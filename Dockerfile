@@ -1,32 +1,31 @@
-# Usa una imagen base de Python. 'slim' es más ligera.
-# Asegúrate de que la versión de Python coincida con la tuya (ej. 3.12, 3.11, etc.)
-FROM python:3.12-slim
+# Usa una imagen base de Python más específica (Debian 12 Bookworm)
+FROM python:3.12-slim-bookworm
+
+# Variables de entorno recomendadas para Python en Docker
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 # Instala las dependencias de sistema que WeasyPrint necesita
-# Usamos apt-get, el gestor de paquetes de Debian/Ubuntu
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgobject-2.0-0 \
     libpango-1.0-0 \
     libpangoft2-1.0-0 \
-    libgobject-2.0-0 \
-    # Añadimos otras dependencias comunes de WeasyPrint para evitar futuros problemas
     libharfbuzz0b \
     libfontconfig1 \
     libffi-dev \
-    --no-install-recommends \
+    # Limpia el caché de apt para mantener la imagen ligera
     && rm -rf /var/lib/apt/lists/*
 
-# Establece el directorio de trabajo dentro del contenedor
+# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia tu archivo de requerimientos de Python y los instala
+# Copia e instala los requerimientos de Python
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia el resto del código de tu aplicación al contenedor
+# Copia el resto del código de tu aplicación
 COPY . .
 
-# Comando para iniciar tu aplicación.
-# AJÚSTALO según tu archivo principal y el nombre de tu app de FastAPI/Flask.
-# El comando usa la variable de entorno $PORT que Railway proporciona.
-# Ejemplo para FastAPI: uvicorn [nombre_modulo]:[nombre_app]
+# Comando para iniciar tu aplicación (ajústalo si es necesario)
+# Railway proporciona la variable $PORT automáticamente
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "$PORT"]
