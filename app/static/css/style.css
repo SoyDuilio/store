@@ -1,0 +1,100 @@
+/* css/style.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.8;
+    margin: 0;
+    padding: 20px;
+    padding-top: 100px; /* Espacio para los controles */
+    transition: var(--theme-transition);
+}
+
+#ebook-content {
+    max-width: 800px;
+    margin: 0 auto;
+    transition: font-size 0.2s ease-in-out;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--heading-color);
+    transition: var(--theme-transition);
+}
+
+h1 { font-size: 3.5em; text-align: center; margin-bottom: 0.2em; }
+h2 { font-size: 2.5em; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-top: 2em; }
+h3 { font-size: 1.8em; color: var(--accent-color); margin-top: 1.5em; }
+
+p, li, blockquote { font-size: 1.1em; }
+blockquote {
+    border-left: 4px solid var(--accent-color);
+    padding-left: 20px;
+    margin: 20px 0;
+    font-style: italic;
+    background-color: var(--card-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+strong { color: var(--accent-color); }
+footer { text-align: center; margin-top: 4em; font-size: 0.9em; opacity: 0.7; }
+
+/* --- Controles Flotantes --- */
+#controls {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--card-bg-color);
+    padding: 10px 15px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+    border: 1px solid var(--border-color);
+}
+
+.control-group { display: flex; gap: 5px; }
+
+#controls button {
+    background: none;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#controls button:hover, #controls button.active {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+}
+
+/* --- Video Responsivo --- */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+    margin-top: 1em;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

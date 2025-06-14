@@ -1,0 +1,9 @@
+# Configuración para Nixpacks en Railway
+[phases.setup]
+# Instala las librerías del sistema (apt) que WeasyPrint necesita.
+# ¡Esto elimina todos los problemas que tuviste en Windows!
+aptPkgs = ["libpango1.0-dev", "libcairo2-dev", "libgobject-2.0-0", "libffi-dev", "fonts-noto-color-emoji"]
+
+[start]
+# Comando para iniciar la aplicación. Railway usará la variable $PORT.
+cmd = "uvicorn app.main:app --host 0.0.0.0 --port $PORT"

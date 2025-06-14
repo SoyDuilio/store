@@ -1,0 +1,145 @@
+<!-- app/templates/ebook_template.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domina tu Territorio</title>
+<link rel="stylesheet" href="{{ url_for('static', path='css/ebook_style.css') }}">
+</head>
+<body class="theme-light font-size-normal font-family-default">
+
+    <!-- =========== BARRA DE CONTROLES FLOTANTE =========== -->
+    <div id="controls">
+        <div class="control-group">
+            <label>Tema:</label>
+            <button onclick="changeTheme('theme-light')">Claro</button>
+            <button onclick="changeTheme('theme-dark')">Oscuro</button>
+            <button onclick="changeTheme('theme-feminine')">Femenino</button>
+        </div>
+        <div class="control-group">
+            <label>Fuente:</label>
+            <button onclick="changeFontSize('font-size-normal')">A</button>
+            <button onclick="changeFontSize('font-size-large')">A+</button>
+            <button onclick="changeFontFamily('font-family-default')">Sans</button>
+            <button onclick="changeFontFamily('font-family-serif')">Serif</button>
+        </div>
+        <div class="control-group">
+            <label>Acciones:</label>
+            <button id="speak-all-btn" class="speak-btn">🔊 Leer</button>
+            <a href="/ebook/download/{{ reader_id }}" class="button">📥 Descargar PDF</a>
+        </div>
+    </div>
+
+    <!-- Contenedor principal con ancho limitado -->
+    <div class="content-wrapper">
+        <main id="ebook-content">
+            
+            <section class="page" style="text-align: center;">
+                <h1 style="font-size: 4em; margin-top: 2em;">Domina tu Territorio</h1>
+                <p style="font-size: 1.4em;">La guía definitiva para convertir tu barrio en tu principal fuente de ingresos.</p>
+                <img src="https://images.pexels.com/photos/3992870/pexels-photo-3992870.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Mujer en salón de belleza" class="content-image" style="max-width: 60%; margin-top: 2em;">
+            </section>
+
+            <section class="page">
+                <h2 id="indice">Índice</h2>
+                <ol class="table-of-contents">
+                    <li><a href="#introduccion">Introducción: El Secreto está a tus Pies</a></li>
+                    <li><a href="#zona-influencia">Tu Zona de Influencia: El Tesoro Escondido</a></li>
+                    <li><a href="#plan-conquista">El Plan de Conquista: Tus Tres Objetivos Clave</a></li>
+                    <li><a href="#historia-leyenda">La Estrategia que lo Cambia Todo: De Negocio a Leyenda</a></li>
+                    <li><a href="#espia-digital">Tu Espía Digital: Usando Google a tu Favor</a></li>
+                    <li><a href="#conclusion">Conclusión: Ahora, a Dominar</a></li>
+                </ol>
+            </section>
+            
+            <section class="page">
+                <h2 id="introduccion">Introducción: El Secreto está a tus Pies</h2>
+                <p>Hola, si estás leyendo esto, es probable que te sientas un poco frustrada. Tienes un negocio increíble, ofreces un servicio de calidad, pero miras tu agenda y ves esos huecos... esas horas tranquilas en las que te gustaría tener más movimiento. Quizás has invertido en publicidad en redes sociales, has repartido volantes, pero sientes que estás gritando en un cuarto lleno de gente y pocos te escuchan.</p>
+                <p>Te entiendo perfectamente. Hoy quiero compartir contigo un secreto, una estrategia tan simple y poderosa que la mayoría de los negocios la pasan por alto. La solución a tus problemas de agenda no está en un anuncio viral de Instagram ni en una campaña de Facebook al otro lado de la ciudad.</p>
+                <blockquote class="pull-quote">La solución está debajo de tus pies. Está en tu calle, en tu edificio, a la vuelta de la esquina.</blockquote>
+                <p>En las próximas páginas, te voy a enseñar a "adueñarte" de tu entorno. Te mostraré cómo hacer que las personas que viven y trabajan a tu alrededor no solo te conozcan, sino que sientan que tú eres su única y mejor opción. Olvídate de competir con todo el mundo. Vamos a hacer que, en tu territorio, no tengas competencia. ¿Estás lista? Empecemos.</p>
+            </section>
+            
+            <section class="page">
+                <h2 id="zona-influencia">Tu Zona de Influencia: El Tesoro Escondido</h2>
+                <div class="layout-alternating">
+                    <div class="row">
+                        <div class="text">
+                            <p>Primero, hablemos de tu Zona de Influencia. Tú tienes el poder de definirla. Imagina un círculo alrededor de tu local. Pueden ser 10, 20 o 50 cuadras a la redonda. Es la zona donde, por el simple hecho de que tú estás allí, las personas que son tu público objetivo, en teoría, "te pertenecen".</p>
+                            <p>Piénsalo de esta manera: por ser la opción más cercana, eres quien debe ganarse el derecho preferencial a atenderlas. Es casi una obligación. Si tu negocio fuese una bodega, la señora que vive en la casa de al lado, por ningún motivo, debería caminar 10 metros más para ir a comprar a otra parte.</p>
+                        </div>
+                        <div class="image"><img src="https://images.pexels.com/photos/6621327/pexels-photo-6621327.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="content-image" alt="Mapa con pin"></div>
+                    </div>
+                    <div class="row">
+                        <div class="text">
+                            <p>"Pero", me dirás, "no solo importa la cercanía". Y tienes toda la razón. Hay otros factores: la calidad, el precio, el ambiente, la atención. Esos factores debes conocerlos y, más importante aún, controlarlos tú.</p>
+                            <p>En términos comerciales, no debería haber motivos para que tu vecina se vaya a hacer las uñas a dos cuadras si tú ofreces un servicio de igual o mejor calidad. El consejo es simple: debes "atar" a tus vecinas a tu servicio, a tu local, a tu marca.</p>
+                        </div>
+                        <div class="image"><img src="https://images.pexels.com/photos/3184328/pexels-photo-3184328.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="content-image" alt="Equipo de trabajo"></div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="page">
+                <h2 id="plan-conquista">El Plan de Conquista: Tus Tres Objetivos Clave</h2>
+                 <h3>1. Tus Vecinas: El Contacto Personal</h3>
+                 <p>Con tus vecinas, el trato debe ser cálido y personal. La táctica es sencilla: prepara a una colaboradora uniformada para dar una imagen profesional. Su misión no es vender, es presentarse y regalar algo: "¡Hola, vecina! Somos [Nombre de tu negocio] y queremos consentirte. Aquí tienes un 20% de descuento en tu primera visita". El objetivo es romper el hielo y, si es posible, tomar sus datos. "¿Te gustaría que te avisemos por WhatsApp de nuestras promociones especiales para vecinas?".</p>
+                 
+                 <h3>2. Las Empresas e Instituciones: El Contacto Profesional</h3>
+                 <p>Si en tu zona hay oficinas, bancos o cualquier empresa, "deben ser tus clientes". El acercamiento es formal. Prepara una propuesta de "Paquete de Bienestar Corporativo" para regalar a sus empleadas. Es una oferta que los gerentes de recursos humanos amarán.</p>
+                 
+                 <h3>3. El Objetivo de Oro: Los Colegios</h3>
+                 <p>El 90% de quienes recogen a los niños son mujeres: madres, abuelas, tías. Además, están las profesoras. Y lo mejor, el horario. Muchas madres, después de dejar a los niños, tienen esas horas libres que coinciden con tus "horas tranquilas". Tu meta es que tu negocio sea su parada obligatoria. Haz las concesiones necesarias: un descuento especial, un pequeño taller... Una madre feliz por la mañana es una recomendación segura para la tarde.</p>
+            </section>
+            
+            <section class="page">
+                <h2 id="historia-leyenda">De Negocio a Leyenda: La Estrategia que lo Cambia Todo</h2>
+                <p>Lo que te he contado funciona. Pero ahora quiero compartirte algo más profundo. Permíteme contarte una historia real.</p>
+                <div style="background: var(--card-bg); padding: 2em; border-radius: 12px; margin: 2em 0; box-shadow: var(--card-shadow);">
+                    <p>Alguna vez, viajando, conversé con una estilista muy reconocida. Me contó que cada cierto tiempo iba a un pueblo con la esperanza de encontrar a su madre, quien años atrás había perdido la razón. Nunca la encontró.</p>
+                    <p>Mientras me contaba, su voz se quebraba un poco. Me dijo que a menudo pensaba en cómo estaría su mamá, cómo luciría. Por ese motivo, en homenaje a ella, coordinó con el alcalde de su ciudad para hacer algo especial. Reunió a todas las mujeres indigentes y les ofreció un día de arreglo personal completo en la plaza principal. Ella misma participó en los peinados y manicuras.</p>
+                    <p>El impacto fue profundo. La gente vio la transformación. Esas mujeres que antes andaban en un estado lamentable, ahora lucían dignas. Su fama creció tanto que las señoras de mayor posición económica solo querían atenderse con ella, no solo por su habilidad, sino porque querían ser parte de sus valores.</p>
+                </div>
+                <blockquote class="pull-quote">¿La lección? Haz algo bueno, algo genuino por tu comunidad, y la gente te lo reconocerá con una lealtad que el dinero no puede comprar.</blockquote>
+            </section>
+
+            <section class="page">
+                <h2 id="espia-digital">Tu Espía Digital y Conclusión</h2>
+                <div class="layout-alternating">
+                     <div class="row">
+                        <div class="text">
+                           <h3>Usando Google a tu Favor</h3>
+                           <p>Para aplicar todo esto, necesitas información. Y tu mejor herramienta es gratis: Google Maps. Úsalo para explorar tu Zona de Influencia. Busca "empresas", "colegios", "oficinas" cerca de ti. En minutos, tendrás una lista de nombres y direcciones. Y lo más importante, podrás "espiar" a tu competencia. Mira sus perfiles, sus horarios, sus reseñas. Toda esa información es oro puro para asegurarte de que tu oferta siempre sea superior.</p>
+                        </div>
+                        <div class="image"><img src="https://images.pexels.com/photos/4353813/pexels-photo-4353813.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="content-image" alt="Mujer con laptop"></div>
+                    </div>
+                </div>
+                
+                <h3 id="conclusion" style="text-align:center; margin-top:3em;">Ahora, a Dominar</h3>
+                <p>Ya lo ves. El camino para llenar tu negocio no requiere de fórmulas mágicas ni de grandes presupuestos. Requiere de estrategia, de acción y, sobre todo, de conexión humana. Deja de ver a las personas de tu barrio como simples transeúntes. Son tus vecinos, tus futuros clientes, tus más grandes aliados.</p>
+                <p style="text-align:center; font-size: 1.3em; font-family: var(--font-family-headings); color: var(--primary-color); padding: 1.5em; border: 2px solid var(--accent-color); border-radius: 12px; margin-top:2em;">Elige UNA sola idea de este libro. Solo una. Y aplícala esta semana. No mañana, no el lunes. <strong>Esta semana.</strong></p>
+            </section>
+            
+            <section class="page">
+                <h2>Recursos Adicionales y Próximos Pasos</h2>
+                <h3>Galería de Recursos</h3>
+                <p>Aquí tienes algunos formatos y plantillas que te ayudarán a poner en práctica lo aprendido. ¡Haz clic para descargar!</p>
+                <div class="card-grid">
+                    <div class="card"><img src="https://via.placeholder.com/400x250.png/C39EA0/FFFFFF?text=Checklist" alt=""><h3>Checklist de Bienvenida</h3><p>Una guía paso a paso para tu primera campaña de "Hola, vecina".</p><a href="#" class="button">Descargar</a></div>
+                    <div class="card"><img src="https://via.placeholder.com/400x250.png/8E7D93/FFFFFF?text=Plantilla" alt=""><h3>Plantilla de Propuesta</h3><p>Un modelo de propuesta comercial para presentar a las empresas de tu zona.</p><a href="#" class="button">Descargar</a></div>
+                </div>
+                
+                <h3 style="margin-top: 3em;">Continúa tu Formación</h3>
+                <p>Si este Ebook te ha sido de utilidad, explora nuestros otros manuales para llevar tu negocio al siguiente nivel.</p>
+                <div class="card-grid">
+                    <div class="card"><img src="https://via.placeholder.com/400x250.png/C39EA0/FFFFFF?text=Ebook+2" alt=""><h3>Protocolos de Atención y Fidelización</h3><p>Aprende a crear una experiencia de cliente inolvidable que los haga volver siempre.</p><a href="#" class="button">Ver más</a></div>
+                    <div class="card"><img src="https://via.placeholder.com/400x250.png/8E7D93/FFFFFF?text=Ebook+3" alt=""><h3>Resolución de Conflictos</h3><p>Convierte a un cliente insatisfecho en tu mayor fan y gestiona conflictos internos con eficacia.</p><a href="#" class="button">Ver más</a></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', path='js/ebook_script.js') }}"></script>
+</body>
+</html>

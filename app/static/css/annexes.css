@@ -1,0 +1,59 @@
+/* css/annexes.css */
+
+.annex-section {
+    background-color: var(--card-bg-color);
+    border: 2px dashed var(--border-color);
+    padding: 2em;
+    margin-top: 3em;
+    border-radius: 15px;
+    position: relative;
+    /* Un patrón sutil de fondo. Elige uno de HeroPatterns.com o similar */
+    background-image: url('https://www.heropatterns.com/uploads/pattern/2/2279/2279-subtle-light.svg');
+    background-size: 300px;
+}
+
+/* Esto añade un "clip" decorativo en la esquina */
+.annex-section::before {
+    content: '\f0c6'; /* Icono de clip de Font Awesome */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: -15px;
+    right: 25px;
+    font-size: 30px;
+    color: var(--accent-color);
+    transform: rotate(15deg);
+}
+
+.annex-section h2 {
+    text-align: center;
+    border-bottom: none;
+}
+
+details {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
+summary {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: var(--heading-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+summary i {
+    color: var(--accent-color);
+}
+
+.annex-content {
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid var(--border-color);
+}

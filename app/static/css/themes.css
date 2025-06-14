@@ -1,0 +1,41 @@
+/* css/themes.css */
+:root {
+    /* Define todas las variables de color aquí. */
+    /* El tema es controlado por una clase en el <body> */
+
+    /* --- Transiciones --- */
+    --theme-transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* TEMA OSCURO (Por defecto) */
+.theme-dark {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --heading-color: #ffffff;
+    --accent-color: #00aaff; /* Un azul eléctrico vibrante */
+    --accent-color-hover: #0088cc;
+    --card-bg-color: #2c2c2c;
+    --border-color: #444444;
+}
+
+/* TEMA CLARO */
+.theme-light {
+    --bg-color: #f4f4f4;
+    --text-color: #333333;
+    --heading-color: #000000;
+    --accent-color: #ff3366; /* Un rosa fuerte */
+    --accent-color-hover: #d62a55;
+    --card-bg-color: #ffffff;
+    --border-color: #dddddd;
+}
+
+/* TEMA FEMENINO */
+.theme-feminine {
+    --bg-color: #fff5f8; /* Rosa muy pálido */
+    --text-color: #6d4b5a; /* Marrón rosado oscuro */
+    --heading-color: #d6336c; /* Rosa fuerte */
+    --accent-color: #a07a9d; /* Lavanda suave */
+    --accent-color-hover: #8e6a8b;
+    --card-bg-color: #ffffff;
+    --border-color: #f7d9e3; /* Borde rosa pastel */
+}
