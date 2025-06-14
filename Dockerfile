@@ -5,15 +5,13 @@ FROM python:3.12-slim-bookworm
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Instala las dependencias de sistema CORRECTAS para WeasyPrint
-# NOTA: Cambiamos libgobject-2.0-0 por libgobject-2.0-dev y añadimos pkg-config
+# Instala el conjunto COMPLETO de dependencias de desarrollo para WeasyPrint
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
     pkg-config \
-    libgobject-2.0-dev \
-    libpango-1.0-0 \
-    libpangoft2-1.0-0 \
-    libharfbuzz0b \
-    libfontconfig1 \
+    libcairo2-dev \
+    libpango1.0-dev \
+    libgdk-pixbuf-2.0-dev \
     libffi-dev \
     # Limpia el caché de apt para mantener la imagen ligera
     && rm -rf /var/lib/apt/lists/*
