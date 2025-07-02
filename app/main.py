@@ -1,11 +1,17 @@
-# app/main.py
-
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, Response
+from fastapi import FastAPI
+from .routers import campaigns, proposals, ebooks, ebooks_openAI, views, auth, uploads # Y los otros
+from .database import engine, Base
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from weasyprint import HTML
-from datetime import datetime
+from .routers import views, auth, uploads
+from fastapi import Request
+from fastapi.responses import HTMLResponse, Response
+# En app/main.py
+
+# Crea las tablas en la BD (esto se puede quitar una vez que uses Alembic)
+# Base.metadata.create_all(bind=engine) 
+
+app = FastAPI()
 
 # --- CONFIGURACIÓN DE LA APLICACIÓN ---
 app = FastAPI(title="Generador de Ebooks de Belleza")
@@ -13,72 +19,69 @@ app = FastAPI(title="Generador de Ebooks de Belleza")
 # Montar archivos estáticos (CSS, JS)
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
-# Configurar plantillas Jinja2 en modo asíncrono
-templates = Jinja2Templates(directory="app/templates", enable_async=True)
+# Configurar plantillas Jinja2
+templates = Jinja2Templates(directory="app/templates")
+
+# Añadir middleware para la sesión (¡importante para el login!)
+from starlette.middleware.sessions import SessionMiddleware
+app.add_middleware(SessionMiddleware, secret_key="una-clave-secreta-muy-larga-y-dificil")
 
 
-# --- BASE DE DATOS SIMULADA ---
-def get_user_from_db(user_id: int):
-    """Simula una consulta a la base de datos para obtener datos del usuario."""
-    fake_users = {
-        1: {"name": "Ana Lucía Torres"},
-        2: {"name": "Carla Mendoza"},
-        3: {"name": "Lectora VIP"}
-    }
-    return fake_users.get(user_id)
+# ✔ HOME DEL SITIO 👈
+@app.get("/", response_class=HTMLResponse)
+async def duilio_home(request: Request):
+    """
+    Sirve la home de Duilio.store
+    """
+    return templates.TemplateResponse("index.html", {"request": request})
+
+# ✔ HOME DEL SITIO 👈
+@app.get("/onboarding", response_class=HTMLResponse)
+async def get_onboarding_page(request: Request):
+    """
+    Sirve la página principal de onboarding donde el usuario inicia la creación.
+    """
+    return templates.TemplateResponse("onboarding.html", {"request": request})
+
+@app.get("/approval", response_class=HTMLResponse)
+async def get_approval_page(request: Request):
+    """
+    Sirve la nueva página de "Aprobación" donde el usuario revisa
+    la propuesta de la IA (índice y ángulos de venta).
+    """
+    return templates.TemplateResponse("approval.html", {"request": request})
 
 
-# --- ENDPOINTS DE LA API ---
-
-@app.get("/ebook/view/{user_id}", response_class=HTMLResponse)
-async def view_ebook(request: Request, user_id: int):
-    """Muestra una versión web interactiva del Ebook."""
-    user_data = get_user_from_db(user_id)
-    if not user_data:
-        return HTMLResponse("<h1>Usuario no encontrado</h1>", status_code=404)
-
-    context = {
-        "request": request,
-        "reader_name": user_data["name"],
-        "reader_id": user_id,  # Necesario para el botón de descarga en la plantilla
-        "generation_date": datetime.now().strftime("%d de %B de %Y")
-    }
-
-    html_template = templates.get_template("ebook_template.html")
-    content = await html_template.render_async(context)
-    return HTMLResponse(content=content)
+@app.get("/campaign-dashboard", response_class=HTMLResponse)
+async def get_campaign_dashboard_page(request: Request):
+    """
+    Sirve la página final donde se muestran los 3 documentos
+    de la campaña generada.
+    """
+    return templates.TemplateResponse("campaign-dashboard.html", {"request": request})
 
 
-@app.get("/ebook/download/{user_id}")
-async def generate_pdf_ebook(request: Request, user_id: int):
-    """Genera un Ebook en PDF con diseño moderno usando WeasyPrint."""
-    user_data = get_user_from_db(user_id)
-    if not user_data:
-        return HTMLResponse("<h1>Usuario no encontrado</h1>", status_code=404)
 
-    context = {
-        "request": request,
-        "reader_name": user_data["name"],
-        "reader_id": user_id,
-        "generation_date": datetime.now().strftime("%d de %B de %Y")
-    }
+@app.get("/editor", response_class=HTMLResponse)
+async def editor( request: Request):
+    return templates.TemplateResponse("editor_v2.html", {"request": request})
 
-    # Renderiza la plantilla HTML a un string
-    html_template = templates.get_template("ebook_template.html")
-    html_string = await html_template.render_async(context)
+app.include_router(campaigns.router)
+app.include_router(proposals.router)
+app.include_router(ebooks.router)
+app.include_router(views.router)
+app.include_router(auth.router)
+app.include_router(uploads.router)
+app.include_router(ebooks_openAI.router)
+# ... incluir otros routers ...
 
-    # Crea el objeto HTML de WeasyPrint
-    # La URL base es crucial para que encuentre el archivo CSS enlazado en el HTML
-    base_url = str(request.base_url)
-    html_doc = HTML(string=html_string, base_url=base_url)
 
-    # Renderiza el PDF en memoria
-    pdf_bytes = html_doc.write_pdf()
+#CEJAS main.im version 1
+@app.get("/cejas4", response_class=HTMLResponse)
+async def cejas4( request: Request):
+    return templates.TemplateResponse("cejas_main_1.html", {"request": request})
 
-    # Prepara y devuelve la respuesta
-    pdf_filename = "Ebook-Domina-Tu-Territorio.pdf"
-    return Response(
-        content=pdf_bytes,
-        media_type='application/pdf',
-        headers={'Content-Disposition': f'attachment; filename="{pdf_filename}"'}
-    )
+#CEJAS main.im version 2
+@app.get("/cejas5", response_class=HTMLResponse)
+async def cejas5( request: Request):
+    return templates.TemplateResponse("cejas_main_2.html", {"request": request})
