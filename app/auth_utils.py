@@ -1,8 +1,8 @@
 from fastapi import Depends, HTTPException, status, Request
 from sqlalchemy.orm import Session
 
-from .database import get_db
-from .models import user as user_model
+from app.database import get_db
+from app.models import user as user_model
 
 def get_current_user(request: Request, db: Session = Depends(get_db)) -> user_model.User:
     """
