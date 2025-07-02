@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duilio [Tu Apellido] - Estrategia Digital y Desarrollo</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-fondo: #121212;
+            --color-superficie: #1e1e1e;
+            --color-primario: #FFC107; /* Un dorado/ámbar profesional */
+            --color-texto-principal: #f0f0f0;
+            --color-texto-secundario: #a0a0a0;
+            --fuente-principal: 'Poppins', sans-serif;
+            --sombra-suave: 0 8px 30px rgba(0, 0, 0, 0.5);
+            --transicion-rapida: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--fuente-principal);
+            background-color: var(--color-fondo);
+            color: var(--color-texto-principal);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Animación de Fade-in --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 193, 7, 0.1);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--color-texto-principal);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--color-primario);
+        }
+
+        nav a {
+            color: var(--color-texto-principal);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 400;
+            transition: var(--transicion-rapida);
+        }
+
+        nav a:hover {
+            color: var(--color-primario);
+        }
+        
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px; /* Espacio para el header fijo */
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 .highlight {
+            color: var(--color-primario);
+            display: block;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--color-texto-secundario);
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .hero-image {
+            flex: 0 0 40%;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--color-superficie);
+            box-shadow: 0 0 25px rgba(255, 193, 7, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--color-primario);
+            color: #000;
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transicion-rapida);
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+        }
+
+        /* --- Secciones Generales --- */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--color-primario);
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* --- Sección de Servicios --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--color-superficie);
+            padding: 40px;
+            border-radius: 10px;
+            border-left: 4px solid var(--color-primario);
+            transition: var(--transicion-rapida);
+            box-shadow: var(--sombra-suave);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            background-color: #2a2a2a;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--color-texto-principal);
+        }
+
+        .service-card p {
+            color: var(--color-texto-secundario);
+            font-size: 1rem;
+        }
+
+        /* --- Sección de Enfoque (About) --- */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+        }
+
+        /* --- Sección de Compromiso --- */
+        #commitment {
+            background-color: var(--color-superficie);
+        }
+        
+        .commitment-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .commitment-content .icon {
+            font-size: 3rem;
+            color: var(--color-primario);
+            margin-bottom: 20px;
+        }
+        
+        /* --- Sección de Contacto --- */
+        #contact {
+            text-align: center;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background-color: var(--color-superficie);
+            color: var(--color-texto-secundario);
+            font-size: 0.9rem;
+        }
+
+        /* --- Responsive --- */
+        @media(max-width: 768px) {
+            body {
+                font-size: 15px;
+            }
+
+            nav {
+                display: none; /* Simplificar para este ejemplo, se podría hacer un menú hamburguesa */
+            }
+            
+            .hero {
+                text-align: center;
+            }
+
+            .hero-content {
+                flex-direction: column-reverse;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .hero-image img {
+                width: 250px;
+                height: 250px;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+            
+            section {
+                padding: 80px 0;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <a href="#" class="logo">Duilio<span>.store</span></a>
+            <nav>
+                <a href="#about">Mi Enfoque</a>
+                <a href="#services">Servicios</a>
+                <a href="#contact">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text fade-in">
+                        <h1>
+                            Soluciones Digitales
+                            <span class="highlight">con Visión Estratégica.</span>
+                        </h1>
+                        <p>
+                            Combino 20 años de experiencia en economía, tributación y desarrollo de software para crear herramientas y estrategias que impulsan tu negocio con datos, no con suposiciones.
+                        </p>
+                        <a href="#contact" class="btn">Hablemos de tu proyecto</a>
+                    </div>
+                    <div class="hero-image fade-in">
+                        <!-- REEMPLAZA ESTA IMAGEN con tu foto de brazos cruzados y fondo transparente (PNG) -->
+                        <img src="/static/img/duilio_cruzado.png" alt="Retrato profesional de Duilio">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MI ENFOQUE (ABOUT) SECTION -->
+        <section id="about">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <p>Mi Perfil</p>
+                    <h2>Un Enfoque Único</h2>
+                </div>
+                <div class="about-content fade-in">
+                    <div class="about-text">
+                        <h3>De la Teoría Económica al Código Funcional</h3>
+                        <p>
+                            Mi perfil no es convencional, y esa es mi mayor fortaleza. Mi formación como Ingeniero Economista me permite entender el "porqué" detrás de cada negocio: los flujos de ingresos, la optimización de costos y las variables que definen el éxito. No solo construyo software; diseño sistemas que resuelven problemas económicos reales.
+                        </p>
+                        <h3>Profesor, Programador, Estratega</h3>
+                        <p>
+                            La docencia en matemáticas y estadística agudizó mi habilidad para simplificar lo complejo. La programación en Python y el desarrollo web me dieron las herramientas para construir soluciones. El marketing digital y el eCommerce me enseñaron a conectar esas soluciones con el mercado. Esta sinergia es la que ofrezco en cada proyecto.
+                        </p>
+                        <a href="#services" class="btn">Ver mis servicios</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICIOS SECTION -->
+        <section id="services" style="background-color: var(--color-superficie);">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <p>Mis Soluciones</p>
+                    <h2>¿Cómo puedo ayudarte?</h2>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card fade-in">
+                        <h3>Desarrollo de Software a Medida</h3>
+                        <p>
+                            Desde sistemas CRM como el "CMR Político" hasta plataformas de gestión empresarial. Creo herramientas robustas, seguras y diseñadas para optimizar tus procesos y darte una ventaja competitiva.
+                        </p>
+                    </div>
+                    <div class="service-card fade-in" style="transition-delay: 0.2s;">
+                        <h3>Consultoría Digital y Estrategia</h3>
+                        <p>
+                            Analizo tu modelo de negocio con la visión de un economista y te ofrezco una hoja de ruta tecnológica. Optimizamos procesos, identificamos oportunidades y definimos la tecnología que necesitas para crecer.
+                        </p>
+                    </div>
+                    <div class="service-card fade-in" style="transition-delay: 0.4s;">
+                        <h3>Info-Productos y eBooks Web</h3>
+                        <p>
+                           Conocimiento empaquetado y listo para consumir. Vendo eBooks y guías prácticas (próximamente) sobre temas de tecnología, finanzas y estrategia, directamente aplicables a tus proyectos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMPROMISO ETICO SECTION -->
+        <section id="commitment">
+            <div class="container fade-in">
+                 <div class="commitment-content">
+                    <div class="icon">✓</div>
+                    <div class="section-title">
+                        <p>Mis Valores</p>
+                        <h2>Ética y Transparencia: Mi Pilar Fundamental</h2>
+                    </div>
+                    <p style="color: var(--color-texto-secundario);">
+                        Habiendo trabajado en instituciones de máxima responsabilidad y compromiso ético, la honestidad y la integridad no son negociables. Cada línea de código que escribo y cada consejo que doy están respaldados por un profundo respeto por la confianza de mis clientes. Mi reputación es mi activo más valioso.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACTO SECTION -->
+        <section id="contact">
+            <div class="container fade-in">
+                <div class="section-title">
+                    <p>¿Tienes una idea?</p>
+                    <h2>Hagámosla realidad</h2>
+                </div>
+                <p style="max-width: 600px; margin: 0 auto 40px auto; color: var(--color-texto-secundario);">
+                    Si buscas una solución que vaya más allá de lo técnico y entienda el corazón de tu negocio, estoy aquí para escuchar. Agenda una llamada sin compromiso y exploremos cómo podemos trabajar juntos.
+                </p>
+                <a href="mailto:restucciaduilio@gmail.com" class="btn">Envíame un correo</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Duilio.store. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script para la animación de Fade-in al hacer scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            const faders = document.querySelectorAll('.fade-in');
+
+            const appearOptions = {
+                threshold: 0.2, // El elemento se vuelve visible cuando el 20% está en pantalla
+                rootMargin: "0px 0px -50px 0px" // Activa la animación un poco antes de que llegue al borde
+            };
+
+            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('visible');
+                        appearOnScroll.unobserve(entry.target);
+                    }
+                });
+            }, appearOptions);
+
+            faders.forEach(fader => {
+                appearOnScroll.observe(fader);
+            });
+        });
+    </script>
+</body>
+</html>
