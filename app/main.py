@@ -1,9 +1,8 @@
 from fastapi import FastAPI
-from .routers import campaigns, proposals, ebooks, ebooks_openAI, views, auth, uploads # Y los otros
-from .database import engine, Base
+from app.routers import campaigns, proposals, ebooks, ebooks_openAI, views, auth, uploads
+from app.database import engine, Base
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from .routers import views, auth, uploads
 from fastapi import Request
 from fastapi.responses import HTMLResponse, Response
 # En app/main.py
@@ -34,6 +33,15 @@ async def duilio_home(request: Request):
     Sirve la home de Duilio.store
     """
     return templates.TemplateResponse("index.html", {"request": request})
+
+
+# ✔ CMR POLITICO 👈
+@app.get("/cmrpolitico", response_class=HTMLResponse)
+async def duilio_home(request: Request):
+    """
+    Sirve la home de Duilio.store
+    """
+    return templates.TemplateResponse("elecciones_bilingue.html", {"request": request})
 
 # ✔ HOME DEL SITIO 👈
 @app.get("/onboarding", response_class=HTMLResponse)
