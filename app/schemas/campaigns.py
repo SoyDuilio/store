@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel, Field
 from typing import List
-from .documents import ChapterProposal, SalesAngleProposal # Importamos los modelos que ya teníamos
+from app.schemas.documents import ChapterProposal, SalesAngleProposal # Importamos los modelos que ya teníamos
 
 class CampaignGenerationRequest(BaseModel):
     """
