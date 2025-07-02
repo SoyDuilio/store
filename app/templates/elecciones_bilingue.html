@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<!-- El atributo lang cambiará dinámicamente con JavaScript -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CMR Político - Siyasay CMR</title>
+  <style>
+    /* --- ESTILOS GENERALES Y VARIABLES --- */
+    :root {
+      --color-primario: #d32f2f;
+      --color-fondo: #121212;
+      --color-texto: #f5f5f5;
+      --color-secundario: #ffffff;
+      --color-acento: #ff9800;
+      --fuente-base: 'Arial', sans-serif;
+      --sombra-suave: 0 2px 8px rgba(0,0,0,0.3);
+      --transicion-suave: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--fuente-base);
+      background-color: var(--color-fondo);
+      color: var(--color-texto);
+      line-height: 1.6;
+      /* Espacio para el footer fijo */
+      padding-bottom: 60px;
+    }
+
+    /* --- ENCABEZADO --- */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(135deg, var(--color-primario), #b71c1c);
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      box-shadow: var(--sombra-suave);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    header img {
+      height: 50px;
+      width: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid var(--color-secundario);
+    }
+
+    header .info {
+      margin-left: 15px;
+    }
+
+    header .info span {
+      display: block;
+      font-size: 14px;
+      color: var(--color-secundario);
+    }
+
+    .language-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.1);
+      padding: 8px 12px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .language-toggle button {
+      background: none;
+      border: 1px solid var(--color-secundario);
+      color: var(--color-secundario);
+      padding: 5px 10px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: var(--transicion-suave);
+      font-size: 12px;
+    }
+
+    .language-toggle button.active {
+      background: var(--color-secundario);
+      color: var(--color-primario);
+      font-weight: bold;
+    }
+
+    /* --- NAVEGACIÓN --- */
+    nav {
+      margin-top: 70px;
+      background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+      padding: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: var(--sombra-suave);
+      position: sticky;
+      top: 70px; /* Se pega debajo del header al hacer scroll */
+      z-index: 999;
+    }
+
+    nav button {
+      background: linear-gradient(135deg, var(--color-primario), #b71c1c);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: var(--transicion-suave);
+      box-shadow: var(--sombra-suave);
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav button.active {
+      background: linear-gradient(135deg, var(--color-acento), #f57c00);
+      box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+    }
+
+    nav button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4);
+    }
+
+    /* --- SECCIONES --- */
+    section {
+      padding: 30px 20px;
+      display: none;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      min-height: calc(100vh - 250px); /* Ajuste para visibilidad */
+    }
+
+    section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      color: var(--color-secundario);
+      margin-bottom: 20px;
+      border-bottom: 3px solid var(--color-primario);
+      padding-bottom: 10px;
+      font-size: 28px;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    ul li {
+      padding: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      transition: var(--transicion-suave);
+      border-radius: 5px;
+      margin-bottom: 5px;
+      background: rgba(255,255,255,0.02);
+    }
+    
+    ul li::before {
+      content: '✨';
+      color: var(--color-acento);
+      margin-right: 10px;
+    }
+
+    ul li:hover {
+      background: rgba(255,255,255,0.05);
+      transform: translateX(5px);
+    }
+
+    /* --- TABLA DE PRECIOS --- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--sombra-suave);
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    th {
+      background: linear-gradient(135deg, var(--color-primario), #b71c1c);
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    /* --- TARJETAS DE INDICADORES (MEJORADAS) --- */
+    .indicadores {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .indicador {
+      background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+      padding: 25px;
+      border-radius: 15px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer;
+      transition: var(--transicion-suave);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--sombra-suave);
+    }
+
+    /* Icono para indicar que es clickeable */
+    .indicador::before {
+      content: '👆';
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      opacity: 0.7;
+      transition: var(--transicion-suave);
+    }
+
+    /* Texto de ayuda bilingüe */
+    .indicador::after {
+      content: 'Clic para detalles / Ñit'iy willaykunapaq';
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      opacity: 0;
+      color: var(--color-acento);
+      transition: var(--transicion-suave);
+      white-space: nowrap;
+    }
+    
+    .indicador:hover::after {
+        opacity: 0.8;
+    }
+
+    .indicador:hover {
+      transform: translateY(-8px) scale(1.03);
+      background: linear-gradient(135deg, #383838, #2a2a2a);
+      box-shadow: 0 8px 25px rgba(211, 47, 47, 0.3);
+    }
+
+    .indicador:hover::before {
+      transform: scale(1.2) rotate(10deg);
+      opacity: 1;
+    }
+
+    .indicador h3 {
+      color: var(--color-acento);
+      font-size: 42px;
+      margin: 10px 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .indicador p {
+      margin: 5px 0;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    /* --- BLOQUE DE RESUMEN --- */
+    .resumen {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      padding: 20px;
+      margin-top: 30px;
+      border-left: 5px solid var(--color-acento);
+      border-radius: 10px;
+      font-size: 16px;
+      box-shadow: var(--sombra-suave);
+    }
+
+    /* --- VENTANA MODAL --- */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+      padding: 30px;
+      border: 1px solid rgba(255,255,255,0.1);
+      width: 90%;
+      max-width: 600px;
+      border-radius: 15px;
+      color: white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+      animation: modalSlideIn 0.4s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close {
+      color: #aaa;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 32px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transicion-suave);
+    }
+
+    .close:hover {
+      color: var(--color-acento);
+      transform: rotate(90deg);
+    }
+
+    #modal-title, #modal-body p {
+      margin-bottom: 15px;
+    }
+
+    /* --- PIE DE PÁGINA --- */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #101010;
+      padding: 15px;
+      text-align: center;
+      font-size: 12px;
+      color: #ccc;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
+      z-index: 1001;
+    }
+
+    /* --- CLASES PARA IDIOMA (CORREGIDO CON !IMPORTANT) --- */
+    .lang-es { display: block !important; }
+    .lang-qu { display: none !important; }
+
+    body.quechua .lang-es { display: none !important; }
+    body.quechua .lang-qu { display: block !important; }
+
+    /* --- DISEÑO RESPONSIVO --- */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+        position: static; /* Header estático en móvil para evitar ocupar pantalla */
+      }
+      
+      nav {
+        margin-top: 0;
+        top: 0; /* Se pega arriba en móvil */
+      }
+
+      section {
+        padding: 20px 15px;
+        min-height: unset;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <!-- NOTA: Reemplazar "foto-candidato.jpg" con la imagen real -->
+      <img src="/static/img/logo.png" 
+           data-alt-es="Foto del Candidato Juan Pérez" 
+           data-alt-qu="Juan Pérez Akllasqap Rurun" 
+           alt="Foto del Candidato Juan Pérez">
+      <div class="info">
+          <!-- Línea 1: Candidato -->
+          <div>
+            <span class="lang-es"><strong>Candidato:</strong> Juan Pérez</span>
+            <span class="lang-qu"><strong>Akllasqa:</strong> Juan Pérez</span>
+          </div>
+          <!-- Línea 2: Agrupación -->
+          <div>
+            <span class="lang-es"><strong>Agrupación:</strong> Movimiento Regional Justicia</span>
+            <span class="lang-qu"><strong>Huñu:</strong> Llaqta Chanin Kuyuy</span>
+          </div>
+      </div>
+    </div>
+    <div class="language-toggle">
+      <span style="font-size: 12px;">🌐</span>
+      <button id="btn-es" class="active">ES</button>
+      <button id="btn-qu">QU</button>
+    </div>
+  </header>
+
+  <nav>
+    <button data-target="beneficios" class="active">
+      <span class="lang-es">🎯 Beneficios</span>
+      <span class="lang-qu">🎯 Allinkuna</span>
+    </button>
+    <button data-target="precios">
+      <span class="lang-es">💰 Planes y Precios</span>
+      <span class="lang-qu">💰 Ruwaykuna Chaninkunawan</span>
+    </button>
+    <button data-target="ahorros">
+      <span class="lang-es">📊 Ahorro</span>
+      <span class="lang-qu">📊 Qullqi Waqaychay</span>
+    </button>
+    <button data-target="metricas">
+      <span class="lang-es">📈 Indicadores</span>
+      <span class="lang-qu">📈 Rikuchiqkuna</span>
+    </button>
+    <button data-target="contacto">
+      <span class="lang-es">📞 Contacto</span>
+      <span class="lang-qu">📞 Rimanakuy</span>
+    </button>
+  </nav>
+
+  <main>
+    <section id="beneficios" class="active">
+      <h2>
+        <span class="lang-es">Beneficios Clave del CMR Político</span>
+        <span class="lang-qu">Siyasay CMR-pa Hatun Allinkuna</span>
+      </h2>
+      <ul>
+        <li><span class="lang-es">Registra y fideliza simpatizantes al instante</span><span class="lang-qu">Yanapaqkunata chaylla qillqay hinaspa munayninpi waqaychay</span></li>
+        <li><span class="lang-es">Segmentación avanzada para mensajes precisos</span><span class="lang-qu">Ñawpaqman risqa rakiykuna chiqa willaykunapaq</span></li>
+        <li><span class="lang-es">Realiza encuestas, recoge preguntas y comentarios</span><span class="lang-qu">Tapukuykunata ruway, tapuykunata rimaykunatawan huñuy</span></li>
+        <li><span class="lang-es">Comunica y envía mensajes masivos de forma efectiva</span><span class="lang-qu">Achka willaykunata allinta willay hinaspa kachay</span></li>
+        <li><span class="lang-es">Optimiza mensajes con I.A. según cada segmento</span><span class="lang-qu">Yachay Makiwan (I.A.) willaykunata sapa rakiypaq allinchay</span></li>
+        <li><span class="lang-es">Dashboard para ver resultados en tiempo real</span><span class="lang-qu">Chiqap pachapi rurasqakunata qhawana tabla</span></li>
+        <li><span class="lang-es">Toma decisiones basadas en datos reales y actualizados</span><span class="lang-qu">Chiqap hinaspa kunan willaykunawan allin akllaykunata ruway</span></li>
+        <li><span class="lang-es">Funciona con o sin internet (modo offline)</span><span class="lang-qu">Internet kaqtinpas mana kaqtinpas llamk'an</span></li>
+        <li><span class="lang-es">Notificaciones y GPS para equipos en campo</span><span class="lang-qu">Willaykuna hinaspa GPS pampapi llamk'aqkunapaq</span></li>
+        <li><span class="lang-es">Campañas más organizadas, eficientes y transparentes</span><span class="lang-qu">Aswan allichasqa, allin hinaspa sut'i kampañakuna</span></li>
+      </ul>
+      <div class="resumen">
+        <strong>
+          <span class="lang-es">Resumen: Más orden, menos gasto, más votos.</span>
+          <span class="lang-qu">Pisiyachispa: Aswan allichay, pisi qullqi, aswan akllaykuna.</span>
+        </strong>
+      </div>
+    </section>
+
+    <section id="precios">
+      <h2>
+        <span class="lang-es">Planes y Precios</span>
+        <span class="lang-qu">Ruwaykuna Chaninkunawan</span>
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th><span class="lang-es">Plan</span><span class="lang-qu">Ruway</span></th>
+            <th><span class="lang-es">Para quién</span><span class="lang-qu">Pipaq</span></th>
+            <th><span class="lang-es">Pago Inicial</span><span class="lang-qu">Qallariy Qullqi</span></th>
+            <th><span class="lang-es">Mensual</span><span class="lang-qu">Sapa Killa</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="lang-es">Base Distrital</span><span class="lang-qu">Distritu Saphi</span></td>
+            <td><span class="lang-es">Alcalde Distrital</span><span class="lang-qu">Distritu Umalliq</span></td>
+            <td>S/ 1950</td>
+            <td>S/ 319</td>
+          </tr>
+          <tr>
+            <td><span class="lang-es">Pro Provincial</span><span class="lang-qu">Wamani Allin</span></td>
+            <td><span class="lang-es">Alcalde Provincial / Diputado</span><span class="lang-qu">Wamani Umalliq / Diputado</span></td>
+            <td>S/ 2350</td>
+            <td>S/ 469</td>
+          </tr>
+          <tr>
+            <td><span class="lang-es">Ejecutivo Regional</span><span class="lang-qu">Suyu Kamachiq</span></td>
+            <td><span class="lang-es">Gobernador / Senador</span><span class="lang-qu">Gobernador / Senador</span></td>
+            <td>S/ 2799</td>
+            <td>S/ 549</td>
+          </tr>
+          <tr>
+            <td><span class="lang-es">Nacional</span><span class="lang-qu">Mama Llaqta</span></td>
+            <td><span class="lang-es">Presidencial / Partido Completo</span><span class="lang-qu">Umalliq / Tukuy Partidu</span></td>
+            <td><span class="lang-es">A convenir</span><span class="lang-qu">Rimanakuspa</span></td>
+            <td>S/ 3999+</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="ahorros">
+      <h2>
+        <span class="lang-es">¿Cuánto cuesta NO tenerlo? (Costos Ocultos)</span>
+        <span class="lang-qu">¿Hayk'atan chinkanki mana hap'ispa? (Pakasqa Gastukuna)</span>
+      </h2>
+      <ul>
+        <li><span class="lang-es">Inversión en volantes y afiches sin retorno medible.</span><span class="lang-qu">Mana tupuy atina kutichiyniyuq raphikunapi qullqi churay.</span></li>
+        <li><span class="lang-es">Gasto en personal y voluntarios sin resultados claros.</span><span class="lang-qu">Mana sut'i rurayniyuq runakunapi qullqi chinkachiy.</span></li>
+        <li><span class="lang-es">Envío de mensajes sin seguimiento ni trazabilidad.</span><span class="lang-qu">Mana qatiyniyuq nitaq taripayniyuq willaykuna apachiy.</span></li>
+        <li><span class="lang-es">Pérdida de votantes por falta de contacto y seguimiento.</span><span class="lang-qu">Mana rimanakuspa, mana qatispa akllaqkunata chinkachiy.</span></li>
+        <li><span class="lang-es">Horas y esfuerzo perdidos por desorganización.</span><span class="lang-qu">Mana allichasqa kayrayku pacha hinaspa kallpa usuchiy.</span></li>
+      </ul>
+      <div class="resumen">
+        <strong>
+          <span class="lang-es">Con CMR Político puedes ahorrar hasta un 50% en gastos de campaña improductivos y reinvertirlo en acciones que SÍ generan votos.</span>
+          <span class="lang-qu">Siyasay CMR kaqwan, mana allin kampañapi qullqi chinkachiykunata 50%kama waqaychayta atinki, chay qullqitataq chiqapmanta vutukunata qusuq ruwaykunaman churay.</span>
+        </strong>
+      </div>
+    </section>
+
+    <section id="metricas">
+        <h2>
+            <span class="lang-es">Indicadores de Campaña en Tiempo Real</span>
+            <span class="lang-qu">Chiqap Pacha Kampaña Rikuchiqkuna</span>
+        </h2>
+        <div class="indicadores">
+            <div class="indicador" onclick="abrirModal('simpatizantes')">
+                <h3>10,450</h3>
+                <p><span class="lang-es">Simpatizantes</span><span class="lang-qu">Yanapaqkuna</span></p>
+            </div>
+            <div class="indicador" onclick="abrirModal('encuestas')">
+                <h3>1,230</h3>
+                <p><span class="lang-es">Encuestas Realizadas</span><span class="lang-qu">Ruwasqa Tapukuykuna</span></p>
+            </div>
+            <div class="indicador" onclick="abrirModal('zonas')">
+                <h3>85%</h3>
+                <p><span class="lang-es">Cobertura de Zonas</span><span class="lang-qu">Llaqtakuna Chayasqa</span></p>
+            </div>
+             <div class="indicador" onclick="abrirModal('votos')">
+                <h3>+15%</h3>
+                <p><span class="lang-es">Intención de Voto</span><span class="lang-qu">Akllanapaq Munay</span></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <h2>
+            <span class="lang-es">Contacto y Demostración</span>
+            <span class="lang-qu">Rimanakuy hinaspa Rikuchiy</span>
+        </h2>
+        <ul>
+            <li>
+                <span class="lang-es"><strong>Email:</strong> <a href="mailto:restucciaduilio@gmail.com" style="color: #b71c1c;">restucciaduilio@gmail.com</a></span>
+                <span class="lang-qu"><strong>Chaski:</strong> <a href="mailto:restucciaduilio@gmail.com" style="color: #b71c1c;">restucciaduilio@gmail.com</a></span>
+            </li>
+            <li>
+                <span class="lang-es"><strong>Teléfono / WhatsApp:</strong> <a href="https://wa.me/51974089434" style="color: #27b70a;">+51 974 089 434</a></span>
+                <span class="lang-qu"><strong>Karurimana / WhatsApp:</strong> <a href="https://wa.me/51974089434" style="color: #27b70a;">+51 974 089 434</a></span>
+            </li>
+        <!--    
+            <li>
+                <span class="lang-es"><strong>Agenda una Demo:</strong> <a href="#" target="_blank">Haz clic aquí para agendar</a></span>
+                <span class="lang-qu"><strong>Rikuchinapaq Hayt'ay:</strong> <a href="#" target="_blank">Kaypi ñit'iy hayt'anapaq</a></span>
+            </li>
+        -->
+        </ul>
+        <div class="resumen">
+            <strong>
+              <span class="lang-es">¿Listo para transformar tu campaña? Contáctanos hoy mismo.</span>
+              <span class="lang-qu">¿Listuchu kanki kampañaykita tikranapaq? Kunan p'unchaw rimanakuy kansayku.</span>
+            </strong>
+        </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <span class="lang-es">© 2025 CMR Político. Todos los derechos reservados.</span>
+      <span class="lang-qu">© 2025 Siyasay CMR. Llapan hayñikuna waqaychasqa.</span>
+    </p>
+  </footer>
+
+  <!-- Ventana Modal -->
+  <div id="infoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="cerrarModal()">×</span>
+      <h2 id="modal-title">
+        <span class="lang-es"></span><span class="lang-qu"></span>
+      </h2>
+      <div id="modal-body">
+        <p><span class="lang-es"></span><span class="lang-qu"></span></p>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- LÓGICA DE NAVEGACIÓN POR PESTAÑAS ---
+      const navButtons = document.querySelectorAll('nav button');
+      const sections = document.querySelectorAll('main section');
+
+      function mostrar(targetId) {
+        sections.forEach(section => {
+          section.classList.remove('active');
+        });
+        navButtons.forEach(button => {
+          button.classList.remove('active');
+        });
+
+        const targetSection = document.getElementById(targetId);
+        const targetButton = document.querySelector(`nav button[data-target="${targetId}"]`);
+        
+        if (targetSection) targetSection.classList.add('active');
+        if (targetButton) targetButton.classList.add('active');
+      }
+
+      navButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          mostrar(button.dataset.target);
+        });
+      });
+
+      // --- LÓGICA DE CAMBIO DE IDIOMA ---
+      const btnEs = document.getElementById('btn-es');
+      const btnQu = document.getElementById('btn-qu');
+      const body = document.body;
+      const html = document.documentElement;
+      const imgCandidato = document.querySelector('header img');
+
+      function cambiarIdioma(lang) {
+        if (lang === 'qu') {
+          body.classList.add('quechua');
+          btnQu.classList.add('active');
+          btnEs.classList.remove('active');
+          html.lang = 'qu';
+          imgCandidato.alt = imgCandidato.dataset.altQu;
+        } else {
+          body.classList.remove('quechua');
+          btnEs.classList.add('active');
+          btnQu.classList.remove('active');
+          html.lang = 'es';
+          imgCandidato.alt = imgCandidato.dataset.altEs;
+        }
+      }
+
+      btnEs.addEventListener('click', () => cambiarIdioma('es'));
+      btnQu.addEventListener('click', () => cambiarIdioma('qu'));
+
+      // Iniciar con la primera sección activa
+      mostrar('beneficios');
+    });
+
+    // --- LÓGICA DE LA VENTANA MODAL ---
+    const modal = document.getElementById('infoModal');
+    const modalTitleEs = document.querySelector('#modal-title .lang-es');
+    const modalTitleQu = document.querySelector('#modal-title .lang-qu');
+    const modalBodyEs = document.querySelector('#modal-body .lang-es');
+    const modalBodyQu = document.querySelector('#modal-body .lang-qu');
+
+    const modalData = {
+        simpatizantes: {
+            titleEs: "Simpatizantes Registrados",
+            titleQu: "Qillqasqa Yanapaqkuna",
+            bodyEs: "Este número representa el total de personas que han sido registradas en nuestra base de datos como simpatizantes. Un mayor número indica una base de apoyo más sólida y un mayor alcance potencial.",
+            bodyQu: "Kay yupayqa llapan qillqasqa runakunatan rikuchin yanapaqninchikkunahina. Sapa aswan yupay kaqtin, aswan kallpasapa yanapaymi kanqa, aswan karuman chayayta atisun."
+        },
+        encuestas: {
+            titleEs: "Encuestas Realizadas",
+            titleQu: "Ruwasqa Tapukuykuna",
+            bodyEs: "Total de encuestas completadas por nuestros equipos en campo. Estos datos nos permiten entender las preocupaciones y preferencias de los votantes para ajustar nuestra estrategia.",
+            bodyQu: "Pampapi llamk'aqninchiskunaq tukusqan tapukuykuna. Kay willaykunaqa yanapawanchikmi akllaqkunaq llakiyninkuta hinaspa munayninkuta yachanapaq, chaynapi ruwayninchikta allichanapaq."
+        },
+        zonas: {
+            titleEs: "Cobertura de Zonas",
+            titleQu: "Llaqtakuna Chayasqa",
+            bodyEs: "Porcentaje del territorio (distritos, barrios, comunidades) que ha sido visitado o contactado por nuestros equipos. Una alta cobertura es clave para la visibilidad de la campaña.",
+            bodyQu: "Hayk'a % pacha (distritukuna, barriokuna, ayllukuna) watukusqa utaq rimasqa karqan llamk'aqninchiskunawan. Aswan chayasqa kaspa, kampañanchikqa aswan riqsisqan kanqa."
+        },
+        votos: {
+            titleEs: "Incremento en Intención de Voto",
+            titleQu: "Akllanapaq Munay Wiñariynin",
+            bodyEs: "Este es el aumento porcentual en la intención de voto a nuestro favor desde que se inició el uso del CMR, según nuestras encuestas internas. Mide el impacto directo de nuestras acciones.",
+            bodyQu: "Kayqa CMR llamk'ayta qallarisqanchikmantapacha, ukhu tapukuykunanchikman hina, akllanapaq munaypa wiñariyninmi. Ruwayninchikunaq chiqap tupunmi."
+        }
+    };
+
+    function abrirModal(indicadorId) {
+        const data = modalData[indicadorId];
+        if (data) {
+            modalTitleEs.textContent = data.titleEs;
+            modalTitleQu.textContent = data.titleQu;
+            modalBodyEs.textContent = data.bodyEs;
+            modalBodyQu.textContent = data.bodyQu;
+            modal.style.display = 'flex';
+        }
+    }
+
+    function cerrarModal() {
+        modal.style.display = 'none';
+    }
+
+    // Cierra el modal si se hace clic fuera del contenido
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            cerrarModal();
+        }
+    }
+  </script>
+</body>
+</html>
