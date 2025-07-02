@@ -3,8 +3,8 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse # Importamos JSONResponse
 from pydantic import BaseModel
-from ..schemas.campaigns import CampaignGenerationRequest
-from ..schemas.documents import EbookState
+from app.schemas.campaigns import CampaignGenerationRequest
+from app.schemas.documents import EbookState
 from typing import List
 import openai
 import os
