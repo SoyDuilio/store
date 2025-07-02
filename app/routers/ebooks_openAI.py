@@ -1,7 +1,7 @@
 # Archivo: app/routers/ebooks_openAI.py
 
 from fastapi import APIRouter, Form, HTTPException
-from ..schemas.documents import EbookState
+from app.schemas.documents import EbookState
 import openai
 import os
 import json

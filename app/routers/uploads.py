@@ -6,11 +6,11 @@ from google.cloud import storage
 from dotenv import load_dotenv
 
 # Importaciones de tu proyecto
-from ..database import get_db
-from ..models import user as user_model
-from ..models import image as image_model
-from ..schemas import image as image_schema # Asegúrate de tener este schema
-from ..auth_utils import get_current_user
+from app.database import get_db
+from app.models import user as user_model
+from app.models import image as image_model
+from app.schemas import image as image_schema # Asegúrate de tener este schema
+from app.auth_utils import get_current_user
 
 load_dotenv()
 router = APIRouter(

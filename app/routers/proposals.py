@@ -1,7 +1,7 @@
 # Archivo: app/routers/proposals.py
 
 from fastapi import APIRouter, Form, HTTPException
-from ..schemas.documents import StrategicProposal # Importamos nuestro nuevo esquema
+from app.schemas.documents import StrategicProposal # Importamos nuestro nuevo esquema
 import openai
 import os
 import json

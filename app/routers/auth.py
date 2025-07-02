@@ -6,8 +6,8 @@ from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 
 # Importaciones de tu proyecto
-from ..database import get_db
-from ..models import user as user_model
+from app.database import get_db
+from app.models import user as user_model
 
 # --- Configuración ---
 load_dotenv()
