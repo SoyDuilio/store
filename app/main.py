@@ -1,19 +1,28 @@
+# app/main.py
+
 from fastapi import FastAPI
-from app.routers import campaigns, proposals, ebooks, ebooks_openAI, views, auth, uploads
-from app.database import engine, Base
+# ----------------- CAMBIOS AQUÍ -----------------
+# 1. Comentamos la importación de los routers que usan la base de datos.
+#    Esto evita que se ejecute el código dentro de ellos al arrancar.
+# from app.routers import campaigns, proposals, ebooks, ebooks_openAI, views, auth, uploads
+
+# 2. Comentamos la importación de la base de datos.
+#    Esta es la causa principal del error.
+# from app.database import engine, Base
+# ------------------------------------------------
+
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from fastapi.responses import HTMLResponse, Response
-# En app/main.py
 
-# Crea las tablas en la BD (esto se puede quitar una vez que uses Alembic)
-# Base.metadata.create_all(bind=engine) 
+# Base.metadata.create_all(bind=engine) # Esto ya estaba comentado, pero es correcto
 
 app = FastAPI()
 
 # --- CONFIGURACIÓN DE LA APLICACIÓN ---
-app = FastAPI(title="Generador de Ebooks de Belleza")
+# He quitado la re-declaración de `app = FastAPI(...)` que era redundante.
+app.title = "Generador de Ebooks de Belleza"
 
 # Montar archivos estáticos (CSS, JS)
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
@@ -21,10 +30,17 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 # Configurar plantillas Jinja2
 templates = Jinja2Templates(directory="app/templates")
 
-# Añadir middleware para la sesión (¡importante para el login!)
-from starlette.middleware.sessions import SessionMiddleware
-app.add_middleware(SessionMiddleware, secret_key="una-clave-secreta-muy-larga-y-dificil")
+# ----------------- CAMBIO OPCIONAL PERO RECOMENDADO -----------------
+# 3. Comentamos el middleware de sesión, ya que se usa para el login (auth)
+#    que hemos desactivado. Así la app es aún más ligera.
+# from starlette.middleware.sessions import SessionMiddleware
+# app.add_middleware(SessionMiddleware, secret_key="una-clave-secreta-muy-larga-y-dificil")
+# ---------------------------------------------------------------------
 
+
+# ======================================================================
+# ESTAS RUTAS NO DEPENDEN DE LA BASE DE DATOS Y FUNCIONARÁN PERFECTAMENTE
+# ======================================================================
 
 # ✔ HOME DEL SITIO 👈
 @app.get("/", response_class=HTMLResponse)
@@ -37,59 +53,47 @@ async def duilio_home(request: Request):
 
 # ✔ CMR POLITICO 👈
 @app.get("/cmrpolitico", response_class=HTMLResponse)
-async def duilio_home(request: Request):
+async def cmr_politico_page(request: Request): # He cambiado el nombre de la función para que no se repita
     """
-    Sirve la home de Duilio.store
+    Sirve la página del CMR Político.
     """
     return templates.TemplateResponse("elecciones_bilingue.html", {"request": request})
 
-# ✔ HOME DEL SITIO 👈
+# ✔ Otras páginas estáticas 👈
+# Estas también funcionarán sin problema.
 @app.get("/onboarding", response_class=HTMLResponse)
 async def get_onboarding_page(request: Request):
-    """
-    Sirve la página principal de onboarding donde el usuario inicia la creación.
-    """
     return templates.TemplateResponse("onboarding.html", {"request": request})
 
 @app.get("/approval", response_class=HTMLResponse)
 async def get_approval_page(request: Request):
-    """
-    Sirve la nueva página de "Aprobación" donde el usuario revisa
-    la propuesta de la IA (índice y ángulos de venta).
-    """
     return templates.TemplateResponse("approval.html", {"request": request})
 
 
 @app.get("/campaign-dashboard", response_class=HTMLResponse)
 async def get_campaign_dashboard_page(request: Request):
-    """
-    Sirve la página final donde se muestran los 3 documentos
-    de la campaña generada.
-    """
     return templates.TemplateResponse("campaign-dashboard.html", {"request": request})
-
-
 
 @app.get("/editor", response_class=HTMLResponse)
 async def editor( request: Request):
     return templates.TemplateResponse("editor_v2.html", {"request": request})
 
-app.include_router(campaigns.router)
-app.include_router(proposals.router)
-app.include_router(ebooks.router)
-app.include_router(views.router)
-app.include_router(auth.router)
-app.include_router(uploads.router)
-app.include_router(ebooks_openAI.router)
-# ... incluir otros routers ...
-
-
-#CEJAS main.im version 1
 @app.get("/cejas4", response_class=HTMLResponse)
 async def cejas4( request: Request):
     return templates.TemplateResponse("cejas_main_1.html", {"request": request})
 
-#CEJAS main.im version 2
 @app.get("/cejas5", response_class=HTMLResponse)
 async def cejas5( request: Request):
     return templates.TemplateResponse("cejas_main_2.html", {"request": request})
+
+# ----------------- CAMBIOS AQUÍ -----------------
+# 4. Comentamos todos los `include_router`. Si no lo hacemos, la app fallará
+#    porque las variables (campaigns, auth, etc.) no fueron importadas.
+# app.include_router(campaigns.router)
+# app.include_router(proposals.router)
+# app.include_router(ebooks.router)
+# app.include_router(views.router)
+# app.include_router(auth.router)
+# app.include_router(uploads.router)
+# app.include_router(ebooks_openAI.router)
+# ------------------------------------------------
