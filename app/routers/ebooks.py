@@ -1,7 +1,7 @@
 # Archivo: app/routers/ebooks.py (Versión 2.0 - Con Muestra Realista)
 
 from fastapi import APIRouter, Form, HTTPException
-from ..schemas.documents import EbookState
+from app.schemas.documents import EbookState
 import json
 import os
 import uuid # ¡Importante añadir uuid para generar nuevos IDs!
