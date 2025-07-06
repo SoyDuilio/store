@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 # from app.routes import auth, contacts, events, notifications, territories
 # from app.models.models import User
 
-from app.routes import views, contacts_review
+#from app.routes import views, contacts_review
 
 # Crear tablas (comentado)
 # try:
