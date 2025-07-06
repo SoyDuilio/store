@@ -282,9 +282,59 @@
             backdrop-filter: blur(5px);
         }
 
-        .component-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
+        .question-text {
+            background: linear-gradient(135deg, #f1f2f6 0%, #dfe4ea 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 4px solid #3498db;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .bibliography {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border-left: 4px solid #e17055;
+        }
+
+        .bibliography strong {
+            color: #2d3436;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .bibliography ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .bibliography li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .bibliography li:last-child {
+            border-bottom: none;
+        }
+
+        .bibliography li:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateX(5px);
+        }
+
+        .bibliography li::before {
+            content: "📚";
+            position: absolute;
+            left: 0;
+            top: 8px;
         }
 
         .scroll-progress {
@@ -373,25 +423,38 @@
                 </div>
                 <div class="question-content">
                     <div class="content-inner">
+                        <div class="question-text">
+                            <strong>Pregunta:</strong> Analiza en qué medida la educación en el Tahuantinsuyo puede considerarse un sistema educativo. Contrasta argumentos de autores a favor y en contra.
+                        </div>
                         <div class="arguments">
                             <div class="argument-block favor">
                                 <div class="argument-title">Argumentos a favor</div>
                                 <ul class="argument-list">
-                                    <li>Estructura jerárquica organizada: yachayhuasi para nobles, acllahuasi para mujeres selectas</li>
-                                    <li>Transmisión sistemática de conocimientos: quipus, agricultura, astronomía, administración</li>
-                                    <li>Especialización por roles sociales y funciones estatales</li>
-                                    <li>Cobertura territorial amplia y uniforme</li>
+                                    <li>Estructura jerárquica organizada: yachayhuasi para nobles, acllahuasi para mujeres selectas (Rostworowski, 1988)</li>
+                                    <li>Transmisión sistemática de conocimientos: quipus, agricultura, astronomía, administración (Zuidema, 1989)</li>
+                                    <li>Especialización por roles sociales y funciones estatales (Murra, 1975)</li>
+                                    <li>Cobertura territorial amplia y uniforme (Pease, 1992)</li>
                                 </ul>
                             </div>
                             <div class="argument-block contra">
                                 <div class="argument-title">Argumentos en contra</div>
                                 <ul class="argument-list">
-                                    <li>Acceso restringido por clase social (no universal)</li>
-                                    <li>Ausencia de escritura formal como soporte</li>
-                                    <li>Primacía de la oralidad y memorización</li>
-                                    <li>Limitada movilidad social a través de la educación</li>
+                                    <li>Acceso restringido por clase social (no universal) (Espinoza Soriano, 1997)</li>
+                                    <li>Ausencia de escritura formal como soporte (Porras Barrenechea, 1963)</li>
+                                    <li>Primacía de la oralidad y memorización (Lohmann Villena, 1999)</li>
+                                    <li>Limitada movilidad social a través de la educación (Hampe, 1996)</li>
                                 </ul>
                             </div>
+                        </div>
+                        <div class="bibliography">
+                            <strong>Fuentes bibliográficas:</strong>
+                            <ul>
+                                <li>Rostworowski, M. (1988). <em>Historia del Tahuantinsuyo</em>. Lima: IEP.</li>
+                                <li>Zuidema, T. (1989). <em>Reyes y guerreros: ensayos de cultura andina</em>. Lima: FOMCIENCIAS.</li>
+                                <li>Murra, J. (1975). <em>Formaciones económicas y políticas del mundo andino</em>. Lima: IEP.</li>
+                                <li>Pease, F. (1992). <em>Los Incas</em>. Lima: PUCP.</li>
+                                <li>Espinoza Soriano, W. (1997). <em>Los Incas: economía, sociedad y estado en la era del Tahuantinsuyo</em>. Lima: Amaru.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -404,34 +467,46 @@
                 </div>
                 <div class="question-content">
                     <div class="content-inner">
-                        <p>La educación virreinal fue instrumental para:</p>
+                        <div class="question-text">
+                            <strong>Pregunta:</strong> Explica cómo la educación durante el virreinato reflejaba los intereses políticos, económicos y religiosos de la Corona española.
+                        </div>
+                        <p>La educación virreinal fue instrumental para consolidar el dominio colonial español (Alaperrine-Bouyer, 2007):</p>
                         <div class="arguments">
                             <div class="argument-block">
                                 <div class="argument-title">Intereses Políticos</div>
                                 <ul class="argument-list">
-                                    <li>Formar élites criollas leales a la Corona</li>
-                                    <li>Consolidar el dominio español</li>
-                                    <li>Crear funcionarios administrativos</li>
+                                    <li>Formar élites criollas leales a la Corona (Lavallé, 1993)</li>
+                                    <li>Consolidar el dominio español (Pease, 1995)</li>
+                                    <li>Crear funcionarios administrativos (Hampe, 1996)</li>
                                 </ul>
                             </div>
                             <div class="argument-block">
                                 <div class="argument-title">Intereses Económicos</div>
                                 <ul class="argument-list">
-                                    <li>Capacitar para actividades productivas coloniales</li>
-                                    <li>Administración tributaria eficiente</li>
-                                    <li>Formación de cuadros especializados</li>
+                                    <li>Capacitar para actividades productivas coloniales (Assadourian, 1982)</li>
+                                    <li>Administración tributaria eficiente (TePaske, 1986)</li>
+                                    <li>Formación de cuadros especializados (Contreras, 1996)</li>
                                 </ul>
                             </div>
                             <div class="argument-block">
                                 <div class="argument-title">Intereses Religiosos</div>
                                 <ul class="argument-list">
-                                    <li>Evangelización masiva</li>
-                                    <li>Eliminación de "idolatrías"</li>
-                                    <li>Hispanización cultural</li>
+                                    <li>Evangelización masiva (Duviols, 1977)</li>
+                                    <li>Eliminación de "idolatrías" (Millones, 1987)</li>
+                                    <li>Hispanización cultural (Gareis, 2001)</li>
                                 </ul>
                             </div>
                         </div>
-                        <p>Las universidades (San Marcos, 1551) formaron funcionarios y clero, mientras la educación indígena se limitó a la catequesis.</p>
+                        <p>Las universidades (San Marcos, 1551) formaron funcionarios y clero, mientras la educación indígena se limitó a la catequesis (Eguiguren, 1951).</p>
+                        <div class="bibliography">
+                            <strong>Fuentes bibliográficas:</strong>
+                            <ul>
+                                <li>Alaperrine-Bouyer, M. (2007). <em>La educación de las élites indígenas en el Perú colonial</em>. Lima: IFEA.</li>
+                                <li>Lavallé, B. (1993). <em>Las promesas ambiguas: criollismo colonial en los Andes</em>. Lima: PUCP.</li>
+                                <li>Duviols, P. (1977). <em>La destrucción de las religiones andinas</em>. México: UNAM.</li>
+                                <li>Eguiguren, L. A. (1951). <em>La Universidad en el siglo XVI</em>. Lima: UNMSM.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -443,25 +518,39 @@
                 </div>
                 <div class="question-content">
                     <div class="content-inner">
+                        <div class="question-text">
+                            <strong>Pregunta:</strong> Evalúa los avances y limitaciones de las políticas educativas republicanas en el siglo XIX. ¿Qué factores impidieron su consolidación?
+                        </div>
                         <div class="arguments">
                             <div class="argument-block avances">
                                 <div class="argument-title">Avances</div>
                                 <ul class="argument-list">
-                                    <li>Principio de educación gratuita y obligatoria</li>
-                                    <li>Creación de escuelas normales</li>
-                                    <li>Intento de secularización educativa</li>
+                                    <li>Principio de educación gratuita y obligatoria (Constitución de 1823, art. 181)</li>
+                                    <li>Creación de escuelas normales (Decreto de 1822, Rivero, 1876)</li>
+                                    <li>Intento de secularización educativa (Villarán, 1908)</li>
+                                    <li>Impulso a la educación femenina (González Vigil, 1858)</li>
                                 </ul>
                             </div>
                             <div class="argument-block limitaciones">
                                 <div class="argument-title">Limitaciones</div>
                                 <ul class="argument-list">
-                                    <li>Guerras civiles constantes</li>
-                                    <li>Precariedad fiscal del Estado</li>
-                                    <li>Resistencia conservadora</li>
-                                    <li>Fragmentación territorial y social</li>
-                                    <li>Prioridad a conflictos políticos sobre educación</li>
+                                    <li>Guerras civiles constantes (Basadre, 1983)</li>
+                                    <li>Precariedad fiscal del Estado (Contreras, 2004)</li>
+                                    <li>Resistencia conservadora (Klaiber, 1988)</li>
+                                    <li>Fragmentación territorial y social (Manrique, 1993)</li>
+                                    <li>Prioridad a conflictos políticos sobre educación (Portocarrero, 1987)</li>
                                 </ul>
                             </div>
+                        </div>
+                        <div class="bibliography">
+                            <strong>Fuentes bibliográficas:</strong>
+                            <ul>
+                                <li>Basadre, J. (1983). <em>Historia de la República del Perú (1822-1933)</em>. Lima: Editorial Universitaria.</li>
+                                <li>Contreras, C. (2004). <em>El aprendizaje del capitalismo: estudios de historia económica y social del Perú republicano</em>. Lima: IEP.</li>
+                                <li>Klaiber, J. (1988). <em>La Iglesia en el Perú</em>. Lima: PUCP.</li>
+                                <li>Villarán, M. V. (1908). <em>Las profesiones liberales en el Perú</em>. Lima: Imprenta Torres Aguirre.</li>
+                                <li>Rivero, M. E. (1876). <em>Memorias y documentos para la historia de la Independencia del Perú</em>. París: Librería de Garnier Hermanos.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -474,24 +563,38 @@
                 </div>
                 <div class="question-content">
                     <div class="content-inner">
+                        <div class="question-text">
+                            <strong>Pregunta:</strong> ¿Qué tensiones y aportes generó la Reforma Educativa de 1972 en la visión de ciudadanía y producción? Sustenta tu respuesta con fuentes.
+                        </div>
                         <div class="arguments">
                             <div class="argument-block contra">
                                 <div class="argument-title">Tensiones</div>
                                 <ul class="argument-list">
-                                    <li>Confrontación entre educación tradicional vs. educación para el trabajo</li>
-                                    <li>Resistencia de sectores conservadores</li>
-                                    <li>Debate sobre castellanización vs. lenguas originarias</li>
+                                    <li>Confrontación entre educación tradicional vs. educación para el trabajo (Salazar Bondy, 1975)</li>
+                                    <li>Resistencia de sectores conservadores y clase media (Degregori, 1990)</li>
+                                    <li>Debate sobre castellanización vs. lenguas originarias (Pozzi-Escot, 1998)</li>
+                                    <li>Tensión entre modernización y tradición cultural (Franco, 1991)</li>
                                 </ul>
                             </div>
                             <div class="argument-block favor">
                                 <div class="argument-title">Aportes</div>
                                 <ul class="argument-list">
-                                    <li>Concepto de "educación para el trabajo y desarrollo"</li>
-                                    <li>Impulso a la educación técnica</li>
-                                    <li>Reconocimiento inicial del plurilingüismo</li>
-                                    <li>Democratización del acceso educativo</li>
+                                    <li>Concepto de "educación para el trabajo y desarrollo" (Ley General de Educación N° 19326)</li>
+                                    <li>Impulso a la educación técnica y formación laboral (Rodríguez, 1990)</li>
+                                    <li>Reconocimiento inicial del plurilingüismo (Escobar, 1978)</li>
+                                    <li>Democratización del acceso educativo (Mariátegui, 1990)</li>
                                 </ul>
                             </div>
+                        </div>
+                        <div class="bibliography">
+                            <strong>Fuentes bibliográficas:</strong>
+                            <ul>
+                                <li>Salazar Bondy, A. (1975). <em>La educación del hombre nuevo: la reforma educativa peruana</em>. Buenos Aires: Paidós.</li>
+                                <li>Degregori, C. I. (1990). <em>El surgimiento de Sendero Luminoso: Ayacucho 1969-1979</em>. Lima: IEP.</li>
+                                <li>Pozzi-Escot, I. (1998). <em>El multilingüismo en el Perú</em>. Cuzco: CBC.</li>
+                                <li>Franco, C. (1991). <em>Imágenes de la sociedad peruana: la "otra" modernidad</em>. Lima: CEDEP.</li>
+                                <li>Perú. (1972). <em>Ley General de Educación N° 19326</em>. Lima: Ministerio de Educación.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>

@@ -18,6 +18,23 @@
       padding: 20px;
       text-align: center;
     }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #34495e;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: #ecf0f1;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
     main {
       padding: 20px;
       max-width: 960px;
@@ -54,13 +71,32 @@
     .hidden {
       display: none;
     }
+    .fuente {
+      font-size: 0.9em;
+      color: #555;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Historia y Política Educativa en el Perú</h1>
   </header>
+
+  <nav>
+    <a href="#q1">Tahuantinsuyo</a>
+    <a href="#q2">Virreinato</a>
+    <a href="#q3">República S. XIX</a>
+    <a href="#q4">Reforma 1972</a>
+    <a href="#q5">Reformas 1990-2000</a>
+    <a href="#q6">PEN 2036</a>
+    <a href="#q7">Tendencias Europeas</a>
+    <a href="#q8">EIB Rural</a>
+  </nav>
+
   <main>
+<!-- CONTENIDO EXISTENTE INICIA AQUÍ -->
+
     <section>
       <h2>1. Educación en el Tahuantinsuyo</h2>
       <button class="toggle-button" onclick="toggle('q1')">Mostrar/Ocultar</button>
