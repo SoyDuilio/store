@@ -105,4 +105,8 @@ async def duilia1(request: Request):
 async def duilia2(request: Request):
     return templates.TemplateResponse("duilia_claude.html", {"request": request})
 
+@app.get("/duilia3", response_class=HTMLResponse, name="duilia2_page") # Nombre cambiado
+async def duilia3(request: Request):
+    return templates.TemplateResponse("duilia_explica.html", {"request": request})
+
 
