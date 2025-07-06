@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historia y Política Educativa en el Perú</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    h2 {
+      color: #2980b9;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #ecf0f1;
+    }
+    .toggle-button {
+      background-color: #3498db;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Historia y Política Educativa en el Perú</h1>
+  </header>
+  <main>
+    <section>
+      <h2>1. Educación en el Tahuantinsuyo</h2>
+      <button class="toggle-button" onclick="toggle('q1')">Mostrar/Ocultar</button>
+      <div id="q1" class="hidden">
+        <p><strong>A favor:</strong> Sistema jerárquico, organizado, con formación para élites políticas y religiosas (Valcárcel).</p>
+        <p><strong>En contra:</strong> Sin institucionalidad moderna ni acceso universal (Rostworowski).</p>
+        <p><strong>Conclusión:</strong> Fue un sistema funcional adaptado a su contexto, aunque diferente del modelo escolar moderno.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Educación en el Virreinato</h2>
+      <button class="toggle-button" onclick="toggle('q2')">Mostrar/Ocultar</button>
+      <div id="q2" class="hidden">
+        <ul>
+          <li><strong>Políticos:</strong> Formación de élites leales a la Corona.</li>
+          <li><strong>Económicos:</strong> Educación funcional al modelo extractivo colonial.</li>
+          <li><strong>Religiosos:</strong> Instrumento clave de evangelización.</li>
+        </ul>
+        <p><strong>Conclusión:</strong> Educación subordinada al control colonial.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Educación Republicana del Siglo XIX</h2>
+      <button class="toggle-button" onclick="toggle('q3')">Mostrar/Ocultar</button>
+      <div id="q3" class="hidden">
+        <p><strong>Avances:</strong> Instituciones educativas públicas y laicas.</p>
+        <p><strong>Limitaciones:</strong> Analfabetismo, exclusión social, falta de recursos.</p>
+        <p><strong>Factores:</strong> Inestabilidad política, guerra y pobreza.</p>
+        <p><strong>Conclusión:</strong> Buenas intenciones sin capacidad estatal real.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. Reforma Educativa de 1972</h2>
+      <button class="toggle-button" onclick="toggle('q4')">Mostrar/Ocultar</button>
+      <div id="q4" class="hidden">
+        <p><strong>Aportes:</strong> Educación intercultural, producción, ciudadanía activa.</p>
+        <p><strong>Tensiones:</strong> Falta de implementación, oposición conservadora.</p>
+        <p><strong>Conclusión:</strong> Intento profundo pero limitado por recursos y contexto.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. Reformas Educativas 1990 vs. 2000</h2>
+      <button class="toggle-button" onclick="toggle('q5')">Mostrar/Ocultar</button>
+      <div id="q5" class="hidden">
+        <table>
+          <tr><th>Aspecto</th><th>Años 1990</th><th>Años 2000</th></tr>
+          <tr><td>Gestión</td><td>Centralista</td><td>Descentralización progresiva</td></tr>
+          <tr><td>Cobertura</td><td>Expansión rápida</td><td>Consolidación con programas sociales</td></tr>
+          <tr><td>Calidad</td><td>Descuidada</td><td>Énfasis en currículo y aprendizajes</td></tr>
+          <tr><td>Evaluación</td><td>Limitada</td><td>Evaluaciones sistemáticas (ECE)</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>6. Proyecto Educativo Nacional al 2036</h2>
+      <button class="toggle-button" onclick="toggle('q6')">Mostrar/Ocultar</button>
+      <div id="q6" class="hidden">
+        <p><strong>Continuidad:</strong> Inclusión, calidad y pertinencia cultural.</p>
+        <p><strong>Ruptura:</strong> Enfoque digital, sostenible, con bienestar integral.</p>
+        <p><strong>Conclusión:</strong> Evolución de modelos anteriores con visión amplia.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>7. Influencia de tendencias europeas del siglo XX</h2>
+      <button class="toggle-button" onclick="toggle('q7')">Mostrar/Ocultar</button>
+      <div id="q7" class="hidden">
+        <p><strong>Diálogo:</strong> Democratización del acceso y evaluación.</p>
+        <p><strong>Distancia:</strong> Escasa pedagogía crítica, enfoque tradicional persistente.</p>
+        <p><strong>Conclusión:</strong> Influencias limitadas por condiciones estructurales.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>8. Propuesta de política para la EIB</h2>
+      <button class="toggle-button" onclick="toggle('q8')">Mostrar/Ocultar</button>
+      <div id="q8" class="hidden">
+        <p><strong>Nombre:</strong> Raíces que enseñan, voces que transforman</p>
+        <ul>
+          <li>Formación de docentes nativos</li>
+          <li>Materiales en lenguas originarias</li>
+          <li>Currículo codiseñado con comunidades</li>
+          <li>Evaluación intercultural</li>
+          <li>Financiamiento descentralizado</li>
+          <li>Inspiración en Bolivia, Guatemala y Perú (1972)</li>
+        </ul>
+        <p><strong>Objetivo:</strong> Integrar cultura, lengua y pertinencia pedagógica.</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function toggle(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>
