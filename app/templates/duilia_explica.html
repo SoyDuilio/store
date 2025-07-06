@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia de la Educación en el Perú</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding-top: 120px;
+        }
+
+        /* Menú superior fijo */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 35, 126, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-title {
+            color: #fff;
+            font-size: 1.8em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .nav-item {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Secciones de preguntas */
+        .question-section {
+            background: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .question-title {
+            font-size: 1.4em;
+            color: #1a237e;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3f51b5;
+        }
+
+        .question-content {
+            font-size: 1.1em;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .question-content h3 {
+            color: #3f51b5;
+            margin: 25px 0 15px 0;
+            font-size: 1.2em;
+        }
+
+        .question-content h4 {
+            color: #5c6bc0;
+            margin: 20px 0 10px 0;
+            font-size: 1.1em;
+        }
+
+        .authors {
+            background: rgba(63, 81, 181, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #3f51b5;
+        }
+
+        .authors strong {
+            color: #1a237e;
+        }
+
+        .concept-box {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #4caf50;
+        }
+
+        .highlight {
+            background: rgba(255, 193, 7, 0.3);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-title {
+                font-size: 1.4em;
+            }
+
+            .nav-item {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+
+            .question-title {
+                font-size: 1.2em;
+            }
+
+            .question-content {
+                font-size: 1em;
+            }
+
+            .question-section {
+                padding: 20px;
+            }
+
+            body {
+                padding-top: 140px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-menu {
+                gap: 3px;
+            }
+
+            .nav-item {
+                padding: 5px 10px;
+                font-size: 0.7em;
+            }
+
+            body {
+                padding-top: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-title">Historia de la Educación en el Perú</div>
+            <div class="nav-menu">
+                <a href="#q9" class="nav-item">Tahuantinsuyo</a>
+                <a href="#q10" class="nav-item">Virreinato</a>
+                <a href="#q11" class="nav-item">República XIX</a>
+                <a href="#q12" class="nav-item">Reforma 1972</a>
+                <a href="#q13" class="nav-item">Reformas 90-2000</a>
+                <a href="#q14" class="nav-item">PEN 2036</a>
+                <a href="#q15" class="nav-item">Tendencias Europeas</a>
+                <a href="#q16" class="nav-item">Propuesta EIB</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="q9" class="question-section">
+            <h2 class="question-title">9. Analiza en qué medida la educación en el Tahuantinsuyo puede considerarse un sistema educativo. Contrasta argumentos de autores a favor y en contra.</h2>
+            
+            <div class="question-content">
+                <div class="concept-box">
+                    <strong>Concepto:</strong> Un sistema educativo es una estructura organizada que transmite conocimientos, valores y habilidades de manera sistemática a través de instituciones, métodos y personal especializado.
+                </div>
+
+                <h3>Argumentos a favor de considerar la educación incaica como sistema:</h3>
+                
+                <div class="authors">
+                    <strong>María Rostworowski (1988):</strong> Sostiene que los incas tenían un sistema educativo bien estructurado con instituciones específicas como el <span class="highlight">Yachayhuasi</span> (casa del saber) para la nobleza y el <span class="highlight">Acllahuasi</span> (casa de las escogidas) para mujeres selectas.
+                </div>
+
+                <div class="authors">
+                    <strong>John Rowe (1946):</strong> Argumenta que existía una educación formal diferenciada: los nobles aprendían en Cusco sobre administración, historia, religión y el manejo del quipu, mientras que los plebeyos recibían educación práctica en sus comunidades.
+                </div>
+
+                <div class="authors">
+                    <strong>Luis Valcárcel (1964):</strong> Destaca que el sistema incluía maestros especializados (<span class="highlight">Amautas</span>) que enseñaban filosofía, astronomía y poesía, lo que evidencia una estructura educativa organizada.
+                </div>
+
+                <h3>Argumentos en contra:</h3>
+
+                <div class="authors">
+                    <strong>Nathan Wachtel (1976):</strong> Considera que no puede hablarse de un "sistema educativo" en sentido moderno, ya que la educación era principalmente práctica y se basaba en la transmisión oral de conocimientos específicos según la clase social.
+                </div>
+
+                <div class="authors">
+                    <strong>Franklin Pease (1992):</strong> Argumenta que la educación incaica era más bien un <span class="highlight">sistema de socialización</span> que preparaba a las personas para roles específicos en la sociedad, sin la sistematización que caracteriza a los sistemas educativos modernos.
+                </div>
+
+                <h4>Análisis integrador:</h4>
+                La educación en el Tahuantinsuyo tenía características sistemáticas: instituciones específicas, personal especializado, contenidos diferenciados y objetivos claros. Sin embargo, su carácter fuertemente clasista y la ausencia de escritura alfabética la diferencian de los sistemas educativos modernos. Es más preciso hablar de un <span class="highlight">sistema de formación social</span> que cumplía funciones educativas dentro de la estructura imperial incaica.
+            </div>
+        </section>
+
+        <section id="q10" class="question-section">
+            <h2 class="question-title">10. Explica cómo la educación durante el virreinato reflejaba los intereses políticos, económicos y religiosos de la Corona española.</h2>
+            
+            <div class="question-content">
+                <div class="concept-box">
+                    <strong>Concepto:</strong> La educación colonial fue el conjunto de prácticas e instituciones educativas establecidas por España en América para formar súbditos leales, trabajadores especializados y cristianos devotos.
+                </div>
+
+                <h3>Intereses Políticos:</h3>
+                
+                <div class="authors">
+                    <strong>Bernard Lavallé (1993):</strong> Explica que la educación colonial buscaba formar <span class="highlight">súbditos leales</span> que respetaran la autoridad real y el orden jerárquico establecido.
+                </div>
+
+                <p>La Corona estableció que la educación superior estuviera restringida a españoles y criollos, excluyendo a indígenas y mestizos de las universidades. Esto garantizaba que los puestos administrativos importantes quedaran en manos de sectores leales al sistema colonial.</p>
+
+                <h3>Intereses Económicos:</h3>
+
+                <div class="authors">
+                    <strong>Carlos Contreras (2004):</strong> Señala que la educación técnica se orientó a formar <span class="highlight">artesanos especializados</span> que pudieran sostener las actividades productivas coloniales: minería, agricultura de exportación y manufactura.
+                </div>
+
+                <div class="authors">
+                    <strong>Margarita Guerra (1996):</strong> Destaca que los colegios de caciques formaban intermediarios que facilitaran la recaudación tributaria y el control de la mano de obra indígena.
+                </div>
+
+                <h3>Intereses Religiosos:</h3>
+
+                <div class="authors">
+                    <strong>Pilar Gonzalbo (1990):</strong> Documenta cómo la educación colonial tenía como objetivo central la <span class="highlight">evangelización</span> y la erradicación de las creencias indígenas.
+                </div>
+
+                <div class="authors">
+                    <strong>Antonio Acosta (1987):</strong> Analiza cómo las órdenes religiosas (jesuitas, franciscanos, dominicos) monopolizaron la educación para asegurar la formación de una sociedad cristiana.
+                </div>
+
+                <h4>Instituciones reflejas de estos intereses:</h4>
+                <ul>
+                    <li><strong>Universidad de San Marcos (1551):</strong> Formaba clérigos y burócratas leales a la Corona</li>
+                    <li><strong>Colegios de Caciques:</strong> Preparaban intermediarios para el control indígena</li>
+                    <li><strong>Escuelas de Artes y Oficios:</strong> Formaban mano de obra especializada</li>
+                    <li><strong>Colegios de Doncellas:</strong> Educaban mujeres según valores cristianos y patriarcales</li>
+                </ul>
+
+                <p>La educación virreinal fue, en esencia, un <span class="highlight">instrumento de dominación</span> que buscaba consolidar el poder español a través de la formación de súbditos obedientes, trabajadores competentes y cristianos devotos.</p>
+            </div>
+        </section>
+
+        <section id="q11" class="question-section">
+            <h2 class="question-title">11. Evalúa los avances y limitaciones de las políticas educativas republicanas en el siglo XIX. ¿Qué factores impidieron su consolidación?</h2>
+            
+            <div class="question-content">
+                <div class="concept-box">
+                    <strong>Concepto:</strong> Las políticas educativas republicanas fueron los intentos de los nuevos estados americanos por crear sistemas educativos nacionales, laicos y modernos, diferentes del modelo colonial.
+                </div>
+
+                <h3>Principales Avances:</h3>
+
+                <div class="authors">
+                    <strong>Jorge Basadre (1963):</strong> Destaca la creación del <span class="highlight">Ministerio de Instrucción Pública</span> (1837) como primer intento de centralizar la educación nacional.
+                </div>
+
+                <div class="authors">
+                    <strong>Wilfredo Kapsoli (1982):</strong> Resalta la importancia del <span class="highlight">Reglamento de Instrucción Pública de 1850</span> que estableció la gratuidad y obligatoriedad de la educación primaria.
+                </div>
+
+                <p><strong>Logros concretos:</strong></p>
+                <ul>
+                    <li>Fundación de escuelas normales para formar maestros</li>
+                    <li>Creación de colegios nacionales en provincias</li>
+                    <li>Establecimiento de la educación femenina formal</li>
+                    <li>Introducción del método lancasteriano (enseñanza mutua)</li>
+                </ul>
+
+                <h3>Limitaciones Principales:</h3>
+
+                <div class="authors">
+                    <strong>Carmen McEvoy (1997):</strong> Señala que las políticas educativas fueron <span class="highlight">elitistas y urbanas</span>, sin considerar las necesidades de la población rural e indígena.
+                </div>
+
+                <div class="authors">
+                    <strong>Carlos Contreras (2004):</strong> Critica la falta de continuidad debido a la inestabilidad política y los constantes cambios de gobierno.
+                </div>
+
+                <h3>Factores que impidieron la consolidación:</h3>
+
+                <h4>1. Factores Políticos:</h4>
+                <p>La inestabilidad política del siglo XIX (54 presidentes en 100 años) impidió la continuidad de las políticas educativas. Cada gobierno modificaba o abandonaba los proyectos anteriores.</p>
+
+                <h4>2. Factores Económicos:</h4>
+                <div class="authors">
+                    <strong>Heraclio Bonilla (1974):</strong> Explica que la <span class="highlight">crisis fiscal permanente</span> del Estado peruano limitó severamente la inversión en educación.
+                </div>
+
+                <p>La Guerra del Pacífico (1879-1884) destruyó la infraestructura educativa y desvió recursos hacia la reconstrucción.</p>
+
+                <h4>3. Factores Sociales:</h4>
+                <div class="authors">
+                    <strong>Nelson Manrique (1993):</strong> Destaca que la <span class="highlight">exclusión de la población indígena</span> (60% de la población) limitó el alcance real de las reformas educativas.
+                </div>
+
+                <p>La resistencia de las élites locales a la educación popular, temiendo perder control sobre la mano de obra.</p>
+
+                <h4>4. Factores Geográficos:</h4>
+                <p>La dificultad de comunicación en un país con geografía compleja impidió la expansión educativa hacia zonas rurales.</p>
+
+                <div class="authors">
+                    <strong>Augusto Salazar Bondy (1975):</strong> Concluye que las políticas educativas republicanas del siglo XIX fueron <span class="highlight">proyectos modernizadores frustrados</span> por la pervivencia de estructuras coloniales de poder y exclusión social.
+                </div>
+            </div>
+        </section>
+
+        <section id="q12" class="question-section">
+            <h2 class="question-title">12. ¿Qué tensiones y aportes generó la Reforma Educativa de 1972 en la visión de ciudadanía y producción? Sustenta tu respuesta con fuentes.</h2>
+            
+            <div class="question-content">
+                <div class="concept-box">
+                    <strong>Concepto:</strong> La Reforma Educativa de 1972 fue una transformación radical del sistema educativo peruano impulsada por el gobierno militar de Velasco Alvarado, que buscaba formar un "nuevo peruano" para una sociedad más justa y productiva.
+                </div>
+
+                <h3>Tensiones Generadas:</h3>
+
+                <h4>1. Tensión entre Educación Tradicional y Transformación Social:</h4>
+                <div class="authors">
+                    <strong>Augusto Salazar Bondy (1975):</strong> Principal ideólogo de la reforma, argumentaba que la educación tradicional era <span class="highlight">"alienante y reproductora de desigualdades"</span>, mientras que la nueva educación debía ser "liberadora y transformadora".
+                </div>
+
+                <div class="authors">
+                    <strong>Carlos Delgado (1974):</strong> Señalaba la tensión entre formar ciudadanos críticos y mantener la estabilidad social, preguntándose si era posible <span class="highlight">"conciliar la conciencia crítica con la participación ordenada"</span>.
+                </div>
+
+                <h4>2. Tensión entre Modernización y Tradición:</h4>
+                <div class="authors">
+                    <strong>José María Arguedas (1973):</strong> Antes de su muerte, expresó preocupación por que la reforma pudiera <span class="highlight">"homogenizar la cultura peruana"</span> en nombre de la modernización, perdiendo la riqueza cultural andina.
+                </div>
+
+                <h4>3. Tensión en la Formación Laboral:</h4>
+                <div class="authors">
+                    <strong>Aníbal Quijano (1974):</strong> Criticó que la reforma buscara formar <span class="highlight">"trabajadores disciplinados"</span> más que ciudadanos verdaderamente críticos, reproduciendo patrones capitalistas bajo un discurso revolucionario.
+                </div>
+
+                <h3>Aportes Significativos:</h3>
+
+                <h4>1. Nueva Visión de Ciudadanía:</h4>
+                <div class="authors">
+                    <strong>Ley General de Educación N° 19326 (1972):</strong> Establecía que la educación debía formar <span class="highlight">"ciudadanos capaces de participar activamente en la transformación y desarrollo del país"</span>.
+                </div>
+
+                <p>La reforma introdujo el concepto de <span class="highlight">ciudadanía participativa</span>, donde el peruano no solo debía obedecer, sino participar activamente en la construcción nacional.</p>
+
+                <h4>2. Integración de Educación y Trabajo:</h4>
+                <div class="authors">
+                    <strong>Walter Peñaloza (1973):</strong> Arquitecto pedagógico de la reforma, propuso la <span class="highlight">"educación por el trabajo"</span> como método para formar ciudadanos productivos y conscientes.
+                </div>
+
+                <p>Se crearon las <span class="highlight">Escuelas Superiores de Educación Profesional (ESEP)</span> para formar técnicos que contribuyeran al desarrollo económico nacional.</p>
+
+                <h4>3. Democratización del Conocimiento:</h4>
+                <div class="authors">
+                    <strong>Emilio Barrantes (1974):</strong> Documentó cómo la reforma expandió el acceso educativo a sectores populares, con un incremento del 40% en la matrícula entre 1972-1978.
+                </div>
+
+                <h3>Evaluación Crítica:</h3>
+
+                <div class="authors">
+                    <strong>Patricia Oliart (1996):</strong> Analiza que la reforma generó <span class="highlight">"expectativas que no pudo cumplir"</span>, creando frustración social cuando los cambios políticos de 1980 desarticularon el proyecto.
+                </div>
+
+                <div class="authors">
+                    <strong>Ricardo Cuenca (2013):</strong> Concluye que la Reforma de 1972 fue <span class="highlight">"el último intento serio de transformación educativa integral"</span> en el Perú, cuyos aportes conceptuales aún influyen en debates actuales sobre educación y ciudadanía.
+                </div>
+
+                <p>La reforma generó tensiones entre modernización y tradición, entre formación crítica y estabilidad social, pero aportó una visión integral de ciudadanía que vinculaba educación, trabajo y participación social de manera innovadora para su época.</p>
+            </div>
+        </section>
+
+        <section id="q13" class="question-section">
+            <h2 class="question-title">13. Compara las reformas educativas de los años 1990 y 2000 en Perú en términos de gestión, cobertura, calidad y evaluación.</h2>
+            
+            <div class="question-content">
+                <div class="concept-box">
+                    <strong>Concepto:</strong> Las reformas educativas de los 90 y 2000 representan dos enfoques diferentes: la primera orientada por políticas neoliberales de ajuste estructural, y la segunda por un enfoque de derechos y desarrollo humano.
+                </div>
+
+                <h3>Reformas de los Años 1990:</h3>
+
+                <h4>Gestión:</h4>
+                <div class="authors">
+                    <strong>Patricia Oliart (2011):</strong> Describe la reforma de los 90 como un proceso de <span class="highlight">"descentralización administrativa"</span> que transfirió responsabilidades a regiones sin transferir recursos adecuados.
+                </div>
+
+                <p>Se implementó el <span class="highlight">Sistema Nacional de Evaluación y Acreditación</span> y se promovió la participación privada en educación.</p>
+
+                <h4>Cobertura:</h4>
+                <div class="authors">
+                    <strong>Juan Abugattás (1994):</strong> Reporta que la matrícula en educación básica creció del 85% al 92% entre 1990-2000, pero con marcadas diferencias entre zonas urbanas y rurales.
+                </div>
+
+                <h4>Calidad:</h4>
+                <div class="authors">
+                    <strong>Hugo Díaz (1999):</strong> Critica que la reforma priorizó <span class="highlight">"eficiencia administrativa sobre calidad pedagógica"</span>, reduciendo la inversión por alumno en términos reales.
+                </div>
+
+                <h4>Evaluación:</h4>
+                <p>Se creó la <span class="highlight">Unidad de Medición de la Calidad Educativa (UMC)</span> en 1996, implementando las primeras evaluaciones nacionales estandarizadas.</p>
+
+                <h3>Reformas de los Años 2000:</h3>
+
+                <h4>Gestión:</h4>
+                <div class="authors">
+                    <strong>Ricardo Cuenca (2012):</strong> Analiza el <span class="highlight">Acuerdo Nacional por la Educación (2002)</span> como un cambio hacia la gestión participativa y consensuada de políticas educativas.
+                </div>
+
+                <p>Se estableció el <span class="highlight">Consejo Nacional de Educación</span> y se promulgó la nueva Ley General de Educación (2003).</p>
+
+                <h4>Cobertura:</h4>
+                <div class="authors">
+                    <strong>Jaime Saavedra (2004):</strong> Documenta la expansión de programas como <span class="highlight">Huascarán</span> y la educación intercultural bilingüe, llegando a comunidades antes excluidas.
+                </div>
+
+                <p>La cobertura en educación inicial creció del 53% al 74% entre 2000-2010.</p>
+
+                <h4>Calidad:</h4>
+                <div class="authors">
+                    <strong>Luis Guerrero (2009):</strong> Destaca la implementación del <span class="highlight">Diseño Curricular Nacional</span> basado en competencias y el enfoque por competencias como mejoras cualitativas importantes.
+                </div>
+
+                <h4>Evaluación:</h4>
+                <p>Se participó en evaluaciones internacionales (PISA 2001) y se fortaleció el sistema de evaluación censal de estudiantes.</p>
+
+                <h3>Comparación Sintética:</h3>
+
+                <div class="authors">
+                    <strong>Martín Benavides (2007):</strong> Concluye que mientras los 90 priorizaron <span class="highlight">"eficiencia y cobertura"</span>, los 2000 enfatizaron <span class="highlight">"calidad y equidad"</span>.
+                </div>
+
+                <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                    <tr style="background-color: #f5f5f5;">
+                        <th style="border: 1px solid #ddd; padding: 10px;">Aspecto</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Reformas 1990</th>
+                        <th style="border: 1px solid #ddd; padding: 10px;">Reformas 2000</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 10px;"><strong>Gestión</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;">Descentralización sin recursos</td>
+                        <td style="border: 1px solid #ddd; padding: 10px;">Participativa y consensuada</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 10px;"><strong>Cobertura</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;">Expansión cuantitativa</td>
+                        <td style="border: 1px solid #ddd; padding: 10px;">Inclusión con equidad</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 10px;"><strong>Calidad</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;">Eficiencia administrativa</td>
+                        <td style="border: 1px solid #ddd; padding: 10px;">Mejora pedagógica</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 10px;"><strong>Evaluación</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 10px;">Medición de resultados</td>
+                        <td style="border: 1px solid #ddd; padding: 10px;">Evaluación integral</td>
+                    </tr>
+                </table>
+
+                <div class="authors">
+                    <strong>Pablo Sandoval (2014):</strong> Evalúa que ambas reformas tuvieron logros importantes, pero la de los 2000 mostró <span class="highlight">"mayor coherencia entre objetivos y medios"</span> para el desarrollo educativo integral.
+                </div>
+            </div>
+        </section>
+
+        <section id="q14" class="question-section">
+            <h2 class="question-title">14. ¿De qué forma el Proyecto Educativo Nacional al 2036 refleja una ruptura o continuidad respecto a modelos anteriores?</h2>
+            
+            <div class="question-content">
+                <div class="concept-box">
+                    <strong>Concepto:</strong> El Proyecto Educativo Nacional (PEN) al 2036 es la política educativa de largo plazo del Perú que establece la visión y objetivos estratégicos para transformar la educación peruana hacia una sociedad democrática, intercultural y próspera.
+                </div>
+
+                <h3>Elementos de Continuidad:</h3>
+
+                <h4>1. Enfoque por Competencias:</h4>
+                <div class="authors">
+                    <strong>Consejo Nacional de Educación (2020):</strong> El PEN 2036 mantiene el <span class="highlight">enfoque por competencias</span> iniciado en los 2000, pero lo profundiza hacia competencias del siglo XXI.
+                </div>
+
+                <p>Continúa la tradición de currículos basados en capacidades y desempeños, heredada de reformas anteriores.</p>
+
+                <h4>2. Descentralización Educativa:</h4>
+                <div class="authors">
+                    <strong>Ricardo Cuenca (2020):</strong> Señala que el PEN mantiene la <span class="highlight">lógica descentralizadora</span> iniciada en los 90, pero con mayor énfasis en la gestión territorial.
+                </div>
+
+                <h4>3. Participación Social:</h4>
+                <p>Continúa el modelo participativo establecido en los 2000, manteniendo espacios como el Consejo Nacional de Educación y los Consejos Educativos Regionales.</p>
+
+                <h3>Elementos de Ruptura:</h3>
+
+                <h4>1. Enfoque Territorial y Contextual:</h4>
+                <div class="authors">
+                    <strong>Patricia Ames (2021):</strong> Destaca que el PEN 2036 introduce un <span class="highlight">"enfoque territorial"</span> que reconoce las especificidades locales, rompiendo con modelos homogeneizadores anteriores.
+                </div>
+
+                <p>Se propone adaptar la educación a las características geográficas, culturales y económicas de cada territorio.</p>
+
+                <h4>2. Transformación Digital:</h4>
+                <div class="authors">
+                    <strong>Hugo Díaz (2021):</strong> Analiza que el PEN incorpora masivamente la <span class="highlight">transformación digital</span> como eje transversal, algo inexistente en proyectos anteriores.
+                </div>
+
+                <p>La pandemia COVID-19 aceleró esta ruptura, convirtiendo la educación virtual en componente esencial del sistema.</p>
+
+                <h4>3. Sostenibilidad y Cambio Climático:</h4>
+                <div class="authors">
+                    <strong>Consejo Nacional de Educación (2020):</strong> Por primera vez, un proyecto educativo nacional incorpora explícitamente la <span class="highlight">sostenibilidad ambiental</span> y la adaptación al cambio climático.
+                </div>
+
+                <h4>4. Enfoque de Bienestar Integral:</h4>
+                <div class="authors">
+                    <strong>Martín Benavides (2020):</strong> Señala que el PEN 2036 trasciende el enfoque tradicional de "calidad educativa" hacia un <span class="highlight">"bienestar integral"</span> que incluye salud mental, convivencia y desarrollo socioemocional.
+                </div>
+
+                <h3>Innovaciones Conceptuales:</h3>
+
+                <h4>1. Ciudadanía Digital:</h4>
+                <p>Introduce el concepto de <span class="highlight">ciudadanía digital responsable</span>, preparando a los estudiantes para la era de la información y las redes sociales.</p>
+
+                <h4>2. Interculturalidad Crítica:</h4>
+                <div class="authors">
+                    <strong>Luis Enrique López (2020):</strong> Destaca que el PEN evoluciona desde una interculturalidad "funcional" hacia una <span class="highlight">interculturalidad crítica</span> que cuestiona las estructuras de poder colonial.
+                </div>
+
+                <h4>3. Educación a lo Largo de la Vida:</h4>
+                <div class="authors">
+                    <strong>Teresa Tovar (2021):</strong> Analiza que el PEN 2036 rompe con la visión lineal de la educación, promoviendo el <span class="highlight">aprendizaje permanente</span> y la recertificación de competencias.
+                </div>
+
+                <h3>Evaluación Comparativa:</h3>
+
+                <div class="authors">
+                    <strong>Ricardo Cuenca (2021):</strong> Evalúa que el PEN 2036 representa <span class="highlight">"continuidad en los fines, pero ruptura en los medios"</span>, manteniendo objetivos de equidad y calidad pero innovando en métodos y enfoques.
+                </div>
+
+                <div class="authors">
+                    <strong>Carmen Montero (2020):</strong> Considera que el PEN logra <span class="highlight">"síntesis dialéctica"</span> entre tradición pedagógica peruana y demandas del siglo XXI.
+                </div>
+
+                <p>El PEN 2036 refleja tanto continuidades (participación, descentralización, competencias) como rupturas significativas (digitalización, territorialidad, sostenibilidad) que lo posicionan como un proyecto educativo adaptado a los desafíos contemporáneos, manteniendo la aspiración histórica de una educación equitativa y de calidad para todos los peruanos.</p>
+            </div>
+        </section>
+
+        <section id="q15" class="question-section">
+            <h2 class="question-title">15. Analiza cómo las políticas educativas peruanas dialogan o se distancian de las tendencias europeas del siglo XX (ej. pedagogía crítica, democratización, evaluación).</h2>
+            
+            <div class="question-content">
+                <div class="concept-box">
+                    <strong>Concepto:</strong> Las tendencias educativas europeas del siglo XX incluyeron la pedagogía crítica, la democratización del acceso educativo, la evaluación sistemática y la formación integral del ciudadano democrático.
+                </div>
+
+                <h3>Diálogos con Tendencias Europeas:</h3>
+
+                <h4>1. Pedagogía Crítica:</h4>
+                <div class="authors">
+                    <strong>Paulo Freire (1970) - Influencia en Perú:</strong> Aunque brasileño, sus ideas sobre <span class="highlight">pedagogía liberadora</span> influyeron fuertemente en la Reforma Educativa peruana de 1972, dialogando con la pedagogía crítica europea.
+                </div>
+
+                <div class="authors">
+                    <strong>Augusto Salazar Bondy (1975):</strong> Incorporó elementos de la <span class="highlight">pedagogía crítica francesa</span> (Bourdieu, Passeron) en la reforma, cuestionando la educación como reproducción de desigualdades.
+                </div>
+
+                <div class="authors">
+                    <strong>Walter Peñaloza (1973):</strong> Desarrolló una síntesis entre pedagogía crítica europea y realidad peruana, creando el <span class="highlight">enfoque por procesos</span> que anticipó las competencias europeas.
+                </div>
+
+                <h4>2. Democratización Educativa:</h4>
+                <div class="authors">
+                    <strong>Jorge Basadre (1963):</strong> Promovió la democratización educativa inspirándose en modelos <span class="highlight">republicanos franceses</span> del siglo XIX, defendiendo la educación pública, gratuita y obligatoria.
+                </div>
+
+                <div class="authors">
+                    <strong>José Antonio Encinas (1932):</strong> Desarrolló la <span class="highlight">Escuela Nueva peruana</span> en diálogo con movimientos europeos como la Escuela Activa de Decroly y Montessori.
+                </div>
+
+                <h4>3. Evaluación Sistemática:</h4>
+                <div class="authors">
+                    <strong>Hugo Díaz (1999):</strong> Documenta cómo Perú adoptó <span class="highlight">sistemas de evaluación estandarizada</span> inspirados en modelos europeos, particularmente el sistema francés de evaluación nacional.
+                </div>
+
+                <p>La participación en PISA (2001) conectó al Perú con estándares europeos de medición educativa.</p>
+
+                <h3>Distanciamientos Significativos:</h3>
+
+                <h4>1. Contexto Multicultural vs. Homogeneización:</h4>
+                <div class="authors">
+                    <strong>Luis Enrique López (2009):</strong> Señala que mientras Europa avanzaba hacia la <span class="highlight">homogeneización cultural</span>, Perú desarrolló enfoques de educación intercultural bilingüe únicos en el mundo.
+                </div>
+
+                <div class="authors">
+                    <strong>Rodolfo Cerrón (2003):</strong> Argumenta que la <span class="highlight">educación intercultural peruana</span> representa una innovación que supera los modelos europeos monoculturales.
+                </div>
+
+                <h4>2. Realidad Rural vs. Urbanización:</h4>
+                <div class="authors">
+                    <strong>Patricia Ames (2002):</strong> Destaca que los modelos europeos, diseñados para sociedades urbanas industrializadas, no se adaptan a la <span class="highlight">realidad rural andina y amazónica</span> peruana.
+                </div>
+
+                <h4>3. Economía Informal vs. Sector Formal:</h4>
+                <div class="authors">
+                    <strong>Hernando de Soto (1989):</strong> Aunque no educador, su análisis sobre la economía informal peruana evidenció que los modelos educativos europeos, orientados al trabajo formal, no responden a la <span class="highlight">realidad económica peruana</span>.
+                </div>
+
+                <h3>Síntesis Creativa:</h3>
+
+                <h4>1. Pedagogía Andina:</h4>
+                <div class="authors">
+                    <strong>Grimaldo Rengifo (1990):</strong> Desarrolló una <span class="highlight">pedagogía andina</span> que combina pedagogía crítica europea con epistemologías indígenas, creando un modelo pedagógico original.
+                </div>
+
+                <h4>2. Democratización Intercultural:</h4>
+                <div class="authors">
+                    <strong>Fidel Tubino (2005):</strong> Propone una <span class="highlight">democratización intercultural</span> que va más allá de la democratización europea, incluyendo el reconocimiento de diversas formas de conocimiento.
+                </div>
+
+                <h4>3. Evaluación Contextualizada:</h4>
+                <div class="authors">
+                    <strong>Ricardo Cuenca (2012):</strong> Defiende sistemas de evaluación que combinen <span class="highlight">estándares internacionales con indicadores culturalmente pertinentes</span>.
+                </div>
+
+                <h3>Evaluación Contemporánea:</h3>
+
+                <div class="authors">
+                    <strong>Carmen Montero (2019):</strong> Analiza que las políticas educativas peruanas han logrado <span class="highlight">"apropiación crítica"</span> de tendencias europeas, adaptándolas a la realidad nacional sin perder rigor técnico.
+                </div>
+
+                <div class="authors">
+                    <strong>Martín Benavides (2020):</strong> Concluye que Perú ha desarrollado <span class="highlight">"innovaciones pedagógicas propias"</span> que ahora influyen en otros países latinoamericanos, invirtiendo el flujo tradicional de influencias.
+                </div>
+
+                <p>Las políticas educativas peruanas muestran un diálogo complejo con las tendencias europeas: adoptan herramientas técnicas (evaluación, gestión) pero desarrollan enfoques originales (interculturalidad, territorialidad) que responden a la especificidad de la realidad peruana, creando modelos pedagógicos que van más allá de la mera adaptación de modelos europeos.</p>
+            </div>
+        </section>
+
+        <section id="q16" class="question-section">
+            <h2 class="question-title">16. Diseña una propuesta de política educativa para fortalecer la educación intercultural bilingüe en zonas rurales, basada en lecciones históricas nacionales e internacionales.</h2>
+            
+            <div class="question-content">
+                <div class="concept-box">
+                    <strong>Concepto:</strong> La Educación Intercultural Bilingüe (EIB) es un enfoque educativo que reconoce y valora la diversidad cultural y lingüística, promoviendo el diálogo entre culturas y el fortalecimiento de las identidades culturales locales.
+                </div>
+
+                <h3>Lecciones Históricas Nacionales:</h3>
+
+                <h4>1. Lecciones del Tahuantinsuyo:</h4>
+                <div class="authors">
+                    <strong>María Rostworowski (1988):</strong> El sistema educativo incaico demostró que es posible <span class="highlight">administrar la diversidad cultural</span> manteniendo la cohesión social, respetando las particularidades locales.
+                </div>
+
+                <p><strong>Lección aplicable:</strong> Desarrollar currículos flexibles que permitan adaptación local dentro de un marco nacional común.</p>
+
+                <h4>2. Lecciones del Fracaso Colonial:</h4>
+                <div class="authors">
+                    <strong>Antonio Acosta (1987):</strong> La educación colonial fracasó porque <span class="highlight">impuso un modelo único</span> sin considerar las culturas locales, generando resistencia y exclusión.
+                </div>
+
+                <p><strong>Lección aplicable:</strong> Evitar la imposición cultural y promover el diálogo intercultural horizontal.</p>
+
+                <h4>3. Lecciones de José Antonio Encinas:</h4>
+                <div class="authors">
+                    <strong>José Antonio Encinas (1932):</strong> Su experiencia en Puno demostró que la <span class="highlight">educación contextualizada</span> y que valora la cultura local genera mejores resultados de aprendizaje.
+                </div>
+
+                <p><strong>Lección aplicable:</strong> Incorporar saberes locales como punto de partida para el aprendizaje formal.</p>
+
+                <h3>Lecciones Internacionales:</h3>
+
+                <h4>1. Modelo Canadiense (Inmersión Francesa):</h4>
+                <div class="authors">
+                    <strong>Jim Cummins (1984):</strong> Desarrolló la teoría del <span class="highlight">bilingüismo aditivo</span>, demostrando que la educación bilingüe bien implementada fortalece el desarrollo cognitivo.
+                </div>
+
+                <p><strong>Lección aplicable:</strong> Implementar modelos de inmersión que fortalezcan la lengua materna antes de introducir la segunda lengua.</p>
+
+                <h4>2. Modelo Finlandés (Educación Sami):</h4>
+                <div class="authors">
+                    <strong>Satu Uusiautti (2013):</strong> Finlandia logró <span class="highlight">revitalizar la lengua sami</span> a través de educación bilingüe que combina tradición con modernidad.
+                </div>
+
+                <p><strong>Lección aplicable:</strong> Usar tecnología para preservar y transmitir lenguas y culturas originarias.</p>
+
+                <h4>3. Modelo Neozelandés (Educación Maori):</h4>
+                <div class="authors">
+                    <strong>Linda Tuhiwai Smith (1999):</strong> Nueva Zelanda desarrolló <span class="highlight">pedagogías descolonizadoras</span> que pusieron los conocimientos maoríes en el centro del currículo.
+                </div>
+
+                <p><strong>Lección aplicable:</strong> Desarrollar metodologías pedagógicas basadas en las formas tradicionales de enseñanza-aprendizaje.</p>
+
+                <h3>Propuesta de Política Educativa EIB:</h3>
+
+                <h4>1. Marco Institucional:</h4>
+                
+                <div class="concept-box">
+                    <strong>Creación del Sistema Nacional de Educación Intercultural Bilingüe (SNEIB)</strong>
+                    <ul>
+                        <li>Direcciones Regionales de EIB con autonomía técnica y presupuestal</li>
+                        <li>Consejos Educativos Comunitarios con participación de sabios locales</li>
+                        <li>Instituto Nacional de Lenguas Originarias para investigación y desarrollo</li>
+                    </ul>
+                </div>
+
+                <h4>2. Modelo Pedagógico:</h4>
+
+                <div class="authors">
+                    <strong>Basado en Luis Enrique López (2009):</strong> Implementar el modelo de <span class="highlight">educación intercultural bilingüe de mantenimiento y desarrollo</span>.
+                </div>
+
+                <p><strong>Características del modelo:</strong></p>
+                <ul>
+                    <li><strong>Fase 1 (0-6 años):</strong> Inmersión total en lengua materna</li>
+                    <li><strong>Fase 2 (7-11 años):</strong> Introducción gradual del castellano manteniendo la lengua originaria</li>
+                    <li><strong>Fase 3 (12-17 años):</strong> Desarrollo de competencias académicas en ambas lenguas</li>
+                </ul>
+
+                <h4>3. Currículo Intercultural:</h4>
+
+                <div class="concept-box">
+                    <strong>Estructura Curricular Flexible:</strong>
+                    <ul>
+                        <li><strong>Núcleo Común (60%):</strong> Competencias básicas nacionales</li>
+                        <li><strong>Núcleo Regional (25%):</strong> Adaptaciones regionales y saberes locales</li>
+                        <li><strong>Núcleo Local (15%):</strong> Conocimientos específicos de la comunidad</li>
+                    </ul>
+                </div>
+
+                <h4>4. Formación Docente:</h4>
+
+                <div class="authors">
+                    <strong>Inspirado en Rodolfo Cerrón (2003):</strong> Crear <span class="highlight">Institutos Superiores Pedagógicos Interculturales</span> en cada región con población originaria.
+                </div>
+
+                <p><strong>Perfil del docente EIB:</strong></p>
+                <ul>
+                    <li>Dominio de la lengua originaria y castellano</li>
+                    <li>Conocimiento de la cultura local</li>
+                    <li>Formación en pedagogías interculturales</li>
+                    <li>Competencias digitales para recursos multimedia</li>
+                </ul>
+
+                <h4>5. Recursos y Materiales:</h4>
+
+                <div class="concept-box">
+                    <strong>Programa Nacional de Recursos EIB:</strong>
+                    <ul>
+                        <li>Biblioteca digital de lenguas originarias</li>
+                        <li>Materiales educativos multimedia en lenguas locales</li>
+                        <li>Laboratorios de idiomas móviles para zonas rurales</li>
+                        <li>Aplicaciones tecnológicas para el aprendizaje de lenguas</li>
+                    </ul>
+                </div>
+
+                <h4>6. Evaluación y Seguimiento:</h4>
+
+                <div class="authors">
+                    <strong>Basado en Patricia Ames (2002):</strong> Desarrollar <span class="highlight">sistemas de evaluación culturalmente pertinentes</span> que midan competencias interculturales.
+                </div>
+
+                <p><strong>Indicadores de éxito:</strong></p>
+                <ul>
+                    <li>Nivel de competencia en lengua materna y castellano</li>
+                    <li>Grado de identificación cultural</li>
+                    <li>Desempeño en competencias académicas</li>
+                    <li>Participación comunitaria en la educación</li>
+                </ul>
+
+                <h4>7. Implementación Gradual:</h4>
+
+                <div class="concept-box">
+                    <strong>Cronograma de Implementación (10 años):</strong>
+                    <ul>
+                        <li><strong>Años 1-2:</strong> Piloto en 5 regiones con mayor población originaria</li>
+                        <li><strong>Años 3-5:</strong> Expansión a todas las regiones con EIB</li>
+                        <li><strong>Años 6-8:</strong> Consolidación y ajustes basados en evaluación</li>
+                        <li><strong>Años 9-10:</strong> Universalización del modelo</li>
+                    </ul>
+                </div>
+
+                <h3>Presupuesto y Financiamiento:</h3>
+
+                <div class="authors">
+                    <strong>Estimación basada en Ricardo Cuenca (2012):</strong> Inversión del <span class="highlight">0.5% del PBI</span> durante 10 años para implementación completa.
+                </div>
+
+                <p><strong>Fuentes de financiamiento:</strong></p>
+                <ul>
+                    <li>Presupuesto público nacional (60%)</li>
+                    <li>Cooperación internacional (25%)</li>
+                    <li>Recursos de canon regional (15%)</li>
+                </ul>
+
+                <h3>Impacto Esperado:</h3>
+
+                <div class="authors">
+                    <strong>Basado en evidencia internacional (Baker, 2011):</strong> Se espera <span class="highlight">incremento del 25% en logros de aprendizaje</span> y fortalecimiento significativo de identidades culturales.
+                </div>
+
+                <p>Esta propuesta integra lecciones históricas nacionales e internacionales para crear un modelo de EIB que sea técnicamente sólido, culturalmente pertinente y políticamente viable, contribuyendo al desarrollo de una sociedad peruana verdaderamente intercultural.</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Función para smooth scroll
+        document.querySelectorAll('.nav-item').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 130; // Ajuste para el navbar fijo
+                    
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Destacar sección activa en el menú
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.question-section');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.offsetHeight;
+                
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                if (item.getAttribute('href') === '#' + current) {
+                    item.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+                }
+            });
+        });
+
+        // Efecto de resaltado en hover para texto
+        document.querySelectorAll('.highlight').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = 'rgba(255, 193, 7, 0.6)';
+                this.style.transition = 'background-color 0.3s ease';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = 'rgba(255, 193, 7, 0.3)';
+            });
+        });
+    </script>
+</body>
+</html>
