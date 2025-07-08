@@ -17,16 +17,12 @@ from fastapi import Request
 from .config import templates 
 from . import demo_router
 
-
 app = FastAPI()
 app.title = "Duilio.store y Demo LICO System"
 app.include_router(demo_router.router)
 
 # Montar archivos estáticos (esto no cambia)
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
-
-# Incluimos el router de la demo
-app.include_router(demo_router.router)
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 # ======================================================================
