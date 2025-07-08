@@ -1,0 +1,15 @@
+{% extends "layouts/_base.html" %}
+{% block content %}
+    <h1>Dashboard Principal</h1>
+    <p>Bienvenido, Gerente. Seleccione un módulo para empezar.</p>
+    <!-- Aquí podrías poner gráficos falsos con imágenes -->
+
+    <!-- ================== NUEVA SECCIÓN PARA NOTIFICACIONES ================== -->
+    <div style="margin-top: 2rem; padding: 1rem; border: 1px solid var(--secondary-dark); border-radius: 8px;">
+        <h3>Alertas Inteligentes</h3>
+        <p>Reciba notificaciones en tiempo real sobre eventos importantes.</p>
+        <button id="enable-notifications-btn">Activar Notificaciones de Prueba</button>
+        <div id="notification-status" style="margin-top: 0.5rem; font-size: 0.9em; opacity: 0.7;"></div>
+    </div>
+    <!-- ====================================================================== -->
+{% endblock %}

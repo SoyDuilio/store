@@ -1,0 +1,29 @@
+{% extends "layouts/_base.html" %}
+
+{% block content %}
+    <h1>Control de Gastos y Egresos</h1>
+
+    <!-- ================== CAMBIO AQUÍ ================== -->
+    <div style="margin-bottom: 1rem;">
+        <a href="/demo/gastos/nuevo"><button>+ Registrar Gasto</button></a>
+    </div>
+    <!-- =============================================== -->
+
+    <table>
+        <thead>
+            <tr><th>Fecha</th><th>Tipo</th><th>Monto</th><th>Descripción</th><th>Responsable</th><th>Autorizado Por</th></tr>
+        </thead>
+        <tbody>
+            {% for gasto in gastos %}
+            <tr>
+                <td>{{ gasto.fecha }}</td>
+                <td>{{ gasto.tipo }}</td>
+                <td>S/ {{ "%.2f"|format(gasto.monto) }}</td>
+                <td>{{ gasto.descripcion }}</td>
+                <td>{{ gasto.responsable }}</td>
+                <td>{{ gasto.autorizado_por }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

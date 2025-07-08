@@ -1,0 +1,14 @@
+{% extends "layouts/_base.html" %}
+{% block content %}
+    <h1>Punto de Venta - Demo</h1>
+    <button id="scan-barcode-btn" style="font-size: 1.2rem; padding: 1rem;">
+        <i class="icon-barcode"></i> Escanear Producto con Celular
+    </button>
+    <div id="scan-feedback" style="margin-top: 1rem;"></div>
+
+    <!-- Contenedor para el video, oculto por defecto -->
+    <div id="video-container" style="display: none; position: relative; max-width: 400px; margin-top: 1rem;">
+        <video id="video-element" style="width: 100%;" autoplay playsinline></video>
+        <button id="stop-scan-btn" style="position: absolute; top: 10px; right: 10px;">Detener</button>
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "layouts/_base.html" %}
+{% block content %}
+    <h1>Liquidación de: {{ empleado.nombre_completo }}</h1>
+    <h2>Sueldo Base: S/ {{ "%.2f"|format(empleado.sueldo_base) }}</h2>
+    <hr>
+    <h3>Desglose de Movimientos:</h3>
+    <ul>
+        {% for mov in movimientos %}
+        <li><strong>{{ mov.tipo.replace('_', ' ') }}:</strong> S/ {{ "%.2f"|format(mov.monto) }} ({{ mov.descripcion }})</li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <h3>Resumen:</h3>
+    <p>Sueldo Base: S/ {{ "%.2f"|format(empleado.sueldo_base) }}</p>
+    <p>+ Total Bonos: S/ {{ "%.2f"|format(total_bonos) }}</p>
+    <p>- Total Adelantos: S/ {{ "%.2f"|format(total_adelantos) }}</p>
+    <p>- Total Descuentos: S/ {{ "%.2f"|format(total_descuentos) }}</p>
+    <h2 style="color: var(--accent-dark);">MONTO FINAL A PAGAR: S/ {{ "%.2f"|format(monto_a_pagar) }}</h2>
+{% endblock %}

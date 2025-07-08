@@ -1,0 +1,48 @@
+{% extends "layouts/_base.html" %}
+
+{% block content %}
+    <h1>Registrar Nuevo Gasto</h1>
+    <div class="form-container">
+        <form onsubmit="alert('Gasto registrado exitosamente (simulación)'); return false;">
+            <div class="form-group">
+                <label for="fecha">Fecha</label>
+                <!-- ================== CORRECCIÓN AQUÍ ================== -->
+                <!-- Quitamos el value de Jinja2. Dejamos que el navegador maneje la fecha por defecto.
+                     Si quieres que la fecha actual aparezca, lo haremos con una pizca de JavaScript. -->
+                <input type="date" id="fecha" name="fecha" required>
+                <!-- ======================================================= -->
+            </div>
+            <div class="form-group">
+                <label for="tipo_gasto">Tipo de Gasto</label>
+                <select id="tipo_gasto" name="tipo_gasto" required>
+                    {% for tipo in tipos_gasto %}
+                    <option value="{{ tipo }}">{{ tipo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="monto">Monto (S/)</label>
+                <input type="number" id="monto" name="monto" step="0.01" placeholder="Ej: 50.00" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción Detallada</label>
+                <textarea id="descripcion" name="descripcion" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="responsable">Responsable del Gasto</label>
+                <select id="responsable" name="responsable" required>
+                    {% for r in responsables %}
+                    <option value="{{ r }}">{{ r }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit">Guardar Gasto</button>
+        </form>
+    </div>
+
+    <!-- Pequeño script para poner la fecha actual por defecto -->
+    <script>
+        document.getElementById('fecha').valueAsDate = new Date();
+    </script>
+
+{% endblock %}

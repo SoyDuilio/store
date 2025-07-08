@@ -1,0 +1,26 @@
+{% extends "layouts/_base.html" %}
+
+{% block content %}
+    <h1>Gestión de Personal</h1>
+    <table>
+        <thead>
+            <tr><th>Nombre</th><th>Cargo</th><th>Sueldo Base</th><th>Acción</th></tr>
+        </thead>
+        <tbody>
+            {% for p in personal %}
+            <tr>
+                <td>{{ p.nombre_completo }}</td>
+                <td>{{ p.cargo }}</td>
+                <td>S/ {{ "%.2f"|format(p.sueldo_base) }}</td>
+                <td>
+                    <!-- ================== CAMBIO AQUÍ ================== -->
+                    <a href="/demo/personal/{{ p.id }}">
+                        <button>Ver Ficha / Liquidar</button>
+                    </a>
+                    <!-- =============================================== -->
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

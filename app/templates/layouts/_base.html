@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión LICO</title>
+    <link rel="stylesheet" href="/static/css/estilos_demo.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
+</head>
+<body>
+    <div class="app-layout">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>LICO System</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/demo/dashboard">Dashboard</a></li>
+                <li><a href="/demo/pos">Punto de Venta</a></li>
+                <li><a href="/demo/gastos">Finanzas y Gastos</a></li>
+                <li><a href="/demo/planillas">Planillas</a></li>
+                <li><a href="#">Inventario</a></li>
+                <!-- ================== CAMBIO AQUÍ ================== -->
+                <li><a href="/demo/reportes/ventas">Reportes</a></li>
+                <!-- =============================================== -->
+                <li><a href="#">Clientes</a></li>
+                <li><a href="#">Configuración</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <label class="switch">
+                    <input type="checkbox" id="theme-switcher">
+                    <span class="slider"></span>
+                </label>
+                <span>Modo Claro/Oscuro</span>
+                <a href="/demo/login" class="logout">Salir</a>
+            </div>
+        </nav>
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    <script src="/static/js/main_demo.js"></script>
+    
+    <!-- Aquí va tu código de Tawk.to si ya lo tienes -->
+    <script src="/static/js/main_demo.js"></script>
+    <!--Start of Tawk.to Script-->
+        <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/686c7d1fbe8a1b1910b8600c/1ivjshhcj';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+        </script>
+    <!--End of Tawk.to Script--> 
+
+</body>
+</html>

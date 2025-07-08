@@ -1,0 +1,54 @@
+{% extends "layouts/_base.html" %}
+{% block content %}
+<h1>Reporte de Ventas y Rendimiento</h1>
+<p>Análisis en tiempo real para tomar mejores decisiones.</p>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+    
+    <div class="chart-container">
+        <h3>Ventas por Hora del Día</h3>
+        <canvas id="horasPicoChart"></canvas>
+    </div>
+    
+    <div class="chart-container">
+        <h3>Productos Más Vendidos (Unidades)</h3>
+        <canvas id="topProductosChart"></canvas>
+    </div>
+
+</div>
+
+<!-- Incluimos la librería de gráficos Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Datos falsos para el gráfico de horas pico
+    const ctxHoras = document.getElementById('horasPicoChart').getContext('2d');
+    new Chart(ctxHoras, {
+        type: 'bar',
+        data: {
+            labels: ['9-11am', '11-1pm', '1-3pm', '3-5pm', '5-7pm', '7-9pm', '9-11pm'],
+            datasets: [{
+                label: 'N° de Ventas',
+                data: [12, 19, 25, 30, 45, 50, 35],
+                backgroundColor: 'rgba(187, 134, 252, 0.6)',
+                borderColor: 'rgba(187, 134, 252, 1)',
+                borderWidth: 1
+            }]
+        }
+    });
+
+    // Datos falsos para el gráfico de productos más vendidos
+    const ctxProductos = document.getElementById('topProductosChart').getContext('2d');
+    new Chart(ctxProductos, {
+        type: 'doughnut',
+        data: {
+            labels: ['Cusqueña Trigo', 'Ron Cartavio', 'Pisco Portón', 'Vino Intipalka', 'Otros'],
+            datasets: [{
+                data: [35, 25, 15, 10, 15],
+                backgroundColor: ['#bb86fc', '#03dac6', '#e94560', '#f1fa8c', '#333']
+            }]
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso al Sistema - LICO</title>
+    <style>
+        /* Estilos base para que el login funcione por sí solo */
+        :root {
+            --bg-dark: #1a1a2e;
+            --primary-dark: #16213e;
+            --accent-dark: #e94560;
+            --text-dark: #dcdcdc;
+            
+            --bg-light: #f5f5f5;
+            --primary-light: #ffffff;
+            --accent-light: #d32f2f;
+            --text-light: #212121;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        html.dark body { background-color: var(--bg-dark); color: var(--text-dark); }
+        html.light body { background-color: var(--bg-light); color: var(--text-light); }
+
+        .login-container {
+            padding: 2.5rem;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        html.dark .login-container { background-color: var(--primary-dark); }
+        html.light .login-container { background-color: var(--primary-light); }
+        
+        .login-container h1 {
+            color: var(--accent-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-container p {
+            margin-bottom: 2rem;
+            opacity: 0.7;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: 1px solid;
+            box-sizing: border-box; /* Importante para que el padding no afecte el ancho */
+        }
+        
+        html.dark .input-group input {
+            background-color: var(--bg-dark);
+            border-color: #4a4a68;
+            color: var(--text-dark);
+        }
+        html.light .input-group input {
+            background-color: #f0f0f0;
+            border-color: #ccc;
+            color: var(--text-light);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            background-color: var(--accent-dark);
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .error-message {
+            color: var(--accent-dark);
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>LICO System</h1>
+        <p>Bienvenido. Ingrese sus credenciales para continuar.</p>
+
+        <form action="/demo/login" method="post">
+            <div class="input-group">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" name="username" value="gerente" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" value="1234" required>
+            </div>
+
+            <button type="submit">Ingresar al Sistema</button>
+        </form>
+
+        <!-- Lógica para mostrar mensaje de error -->
+        {% if request.query_params.get('error') %}
+        <div class="error-message">
+            Usuario o contraseña incorrectos.
+        </div>
+        {% endif %}
+
+        <!-- Nota para la demo -->
+        <p style="font-size: 0.8em; opacity: 0.5; margin-top: 2rem;">
+            <b>Demo:</b> Usuario: <code>gerente</code> | Clave: <code>1234</code>
+        </p>
+    </div>
+
+</body>
+</html>

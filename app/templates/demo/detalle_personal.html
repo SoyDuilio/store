@@ -1,0 +1,31 @@
+{% extends "layouts/_base.html" %}
+{% block content %}
+<style>
+    .profile-card { display: flex; align-items: center; gap: 2rem; }
+    .profile-pic { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; }
+</style>
+<h1>Ficha de Personal</h1>
+<div class="profile-card">
+    <img src="{{ empleado.foto_url }}" alt="Foto de {{ empleado.nombre_completo }}" class="profile-pic">
+    <div>
+        <h2>{{ empleado.nombre_completo }}</h2>
+        <p><strong>Cargo:</strong> {{ empleado.cargo }}</p>
+        <p><strong>Sueldo Base ({{ empleado.frecuencia_pago.lower() }}):</strong> S/ {{ "%.2f"|format(empleado.sueldo_base) }}</p>
+    </div>
+</div>
+<hr style="margin: 2rem 0;">
+<h3>Historial de Movimientos en Planilla</h3>
+<!-- Aquí puedes reusar la tabla estilizada para mostrar los movimientos -->
+<table>
+    <thead><tr><th>Tipo</th><th>Monto</th><th>Descripción</th></tr></thead>
+    <tbody>
+        {% for mov in movimientos %}
+        <tr>
+            <td>{{ mov.tipo.replace('_', ' ') }}</td>
+            <td>S/ {{ "%.2f"|format(mov.monto) }}</td>
+            <td>{{ mov.descripcion }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
