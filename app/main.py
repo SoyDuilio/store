@@ -36,18 +36,115 @@ templates = Jinja2Templates(directory="app/templates")
 # Movemos los datos falsos aquí para que todas las rutas los puedan ver
 
 PERSONAL_MOCK = [
-    {"id": 1, "nombre_completo": "Ana Paredes", "cargo": "Cajera Principal", "sueldo_base": 1200.00, "frecuencia_pago": "MENSUAL"},
-    {"id": 2, "nombre_completo": "Luis Torres", "cargo": "Almacenero", "sueldo_base": 1050.00, "frecuencia_pago": "MENSUAL"},
+    {
+        "id": 1, 
+        "nombre_completo": "Ana Paredes Rojas", 
+        "cargo": "Cajera Principal / Supervisora de Turno", 
+        "sueldo_base": 1350.00,
+        "frecuencia_pago": "QUINCENAL"
+    },
+    {
+        "id": 2, 
+        "nombre_completo": "Luis Torres Vega", 
+        "cargo": "Almacenero / Reponedor", 
+        "sueldo_base": 1100.00,
+        "frecuencia_pago": "MENSUAL"
+    },
+    {
+        "id": 3, 
+        "nombre_completo": "Carlos Mendoza Solis", 
+        "cargo": "Cajero / Atención al Cliente", 
+        "sueldo_base": 1050.00,
+        "frecuencia_pago": "MENSUAL"
+    },
+    {
+        "id": 4, 
+        "nombre_completo": "Sofía Castro Luna", 
+        "cargo": "Personal de Reparto (Delivery)", 
+        "sueldo_base": 950.00,
+        "frecuencia_pago": "SEMANAL"
+    },
 ]
-
 MOVIMIENTOS_PLANILLA_MOCK = {
-    1: [{"tipo": "ADELANTO_EFECTIVO", "monto": 100.00, "descripcion": "Adelanto del 5 de mes"}, ...],
-    2: [{"tipo": "ADELANTO_EFECTIVO", "monto": 50.00, "descripcion": "Adelanto del 10 de mes"}],
+    # Movimientos de Ana Paredes (ID 1)
+    1: [
+        {"tipo": "ADELANTO_EFECTIVO", "monto": 150.00, "descripcion": "Adelanto del 5 de mes para gastos personales"},
+        {"tipo": "DESCUENTO_PRODUCTO", "monto": 28.00, "descripcion": "1x Vino Intipalka Malbec"},
+        {"tipo": "BONO_DESEMPENO", "monto": 75.00, "descripcion": "Bono por superar meta de ventas quincenal"},
+        {"tipo": "DESCUENTO_TARDANZA", "monto": 15.00, "descripcion": "Acumulado de 3 tardanzas en la quincena"},
+    ],
+    # Movimientos de Luis Torres (ID 2)
+    2: [
+        {"tipo": "ADELANTO_EFECTIVO", "monto": 50.00, "descripcion": "Adelanto para movilidad"},
+        {"tipo": "DESCUENTO_PRODUCTO", "monto": 7.50, "descripcion": "1x Cerveza Cusqueña Trigo"},
+        {"tipo": "BONO_FERIADO", "monto": 50.00, "descripcion": "Pago por trabajar feriado (Día del Trabajo)"},
+    ],
+    # Movimientos de Carlos Mendoza (ID 3)
+    3: [
+        {"tipo": "DESCUENTO_FALTA", "monto": 35.00, "descripcion": "Descuento por falta injustificada el 12/05"},
+        {"tipo": "ADELANTO_EFECTIVO", "monto": 200.00, "descripcion": "Adelanto de sueldo"},
+    ],
+    # Movimientos de Sofía Castro (ID 4)
+    4: [
+        {"tipo": "BONO_DESEMPENO", "monto": 25.00, "descripcion": "Bono por entregas rápidas y sin quejas"},
+    ]
 }
 
 GASTOS_MOCK = [
-    {"id": 1, "fecha": "2024-05-20", "monto": 50.00, "tipo": "Servicios", "descripcion": "Pago de Internet", "responsable": "Ana Paredes", "autorizado_por": "Gerente"},
-    # ... más gastos
+    {
+        "id": 1, 
+        "fecha": "2024-05-20", 
+        "monto": 50.00, 
+        "tipo": "Servicios", 
+        "descripcion": "Pago de Internet del local (Mes de Mayo)", 
+        "responsable": "Ana Paredes", 
+        "autorizado_por": "Gerente"
+    },
+    {
+        "id": 2, 
+        "fecha": "2024-05-19", 
+        "monto": 25.00, 
+        "tipo": "Movilidad", 
+        "descripcion": "Taxi para llevar documentos a la contadora", 
+        "responsable": "Luis Torres", 
+        "autorizado_por": "Gerente"
+    },
+    {
+        "id": 3, 
+        "fecha": "2024-05-18", 
+        "monto": 250.00, 
+        "tipo": "Compras", 
+        "descripcion": "Compra de bolsas, six-packs de cartón y material de limpieza", 
+        "responsable": "Ana Paredes", 
+        "autorizado_por": "Gerente"
+    },
+    {
+        "id": 4, 
+        "fecha": "2024-05-15", 
+        "monto": 150.00, 
+        "tipo": "Contador", 
+        "descripcion": "Pago honorarios contadora Sra. Elvira", 
+        "responsable": "Gerente", 
+        "autorizado_por": "Gerente"
+    },
+    {
+        "id": 5, 
+        "fecha": "2024-05-10", 
+        "monto": 80.00, 
+        "tipo": "Mantenimiento", 
+        "descripcion": "Reparación de luz de letrero exterior", 
+        "responsable": "Gerente", 
+        "autorizado_por": "Gerente"
+    },
+    {
+        "id": 6, 
+        "fecha": "2024-05-02", 
+        "monto": 120.00, 
+        "tipo": "Servicios", 
+        "descripcion": "Pago de servicio de agua y luz del local", 
+        "responsable": "Ana Paredes", 
+        "autorizado_por": "Gerente"
+    }
 ]
 
 
