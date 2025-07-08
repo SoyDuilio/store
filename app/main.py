@@ -35,6 +35,12 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 # Configurar plantillas Jinja2 - Sirve para ambos proyectos
 templates = Jinja2Templates(directory="app/templates")
 
+# ======================================================================
+#             SECCIÓN PARA ACTIVAR LAS RUTAS DE LA DEMO
+# ======================================================================
+
+app.include_router(demo_router.router)
+
 # Middleware de sesión original comentado (esto está correcto)
 # from starlette.middleware.sessions import SessionMiddleware
 # app.add_middleware(SessionMiddleware, secret_key="una-clave-secreta-muy-larga-y-dificil")
