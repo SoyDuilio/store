@@ -1,0 +1,157 @@
+:root {
+    --bg-dark: #121212;
+    --primary-dark: #1e1e1e;
+    --secondary-dark: #2a2a2a;
+    --accent-dark: #bb86fc;
+    --text-dark: #e0e0e0;
+    
+    --bg-light: #f5f5f5;
+    --primary-light: #ffffff;
+    --secondary-light: #e0e0e0;
+    --accent-light: #6200ea;
+    --text-light: #212121;
+
+    --sidebar-width: 240px;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html.dark body { background-color: var(--bg-dark); color: var(--text-dark); }
+html.light body { background-color: var(--bg-light); color: var(--text-light); }
+
+.app-layout { display: flex; min-height: 100vh; }
+
+.sidebar {
+    width: var(--sidebar-width);
+    flex-shrink: 0; /* Evita que el sidebar se encoja */
+    display: flex;
+    flex-direction: column;
+}
+html.dark .sidebar { background-color: var(--primary-dark); }
+html.light .sidebar { background-color: var(--primary-light); border-right: 1px solid var(--secondary-light); }
+
+.sidebar-header { padding: 1.5rem; text-align: center; }
+.sidebar-header h2 { margin: 0; color: var(--accent-dark); }
+
+.nav-links { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+.nav-links li a {
+    display: block; padding: 1rem 1.5rem; text-decoration: none; transition: background-color 0.2s;
+}
+html.dark .nav-links li a { color: var(--text-dark); }
+html.light .nav-links li a { color: var(--text-light); }
+.nav-links li a:hover, .nav-links li.active a { background-color: var(--secondary-dark); }
+html.light .nav-links li a:hover, html.light .nav-links li.active a { background-color: var(--secondary-light); }
+
+.sidebar-footer { padding: 1.5rem; }
+.logout { color: var(--accent-dark); text-decoration: none; display: block; margin-top: 1rem; text-align: center; }
+
+.content { flex-grow: 1; padding: 2rem; }
+
+/* ... (Estilos de tabla, botones, etc. se mantienen) ... */
+
+/* ESTA ES LA MAGIA DEL RESPONSIVE */
+@media (max-width: 768px) {
+    .app-layout { flex-direction: column; }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    html.dark .sidebar { border-bottom: 1px solid var(--secondary-dark); }
+    html.light .sidebar { border-bottom: 1px solid var(--secondary-light); }
+
+    .sidebar-header { padding: 0 1rem; }
+    .nav-links {
+        display: flex;
+        overflow-x: auto; /* Permite scroll horizontal si no caben los links */
+        white-space: nowrap;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .nav-links::-webkit-scrollbar { display: none; } /* Chrome, Safari, Opera */
+
+    .nav-links li a { padding: 1rem; }
+    .sidebar-footer { margin-left: auto; padding-right: 1rem; }
+}
+/* ... (El resto de estilos como el switch se mantienen igual) ... */
+
+/* Switch para tema */
+.switch { position: relative; display: inline-block; width: 40px; height: 20px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px;}
+.slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;}
+input:checked + .slider { background-color: var(--accent-dark); }
+input:checked + .slider:before { transform: translateX(20px); }
+
+
+/* ... (Todo el CSS anterior) ... */
+
+/* ESTILOS PARA TABLAS PROFESIONALES */
+table {
+    border-collapse: separate; /* Cambiamos a separate */
+    border-spacing: 0 10px; /* Espaciado vertical entre filas */
+    margin-top: 1rem;
+    width: 100%;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+th {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+}
+html.dark th { color: var(--accent-dark); border-bottom: 2px solid var(--accent-dark); }
+html.light th { color: var(--accent-light); border-bottom: 2px solid var(--accent-light); }
+
+td {
+    border: none;
+    border-radius: 6px;
+}
+html.dark td { background-color: var(--primary-dark); }
+html.light td { background-color: var(--primary-light); }
+tr:hover td {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+}
+html.dark tr:hover td { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+html.light tr:hover td { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+
+/* Arreglo para la primera celda */
+td:first-child { border-top-left-radius: 6px; border-bottom-left-radius: 6px; }
+td:last-child { border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
+
+
+/* ESTILOS PARA FORMULARIOS */
+.form-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 2rem;
+    border-radius: 8px;
+}
+html.dark .form-container { background-color: var(--primary-dark); }
+html.light .form-container { background-color: var(--primary-light); }
+
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid;
+    box-sizing: border-box;
+}
+/* ... (copia los estilos de input del login.html para consistencia) ... */
