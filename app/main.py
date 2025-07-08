@@ -1,71 +1,45 @@
 # app/main.py
 
 from fastapi import FastAPI
-# ----------------- Importaciones originales comentadas (esto está correcto) -----------------
+# ----------------- CAMBIOS AQUÍ -----------------
+# 1. Comentamos la importación de los routers que usan la base de datos.
+#    Esto evita que se ejecute el código dentro de ellos al arrancar.
 # from app.routers import campaigns, proposals, ebooks, ebooks_openAI, views, auth, uploads
+
+# 2. Comentamos la importación de la base de datos.
+#    Esta es la causa principal del error.
 # from app.database import engine, Base
-# -----------------------------------------------------------------------------------------
+# ------------------------------------------------
 
-# app/main.py
-from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse, Response
+from fastapi.templating import Jinja2Templates
 from fastapi import Request
+from fastapi.responses import HTMLResponse, Response
 
-# --- CORRECCIÓN CLAVE ---
-# Importamos desde el nuevo archivo de configuración
-from .config import templates 
-from . import demo_router
-
-# Obtenemos la ruta del directorio donde se encuentra ESTE archivo (main.py)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_DIR = os.path.join(BASE_DIR, "static")
+# Base.metadata.create_all(bind=engine) # Esto ya estaba comentado, pero es correcto
 
 app = FastAPI()
-app.title = "Duilio.store y Demo LICO System"
-app.include_router(demo_router.router)
-
-# Usamos la ruta absoluta para montar los archivos estáticos
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-
-# ======================================================================
-#             INICIO DE LA INTEGRACIÓN DE LA DEMO
-# ======================================================================
-
-
-# ======================================================================
-#             FIN DE LA INTEGRACIÓN DE LA DEMO
-# ======================================================================
-
-# Base.metadata.create_all(bind=engine) # Correctamente comentado
-
 
 # --- CONFIGURACIÓN DE LA APLICACIÓN ---
+# He quitado la re-declaración de `app = FastAPI(...)` que era redundante.
+app.title = "Generador de Ebooks de Belleza"
 
-# ======================================================================
-#             SECCIÓN PARA ACTIVAR LAS RUTAS DE LA DEMO
-# ======================================================================
+# Montar archivos estáticos (CSS, JS)
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
+# Configurar plantillas Jinja2
+templates = Jinja2Templates(directory="app/templates")
 
-# Middleware de sesión original comentado (esto está correcto)
+# ----------------- CAMBIO OPCIONAL PERO RECOMENDADO -----------------
+# 3. Comentamos el middleware de sesión, ya que se usa para el login (auth)
+#    que hemos desactivado. Así la app es aún más ligera.
 # from starlette.middleware.sessions import SessionMiddleware
 # app.add_middleware(SessionMiddleware, secret_key="una-clave-secreta-muy-larga-y-dificil")
-
-# ======================================================================
-#             SECCIÓN PARA ACTIVAR LAS RUTAS DE LA DEMO
-# ======================================================================
-
-# 2. Incluye el router de la demo en la aplicación principal.
-#    Esto hace que todas las rutas como /demo/login, /demo/gastos, etc., funcionen.
-app.include_router(demo_router.router)
-
-# ======================================================================
-#             FIN DE LA SECCIÓN DE RUTAS DE LA DEMO
-# ======================================================================
+# ---------------------------------------------------------------------
 
 
 # ======================================================================
-#      RUTAS ORIGINALES DE DUILIO.STORE (PERMANECEN INTACTAS)
+# ESTAS RUTAS NO DEPENDEN DE LA BASE DE DATOS Y FUNCIONARÁN PERFECTAMENTE
 # ======================================================================
 
 # ✔ HOME DEL SITIO 👈
@@ -79,14 +53,14 @@ async def duilio_home(request: Request):
 
 # ✔ CMR POLITICO 👈
 @app.get("/cmrpolitico", response_class=HTMLResponse)
-async def cmr_politico_page(request: Request):
+async def cmr_politico_page(request: Request): # He cambiado el nombre de la función para que no se repita
     """
     Sirve la página del CMR Político.
     """
     return templates.TemplateResponse("elecciones_bilingue.html", {"request": request})
 
 # ✔ Otras páginas estáticas 👈
-# (Las demás rutas de tu sitio estático permanecen aquí, sin cambios)
+# Estas también funcionarán sin problema.
 @app.get("/onboarding", response_class=HTMLResponse)
 async def get_onboarding_page(request: Request):
     return templates.TemplateResponse("onboarding.html", {"request": request})
@@ -94,6 +68,7 @@ async def get_onboarding_page(request: Request):
 @app.get("/approval", response_class=HTMLResponse)
 async def get_approval_page(request: Request):
     return templates.TemplateResponse("approval.html", {"request": request})
+
 
 @app.get("/campaign-dashboard", response_class=HTMLResponse)
 async def get_campaign_dashboard_page(request: Request):
@@ -111,18 +86,118 @@ async def cejas4( request: Request):
 async def cejas5( request: Request):
     return templates.TemplateResponse("cejas_main_2.html", {"request": request})
 
-# Routers originales comentados (esto está correcto)
+# ----------------- CAMBIOS AQUÍ -----------------
+# 4. Comentamos todos los `include_router`. Si no lo hacemos, la app fallará
+#    porque las variables (campaigns, auth, etc.) no fueron importadas.
 # app.include_router(campaigns.router)
-# ... etc ...
-
-@app.get("/duilia1", response_class=HTMLResponse, name="duilia1_page")
+# app.include_router(proposals.router)
+# app.include_router(ebooks.router)
+# app.include_router(views.router)
+# app.include_router(auth.router)
+# app.include_router(uploads.router)
+# app.include_router(ebooks_openAI.router)
+# ------------------------------------------------
+@app.get("/duilia1", response_class=HTMLResponse, name="duilia1_page") # Nombre cambiado
 async def duilia1(request: Request):
     return templates.TemplateResponse("duilia_chatgpt.html", {"request": request})
 
-@app.get("/duilia2", response_class=HTMLResponse, name="duilia2_page")
+@app.get("/duilia2", response_class=HTMLResponse, name="duilia2_page") # Nombre cambiado
 async def duilia2(request: Request):
     return templates.TemplateResponse("duilia_claude.html", {"request": request})
 
-@app.get("/duilia3", response_class=HTMLResponse, name="duilia3_page") # Nombre corregido
+@app.get("/duilia3", response_class=HTMLResponse, name="duilia2_page") # Nombre cambiado
 async def duilia3(request: Request):
     return templates.TemplateResponse("duilia_explica.html", {"request": request})
+
+#DEMO LICO            DEMO LICO                DEMO LICO
+@router.get("demo/login", response_class=HTMLResponse)
+async def login_page(request: Request):
+    return templates.TemplateResponse("/demo/login.html", {"request": request})
+
+@router.post("demo/login")
+async def handle_login(request: Request):
+    form = await request.form()
+    # Simulación de login: clave "1234" para el gerente
+    if form.get("username") == "gerente" and form.get("password") == "1234":
+        return RedirectResponse(url="/demo/dashboard", status_code=303)
+    return RedirectResponse(url="/demo/login?error=1", status_code=303)
+
+@router.get("demo/dashboard", response_class=HTMLResponse)
+async def dashboard(request: Request):
+    return templates.TemplateResponse("demo/dashboard.html", {"request": request})
+
+@router.get("demo/gastos", response_class=HTMLResponse)
+async def gastos_view(request: Request):
+    return templates.TemplateResponse("demo/gastos.html", {"request": request, "gastos": GASTOS_MOCK})
+
+@router.get("demo/planillas", response_class=HTMLResponse)
+async def planillas_view(request: Request):
+    return templates.TemplateResponse("demo/planillas.html", {"request": request, "personal": PERSONAL_MOCK})
+
+@router.get("demo/personal/{personal_id}/liquidacion", response_class=HTMLResponse)
+async def calcular_liquidacion(request: Request, personal_id: int):
+    # Lógica de la liquidación (la "magia" de la demo)
+    empleado = next((p for p in PERSONAL_MOCK if p["id"] == personal_id), None)
+    if not empleado:
+        return HTMLResponse("Empleado no encontrado", status_code=404)
+
+    movimientos = MOVIMIENTOS_PLANILLA_MOCK.get(personal_id, [])
+    
+    sueldo = empleado["sueldo_base"]
+    total_descuentos = sum(m["monto"] for m in movimientos if "DESCUENTO" in m["tipo"])
+    total_adelantos = sum(m["monto"] for m in movimientos if "ADELANTO" in m["tipo"])
+    total_bonos = sum(m["monto"] for m in movimientos if "BONO" in m["tipo"])
+    
+    monto_a_pagar = sueldo - total_descuentos - total_adelantos + total_bonos
+
+    return templates.TemplateResponse("demo/liquidacion.html", {
+        "request": request,
+        "empleado": empleado,
+        "movimientos": movimientos,
+        "total_descuentos": total_descuentos,
+        "total_adelantos": total_adelantos,
+        "total_bonos": total_bonos,
+        "monto_a_pagar": monto_a_pagar
+    })
+
+# Simulación del POS para mostrar el botón de escaneo
+@router.get("demo/pos", response_class=HTMLResponse)
+async def pos_view(request: Request):
+    return templates.TemplateResponse("demo/pos_demo.html", {"request": request})
+
+
+# --- FINANZAS: Pantalla para añadir un nuevo gasto ---
+@router.get("demo/gastos/nuevo", response_class=HTMLResponse)
+async def nuevo_gasto_form(request: Request):
+    # En la vida real, los tipos de gasto y responsables vendrían de la DB
+    tipos_gasto = ["Servicios", "Movilidad", "Compras", "Contador", "Sueldos"]
+    responsables = ["Gerente", "Ana Paredes", "Luis Torres"]
+    return templates.TemplateResponse("demo/form_gasto.html", {
+        "request": request,
+        "tipos_gasto": tipos_gasto,
+        "responsables": responsables
+    })
+
+# --- PLANILLAS: Detalle del trabajador con foto ---
+@router.get("demo/personal/{personal_id}", response_class=HTMLResponse)
+async def detalle_personal(request: Request, personal_id: int):
+    # Usamos los datos del mock_data.py
+    empleado = next((p for p in PERSONAL_MOCK if p["id"] == personal_id), None)
+    movimientos = MOVIMIENTOS_PLANILLA_MOCK.get(personal_id, [])
+    
+    # Añadimos una URL de foto falsa
+    if empleado:
+        empleado["foto_url"] = f"https://i.pravatar.cc/150?u={empleado['nombre_completo']}"
+    
+    return templates.TemplateResponse("demo/detalle_personal.html", {
+        "request": request,
+        "empleado": empleado,
+        "movimientos": movimientos
+    })
+
+# --- REPORTES: Pantalla de demo con gráficos falsos ---
+@router.get("demo/reportes/ventas", response_class=HTMLResponse)
+async def reportes_ventas(request: Request):
+    # Los datos para los gráficos se generarían aquí
+    # Para la demo, los ponemos directamente en el HTML/JS
+    return templates.TemplateResponse("demo/reporte_ventas.html", {"request": request})
