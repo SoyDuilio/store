@@ -30,6 +30,27 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 # Configurar plantillas Jinja2
 templates = Jinja2Templates(directory="app/templates")
 
+# ======================================================================
+#             2. DATOS SIMULADOS (MOCK DATA)
+# ======================================================================
+# Movemos los datos falsos aquí para que todas las rutas los puedan ver
+
+PERSONAL_MOCK = [
+    {"id": 1, "nombre_completo": "Ana Paredes", "cargo": "Cajera Principal", "sueldo_base": 1200.00, "frecuencia_pago": "MENSUAL"},
+    {"id": 2, "nombre_completo": "Luis Torres", "cargo": "Almacenero", "sueldo_base": 1050.00, "frecuencia_pago": "MENSUAL"},
+]
+
+MOVIMIENTOS_PLANILLA_MOCK = {
+    1: [{"tipo": "ADELANTO_EFECTIVO", "monto": 100.00, "descripcion": "Adelanto del 5 de mes"}, ...],
+    2: [{"tipo": "ADELANTO_EFECTIVO", "monto": 50.00, "descripcion": "Adelanto del 10 de mes"}],
+}
+
+GASTOS_MOCK = [
+    {"id": 1, "fecha": "2024-05-20", "monto": 50.00, "tipo": "Servicios", "descripcion": "Pago de Internet", "responsable": "Ana Paredes", "autorizado_por": "Gerente"},
+    # ... más gastos
+]
+
+
 # ----------------- CAMBIO OPCIONAL PERO RECOMENDADO -----------------
 # 3. Comentamos el middleware de sesión, ya que se usa para el login (auth)
 #    que hemos desactivado. Así la app es aún más ligera.
@@ -119,7 +140,9 @@ async def handle_login(request: Request):
     form = await request.form()
     # Simulación de login: clave "1234" para el gerente
     if form.get("username") == "gerente" and form.get("password") == "1234":
+        # ESTA ES LA FORMA CORRECTA Y DEBE FUNCIONAR
         return RedirectResponse(url="/demo/dashboard", status_code=303)
+    
     return RedirectResponse(url="/demo/login?error=1", status_code=303)
 
 @app.get("/demo/dashboard", response_class=HTMLResponse)
