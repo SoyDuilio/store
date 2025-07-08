@@ -119,7 +119,7 @@ async def handle_login(request: Request):
     form = await request.form()
     # Simulación de login: clave "1234" para el gerente
     if form.get("username") == "gerente" and form.get("password") == "1234":
-        return templates.TemplateResponse("/demo/dashboard", {"request": request})
+        return RedirectResponse(url="/demo/dashboard", status_code=303)
     return RedirectResponse(url="/demo/login?error=1", status_code=303)
 
 @app.get("/demo/dashboard", response_class=HTMLResponse)
