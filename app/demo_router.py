@@ -1,11 +1,19 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
 
+# --- CORRECCIÓN CLAVE ---
+# Importamos desde el nuevo archivo de configuración
+from .config import templates 
 from .mock_data import PERSONAL_MOCK, MOVIMIENTOS_PLANILLA_MOCK, GASTOS_MOCK
 
 router = APIRouter(prefix="/demo", tags=["Demo"])
-templates = Jinja2Templates(directory="templates")
+
+# --- CORRECCIÓN CLAVE ---
+# ELIMINAMOS cualquier definición local de templates
+
+
+router = APIRouter(prefix="/demo", tags=["Demo"])
+
 
 @router.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request):
