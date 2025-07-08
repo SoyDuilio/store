@@ -17,20 +17,21 @@ from fastapi import Request
 from .config import templates 
 from . import demo_router
 
+# Obtenemos la ruta del directorio donde se encuentra ESTE archivo (main.py)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+
 app = FastAPI()
 app.title = "Duilio.store y Demo LICO System"
 app.include_router(demo_router.router)
 
-# Montar archivos estáticos (esto no cambia)
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
+# Usamos la ruta absoluta para montar los archivos estáticos
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 # ======================================================================
 #             INICIO DE LA INTEGRACIÓN DE LA DEMO
 # ======================================================================
 
-# 1. Importa el router de la demo que contiene toda su lógica.
-from app import demo_router
 
 # ======================================================================
 #             FIN DE LA INTEGRACIÓN DE LA DEMO
@@ -38,16 +39,13 @@ from app import demo_router
 
 # Base.metadata.create_all(bind=engine) # Correctamente comentado
 
-app = FastAPI()
 
 # --- CONFIGURACIÓN DE LA APLICACIÓN ---
-app.title = "Duilio.store y Demo LICO System"
 
 # ======================================================================
 #             SECCIÓN PARA ACTIVAR LAS RUTAS DE LA DEMO
 # ======================================================================
 
-app.include_router(demo_router.router)
 
 # Middleware de sesión original comentado (esto está correcto)
 # from starlette.middleware.sessions import SessionMiddleware
