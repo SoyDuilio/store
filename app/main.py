@@ -14,7 +14,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
-from fastapi.responses import HTMLResponse, Response
+from fastapi.responses import HTMLResponse, Response, RedirectResponse
 
 # Base.metadata.create_all(bind=engine) # Esto ya estaba comentado, pero es correcto
 
