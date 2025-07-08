@@ -6,10 +6,28 @@ from fastapi import FastAPI
 # from app.database import engine, Base
 # -----------------------------------------------------------------------------------------
 
+# app/main.py
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from fastapi import Request
 from fastapi.responses import HTMLResponse, Response
+from fastapi import Request
+
+# --- CORRECCIÓN CLAVE ---
+# Importamos desde el nuevo archivo de configuración
+from .config import templates 
+from . import demo_router
+
+
+app = FastAPI()
+app.title = "Duilio.store y Demo LICO System"
+app.include_router(demo_router.router)
+
+# Montar archivos estáticos (esto no cambia)
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
+# Incluimos el router de la demo
+app.include_router(demo_router.router)
+
 
 # ======================================================================
 #             INICIO DE LA INTEGRACIÓN DE LA DEMO
