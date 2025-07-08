@@ -110,11 +110,11 @@ async def duilia3(request: Request):
     return templates.TemplateResponse("duilia_explica.html", {"request": request})
 
 #DEMO LICO            DEMO LICO                DEMO LICO
-@router.get("demo/login", response_class=HTMLResponse)
+@app.get("demo/login", response_class=HTMLResponse)
 async def login_page(request: Request):
     return templates.TemplateResponse("/demo/login.html", {"request": request})
 
-@router.post("demo/login")
+@app.post("demo/login")
 async def handle_login(request: Request):
     form = await request.form()
     # Simulación de login: clave "1234" para el gerente
@@ -122,19 +122,19 @@ async def handle_login(request: Request):
         return RedirectResponse(url="/demo/dashboard", status_code=303)
     return RedirectResponse(url="/demo/login?error=1", status_code=303)
 
-@router.get("demo/dashboard", response_class=HTMLResponse)
+@app.get("demo/dashboard", response_class=HTMLResponse)
 async def dashboard(request: Request):
     return templates.TemplateResponse("demo/dashboard.html", {"request": request})
 
-@router.get("demo/gastos", response_class=HTMLResponse)
+@app.get("demo/gastos", response_class=HTMLResponse)
 async def gastos_view(request: Request):
     return templates.TemplateResponse("demo/gastos.html", {"request": request, "gastos": GASTOS_MOCK})
 
-@router.get("demo/planillas", response_class=HTMLResponse)
+@app.get("demo/planillas", response_class=HTMLResponse)
 async def planillas_view(request: Request):
     return templates.TemplateResponse("demo/planillas.html", {"request": request, "personal": PERSONAL_MOCK})
 
-@router.get("demo/personal/{personal_id}/liquidacion", response_class=HTMLResponse)
+@app.get("demo/personal/{personal_id}/liquidacion", response_class=HTMLResponse)
 async def calcular_liquidacion(request: Request, personal_id: int):
     # Lógica de la liquidación (la "magia" de la demo)
     empleado = next((p for p in PERSONAL_MOCK if p["id"] == personal_id), None)
@@ -161,13 +161,13 @@ async def calcular_liquidacion(request: Request, personal_id: int):
     })
 
 # Simulación del POS para mostrar el botón de escaneo
-@router.get("demo/pos", response_class=HTMLResponse)
+@app.get("demo/pos", response_class=HTMLResponse)
 async def pos_view(request: Request):
     return templates.TemplateResponse("demo/pos_demo.html", {"request": request})
 
 
 # --- FINANZAS: Pantalla para añadir un nuevo gasto ---
-@router.get("demo/gastos/nuevo", response_class=HTMLResponse)
+@app.get("demo/gastos/nuevo", response_class=HTMLResponse)
 async def nuevo_gasto_form(request: Request):
     # En la vida real, los tipos de gasto y responsables vendrían de la DB
     tipos_gasto = ["Servicios", "Movilidad", "Compras", "Contador", "Sueldos"]
@@ -179,7 +179,7 @@ async def nuevo_gasto_form(request: Request):
     })
 
 # --- PLANILLAS: Detalle del trabajador con foto ---
-@router.get("demo/personal/{personal_id}", response_class=HTMLResponse)
+@app.get("demo/personal/{personal_id}", response_class=HTMLResponse)
 async def detalle_personal(request: Request, personal_id: int):
     # Usamos los datos del mock_data.py
     empleado = next((p for p in PERSONAL_MOCK if p["id"] == personal_id), None)
@@ -196,7 +196,7 @@ async def detalle_personal(request: Request, personal_id: int):
     })
 
 # --- REPORTES: Pantalla de demo con gráficos falsos ---
-@router.get("demo/reportes/ventas", response_class=HTMLResponse)
+@app.get("demo/reportes/ventas", response_class=HTMLResponse)
 async def reportes_ventas(request: Request):
     # Los datos para los gráficos se generarían aquí
     # Para la demo, los ponemos directamente en el HTML/JS
