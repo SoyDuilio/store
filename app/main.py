@@ -43,12 +43,6 @@ app = FastAPI()
 # --- CONFIGURACIÓN DE LA APLICACIÓN ---
 app.title = "Duilio.store y Demo LICO System"
 
-# Montar archivos estáticos (CSS, JS) - Sirve para ambos proyectos
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
-
-# Configurar plantillas Jinja2 - Sirve para ambos proyectos
-templates = Jinja2Templates(directory="app/templates")
-
 # ======================================================================
 #             SECCIÓN PARA ACTIVAR LAS RUTAS DE LA DEMO
 # ======================================================================
