@@ -177,6 +177,15 @@ async def cmr_politico_page(request: Request): # He cambiado el nombre de la fun
     """
     return templates.TemplateResponse("elecciones_bilingue.html", {"request": request})
 
+
+# ✔ DUILIA - 2° CONTROL DE LECTURA CON CITAS👈
+@app.get("/control2-citas", response_class=HTMLResponse)
+async def control2-citas(request: Request): # He cambiado el nombre de la función para que no se repita
+    """
+    2° Control de Lectura - Maestría Duilia
+    """
+    return templates.TemplateResponse("control2-citas.html", {"request": request})
+
 # ✔ DUILIA - 2° CONTROL DE LECTURA 👈
 @app.get("/control2", response_class=HTMLResponse)
 async def control2(request: Request): # He cambiado el nombre de la función para que no se repita
