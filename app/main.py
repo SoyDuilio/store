@@ -179,12 +179,12 @@ async def cmr_politico_page(request: Request): # He cambiado el nombre de la fun
 
 
 # ✔ PROPUESTA NIEVES-CARLOS 👈
-@app.get("/propuesta", response_class=HTMLResponse)
-async def propuesta(request: Request): # He cambiado el nombre de la función para que no se repita
+@app.get("/planes", response_class=HTMLResponse)
+async def planes(request: Request): # He cambiado el nombre de la función para que no se repita
     """
     Propuesta Ventas
     """
-    return templates.TemplateResponse("propuesta.html", {"request": request})
+    return templates.TemplateResponse("planes.html", {"request": request})
 
 
 
