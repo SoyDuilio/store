@@ -179,8 +179,8 @@ async def cmr_politico_page(request: Request): # He cambiado el nombre de la fun
 
 
 # ✔ DUILIA - 2° CONTROL DE LECTURA CON CITAS👈
-@app.get("/control2-citas", response_class=HTMLResponse)
-async def control2-citas(request: Request): # He cambiado el nombre de la función para que no se repita
+@app.get("/control2citas", response_class=HTMLResponse)
+async def control2citas(request: Request): # He cambiado el nombre de la función para que no se repita
     """
     2° Control de Lectura - Maestría Duilia
     """
