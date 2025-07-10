@@ -177,6 +177,17 @@ async def cmr_politico_page(request: Request): # He cambiado el nombre de la fun
     """
     return templates.TemplateResponse("elecciones_bilingue.html", {"request": request})
 
+
+# ✔ PROPUESTA NIEVES-CARLOS 👈
+@app.get("/propuesta", response_class=HTMLResponse)
+async def propuesta(request: Request): # He cambiado el nombre de la función para que no se repita
+    """
+    Propuesta Ventas
+    """
+    return templates.TemplateResponse("propuesta.html", {"request": request})
+
+
+
 # ✔ Otras páginas estáticas 👈
 # Estas también funcionarán sin problema.
 @app.get("/onboarding", response_class=HTMLResponse)
