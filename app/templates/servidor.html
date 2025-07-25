@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Requisitos por Opción</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background: #0f0f0f;
+      color: #ffffff;
+      padding: 2rem;
+    }
+    .titulo {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    .planes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .plan {
+      background: #1c1c1c;
+      border-radius: 10px;
+      padding: 2rem;
+      width: 380px;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+    }
+    .plan h2 {
+      color: #ffd700;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .plan ul {
+      list-style: none;
+      padding: 0;
+    }
+    .plan ul li {
+      margin-bottom: 0.75rem;
+    }
+    .destacado {
+      border: 2px solid #ffd700;
+    }
+    .boton {
+      background: #ffd700;
+      color: #000;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      margin-top: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .subtitulo {
+      font-weight: bold;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      color: #ffd700;
+    }
+  </style>
+</head>
+<body>
+  <div class="titulo">¿Qué necesitas según la opción elegida?</div>
+
+  <div class="planes">
+    <div class="plan">
+      <h2>Opción A: Ngrok Pago</h2>
+      <div class="subtitulo">Características mínimas recomendadas para la PC - Servidor</div>
+      <ul>
+        <li>🔸 Procesador: Intel i3 (8va gen) o Ryzen 3 mínimo</li>
+        <li>🔸 RAM: 4 GB (recomendado: 8 GB)</li>
+        <li>🔸 Disco: SSD de 128 GB mínimo</li>
+        <li>🔸 Internet: 10 Mbps de subida mínimo</li>
+        <li>🔸 Sistema operativo: Windows 10 o Ubuntu</li>
+        <li>🔸 Fuente de energía estable (opcional: UPS)</li>
+        <li>🔸 Conexión por cable (no Wi-Fi)</li>
+        <li>🔸 Software preinstalado: Python, FastAPI, navegador</li>
+        <li>💰 Ngrok desde $8 USD/mes</li>
+      </ul>
+    </div>
+
+    <div class="plan destacado">
+      <h2>Opción B: Servidor en la Nube</h2>
+      <div class="subtitulo">Incluye:</div>
+      <ul>
+        <li>🔸 Instalación en un servidor remoto 24/7</li>
+        <li>🔸 IP pública, dominio propio y soporte técnico</li>
+        <li>🔸 No depende de una PC local ni electricidad doméstica</li>
+        <li>🔸 Ideal para escalabilidad y estabilidad profesional</li>
+      </ul>
+      <div class="subtitulo">Costos asociados</div>
+      <ul>
+        <li>💰 Hosting mensual mínimo: $5 USD</li>
+        <li>💰 Dominio anual: entre $10 y $40 USD</li>
+        <li>💰 Almacenamiento de imágenes y documentos (productos, tickets, vouchers Yape/Plin): depende del proveedor (desde $0.02/GB en servicios como Backblaze o Cloudinary)</li>
+        <li>💰 Certificado SSL: gratuito (Let's Encrypt) o de pago si se desea personalizado</li>
+        <li>💰 Soporte o mantenimiento técnico (opcional o incluido en algunos planes)</li>
+      </ul>
+      <button class="boton">Recomendada</button>
+    </div>
+  </div>
+</body>
+</html>
