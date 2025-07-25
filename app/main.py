@@ -204,6 +204,14 @@ async def planes(request: Request): # He cambiado el nombre de la función para 
     """
     return templates.TemplateResponse("planes.html", {"request": request})
 
+# ✔ SERVIDOR NIEVES-CARLOS 👈
+@app.get("/servidor", response_class=HTMLResponse)
+async def servidor(request: Request): # He cambiado el nombre de la función para que no se repita
+    """
+    Servidor, mínimo necesario, para servidor local
+    """
+    return templates.TemplateResponse("servidor.html", {"request": request})
+
 
 
 # ✔ Otras páginas estáticas 👈
