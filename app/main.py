@@ -195,6 +195,14 @@ async def control2(request: Request): # He cambiado el nombre de la función par
     return templates.TemplateResponse("control2.html", {"request": request})
 
 
+# ✔ AVANCE - TIPS VENTAS -  NIEVES-CARLOS 👈
+@app.get("/avance", response_class=HTMLResponse)
+async def avance(request: Request): # He cambiado el nombre de la función para que no se repita
+    """
+    Ideas para vender más
+    """
+    return templates.TemplateResponse("avance.html", {"request": request})
+
 
 # ✔ PROPUESTA NIEVES-CARLOS 👈
 @app.get("/planes", response_class=HTMLResponse)
@@ -358,3 +366,4 @@ async def reportes_ventas(request: Request):
     # Los datos para los gráficos se generarían aquí
     # Para la demo, los ponemos directamente en el HTML/JS
     return templates.TemplateResponse("demo/reporte_ventas.html", {"request": request})
+
