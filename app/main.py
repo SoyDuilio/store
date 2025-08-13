@@ -221,6 +221,15 @@ async def servidor(request: Request): # He cambiado el nombre de la función par
     return templates.TemplateResponse("servidor.html", {"request": request})
 
 
+# ✔ IMAGENES - JUAN NEYRA 🌦🔥
+@app.get("/juan-cni", response_class=HTMLResponse)
+async def juancni(request: Request): # He cambiado el nombre de la función para que no se repita
+    """
+    Servidor, mínimo necesario, para servidor local
+    """
+    return templates.TemplateResponse("juan_cni.html", {"request": request})
+
+
 
 # ✔ Otras páginas estáticas 👈
 # Estas también funcionarán sin problema.
@@ -366,4 +375,5 @@ async def reportes_ventas(request: Request):
     # Los datos para los gráficos se generarían aquí
     # Para la demo, los ponemos directamente en el HTML/JS
     return templates.TemplateResponse("demo/reporte_ventas.html", {"request": request})
+
 
