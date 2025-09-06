@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta SAAS - Sistema de Comercio con IA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 50%, #2d2d5f 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 0 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6, #8b5cf6, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .credit-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #fbbf24);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .credit-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-button {
+            padding: 15px 30px;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #fbbf24);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 2px solid #fbbf24;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(251, 191, 36, 0.1), transparent);
+            animation: shimmer 3s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(30deg); }
+        }
+
+        .hero-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-highlight {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            padding: 20px;
+            border-radius: 15px;
+            color: #1e293b;
+            font-weight: 700;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .summary-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card:nth-child(odd) {
+            border-left: 4px solid #fbbf24;
+        }
+
+        .summary-card:nth-child(even) {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(251, 191, 36, 0.5);
+        }
+
+        .summary-card h3 {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .summary-card ul {
+            list-style: none;
+        }
+
+        .summary-card li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .summary-card li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        .pricing-section {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), rgba(59, 130, 246, 0.05));
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .pricing-section h3 {
+            color: #fbbf24;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .modules-grid {
+            display: grid;
+            gap: 25px;
+        }
+
+        .module {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .module:hover {
+            border-color: rgba(251, 191, 36, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(251, 191, 36, 0.1);
+        }
+
+        .module h3 {
+            color: #fbbf24;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .module-price {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        .submodules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .submodule {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #fbbf24;
+        }
+
+        .submodule h4 {
+            color: #e2e8f0;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .submodule p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .plan-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .plan-card.popular {
+            border-color: #fbbf24;
+            box-shadow: 0 15px 30px rgba(251, 191, 36, 0.3);
+        }
+
+        .plan-card.popular::before {
+            content: "MÁS POPULAR";
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1e293b;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .plan-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #e2e8f0;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #fbbf24;
+            margin-bottom: 5px;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .plan-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .calculator {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .calculator h3 {
+            color: #fbbf24;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .calc-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .calc-input label {
+            display: block;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .calc-input input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            padding: 8px 0;
+            outline: none;
+        }
+
+        .calc-input input:focus {
+            color: #fbbf24;
+        }
+
+        .results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        .result-card h4 {
+            color: #fbbf24;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #10b981;
+            margin-bottom: 5px;
+        }
+
+        .result-subtitle {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .highlight-box h4 {
+            color: #fbbf24;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .highlight-box p {
+            color: #94a3b8;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .guarantee-section {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(251, 191, 36, 0.1));
+            border: 2px solid #10b981;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .guarantee-section h4 {
+            color: #10b981;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .guarantee-section p {
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab-button {
+                margin-bottom: 5px;
+            }
+            
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-section h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Sistema SAAS para Comercio</h1>
+            <p>Una solución completa con Inteligencia Artificial para revolucionar la gestión comercial. Desde inventarios hasta insights predictivos, todo en una plataforma moderna y escalable.</p>
+            <a href="https://duilio.store" class="credit-link" target="_blank">🚀 Desarrollado por Duilio Restuccia</a>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('resumen')">Resumen General</button>
+            <button class="tab-button" onclick="showTab('modulos')">Módulos del Sistema</button>
+            <button class="tab-button" onclick="showTab('planes')">Planes de Suscripción</button>
+        </div>
+
+        <div id="resumen" class="tab-content active">
+            <div class="hero-section">
+                <h2>🎯 De 30 Años de Trabajo Individual a una Máquina Automatizada</h2>
+                <p>Después de tres décadas desarrollando soluciones personalizadas cliente por cliente, es hora de construir UN SOLO PRODUCTO que genere ingresos recurrentes sin esfuerzo adicional.</p>
+                <div class="hero-highlight">
+                    💡 Una vez desarrollado, cada nuevo cliente suma ingresos SIN desarrollo adicional. ¡Es la diferencia entre vender tu tiempo y vender un activo!
+                </div>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>🚀 Servicios Incluidos</h3>
+                    <ul>
+                        <li>Desarrollo de SAAS completo</li>
+                        <li>Integración con Inteligencia Artificial</li>
+                        <li>Mentoría técnica personalizada</li>
+                        <li>Videos de capacitación</li>
+                        <li>Asesoría de estrategia comercial</li>
+                        <li>Estrategia de captación nacional</li>
+                        <li>Capacitación en videos publicitarios con IA</li>
+                        <li>Gestión completa de usuarios/clientes</li>
+                    </ul>
+                </div>
+
+                <div class="summary-card">
+                    <h3>⚡ Tecnologías Modernas</h3>
+                    <ul>
+                        <li>Python + FastAPI (Backend)</li>
+                        <li>PostgreSQL + SQLAlchemy</li>
+                        <li>HTMX + JavaScript (Frontend)</li>
+                        <li>APIs de IA para OCR y análisis</li>
+                        <li>Comprobantes electrónicos integrados</li>
+                        <li>Arquitectura multi-tienda escalable</li>
+                    </ul>
+                </div>
+
+                <div class="summary-card">
+                    <h3>💰 Revolución del Modelo de Negocio</h3>
+                    <ul>
+                        <li>Ingresos recurrentes vs. trabajos únicos</li>
+                        <li>Escalabilidad infinita sin límites</li>
+                        <li>Tres niveles de suscripción premium</li>
+                        <li>IA como diferenciador de alto valor</li>
+                        <li>Mercado nacional como objetivo</li>
+                        <li>Actualizaciones que benefician a todos</li>
+                    </ul>
+                </div>
+
+                <div class="summary-card">
+                    <h3>🎯 Diferenciadores Únicos</h3>
+                    <ul>
+                        <li>Comprobantes electrónicos SIN proveedores</li>
+                        <li>IA para extracción automática de datos</li>
+                        <li>Análisis predictivo empresarial</li>
+                        <li>Módulos contables integrados</li>
+                        <li>Multi-tienda desde el primer día</li>
+                        <li>Insights automáticos inteligentes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pricing-section">
+                <h3>💎 Inversión Total: S/. 9,500</h3>
+                <div class="highlight-box">
+                    <h4>🔧 Condición Especial - Infraestructura</h4>
+                    <p>Para garantizar los plazos comprometidos, se requiere una antena satelital portátil (S/. 1,500). Este costo será descontado proporcionalmente en cada entrega de módulo, asegurando conectividad óptima durante todo el desarrollo.</p>
+                </div>
+            </div>
+
+            <div class="guarantee-section">
+                <h4>🛡️ Garantía Extendida de 6 Meses</h4>
+                <p>Soporte completo por 6 meses desde la fecha del último entregable. Los módulos pueden evolucionar sin alterar el precio final, salvo cambios drásticos en la lógica total o estructura de base de datos.</p>
+            </div>
+        </div>
+
+        <div id="modulos" class="tab-content">
+            <div class="modules-grid">
+                <div class="module">
+                    <h3>🏗️ Módulo 1: Fundación del Sistema <span class="module-price">S/. 1,200</span></h3>
+                    <p>Base arquitectónica sólida para soportar el crecimiento del SAAS.</p>
+                    <div class="submodules">
+                        <div class="submodule">
+                            <h4>Gestión de Usuarios</h4>
+                            <p>Sistema completo de roles y permisos granulares</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Multi-empresa/Multi-tienda</h4>
+                            <p>Arquitectura escalable para múltiples organizaciones</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Configuración General</h4>
+                            <p>Panel de administración y parámetros del sistema</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module">
+                    <h3>📦 Módulo 2: Inventario Inteligente <span class="module-price">S/. 1,800</span></h3>
+                    <p>Gestión avanzada con múltiples presentaciones y control de vencimientos.</p>
+                    <div class="submodules">
+                        <div class="submodule">
+                            <h4>Catálogo de Productos</h4>
+                            <p>Productos con múltiples presentaciones y variantes</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Stock Multi-almacén</h4>
+                            <p>Control de inventario por ubicaciones</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Precios Dinámicos</h4>
+                            <p>Modalidades mayorista, minorista y promocional</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Control de Lotes</h4>
+                            <p>Seguimiento de vencimientos y trazabilidad</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module">
+                    <h3>💳 Módulo 3: POS + Comprobantes Electrónicos <span class="module-price">S/. 1,500</span></h3>
+                    <p>POS moderno con integración de comprobantes electrónicos SIN proveedores externos.</p>
+                    <div class="submodules">
+                        <div class="submodule">
+                            <h4>POS Intuitivo</h4>
+                            <p>Interfaz rápida y amigable para vendedores</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Comprobantes Electrónicos</h4>
+                            <p>Emisión directa sin proveedores externos</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Gestión de Cajas</h4>
+                            <p>Control de apertura, cierre y arqueos</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Métodos de Pago</h4>
+                            <p>Efectivo, tarjetas, transferencias y crédito</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module">
+                    <h3>🛒 Módulo 4: Compras y Proveedores <span class="module-price">S/. 1,200</span></h3>
+                    <p>Gestión completa del ciclo de compras y relación con proveedores.</p>
+                    <div class="submodules">
+                        <div class="submodule">
+                            <h4>Registro de Proveedores</h4>
+                            <p>Base de datos completa con historial</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Órdenes de Compra</h4>
+                            <p>Generación y seguimiento automatizado</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Recepción de Mercadería</h4>
+                            <p>Control de calidad y actualización de stock</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Cuentas por Pagar</h4>
+                            <p>Seguimiento de vencimientos y pagos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module">
+                    <h3>📊 Módulo 5: Contabilidad Integrada <span class="module-price">S/. 1,300</span></h3>
+                    <p>Módulos contables esenciales para control financiero completo.</p>
+                    <div class="submodules">
+                        <div class="submodule">
+                            <h4>Kardex Automático</h4>
+                            <p>Registro detallado de movimientos de inventario</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Registro de Compras</h4>
+                            <p>Cumplimiento de obligaciones tributarias</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Registro de Ventas</h4>
+                            <p>Control automático de ingresos y impuestos</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Estados Financieros</h4>
+                            <p>Reportes de pérdidas y ganancias</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module">
+                    <h3>🤖 Módulo 6: Inteligencia Artificial Premium <span class="module-price">S/. 1,800</span></h3>
+                    <p>Funciones premium que diferencian tu producto de toda la competencia.</p>
+                    <div class="submodules">
+                        <div class="submodule">
+                            <h4>OCR de Facturas</h4>
+                            <p>Extracción automática de datos de comprobantes</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Análisis Predictivo</h4>
+                            <p>Proyecciones de demanda y ventas</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Insights Automáticos</h4>
+                            <p>Recomendaciones basadas en patrones</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Optimización de Precios</h4>
+                            <p>Sugerencias de pricing dinámico</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module">
+                    <h3>👥 Módulo 7: Gestión de Clientes y Marketing <span class="module-price">S/. 700</span></h3>
+                    <p>CRM integrado y herramientas de marketing con IA.</p>
+                    <div class="submodules">
+                        <div class="submodule">
+                            <h4>CRM de Clientes</h4>
+                            <p>Gestión completa de la base de clientes</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Estrategia de Captación Nacional</h4>
+                            <p>Plan de marketing y expansión a nivel país</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Videos Publicitarios con IA</h4>
+                            <p>Capacitación en creación de contenido automático</p>
+                        </div>
+                        <div class="submodule">
+                            <h4>Automatización de Marketing</h4>
+                            <p>Campañas y seguimiento automatizado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>🎯 Flexibilidad Total en el Desarrollo</h4>
+                <p>Los módulos pueden evolucionar y expandirse según las necesidades del mercado, sin alterar el precio final acordado. Solo cambios drásticos en la lógica total o estructura de base de datos requerirían renegociación.</p>
+            </div>
+        </div>
+
+        <div id="planes" class="tab-content">
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <div class="plan-name">BÁSICO</div>
+                    <div class="plan-price">S/. 80<span>/mes</span></div>
+                    <ul class="plan-features">
+                        <li>Una tienda/almacén</li>
+                        <li>Hasta 500 productos</li>
+                        <li>POS básico</li>
+                        <li>Comprobantes electrónicos</li>
+                        <li>Reportes básicos</li>
+                        <li>Inventario estándar</li>
+                        <li>Módulos contables básicos</li>
+                        <li>Soporte por email</li>
+                    </ul>
+                </div>
+
+                <div class="plan-card popular">
+                    <div class="plan-name">PROFESIONAL</div>
+                    <div class="plan-price">S/. 120<span>/mes</span></div>
+                    <ul class="plan-features">
+                        <li>Hasta 3 tiendas/almacenes</li>
+                        <li>Productos ilimitados</li>
+                        <li>POS avanzado</li>
+                        <li>Comprobantes electrónicos</li>
+                        <li>OCR de facturas con IA</li>
+                        <li>Reportes avanzados y estadísticas</li>
+                        <li>Módulos contables completos</li>
+                        <li>Análisis básico con IA</li>
+                        <li>CRM de clientes</li>
+                        <li>Proyecciones simples</li>
+                        <li>Soporte prioritario</li>
+                    </ul>
+                </div>
+
+                <div class="plan-card">
+                    <div class="plan-name">ENTERPRISE</div>
+                    <div class="plan-price">S/. 250<span>/mes</span></div>
+                    <ul class="plan-features">
+                        <li>Tiendas y almacenes ilimitados</li>
+                        <li>Productos y usuarios ilimitados</li>
+                        <li>Todas las funciones básicas</li>
+                        <li>IA completa y predictiva</li>
+                        <li>Insights automáticos avanzados</li>
+                        <li>Optimización de precios con IA</li>
+                        <li>Análisis de competencia</li>
+                        <li>Proyecciones y sugerencias avanzadas</li>
+                        <li>Dashboards ejecutivos</li>
+                        <li>API personalizada</li>
+                        <li>Automatización de marketing</li>
+                        <li>Soporte 24/7</li>
+                        <li>Consultoría mensual</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="hero-section">
+                <h2>🚀 La Oportunidad de Transformación</h2>
+                <p>Después de 30 años desarrollando soluciones individuales, tienes la experiencia y la visión. Ahora construyamos juntos la plataforma que generará ingresos mientras duermes.</p>
+                <div class="hero-highlight">
+                    🎯 Un cliente en plan Enterprise (S/. 250/mes) equivale a más de 3 desarrollos individuales al año. ¡Y se renueva automáticamente!
+                </div>
+            </div>
+
+            <div class="calculator">
+                <h3>💰 Calculadora de Ingresos Proyectados</h3>
+                <div class="calculator-grid">
+                    <div class="calc-input">
+                        <label for="basicClients">Clientes Plan Básico (S/. 80)</label>
+                        <input type="number" id="basicClients" value="20" onchange="calculateRevenue()">
+                    </div>
+                    <div class="calc-input">
+                        <label for="proClients">Clientes Plan Profesional (S/. 120)</label>
+                        <input type="number" id="proClients" value="45" onchange="calculateRevenue()">
+                    </div>
+                    <div class="calc-input">
+                        <label for="enterpriseClients">Clientes Plan Enterprise (S/. 250)</label>
+                        <input type="number" id="enterpriseClients" value="15" onchange="calculateRevenue()">
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>📈 Análisis del Mercado Objetivo</h4>
+                    <p><strong>Cartera total:</strong> 800 clientes | <strong>Nicho objetivo:</strong> 200 clientes (25%) | <strong>Interés estimado:</strong> 80 clientes (40% del nicho) | <strong>Proyección conservadora inicial</strong></p>
+                </div>
+
+                <div class="results">
+                    <div class="result-card">
+                        <h4>Ingresos Mensuales</h4>
+                        <div class="result-value" id="monthlyRevenue">S/. 9,750</div>
+                        <div class="result-subtitle">Recurrente</div>
+                    </div>
+                    <div class="result-card">
+                        <h4>Ingresos Anuales</h4>
+                        <div class="result-value" id="yearlyRevenue">S/. 117,000</div>
+                        <div class="result-subtitle">Proyectado</div>
+                    </div>
+                    <div class="result-card">
+                        <h4>Total Clientes</h4>
+                        <div class="result-value" id="totalClients">80</div>
+                        <div class="result-subtitle">Suscritos</div>
+                    </div>
+                    <div class="result-card">
+                        <h4>Ticket Promedio</h4>
+                        <div class="result-value" id="avgTicket">S/. 122</div>
+                        <div class="result-subtitle">Por cliente</div>
+                    </div>
+                </div>
+
+                <div class="guarantee-section">
+                    <h4>💎 ROI Proyectado</h4>
+                    <p>Con solo 80 clientes iniciales, la inversión de S/. 9,500 se recupera en el primer mes de operación. A partir del mes 2, son ingresos puros y escalables.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Ocultar todas las pestañas
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Mostrar la pestaña seleccionada
+            document.getElementById(tabName).classList.add('active');
+
+            // Actualizar botones
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            // Encontrar el botón correcto y marcarlo como activo
+            const clickedButton = Array.from(buttons).find(button => 
+                button.textContent.toLowerCase().includes(tabName.toLowerCase()) ||
+                (tabName === 'resumen' && button.textContent.includes('Resumen')) ||
+                (tabName === 'modulos' && button.textContent.includes('Módulos')) ||
+                (tabName === 'planes' && button.textContent.includes('Planes'))
+            );
+            
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+        }
+
+        function calculateRevenue() {
+            const basicClients = parseInt(document.getElementById('basicClients').value) || 0;
+            const proClients = parseInt(document.getElementById('proClients').value) || 0;
+            const enterpriseClients = parseInt(document.getElementById('enterpriseClients').value) || 0;
+
+            const basicPrice = 80;
+            const proPrice = 120;
+            const enterprisePrice = 250;
+
+            const monthlyRevenue = (basicClients * basicPrice) + (proClients * proPrice) + (enterpriseClients * enterprisePrice);
+            const yearlyRevenue = monthlyRevenue * 12;
+            const totalClients = basicClients + proClients + enterpriseClients;
+            const avgTicket = totalClients > 0 ? Math.round(monthlyRevenue / totalClients) : 0;
+
+            // Formatear números con comas
+            const formatNumber = (num) => {
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            };
+
+            // Actualizar valores en la interfaz
+            document.getElementById('monthlyRevenue').textContent = `S/. ${formatNumber(monthlyRevenue)}`;
+            document.getElementById('yearlyRevenue').textContent = `S/. ${formatNumber(yearlyRevenue)}`;
+            document.getElementById('totalClients').textContent = totalClients;
+            document.getElementById('avgTicket').textContent = `S/. ${avgTicket}`;
+        }
+
+        // Calcular valores iniciales al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateRevenue();
+        });
+    </script>
+</body>
+</html>
