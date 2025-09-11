@@ -380,3 +380,8 @@ async def reportes_ventas(request: Request):
 @app.get("/saas", response_class=HTMLResponse)
 async def saas(request: Request):
     return templates.TemplateResponse("saas.html", {"request": request})
+
+
+@app.get("/walter", response_class=HTMLResponse)
+async def walter(request: Request):
+    return templates.TemplateResponse("walter_saas.html", {"request": request})
