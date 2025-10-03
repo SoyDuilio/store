@@ -387,7 +387,8 @@ async def walter(request: Request):
     return templates.TemplateResponse("walter_saas.html", {"request": request})
 
 
-@app.get("/ong", response_class=HTMLResponse)
-async def ong(request: Request):
-    return templates.TemplateResponse("ong.html", {"request": request})
+#@app.get("/ong", response_class=HTMLResponse)
+#async def ong(request: Request):
+#    return templates.TemplateResponse("ong.html", {"request": request})
+
 
