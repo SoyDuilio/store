@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Prospectos Salud - Iquitos (Team Duilius)</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#9ca3af;--text:#e6eef5}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(180deg,#031124 0%, #081226 100%); color:var(--text); margin:0; padding:24px}
+    .container{max-width:1100px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+    .card{background:rgba(255,255,255,0.03);padding:16px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.6);}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    input[type=text], select{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);color:var(--text);padding:8px 10px;border-radius:8px}
+    button{background:var(--accent);border:none;color:#052026;padding:9px 12px;border-radius:8px;cursor:pointer}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    th,td{padding:10px 8px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03);font-size:13px}
+    th{color:var(--muted);font-weight:600;font-size:12px}
+    tr:hover td{background:rgba(255,255,255,0.01)}
+    .badge{background:rgba(6,182,212,0.12);color:var(--accent);padding:4px 8px;border-radius:999px;font-weight:600;font-size:12px}
+    .small{font-size:12px;color:var(--muted)}
+    .pill{display:inline-block;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.02)}
+    .contacted{background:#064e3b;color:#ccffea;padding:6px 8px;border-radius:999px;font-weight:700}
+    .actions button{margin-right:6px}
+    .flex-row{display:flex;gap:8px;align-items:center}
+    footer{margin-top:12px;color:var(--muted);font-size:13px}
+    @media (max-width:880px){table{font-size:12px}th:nth-child(4),td:nth-child(4),th:nth-child(6),td:nth-child(6){display:none}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Prospectos Salud — Iquitos</h1>
+        <p class="lead">Lista interactiva para gestionar pilotos (guardar, marcar contactado, exportar). Edita campos y guarda localmente.</p>
+      </div>
+      <div class="flex-row">
+        <button id="exportBtn">Exportar CSV</button>
+        <button id="resetBtn" class="ghost">Restablecer</button>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="controls">
+        <input id="searchInput" type="text" placeholder="Buscar por nombre, especialidad, dirección..." />
+        <select id="filterSpecialty">
+          <option value="">Filtrar por especialidad</option>
+        </select>
+        <select id="filterContacted">
+          <option value="">Mostrar todos</option>
+          <option value="yes">Contactados</option>
+          <option value="no">No contactados</option>
+        </select>
+        <button id="addBtn" class="ghost">Añadir registro</button>
+      </div>
+
+      <div style="overflow:auto;max-height:520px">
+        <table id="tableProspects">
+          <thead>
+            <tr>
+              <th>Nombre / Clínica</th>
+              <th>Especialidad</th>
+              <th class="small">Dirección / Nota</th>
+              <th class="small">Contacto</th>
+              <th>Precio aprox.</th>
+              <th>Web</th>
+              <th>Redes</th>
+              <th>Potencial</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <footer>
+        <div>Tip: usa el botón <strong>Exportar CSV</strong> para generar una hoja con los prospectos. Los cambios se guardan en tu navegador (localStorage).</div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Datos iniciales (puedes editarlos desde el código o añadir nuevos registros en la interfaz)
+    const initialData = [
+      {name:'Odontomedic Clínica Dental', specialty:'Odontología', address:'Sargento Lores 878, Iquitos', contact:'965979242 / odontomedic.clinica@gmail.com', price:'S/. -', website:true, socials:true, potential:'Alto', contacted:false},
+      {name:'DentSalud Consultorio Odontológico', specialty:'Odontología', address:'Jorge Chávez 1034, Iquitos', contact:'975775395', price:'S/. -', website:false, socials:false, potential:'Medio', contacted:false},
+      {name:'Selva Dent - Clínica Odontológica', specialty:'Odontología', address:'Jr. 2 de Mayo 690', contact:'(065) 221285 / clinicaodontologica.selvadent@hotmail.com', price:'S/. -', website:false, socials:false, potential:'Medio', contacted:false},
+      {name:'Allan Dent - Centro Odontológico', specialty:'Odontología', address:'Calle Ricardo Palma 277', contact:'(065) 233133 / 941728929', price:'S/. -', website:true, socials:true, potential:'Alto', contacted:false},
+      {name:'Centro Ortodóncico Megadent', specialty:'Ortodoncia', address:'Calle Morona 446', contact:'65222067', price:'S/. -', website:false, socials:false, potential:'Medio', contacted:false},
+      {name:'OdonthoAliada Iquitos', specialty:'Odontología', address:'Pevas #1350', contact:'(065) 234533 / informes.odonthoaliada@gmail.com', price:'S/. -', website:false, socials:true, potential:'Medio', contacted:false},
+      {name:'Cerdent - Centro Odontológico', specialty:'Odontología', address:'Huallaga N°200-204', contact:'(065) 241943', price:'S/. -', website:false, socials:false, potential:'Medio', contacted:false},
+      {name:'Clínica TrámazonDoctor', specialty:'Psicología / Salud integral', address:'Calle Yavarí 335, Módulo 17', contact:'959464134 / clinicatramazon@gmail.com', price:'S/. -', website:true, socials:true, potential:'Alto', contacted:false},
+      {name:'Psicóloga (Listado local)', specialty:'Psicología', address:'San Marcos / Centro', contact:'965912688', price:'S/. -', website:false, socials:false, potential:'Medio', contacted:false},
+      {name:'Clínica San Juan de Dios - Psicología', specialty:'Psicología / Clínica', address:'Carretera Iquitos-Nauta km 2.8', contact:'+51 908 854 817', price:'S/. -', website:true, socials:false, potential:'Medio', contacted:false},
+      {name:'Nutricionista (Clin Trámazon)', specialty:'Nutrición', address:'Iquitos (Trámazon)', contact:'959464134', price:'S/. 90 aprox', website:false, socials:false, potential:'Medio', contacted:false},
+      {name:'Nut. Cynthia Fuentes Pérez', specialty:'Nutrición', address:'Av. Freyre, Punchana', contact:'(ver Doctoralia)', price:'S/. 80 aprox', website:false, socials:false, potential:'Medio', contacted:false},
+      {name:'Hospital Regional de Loreto - Nutricionistas', specialty:'Nutrición / Hospitalaria', address:'Iquitos / Punchana', contact:'(listado Doctoralia)', price:'S/. -', website:true, socials:false, potential:'Medio', contacted:false}
+    ];
+
+    // Storage key
+    const STORAGE_KEY = 'prospects_iquitos_v1';
+
+    // Utilities
+    function saveData(data){ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+    function loadData(){ const txt = localStorage.getItem(STORAGE_KEY); return txt ? JSON.parse(txt) : null }
+
+    // Initialize
+    let data = loadData() || initialData.slice();
+
+    const tableBody = document.querySelector('#tableProspects tbody');
+    const searchInput = document.getElementById('searchInput');
+    const filterSpecialty = document.getElementById('filterSpecialty');
+    const filterContacted = document.getElementById('filterContacted');
+    const exportBtn = document.getElementById('exportBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const addBtn = document.getElementById('addBtn');
+
+    function uniqueSpecialties(){ const s = new Set(data.map(d=>d.specialty)); return Array.from(s) }
+    function populateSpecialtyFilter(){ const list = uniqueSpecialties(); filterSpecialty.innerHTML = '<option value="">Filtrar por especialidad</option>' + list.map(x=>`<option value="${x}">${x}</option>`).join(''); }
+
+    function render(){
+      populateSpecialtyFilter();
+      const q = searchInput.value.trim().toLowerCase();
+      const spec = filterSpecialty.value;
+      const cnt = filterContacted.value;
+      tableBody.innerHTML = '';
+      data.forEach((row, idx)=>{
+        if(q){ const hay = [row.name, row.specialty, row.address, row.contact].join(' ').toLowerCase(); if(!hay.includes(q)) return }
+        if(spec && row.specialty !== spec) return;
+        if(cnt==='yes' && !row.contacted) return;
+        if(cnt==='no' && row.contacted) return;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${escapeHtml(row.name)}</strong><div class="small">${escapeHtml(row.address)}</div></td>
+          <td>${escapeHtml(row.specialty)}</td>
+          <td class="small">${escapeHtml(row.address)}</td>
+          <td class="small">${escapeHtml(row.contact)}</td>
+          <td>${escapeHtml(row.price || '-')}</td>
+          <td>${row.website ? '<span class="pill">Sí</span>' : '<span class="small">No</span>'}</td>
+          <td>${row.socials ? '<span class="pill">Sí</span>' : '<span class="small">No</span>'}</td>
+          <td>${escapeHtml(row.potential)}</td>
+          <td class="actions">
+            <button class="ghost" onclick="markContacted(${idx})">${row.contacted? 'Contactado':'Marcar contacto'}</button>
+            <button onclick="editRow(${idx})">Editar</button>
+            <button class="ghost" onclick="deleteRow(${idx})">Eliminar</button>
+          </td>
+        `;
+        tableBody.appendChild(tr);
+      })
+    }
+
+    function escapeHtml(str){ if(!str) return ''; return String(str).replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]}) }
+
+    // Actions
+    window.markContacted = function(i){ data[i].contacted = true; saveData(data); render(); }
+    window.deleteRow = function(i){ if(confirm('Eliminar registro?')){ data.splice(i,1); saveData(data); render(); } }
+    window.editRow = function(i){ const r = data[i]; const name = prompt('Nombre / Clínica', r.name); if(name===null) return; r.name = name; r.specialty = prompt('Especialidad', r.specialty) || r.specialty; r.address = prompt('Dirección / Nota', r.address) || r.address; r.contact = prompt('Contacto', r.contact) || r.contact; r.price = prompt('Precio aprox. (ej: S/. 90)', r.price) || r.price; r.website = confirm('¿Tiene sitio web? OK = Sí, Cancel = No'); r.socials = confirm('¿Tiene redes sociales? OK = Sí, Cancel = No'); r.potential = prompt('Potencial (Alto/Medio/Bajo)', r.potential) || r.potential; saveData(data); render(); }
+
+    addBtn.addEventListener('click', ()=>{
+      const name = prompt('Nombre / Clínica'); if(!name) return; const specialty = prompt('Especialidad')||''; const address = prompt('Dirección / Nota')||''; const contact = prompt('Contacto')||''; const price = prompt('Precio aprox.')||''; const website = confirm('¿Tiene sitio web? OK = Sí, Cancel = No'); const socials = confirm('¿Tiene redes sociales? OK = Sí, Cancel = No'); const potential = prompt('Potencial (Alto/Medio/Bajo)')||'Medio';
+      data.push({name,specialty,address,contact,price,website,socials,potential,contacted:false}); saveData(data); render();
+    })
+
+    searchInput.addEventListener('input', ()=>render());
+    filterSpecialty.addEventListener('change', ()=>render());
+    filterContacted.addEventListener('change', ()=>render());
+
+    exportBtn.addEventListener('click', ()=>{
+      const header = ['name','specialty','address','contact','price','website','socials','potential','contacted'];
+      const rows = data.map(r=>[r.name,r.specialty,r.address,r.contact,r.price,r.website? 'Sí':'No',r.socials? 'Sí':'No',r.potential,r.contacted? 'Sí':'No']);
+      const csv = [header.join(','), ...rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','))].join('\n');
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'prospectos_salud_iquitos.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    })
+
+    resetBtn.addEventListener('click', ()=>{ if(confirm('Restablecer datos iniciales? Esto eliminará cambios guardados localmente.')){ localStorage.removeItem(STORAGE_KEY); data = initialData.slice(); saveData(data); render(); } })
+
+    // first render
+    render();
+
+    // expose for debugging
+    window.__prospects = data;
+  </script>
+</body>
+</html>
