@@ -392,3 +392,6 @@ async def walter(request: Request):
 #    return templates.TemplateResponse("ong.html", {"request": request})
 
 
+@app.get("/saludiquitos", response_class=HTMLResponse)
+async def saludiquitos(request: Request):
+    return templates.TemplateResponse("salud_iquitos.html", {"request": request})
