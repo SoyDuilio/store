@@ -395,3 +395,13 @@ async def walter(request: Request):
 @app.get("/saludiquitos", response_class=HTMLResponse)
 async def saludiquitos(request: Request):
     return templates.TemplateResponse("salud_iquitos.html", {"request": request})
+
+
+@app.get("/mockup1", response_class=HTMLResponse)
+async def mockup1(request: Request):
+    return templates.TemplateResponse("mockup1.html", {"request": request})
+
+@app.get("/mockup2", response_class=HTMLResponse)
+async def mockup2(request: Request):
+    return templates.TemplateResponse("mockup2.html", {"request": request})
+
