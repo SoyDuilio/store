@@ -405,3 +405,36 @@ async def mockup1(request: Request):
 async def mockup2(request: Request):
     return templates.TemplateResponse("mockup2.html", {"request": request})
 
+#PROYECTO: SAAS - CREDITOS 💲🤑
+@app.get("/vendedor", response_class=HTMLResponse)
+async def vendedor(request: Request):
+    return templates.TemplateResponse("vendedor.html", {"request": request})
+
+@app.get("/registro", response_class=HTMLResponse)
+async def registro(request: Request):
+    return templates.TemplateResponse("registro.html", {"request": request})
+
+@app.get("/credito", response_class=HTMLResponse)
+async def credito(request: Request):
+    return templates.TemplateResponse("nuevo_credito.html", {"request": request})
+
+@app.get("/pagos", response_class=HTMLResponse)
+async def pagos(request: Request):
+    return templates.TemplateResponse("pagos.html", {"request": request})
+
+@app.get("/supervisor", response_class=HTMLResponse)
+async def supervisor(request: Request):
+    return templates.TemplateResponse("supervisor.html", {"request": request})
+
+@app.get("/caja", response_class=HTMLResponse)
+async def caja(request: Request):
+    return templates.TemplateResponse("control_caja.html", {"request": request})
+
+@app.get("/reportes", response_class=HTMLResponse)
+async def reportes(request: Request):
+    return templates.TemplateResponse("reportes.html", {"request": request})
+
+@app.get("/configuracion", response_class=HTMLResponse)
+async def configuracion(request: Request):
+    return templates.TemplateResponse("configuracion.html", {"request": request})
+
