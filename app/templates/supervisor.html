@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Supervisor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 80px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            color: white;
+            padding: 16px 20px 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-role {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 2px;
+        }
+        
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .icon-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .header-stat {
+            background: rgba(255,255,255,0.15);
+            padding: 10px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        
+        .header-stat-label {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+        
+        /* Tabs */
+        .tabs {
+            background: white;
+            display: flex;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 14px 12px;
+            border: none;
+            background: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .tab.active {
+            color: #7c3aed;
+            border-bottom-color: #7c3aed;
+        }
+        
+        /* Content */
+        .content {
+            padding: 16px 20px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Alerts Section */
+        .alerts-section {
+            margin-bottom: 20px;
+        }
+        
+        .alert-card {
+            background: white;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 4px solid;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+            cursor: pointer;
+        }
+        
+        .alert-card.urgent {
+            border-left-color: #ef4444;
+            background: linear-gradient(to right, #fef2f2 0%, white 100%);
+        }
+        
+        .alert-card.warning {
+            border-left-color: #f59e0b;
+            background: linear-gradient(to right, #fffbeb 0%, white 100%);
+        }
+        
+        .alert-card.info {
+            border-left-color: #3b82f6;
+            background: linear-gradient(to right, #eff6ff 0%, white 100%);
+        }
+        
+        .alert-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .alert-content {
+            flex: 1;
+        }
+        
+        .alert-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        
+        .alert-text {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.4;
+        }
+        
+        .alert-time {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+        
+        .alert-amount {
+            font-size: 16px;
+            font-weight: 700;
+            color: #7c3aed;
+            flex-shrink: 0;
+        }
+        
+        /* Section Title */
+        .section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-action {
+            font-size: 13px;
+            color: #7c3aed;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        /* Vendor Cards */
+        .vendor-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        
+        .vendor-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .vendor-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .vendor-info {
+            flex: 1;
+        }
+        
+        .vendor-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .vendor-status {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+        
+        .status-dot.offline {
+            background: #94a3b8;
+        }
+        
+        .vendor-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .vendor-metric {
+            background: #f8fafc;
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        
+        .metric-label {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        
+        /* Pending Approvals */
+        .approval-card {
+            background: white;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .approval-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+        
+        .approval-client {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .approval-amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: #7c3aed;
+        }
+        
+        .approval-details {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        
+        .approval-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .approval-btn {
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .btn-approve {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-reject {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        
+        /* Performance Chart */
+        .chart-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .chart-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .chart-filter {
+            padding: 6px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #64748b;
+            background: white;
+        }
+        
+        .chart-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bar-label {
+            font-size: 12px;
+            color: #64748b;
+            min-width: 80px;
+        }
+        
+        .bar-track {
+            flex: 1;
+            height: 24px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+        }
+        
+        .bar-value {
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .bar-amount {
+            font-size: 13px;
+            font-weight: 600;
+            color: #0f172a;
+            min-width: 80px;
+            text-align: right;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            padding: 8px 0;
+        }
+        
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            border: none;
+            background: none;
+            color: #64748b;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        
+        .nav-item.active {
+            color: #7c3aed;
+        }
+        
+        .nav-icon {
+            font-size: 22px;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        
+        .empty-text {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-top">
+            <div class="user-info">
+                <div class="user-role">SUPERVISOR</div>
+                <div class="user-name">Roberto Martínez</div>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="openNotifications()">
+                    🔔
+                    <span class="notification-badge">3</span>
+                </button>
+                <button class="icon-btn" onclick="openMenu()">⋮</button>
+            </div>
+        </div>
+        
+        <div class="header-stats">
+            <div class="header-stat">
+                <div class="header-stat-value">S/ 18,450</div>
+                <div class="header-stat-label">CARTERA TOTAL</div>
+            </div>
+            <div class="header-stat">
+                <div class="header-stat-value">S/ 2,340</div>
+                <div class="header-stat-label">MORA TOTAL</div>
+            </div>
+            <div class="header-stat">
+                <div class="header-stat-value">87</div>
+                <div class="header-stat-label">CRÉDITOS</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('overview')">Resumen</button>
+        <button class="tab" onclick="switchTab('team')">Equipo</button>
+        <button class="tab" onclick="switchTab('approvals')">Aprobaciones</button>
+    </div>
+    
+    <!-- Content -->
+    <div class="content">
+        <!-- Overview Tab -->
+        <div class="tab-content active" id="overview">
+            <!-- Alerts -->
+            <div class="alerts-section">
+                <div class="section-title">
+                    🚨 Alertas Urgentes
+                    <span class="section-action" onclick="viewAllAlerts()">Ver todas</span>
+                </div>
+                
+                <div class="alert-card urgent" onclick="handleAlert(1)">
+                    <div class="alert-icon">🔥</div>
+                    <div class="alert-content">
+                        <div class="alert-title">Solicitud de Transferencia</div>
+                        <div class="alert-text">Carlos Mendoza necesita S/ 2,000 para atender crédito de S/ 3,000</div>
+                        <div class="alert-time">Hace 5 minutos</div>
+                    </div>
+                    <div class="alert-amount">S/ 2,000</div>
+                </div>
+                
+                <div class="alert-card warning" onclick="handleAlert(2)">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <div class="alert-title">Cuadre Pendiente</div>
+                        <div class="alert-text">Ana Torres no ha realizado cuadre de caja del día anterior</div>
+                        <div class="alert-time">Hace 2 horas</div>
+                    </div>
+                </div>
+                
+                <div class="alert-card info" onclick="handleAlert(3)">
+                    <div class="alert-icon">📊</div>
+                    <div class="alert-content">
+                        <div class="alert-title">Meta Alcanzada</div>
+                        <div class="alert-text">Jorge López ha alcanzado el 100% de su meta semanal</div>
+                        <div class="alert-time">Hace 1 hora</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Performance Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div class="chart-title">📈 Cobranza Hoy</div>
+                    <select class="chart-filter">
+                        <option>Hoy</option>
+                        <option>Esta Semana</option>
+                        <option>Este Mes</option>
+                    </select>
+                </div>
+                
+                <div class="chart-bars">
+                    <div class="chart-bar">
+                        <div class="bar-label">Carlos M.</div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 85%;">
+                                <span class="bar-value">85%</span>
+                            </div>
+                        </div>
+                        <div class="bar-amount">S/ 1,020</div>
+                    </div>
+                    
+                    <div class="chart-bar">
+                        <div class="bar-label">Ana T.</div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 72%;">
+                                <span class="bar-value">72%</span>
+                            </div>
+                        </div>
+                        <div class="bar-amount">S/ 864</div>
+                    </div>
+                    
+                    <div class="chart-bar">
+                        <div class="bar-label">Jorge L.</div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 95%;">
+                                <span class="bar-value">95%</span>
+                            </div>
+                        </div>
+                        <div class="bar-amount">S/ 1,140</div>
+                    </div>
+                    
+                    <div class="chart-bar">
+                        <div class="bar-label">María S.</div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 60%;">
+                                <span class="bar-value">60%</span>
+                            </div>
+                        </div>
+                        <div class="bar-amount">S/ 720</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Team Tab -->
+        <div class="tab-content" id="team">
+            <div class="section-title">
+                👥 Vendedores Activos
+                <span class="section-action">4 en línea</span>
+            </div>
+            
+            <div class="vendor-card" onclick="viewVendor(1)">
+                <div class="vendor-header">
+                    <img src="https://i.pravatar.cc/150?img=33" alt="Carlos" class="vendor-avatar">
+                    <div class="vendor-info">
+                        <div class="vendor-name">Carlos Mendoza</div>
+                        <div class="vendor-status">
+                            <span class="status-dot"></span>
+                            En ruta • Última actividad: hace 2 min
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="vendor-metrics">
+                    <div class="vendor-metric">
+                        <div class="metric-value">S/ 1,240</div>
+                        <div class="metric-label">Caja</div>
+                    </div>
+                    <div class="vendor-metric">
+                        <div class="metric-value">15</div>
+                        <div class="metric-label">Clientes</div>
+                    </div>
+                    <div class="vendor-metric">
+                        <div class="metric-value">12/15</div>
+                        <div class="metric-label">Cobrados</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="vendor-card" onclick="viewVendor(2)">
+                <div class="vendor-header">
+                    <img src="https://i.pravatar.cc/150?img=45" alt="Ana" class="vendor-avatar">
+                    <div class="vendor-info">
+                        <div class="vendor-name">Ana Torres</div>
+                        <div class="vendor-status">
+                            <span class="status-dot"></span>
+                            En ruta • Última actividad: hace 15 min
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="vendor-metrics">
+                    <div class="vendor-metric">
+                        <div class="metric-value">S/ 890</div>
+                        <div class="metric-label">Caja</div>
+                    </div>
+                    <div class="vendor-metric">
+                        <div class="metric-value">18</div>
+                        <div class="metric-label">Clientes</div>
+                    </div>
+                    <div class="vendor-metric">
+                        <div class="metric-value">10/18</div>
+                        <div class="metric-label">Cobrados</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="vendor-card" onclick="viewVendor(3)">
+                <div class="vendor-header">
+                    <img src="https://i.pravatar.cc/150?img=12" alt="Jorge" class="vendor-avatar">
+                    <div class="vendor-info">
+                        <div class="vendor-name">Jorge López</div>
+                        <div class="vendor-status">
+                            <span class="status-dot"></span>
+                            En ruta • Última actividad: hace 1 min
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="vendor-metrics">
+                    <div class="vendor-metric">
+                        <div class="metric-value">S/ 2,150</div>
+                        <div class="metric-label">Caja</div>
+                    </div>
+                    <div class="vendor-metric">
+                        <div class="metric-value">20</div>
+                        <div class="metric-label">Clientes</div>
+                    </div>
+                    <div class="vendor-metric">
+                        <div class="metric-value">19/20</div>
+                        <div class="metric-label">Cobrados</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="vendor-card" onclick="viewVendor(4)">
+                <div class="vendor-header">
+                    <img src="https://i.pravatar.cc/150?img=27" alt="María" class="vendor-avatar">
+                    <div class="vendor-info">
+                        <div class="vendor-name">María Salazar</div>
+                        <div class="vendor-status">
+                            <span class="status-dot offline"></span>
+                            Offline • Última actividad: hace 3 horas
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="vendor-metrics">
+                    <div class="vendor-metric">
+                        <div class="metric-value">S/ 560</div>
+                        <div class="metric-label">Caja</div>
+                    </div>
+                    <div class="vendor-metric">
+                        <div class="metric-value">12</div>
+                        <div class="metric-label">Clientes</div>
+                    </div>
+                    <div class="vendor-metric">
+                        <div class="metric-value">6/12</div>
+                        <div class="metric-label">Cobrados</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Approvals Tab -->
+        <div class="tab-content" id="approvals">
+            <div class="section-title">
+                ⏳ Pendientes de Aprobación
+                <span class="section-action">2 créditos</span>
+            </div>
+            
+            <div class="approval-card">
+                <div class="approval-header">
+                    <div>
+                        <div class="approval-client">Roberto Vega Díaz</div>
+                        <div class="approval-details">
+                            Solicitado por: Carlos Mendoza<br>
+                            DNI: 45678901 • ID: 5892
+                        </div>
+                    </div>
+                    <div class="approval-amount">S/ 6,500</div>
+                </div>
+                
+                <div class="approval-details">
+                    12 cuotas semanales • S/ 650/cuota • Interés: 20%
+                </div>
+                
+                <div class="approval-actions">
+                    <button class="approval-btn btn-approve" onclick="approveCredit(5892)">✓ Aprobar</button>
+                    <button class="approval-btn btn-reject" onclick="rejectCredit(5892)">✕ Rechazar</button>
+                </div>
+            </div>
+            
+            <div class="approval-card">
+                <div class="approval-header">
+                    <div>
+                        <div class="approval-client">Carmen Rojas López</div>
+                        <div class="approval-details">
+                            Solicitado por: Ana Torres<br>
+                            DNI: 78901234 • ID: 5901
+                        </div>
+                    </div>
+                    <div class="approval-amount">S/ 5,200</div>
+                </div>
+                
+                <div class="approval-details">
+                    10 cuotas quincenales • S/ 572/cuota • Interés: 10%
+                </div>
+                
+                <div class="approval-actions">
+                    <button class="approval-btn btn-approve" onclick="approveCredit(5901)">✓ Aprobar</button>
+                    <button class="approval-btn btn-reject" onclick="rejectCredit(5901)">✕ Rechazar</button>
+                </div>
+            </div>
+            
+            <div class="empty-state">
+                <div class="empty-icon">✅</div>
+                <div class="empty-text">No hay más créditos pendientes</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <button class="nav-item active">
+            <div class="nav-icon">📊</div>
+            <div>Dashboard</div>
+        </button>
+        <button class="nav-item" onclick="goToReports()">
+            <div class="nav-icon">📈</div>
+            <div>Reportes</div>
+        </button>
+        <button class="nav-item" onclick="goToTeam()">
+            <div class="nav-icon">👥</div>
+            <div>Equipo</div>
+        </button>
+        <button class="nav-item" onclick="goToSettings()">
+            <div class="nav-icon">⚙️</div>
+            <div>Config</div>
+        </button>
+    </div>
+    
+    <script>
+        function switchTab(tabName) {
+            // Update tabs
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+        }
+        
+        function handleAlert(alertId) {
+            console.log('Handle alert:', alertId);
+            // Navigate to specific alert action
+        }
+        
+        function viewAllAlerts() {
+            console.log('View all alerts');
+        }
+        
+        function viewVendor(vendorId) {
+            console.log('View vendor:', vendorId);
+            // Navigate to vendor detail
+        }
+        
+        function approveCredit(clientId) {
+            if (confirm(`¿Aprobar crédito para cliente ID ${clientId}?`)) {
+                console.log('Credit approved:', clientId);
+                alert('✅ Crédito aprobado');
+                event.target.closest('.approval-card').style.display = 'none';
+            }
+        }
+        
+        function rejectCredit(clientId) {
+            if (confirm(`¿Rechazar crédito para cliente ID ${clientId}?`)) {
+                console.log('Credit rejected:', clientId);
+                alert('❌ Crédito rechazado');
+                event.target.closest('.approval-card').style.display = 'none';
+            }
+        }
+        
+        function openNotifications() {
+            console.log('Open notifications');
+        }
+        
+        function openMenu() {
+            console.log('Open menu');
+        }
+        
+        function goToReports() {
+            console.log('Go to reports');
+        }
+        
+        function goToTeam() {
+            console.log('Go to team');
+        }
+        
+        function goToSettings() {
+            console.log('Go to settings');
+        }
+    </script>
+</body>
+</html>

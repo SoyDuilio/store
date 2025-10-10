@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Caja</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 100px;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            padding: 16px 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #64748b;
+            cursor: pointer;
+        }
+        
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .cuadre-btn {
+            background: #3b82f6;
+            border: none;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        /* Content */
+        .content {
+            padding: 20px;
+        }
+        
+        /* Cash Summary Card */
+        .cash-summary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .summary-header {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        
+        .summary-total {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .summary-breakdown {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .breakdown-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .breakdown-label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+        
+        .breakdown-value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .breakdown-detail {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        
+        /* Action Grid */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .action-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .action-card:active {
+            transform: scale(0.98);
+        }
+        
+        .action-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .action-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        /* Section */
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-action {
+            font-size: 13px;
+            color: #3b82f6;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        /* Transaction List */
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+        
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .transaction-icon.expense {
+            background: #fee2e2;
+        }
+        
+        .transaction-icon.income {
+            background: #dcfce7;
+        }
+        
+        .transaction-icon.transfer {
+            background: #dbeafe;
+        }
+        
+        .transaction-info {
+            flex: 1;
+        }
+        
+        .transaction-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 2px;
+        }
+        
+        .transaction-subtitle {
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        .transaction-amount {
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .transaction-amount.negative {
+            color: #ef4444;
+        }
+        
+        .transaction-amount.positive {
+            color: #10b981;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: flex-end;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px 20px 0 0;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 24px 20px;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #64748b;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Form */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+            color: #0f172a;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        textarea.form-input {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .input-prefix {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            padding: 12px;
+            font-size: 15px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        .input-with-prefix {
+            border-radius: 0 8px 8px 0;
+        }
+        
+        /* Category Grid */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        
+        .category-btn {
+            padding: 12px 8px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: white;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .category-btn:hover {
+            border-color: #cbd5e1;
+        }
+        
+        .category-btn.active {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        
+        .category-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        
+        .category-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #0f172a;
+        }
+        
+        /* Vendor Select */
+        .vendor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .vendor-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .vendor-item:hover {
+            border-color: #cbd5e1;
+        }
+        
+        .vendor-item.active {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        
+        .vendor-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .vendor-info {
+            flex: 1;
+        }
+        
+        .vendor-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .vendor-cash {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+        
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        
+        /* Cuadre Modal */
+        .cuadre-section {
+            margin-bottom: 20px;
+        }
+        
+        .cuadre-summary {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .cuadre-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        
+        .cuadre-row.total {
+            border-top: 2px solid #cbd5e1;
+            margin-top: 8px;
+            padding-top: 12px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .cuadre-label {
+            color: #64748b;
+        }
+        
+        .cuadre-value {
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .difference-alert {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .difference-alert.match {
+            background: #dcfce7;
+            border-color: #10b981;
+        }
+        
+        .alert-icon {
+            font-size: 24px;
+        }
+        
+        .alert-content {
+            flex: 1;
+        }
+        
+        .alert-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #991b1b;
+        }
+        
+        .difference-alert.match .alert-title {
+            color: #166534;
+        }
+        
+        .alert-text {
+            font-size: 13px;
+            color: #7f1d1d;
+            margin-top: 2px;
+        }
+        
+        .difference-alert.match .alert-text {
+            color: #15803d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="header-title">Control de Caja</div>
+        <button class="cuadre-btn" onclick="openCuadre()">Cuadrar</button>
+    </div>
+    
+    <!-- Content -->
+    <div class="content">
+        <!-- Cash Summary -->
+        <div class="cash-summary">
+            <div class="summary-header">💰 Caja Total</div>
+            <div class="summary-total">S/ 4,090</div>
+            
+            <div class="summary-breakdown">
+                <div class="breakdown-item">
+                    <div class="breakdown-label">Efectivo</div>
+                    <div class="breakdown-value">S/ 3,240</div>
+                    <div class="breakdown-detail">Inicial: S/ 2,000</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">Digital</div>
+                    <div class="breakdown-value">S/ 850</div>
+                    <div class="breakdown-detail">Yape • Plin • Transf.</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="action-grid">
+            <div class="action-card" onclick="openExpenseModal()">
+                <div class="action-icon">📝</div>
+                <div class="action-label">Registrar Gasto</div>
+            </div>
+            <div class="action-card" onclick="openTransferModal()">
+                <div class="action-icon">💸</div>
+                <div class="action-label">Solicitar Dinero</div>
+            </div>
+        </div>
+        
+        <!-- Transactions Today -->
+        <div class="section">
+            <div class="section-title">
+                📋 Movimientos de Hoy
+                <span class="section-action" onclick="viewAllTransactions()">Ver todos</span>
+            </div>
+            
+            <div class="transaction-list">
+                <div class="transaction-item">
+                    <div class="transaction-icon income">💵</div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">Apertura de Caja</div>
+                        <div class="transaction-subtitle">08:00 AM • Roberto Martínez</div>
+                    </div>
+                    <div class="transaction-amount positive">+S/ 2,000</div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="transaction-icon income">💵</div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">Pago de María Gonzáles</div>
+                        <div class="transaction-subtitle">09:30 AM • Efectivo</div>
+                    </div>
+                    <div class="transaction-amount positive">+S/ 120</div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="transaction-icon expense">⛽</div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">Gasolina</div>
+                        <div class="transaction-subtitle">10:15 AM • Grifo Shell</div>
+                    </div>
+                    <div class="transaction-amount negative">-S/ 45</div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="transaction-icon income">📱</div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">Pago de Pedro Chávez</div>
+                        <div class="transaction-subtitle">11:00 AM • Yape</div>
+                    </div>
+                    <div class="transaction-amount positive">+S/ 85</div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="transaction-icon income">💵</div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">Pago de Ana Huamán</div>
+                        <div class="transaction-subtitle">02:30 PM • Efectivo</div>
+                    </div>
+                    <div class="transaction-amount positive">+S/ 150</div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="transaction-icon expense">🔧</div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">Reparación Moto</div>
+                        <div class="transaction-subtitle">03:45 PM • Mecánica Don José</div>
+                    </div>
+                    <div class="transaction-amount negative">-S/ 80</div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="transaction-icon transfer">💸</div>
+                    <div class="transaction-info">
+                        <div class="transaction-title">Transferencia Recibida</div>
+                        <div class="transaction-subtitle">04:20 PM • De Jorge López</div>
+                    </div>
+                    <div class="transaction-amount positive">+S/ 500</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Expense Modal -->
+    <div class="modal" id="expenseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">📝 Registrar Gasto</div>
+                <button class="close-modal" onclick="closeModal('expenseModal')">×</button>
+            </div>
+            
+            <form onsubmit="submitExpense(event)">
+                <div class="form-group">
+                    <label class="form-label">Categoría</label>
+                    <div class="category-grid">
+                        <div class="category-btn active" onclick="selectCategory('gas', event)">
+                            <div class="category-icon">⛽</div>
+                            <div class="category-label">Gasolina</div>
+                        </div>
+                        <div class="category-btn" onclick="selectCategory('repair', event)">
+                            <div class="category-icon">🔧</div>
+                            <div class="category-label">Reparación</div>
+                        </div>
+                        <div class="category-btn" onclick="selectCategory('food', event)">
+                            <div class="category-icon">🍽️</div>
+                            <div class="category-label">Almuerzo</div>
+                        </div>
+                        <div class="category-btn" onclick="selectCategory('parking', event)">
+                            <div class="category-icon">🅿️</div>
+                            <div class="category-label">Parking</div>
+                        </div>
+                        <div class="category-btn" onclick="selectCategory('toll', event)">
+                            <div class="category-icon">🛣️</div>
+                            <div class="category-label">Peaje</div>
+                        </div>
+                        <div class="category-btn" onclick="selectCategory('other', event)">
+                            <div class="category-icon">📦</div>
+                            <div class="category-label">Otro</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Monto</label>
+                    <div class="input-group">
+                        <div class="input-prefix">S/</div>
+                        <input 
+                            type="number" 
+                            class="form-input input-with-prefix" 
+                            id="expenseAmount"
+                            placeholder="0.00"
+                            step="0.01"
+                            required
+                        >
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Descripción (opcional)</label>
+                    <textarea 
+                        class="form-input" 
+                        id="expenseDescription"
+                        placeholder="Ej: Grifo Shell, Av. Principal"
+                    ></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn btn-primary">
+                    Registrar Gasto
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Transfer Modal -->
+    <div class="modal" id="transferModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">💸 Solicitar Dinero</div>
+                <button class="close-modal" onclick="closeModal('transferModal')">×</button>
+            </div>
+            
+            <form onsubmit="submitTransfer(event)">
+                <div class="form-group">
+                    <label class="form-label">Solicitar a:</label>
+                    <div class="vendor-list">
+                        <div class="vendor-item active" onclick="selectVendor(2, event)">
+                            <img src="https://i.pravatar.cc/150?img=45" alt="Ana" class="vendor-avatar">
+                            <div class="vendor-info">
+                                <div class="vendor-name">Ana Torres</div>
+                                <div class="vendor-cash">Caja disponible: S/ 890</div>
+                            </div>
+                        </div>
+                        
+                        <div class="vendor-item" onclick="selectVendor(3, event)">
+                            <img src="https://i.pravatar.cc/150?img=12" alt="Jorge" class="vendor-avatar">
+                            <div class="vendor-info">
+                                <div class="vendor-name">Jorge López</div>
+                                <div class="vendor-cash">Caja disponible: S/ 2,150</div>
+                            </div>
+                        </div>
+                        
+                        <div class="vendor-item" onclick="selectVendor(0, event)">
+                            <img src="https://i.pravatar.cc/150?img=33" alt="Supervisor" class="vendor-avatar">
+                            <div class="vendor-info">
+                                <div class="vendor-name">Roberto Martínez (Supervisor)</div>
+                                <div class="vendor-cash">Caja central</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Monto a Solicitar</label>
+                    <div class="input-group">
+                        <div class="input-prefix">S/</div>
+                        <input 
+                            type="number" 
+                            class="form-input input-with-prefix" 
+                            id="transferAmount"
+                            placeholder="0.00"
+                            step="0.01"
+                            required
+                        >
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Motivo</label>
+                    <textarea 
+                        class="form-input" 
+                        id="transferReason"
+                        placeholder="Ej: Para atender crédito de S/ 3,000"
+                        required
+                    ></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn btn-primary">
+                    Enviar Solicitud
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Cuadre Modal -->
+    <div class="modal" id="cuadreModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">📊 Cuadre de Caja</div>
+                <button class="close-modal" onclick="closeModal('cuadreModal')">×</button>
+            </div>
+            
+            <div class="cuadre-section">
+                <div class="form-label">Caja Esperada (Sistema)</div>
+                <div class="cuadre-summary">
+                    <div class="cuadre-row">
+                        <span class="cuadre-label">Efectivo Inicial</span>
+                        <span class="cuadre-value">S/ 2,000.00</span>
+                    </div>
+                    <div class="cuadre-row">
+                        <span class="cuadre-label">Cobros en Efectivo</span>
+                        <span class="cuadre-value">+S/ 1,365.00</span>
+                    </div>
+                    <div class="cuadre-row">
+                        <span class="cuadre-label">Gastos Registrados</span>
+                        <span class="cuadre-value">-S/ 125.00</span>
+                    </div>
+                    <div class="cuadre-row total">
+                        <span class="cuadre-label">Total Esperado</span>
+                        <span class="cuadre-value">S/ 3,240.00</span>
+                    </div>
+                </div>
+            </div>
+            
+            <form onsubmit="submitCuadre(event)">
+                <div class="form-group">
+                    <label class="form-label">Efectivo Real (Conteo Manual)</label>
+                    <div class="input-group">
+                        <div class="input-prefix">S/</div>
+                        <input 
+                            type="number" 
+                            class="form-input input-with-prefix" 
+                            id="realCash"
+                            placeholder="0.00"
+                            step="0.01"
+                            oninput="calculateDifference()"
+                            required
+                        >
+                    </div>
+                </div>
+                
+                <div id="differenceAlert" style="display: none;"></div>
+                
+                <div class="form-group">
+                    <label class="form-label">Observaciones (opcional)</label>
+                    <textarea 
+                        class="form-input" 
+                        id="cuadreNotes"
+                        placeholder="Notas sobre el cuadre..."
+                    ></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn btn-primary" id="cuadreSubmit" disabled>
+                    Confirmar Cuadre
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        let selectedCategory = 'gas';
+        let selectedVendorId = 2;
+        const expectedCash = 3240;
+        
+        function openExpenseModal() {
+            document.getElementById('expenseModal').classList.add('show');
+        }
+        
+        function openTransferModal() {
+            document.getElementById('transferModal').classList.add('show');
+        }
+        
+        function openCuadre() {
+            document.getElementById('cuadreModal').classList.add('show');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+        
+        function selectCategory(category, event) {
+            event.preventDefault();
+            selectedCategory = category;
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.category-btn').classList.add('active');
+        }
+        
+        function selectVendor(vendorId, event) {
+            selectedVendorId = vendorId;
+            document.querySelectorAll('.vendor-item').forEach(item => item.classList.remove('active'));
+            event.target.closest('.vendor-item').classList.add('active');
+        }
+        
+        function submitExpense(event) {
+            event.preventDefault();
+            const amount = document.getElementById('expenseAmount').value;
+            const description = document.getElementById('expenseDescription').value;
+            
+            console.log('Expense submitted:', {
+                category: selectedCategory,
+                amount,
+                description
+            });
+            
+            alert(`✅ Gasto registrado: S/ ${amount}`);
+            closeModal('expenseModal');
+            
+            // Reset form
+            event.target.reset();
+        }
+        
+        function submitTransfer(event) {
+            event.preventDefault();
+            const amount = document.getElementById('transferAmount').value;
+            const reason = document.getElementById('transferReason').value;
+            
+            console.log('Transfer requested:', {
+                toVendor: selectedVendorId,
+                amount,
+                reason
+            });
+            
+            alert(`✅ Solicitud enviada por S/ ${amount}`);
+            closeModal('transferModal');
+            
+            // Reset form
+            event.target.reset();
+        }
+        
+        function calculateDifference() {
+            const realCash = parseFloat(document.getElementById('realCash').value) || 0;
+            const difference = realCash - expectedCash;
+            const alertDiv = document.getElementById('differenceAlert');
+            const submitBtn = document.getElementById('cuadreSubmit');
+            
+            if (realCash === 0) {
+                alertDiv.style.display = 'none';
+                submitBtn.disabled = true;
+                return;
+            }
+            
+            submitBtn.disabled = false;
+            
+            if (Math.abs(difference) < 0.01) {
+                // Match
+                alertDiv.className = 'difference-alert match';
+                alertDiv.innerHTML = `
+                    <div class="alert-icon">✅</div>
+                    <div class="alert-content">
+                        <div class="alert-title">¡Caja Cuadrada!</div>
+                        <div class="alert-text">El efectivo coincide con el sistema</div>
+                    </div>
+                `;
+            } else {
+                // Difference
+                const diffText = difference > 0 ? 'sobrante' : 'faltante';
+                alertDiv.className = 'difference-alert';
+                alertDiv.innerHTML = `
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <div class="alert-title">Diferencia Detectada</div>
+                        <div class="alert-text">Hay S/ ${Math.abs(difference).toFixed(2)} ${diffText}</div>
+                    </div>
+                `;
+            }
+            
+            alertDiv.style.display = 'flex';
+        }
+        
+        function submitCuadre(event) {
+            event.preventDefault();
+            const realCash = document.getElementById('realCash').value;
+            const notes = document.getElementById('cuadreNotes').value;
+            const difference = parseFloat(realCash) - expectedCash;
+            
+            console.log('Cuadre submitted:', {
+                expected: expectedCash,
+                real: realCash,
+                difference,
+                notes
+            });
+            
+            alert(`✅ Cuadre registrado\n\nEsperado: S/ ${expectedCash.toFixed(2)}\nReal: S/ ${realCash}\nDiferencia: S/ ${difference.toFixed(2)}`);
+            closeModal('cuadreModal');
+            
+            // Reset form
+            event.target.reset();
+            document.getElementById('differenceAlert').style.display = 'none';
+        }
+        
+        function viewAllTransactions() {
+            console.log('View all transactions');
+        }
+        
+        function goBack() {
+            window.history.back();
+        }
+        
+        // Close modals when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

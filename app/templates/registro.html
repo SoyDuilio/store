@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Cliente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 100px;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            padding: 16px 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #64748b;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .save-btn {
+            background: #10b981;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .save-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+        
+        /* Content */
+        .content {
+            padding: 20px;
+        }
+        
+        /* Voice Status */
+        .voice-status {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .voice-status.active {
+            display: block;
+            animation: pulse-bg 1.5s infinite;
+        }
+        
+        @keyframes pulse-bg {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .voice-text {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        
+        .voice-command {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        /* Section */
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section-subtitle {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: -12px;
+            margin-bottom: 16px;
+        }
+        
+        /* Photo Grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .photo-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            background: #f1f5f9;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px dashed #cbd5e1;
+        }
+        
+        .photo-item.has-photo {
+            border: 2px solid #10b981;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .photo-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #64748b;
+        }
+        
+        .photo-placeholder-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .photo-label {
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .photo-meta {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 8px;
+            font-size: 11px;
+        }
+        
+        .gps-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(16, 185, 129, 0.9);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+        }
+        
+        .remove-photo {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(239, 68, 68, 0.9);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            display: none;
+        }
+        
+        .photo-item.has-photo .remove-photo {
+            display: block;
+        }
+        
+        /* DNI Scan */
+        .dni-scan {
+            background: #eff6ff;
+            border: 2px dashed #3b82f6;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        
+        .dni-scan.scanned {
+            background: #dcfce7;
+            border-color: #10b981;
+        }
+        
+        .dni-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+        
+        .dni-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e293b;
+        }
+        
+        .dni-subtext {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        
+        /* Form */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+        
+        .form-label.required::after {
+            content: " *";
+            color: #ef4444;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+            color: #0f172a;
+            transition: border-color 0.2s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .form-input:disabled {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        
+        .form-input.auto-filled {
+            background: #f0fdf4;
+            border-color: #10b981;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        select.form-input {
+            cursor: pointer;
+        }
+        
+        textarea.form-input {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        /* Voice Button */
+        .voice-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            transition: transform 0.2s;
+            z-index: 1000;
+        }
+        
+        .voice-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .voice-btn.listening {
+            background: #ef4444;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); }
+            50% { box-shadow: 0 4px 20px rgba(239, 68, 68, 0.8); }
+        }
+        
+        /* Helper text */
+        .helper-text {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        
+        .success-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #10b981;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="header-title">Nuevo Cliente</div>
+        <button class="save-btn" id="saveBtn" disabled onclick="saveClient()">Guardar</button>
+    </div>
+    
+    <!-- Voice Status -->
+    <div class="voice-status" id="voiceStatus">
+        <div class="voice-text">🎤 Escuchando...</div>
+        <div class="voice-command" id="voiceCommand">Di los datos del cliente</div>
+    </div>
+    
+    <!-- Content -->
+    <div class="content">
+        <!-- DNI Scan Section -->
+        <div class="section">
+            <div class="section-title">📄 Documento de Identidad</div>
+            <div class="section-subtitle">Escanea el DNI para llenar automáticamente</div>
+            
+            <div class="dni-scan" id="dniScan" onclick="scanDNI()">
+                <div class="dni-icon">📸</div>
+                <div class="dni-text">Tocar para escanear DNI</div>
+                <div class="dni-subtext">Frontal y reverso</div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required">Tipo de Documento</label>
+                <select class="form-input" id="docType">
+                    <option value="DNI">DNI - Documento Nacional</option>
+                    <option value="CE">CE - Carné de Extranjería</option>
+                    <option value="PAS">Pasaporte</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required">Número de Documento</label>
+                <input type="text" class="form-input" id="docNumber" placeholder="Ej: 12345678">
+                <div class="helper-text">Se validará automáticamente</div>
+            </div>
+        </div>
+        
+        <!-- Personal Info -->
+        <div class="section">
+            <div class="section-title">👤 Información Personal</div>
+            
+            <div class="form-group">
+                <label class="form-label required">Apellidos</label>
+                <input type="text" class="form-input" id="lastName" placeholder="Apellido Paterno y Materno">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required">Nombres</label>
+                <input type="text" class="form-input" id="firstName" placeholder="Nombres completos">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Teléfono</label>
+                    <input type="tel" class="form-input" id="phone" placeholder="999 888 777">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Fecha Nacimiento</label>
+                    <input type="date" class="form-input" id="birthDate">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Address -->
+        <div class="section">
+            <div class="section-title">📍 Domicilio</div>
+            
+            <div class="form-group">
+                <label class="form-label required">Dirección Completa</label>
+                <textarea class="form-input" id="address" placeholder="Jr. Los Pinos 245, San Juan de Lurigancho"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Referencia</label>
+                <input type="text" class="form-input" id="reference" placeholder="Frente al parque, puerta verde">
+            </div>
+        </div>
+        
+        <!-- Photos -->
+        <div class="section">
+            <div class="section-title">📷 Fotografías</div>
+            <div class="section-subtitle">Incluye ubicación GPS automáticamente</div>
+            
+            <div class="photo-grid">
+                <div class="photo-item" id="photoClient" onclick="takePhoto('client')">
+                    <div class="photo-placeholder">
+                        <div class="photo-placeholder-icon">👤</div>
+                        <div class="photo-label">Cliente</div>
+                    </div>
+                    <button class="remove-photo" onclick="removePhoto('client', event)">×</button>
+                </div>
+                
+                <div class="photo-item" id="photoHome" onclick="takePhoto('home')">
+                    <div class="photo-placeholder">
+                        <div class="photo-placeholder-icon">🏠</div>
+                        <div class="photo-label">Fachada</div>
+                    </div>
+                    <button class="remove-photo" onclick="removePhoto('home', event)">×</button>
+                </div>
+                
+                <div class="photo-item" id="photoDNIFront" onclick="takePhoto('dniFront')">
+                    <div class="photo-placeholder">
+                        <div class="photo-placeholder-icon">🪪</div>
+                        <div class="photo-label">DNI Frontal</div>
+                    </div>
+                    <button class="remove-photo" onclick="removePhoto('dniFront', event)">×</button>
+                </div>
+                
+                <div class="photo-item" id="photoDNIBack" onclick="takePhoto('dniBack')">
+                    <div class="photo-placeholder">
+                        <div class="photo-placeholder-icon">🪪</div>
+                        <div class="photo-label">DNI Reverso</div>
+                    </div>
+                    <button class="remove-photo" onclick="removePhoto('dniBack', event)">×</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Voice Button -->
+    <button class="voice-btn" onclick="toggleVoice()" id="voiceBtn">🎤</button>
+    
+    <script>
+        let isListening = false;
+        let photos = {};
+        
+        // Voice Recognition
+        function toggleVoice() {
+            const btn = document.getElementById('voiceBtn');
+            const status = document.getElementById('voiceStatus');
+            isListening = !isListening;
+            
+            if (isListening) {
+                btn.classList.add('listening');
+                btn.textContent = '⏹';
+                status.classList.add('active');
+                startVoiceRecognition();
+            } else {
+                btn.classList.remove('listening');
+                btn.textContent = '🎤';
+                status.classList.remove('active');
+                stopVoiceRecognition();
+            }
+        }
+        
+        function startVoiceRecognition() {
+            // Web Speech API implementation
+            console.log('Voice recognition started');
+            
+            // Simulación de comando detectado
+            setTimeout(() => {
+                if (isListening) {
+                    simulateVoiceCommand();
+                }
+            }, 2000);
+        }
+        
+        function stopVoiceRecognition() {
+            console.log('Voice recognition stopped');
+        }
+        
+        function simulateVoiceCommand() {
+            const command = document.getElementById('voiceCommand');
+            command.textContent = '"Apellidos Torres García, Nombres Juan Carlos, vive en Avenida Lima 456, referencia frente a la bodega"';
+            
+            setTimeout(() => {
+                document.getElementById('lastName').value = 'Torres García';
+                document.getElementById('firstName').value = 'Juan Carlos';
+                document.getElementById('address').value = 'Avenida Lima 456';
+                document.getElementById('reference').value = 'Frente a la bodega';
+                
+                toggleVoice();
+                validateForm();
+            }, 1500);
+        }
+        
+        // DNI Scan
+        function scanDNI() {
+            const scan = document.getElementById('dniScan');
+            scan.classList.add('scanned');
+            scan.innerHTML = '<div class="dni-icon">✓</div><div class="dni-text">DNI escaneado correctamente</div><div class="dni-subtext">Datos extraídos con IA</div>';
+            
+            // Simular extracción de datos
+            setTimeout(() => {
+                fillFromDNI({
+                    docNumber: '72548963',
+                    lastName: 'Rodríguez Pérez',
+                    firstName: 'María Elena',
+                    birthDate: '1985-03-15'
+                });
+            }, 1000);
+        }
+        
+        function fillFromDNI(data) {
+            document.getElementById('docNumber').value = data.docNumber;
+            document.getElementById('lastName').value = data.lastName;
+            document.getElementById('firstName').value = data.firstName;
+            document.getElementById('birthDate').value = data.birthDate;
+            
+            // Mark as auto-filled
+            document.getElementById('docNumber').classList.add('auto-filled');
+            document.getElementById('lastName').classList.add('auto-filled');
+            document.getElementById('firstName').classList.add('auto-filled');
+            document.getElementById('birthDate').classList.add('auto-filled');
+            
+            validateForm();
+        }
+        
+        // Photo Capture
+        function takePhoto(type) {
+            // Simular captura de foto con GPS
+            const photoElement = document.getElementById(`photo${type.charAt(0).toUpperCase() + type.slice(1)}`);
+            
+            // Get GPS coordinates (simulation)
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const coords = `${position.coords.latitude.toFixed(4)}, ${position.coords.longitude.toFixed(4)}`;
+                    displayPhoto(type, photoElement, coords);
+                },
+                (error) => {
+                    displayPhoto(type, photoElement, 'GPS no disponible');
+                }
+            );
+        }
+        
+        function displayPhoto(type, element, coords) {
+            const imageUrl = `https://picsum.photos/400/300?random=${Math.random()}`;
+            const timestamp = new Date().toLocaleString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            
+            element.classList.add('has-photo');
+            element.innerHTML = `
+                <img src="${imageUrl}" alt="${type}">
+                <div class="photo-meta">
+                    <div class="gps-indicator">📍 ${coords}</div>
+                    <div>${timestamp}</div>
+                </div>
+                <button class="remove-photo" onclick="removePhoto('${type}', event)">×</button>
+            `;
+            
+            photos[type] = { url: imageUrl, coords, timestamp };
+            validateForm();
+        }
+        
+        function removePhoto(type, event) {
+            event.stopPropagation();
+            const photoElement = document.getElementById(`photo${type.charAt(0).toUpperCase() + type.slice(1)}`);
+            const labels = {
+                client: '👤 Cliente',
+                home: '🏠 Fachada',
+                dniFront: '🪪 DNI Frontal',
+                dniBack: '🪪 DNI Reverso'
+            };
+            
+            const [icon, label] = labels[type].split(' ');
+            photoElement.classList.remove('has-photo');
+            photoElement.innerHTML = `
+                <div class="photo-placeholder">
+                    <div class="photo-placeholder-icon">${icon}</div>
+                    <div class="photo-label">${label}</div>
+                </div>
+                <button class="remove-photo" onclick="removePhoto('${type}', event)">×</button>
+            `;
+            
+            delete photos[type];
+            validateForm();
+        }
+        
+        // Form Validation
+        function validateForm() {
+            const docNumber = document.getElementById('docNumber').value;
+            const lastName = document.getElementById('lastName').value;
+            const firstName = document.getElementById('firstName').value;
+            const address = document.getElementById('address').value;
+            const hasClientPhoto = photos.client !== undefined;
+            
+            const isValid = docNumber && lastName && firstName && address && hasClientPhoto;
+            document.getElementById('saveBtn').disabled = !isValid;
+        }
+        
+        // Add event listeners
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('input', validateForm);
+        });
+        
+        function saveClient() {
+            console.log('Saving client...', {
+                docType: document.getElementById('docType').value,
+                docNumber: document.getElementById('docNumber').value,
+                lastName: document.getElementById('lastName').value,
+                firstName: document.getElementById('firstName').value,
+                phone: document.getElementById('phone').value,
+                birthDate: document.getElementById('birthDate').value,
+                address: document.getElementById('address').value,
+                reference: document.getElementById('reference').value,
+                photos: photos
+            });
+            alert('Cliente guardado correctamente');
+        }
+        
+        function goBack() {
+            if (confirm('¿Descartar cambios?')) {
+                window.history.back();
+            }
+        }
+    </script>
+</body>
+</html>

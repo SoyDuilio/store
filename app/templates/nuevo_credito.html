@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Crédito</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            padding-bottom: 120px;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            padding: 16px 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #64748b;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .header-spacer {
+            width: 40px;
+        }
+        
+        /* Content */
+        .content {
+            padding: 20px;
+        }
+        
+        /* Cash Alert */
+        .cash-alert {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .cash-available {
+            font-weight: 600;
+        }
+        
+        .cash-amount {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        /* Section */
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Client Search */
+        .client-search {
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 18px;
+        }
+        
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            z-index: 10;
+        }
+        
+        .search-results.show {
+            display: block;
+        }
+        
+        .search-result-item {
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .search-result-item:hover {
+            background: #f8fafc;
+        }
+        
+        .result-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .result-info {
+            flex: 1;
+        }
+        
+        .result-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .result-id {
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        .selected-client {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f0fdf4;
+            border: 1px solid #10b981;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+        
+        .selected-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .selected-info {
+            flex: 1;
+        }
+        
+        .selected-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .selected-id {
+            font-size: 13px;
+            color: #64748b;
+        }
+        
+        .active-loans {
+            font-size: 12px;
+            color: #f59e0b;
+            margin-top: 4px;
+        }
+        
+        .change-btn {
+            background: none;
+            border: none;
+            color: #3b82f6;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        /* Form */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+            color: #0f172a;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .form-input:disabled {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .input-prefix {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            padding: 12px;
+            font-size: 15px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        .input-with-prefix {
+            border-radius: 0 8px 8px 0;
+        }
+        
+        /* Toggle Switch */
+        .toggle-group {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .toggle-option {
+            flex: 1;
+            padding: 8px;
+            text-align: center;
+            border: none;
+            background: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .toggle-option.active {
+            background: white;
+            color: #0f172a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        /* Summary Box */
+        .summary-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .summary-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-label {
+            font-size: 14px;
+            color: #475569;
+        }
+        
+        .summary-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        
+        .summary-highlight {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+            text-align: center;
+        }
+        
+        .summary-highlight-label {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+        
+        .summary-highlight-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 16px 20px;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+            display: grid;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-primary {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-primary:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background: #3b82f6;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-secondary:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+        
+        /* Helper Text */
+        .helper-text {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        
+        .warning-text {
+            font-size: 12px;
+            color: #f59e0b;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .error-text {
+            font-size: 12px;
+            color: #ef4444;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="header-title">Nuevo Crédito</div>
+        <div class="header-spacer"></div>
+    </div>
+    
+    <!-- Content -->
+    <div class="content">
+        <!-- Cash Available -->
+        <div class="cash-alert">
+            <div>
+                <div class="cash-available">💰 Efectivo Disponible</div>
+            </div>
+            <div class="cash-amount">S/ 3,240</div>
+        </div>
+        
+        <!-- Client Selection -->
+        <div class="section">
+            <div class="section-title">👤 Cliente</div>
+            
+            <div class="client-search" id="clientSearchContainer">
+                <div class="search-icon">🔍</div>
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="clientSearch"
+                    placeholder="Buscar por nombre o DNI..."
+                    oninput="searchClients(this.value)"
+                >
+                <div class="search-results" id="searchResults"></div>
+            </div>
+            
+            <div id="selectedClientContainer" style="display: none;">
+                <div class="selected-client">
+                    <img src="" alt="" class="selected-avatar" id="selectedAvatar">
+                    <div class="selected-info">
+                        <div class="selected-name" id="selectedName"></div>
+                        <div class="selected-id" id="selectedId"></div>
+                        <div class="active-loans" id="activeLoans"></div>
+                    </div>
+                    <button class="change-btn" onclick="changeClient()">Cambiar</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loan Details -->
+        <div class="section" id="loanSection" style="display: none;">
+            <div class="section-title">💰 Detalles del Crédito</div>
+            
+            <div class="form-group">
+                <label class="form-label">Monto Solicitado</label>
+                <div class="input-group">
+                    <div class="input-prefix">S/</div>
+                    <input 
+                        type="number" 
+                        class="form-input input-with-prefix" 
+                        id="amount"
+                        placeholder="0.00"
+                        oninput="calculateLoan()"
+                    >
+                </div>
+                <div class="helper-text">Tu límite: S/ 5,000 por crédito</div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Tipo de Interés</label>
+                <div class="toggle-group">
+                    <button class="toggle-option active" onclick="setInterestType('percent')" id="btnPercent">Porcentaje (%)</button>
+                    <button class="toggle-option" onclick="setInterestType('amount')" id="btnAmount">Monto (S/)</button>
+                </div>
+            </div>
+            
+            <div class="form-group" id="interestPercentGroup">
+                <label class="form-label">Tasa de Interés</label>
+                <div class="input-group">
+                    <input 
+                        type="number" 
+                        class="form-input" 
+                        id="interestPercent"
+                        placeholder="0"
+                        step="0.1"
+                        oninput="calculateLoan()"
+                        style="border-radius: 8px 0 0 8px;"
+                    >
+                    <div class="input-prefix" style="border-radius: 0 8px 8px 0; border-left: none; border-right: 1px solid #cbd5e1;">%</div>
+                </div>
+            </div>
+            
+            <div class="form-group" id="interestAmountGroup" style="display: none;">
+                <label class="form-label">Monto de Interés Total</label>
+                <div class="input-group">
+                    <div class="input-prefix">S/</div>
+                    <input 
+                        type="number" 
+                        class="form-input input-with-prefix" 
+                        id="interestAmount"
+                        placeholder="0.00"
+                        oninput="calculateLoan()"
+                    >
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Frecuencia de Pago</label>
+                    <select class="form-input" id="frequency" onchange="calculateLoan()">
+                        <option value="daily">Diario</option>
+                        <option value="daily_lv">Lun-Vie</option>
+                        <option value="daily_ls">Lun-Sáb</option>
+                        <option value="weekly" selected>Semanal</option>
+                        <option value="biweekly">Catorcenal</option>
+                        <option value="bimonthly">Quincenal</option>
+                        <option value="monthly">Mensual</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Número de Cuotas</label>
+                    <input 
+                        type="number" 
+                        class="form-input" 
+                        id="installments"
+                        placeholder="0"
+                        min="1"
+                        oninput="calculateLoan()"
+                    >
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Fecha Primer Pago</label>
+                <input 
+                    type="date" 
+                    class="form-input" 
+                    id="startDate"
+                    onchange="calculateLoan()"
+                >
+            </div>
+            
+            <!-- Summary -->
+            <div class="summary-box" id="summaryBox" style="display: none;">
+                <div class="summary-title">📊 Resumen del Crédito</div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">Capital</span>
+                    <span class="summary-value" id="summaryCapital">S/ 0.00</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">Interés Total</span>
+                    <span class="summary-value" id="summaryInterest">S/ 0.00</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">Total a Pagar</span>
+                    <span class="summary-value" id="summaryTotal">S/ 0.00</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">Número de Cuotas</span>
+                    <span class="summary-value" id="summaryInstallments">0</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">Último Pago</span>
+                    <span class="summary-value" id="summaryEndDate">--/--/----</span>
+                </div>
+                
+                <div class="summary-highlight">
+                    <div class="summary-highlight-label">Cuota a Pagar</div>
+                    <div class="summary-highlight-value" id="installmentAmount">S/ 0.00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="action-buttons" id="actionButtons" style="display: none;">
+        <button class="btn btn-secondary" id="whatsappBtn" onclick="sendWhatsApp()" disabled>
+            💬 Enviar Resumen por WhatsApp
+        </button>
+        <button class="btn btn-primary" id="approveBtn" onclick="approveLoan()" disabled>
+            ✓ Aprobar y Desembolsar
+        </button>
+    </div>
+    
+    <script>
+        let selectedClient = null;
+        let interestType = 'percent';
+        let loanData = {};
+        
+        // Mock client data
+        const clients = [
+            { id: 2847, name: 'María Gonzáles Ríos', doc: '72548963', avatar: 'https://i.pravatar.cc/150?img=47', phone: '987654321', activeLoans: 1 },
+            { id: 1523, name: 'Pedro Chávez Soto', doc: '65432187', avatar: 'https://i.pravatar.cc/150?img=12', phone: '976543210', activeLoans: 0 },
+            { id: 3901, name: 'Ana Huamán Torres', doc: '81234567', avatar: 'https://i.pravatar.cc/150?img=20', phone: '965432109', activeLoans: 1 },
+            { id: 4156, name: 'Jorge Maldonado Cruz', doc: '56789012', avatar: '', phone: '954321098', activeLoans: 2 },
+            { id: 2134, name: 'Rosa Paredes Quispe', doc: '78901234', avatar: 'https://i.pravatar.cc/150?img=44', phone: '943210987', activeLoans: 0 }
+        ];
+        
+        function searchClients(query) {
+            const results = document.getElementById('searchResults');
+            
+            if (!query || query.length < 2) {
+                results.classList.remove('show');
+                return;
+            }
+            
+            const filtered = clients.filter(c => 
+                c.name.toLowerCase().includes(query.toLowerCase()) ||
+                c.doc.includes(query)
+            );
+            
+            if (filtered.length === 0) {
+                results.innerHTML = '<div style="padding: 20px; text-align: center; color: #64748b;">No se encontraron clientes</div>';
+                results.classList.add('show');
+                return;
+            }
+            
+            results.innerHTML = filtered.map(client => `
+                <div class="search-result-item" onclick='selectClient(${JSON.stringify(client)})'>
+                    ${client.avatar ? 
+                        `<img src="${client.avatar}" alt="${client.name}" class="result-avatar">` :
+                        `<div class="result-avatar" style="background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 18px;">👤</div>`
+                    }
+                    <div class="result-info">
+                        <div class="result-name">${client.name}</div>
+                        <div class="result-id">ID: ${client.id} • DNI: ${client.doc}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            results.classList.add('show');
+        }
+        
+        function selectClient(client) {
+            selectedClient = client;
+            
+            document.getElementById('clientSearch').value = '';
+            document.getElementById('searchResults').classList.remove('show');
+            document.getElementById('clientSearchContainer').style.display = 'none';
+            document.getElementById('selectedClientContainer').style.display = 'block';
+            
+            document.getElementById('selectedAvatar').src = client.avatar || '';
+            document.getElementById('selectedName').textContent = client.name;
+            document.getElementById('selectedId').textContent = `ID: ${client.id} • DNI: ${client.doc}`;
+            
+            const activeLoansEl = document.getElementById('activeLoans');
+            if (client.activeLoans > 0) {
+                activeLoansEl.textContent = `⚠️ ${client.activeLoans} crédito(s) activo(s)`;
+                activeLoansEl.style.display = 'block';
+            } else {
+                activeLoansEl.style.display = 'none';
+            }
+            
+            document.getElementById('loanSection').style.display = 'block';
+            
+            // Set default start date to next Monday
+            const today = new Date();
+            const nextMonday = new Date(today);
+            nextMonday.setDate(today.getDate() + ((8 - today.getDay()) % 7 || 7));
+            document.getElementById('startDate').value = nextMonday.toISOString().split('T')[0];
+        }
+        
+        function changeClient() {
+            selectedClient = null;
+            document.getElementById('clientSearchContainer').style.display = 'block';
+            document.getElementById('selectedClientContainer').style.display = 'none';
+            document.getElementById('loanSection').style.display = 'none';
+            document.getElementById('actionButtons').style.display = 'none';
+            document.getElementById('clientSearch').focus();
+        }
+        
+        function setInterestType(type) {
+            interestType = type;
+            
+            if (type === 'percent') {
+                document.getElementById('btnPercent').classList.add('active');
+                document.getElementById('btnAmount').classList.remove('active');
+                document.getElementById('interestPercentGroup').style.display = 'block';
+                document.getElementById('interestAmountGroup').style.display = 'none';
+            } else {
+                document.getElementById('btnPercent').classList.remove('active');
+                document.getElementById('btnAmount').classList.add('active');
+                document.getElementById('interestPercentGroup').style.display = 'none';
+                document.getElementById('interestAmountGroup').style.display = 'block';
+            }
+            
+            calculateLoan();
+        }
+        
+        function calculateLoan() {
+            const amount = parseFloat(document.getElementById('amount').value) || 0;
+            const installments = parseInt(document.getElementById('installments').value) || 0;
+            const frequency = document.getElementById('frequency').value;
+            const startDate = document.getElementById('startDate').value;
+            
+            if (!amount || !installments || !startDate) {
+                document.getElementById('summaryBox').style.display = 'none';
+                document.getElementById('actionButtons').style.display = 'none';
+                return;
+            }
+            
+            let interest = 0;
+            
+            if (interestType === 'percent') {
+                const interestPercent = parseFloat(document.getElementById('interestPercent').value) || 0;
+                interest = amount * (interestPercent / 100);
+            } else {
+                interest = parseFloat(document.getElementById('interestAmount').value) || 0;
+            }
+            
+            const total = amount + interest;
+            const installmentAmount = total / installments;
+            
+            // Calculate end date
+            const start = new Date(startDate);
+            let endDate = new Date(start);
+            
+            const frequencyDays = {
+                'daily': 1,
+                'daily_lv': 1,
+                'daily_ls': 1,
+                'weekly': 7,
+                'biweekly': 14,
+                'bimonthly': 15,
+                'monthly': 30
+            };
+            
+            const daysToAdd = frequencyDays[frequency] * (installments - 1);
+            endDate.setDate(endDate.getDate() + daysToAdd);
+            
+            // Update summary
+            document.getElementById('summaryCapital').textContent = `S/ ${amount.toFixed(2)}`;
+            document.getElementById('summaryInterest').textContent = `S/ ${interest.toFixed(2)}`;
+            document.getElementById('summaryTotal').textContent = `S/ ${total.toFixed(2)}`;
+            document.getElementById('summaryInstallments').textContent = installments;
+            document.getElementById('summaryEndDate').textContent = endDate.toLocaleDateString('es-PE');
+            document.getElementById('installmentAmount').textContent = `S/ ${installmentAmount.toFixed(2)}`;
+            
+            document.getElementById('summaryBox').style.display = 'block';
+            document.getElementById('actionButtons').style.display = 'grid';
+            document.getElementById('whatsappBtn').disabled = false;
+            document.getElementById('approveBtn').disabled = false;
+            
+            // Store loan data
+            loanData = {
+                client: selectedClient,
+                amount,
+                interest,
+                total,
+                installments,
+                installmentAmount,
+                frequency,
+                startDate: start,
+                endDate
+            };
+        }
+        
+        function sendWhatsApp() {
+            const frequencyNames = {
+                'daily': 'Diaria',
+                'daily_lv': 'Diaria (Lun-Vie)',
+                'daily_ls': 'Diaria (Lun-Sáb)',
+                'weekly': 'Semanal',
+                'biweekly': 'Catorcenal',
+                'bimonthly': 'Quincenal',
+                'monthly': 'Mensual'
+            };
+            
+            const message = `🎉 *CRÉDITO APROBADO*
+
+📋 *Detalles del Crédito:*
+👤 Cliente: ${loanData.client.name}
+💰 Monto: S/ ${loanData.amount.toFixed(2)}
+💵 Interés: S/ ${loanData.interest.toFixed(2)}
+💳 Total a Pagar: S/ ${loanData.total.toFixed(2)}
+
+📅 *Plan de Pagos:*
+🔢 Cuotas: ${loanData.installments}
+💸 Cuota: S/ ${loanData.installmentAmount.toFixed(2)}
+⏱️ Frecuencia: ${frequencyNames[loanData.frequency]}
+📆 Primer Pago: ${loanData.startDate.toLocaleDateString('es-PE')}
+📆 Último Pago: ${loanData.endDate.toLocaleDateString('es-PE')}
+
+✅ Recuerda que tu compromiso de pago es importante. ¡Bienvenido!`;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(message).then(() => {
+                // Redirect to WhatsApp
+                const phone = loanData.client.phone.replace(/\D/g, '');
+                const whatsappUrl = `https://wa.me/51${phone}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+                
+                alert('✅ Resumen copiado al portapapeles y WhatsApp abierto');
+            });
+        }
+        
+        function approveLoan() {
+            if (confirm(`¿Confirmar desembolso de S/ ${loanData.amount.toFixed(2)} a ${loanData.client.name}?`)) {
+                console.log('Loan approved:', loanData);
+                alert('✅ Crédito aprobado y desembolsado correctamente');
+                // Here would redirect to loan details or back to dashboard
+            }
+        }
+        
+        function goBack() {
+            if (confirm('¿Descartar crédito?')) {
+                window.history.back();
+            }
+        }
+        
+        // Close search results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.client-search')) {
+                document.getElementById('searchResults').classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
