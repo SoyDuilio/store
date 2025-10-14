@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Sincronización VFP a Postgres en Railway</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        h1, h2 { color: #333; }
+        h3 { color: #555; }
+        table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background: #f4f4f4; padding: 10px; border-left: 4px solid #007acc; overflow-x: auto; }
+        ul { margin: 10px 0; padding-left: 20px; }
+        .paso { background: #e8f4fd; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Guía Paso a Paso: Middleware de Sincronización VFP a Postgres (Railway)</h1>
+    <p><strong>Objetivo:</strong> Sincronizar en tiempo real actualizaciones de <em>productos</em> (incluyendo stock_actual), <em>precios</em>, y campos relacionados desde DB local VFP hacia Postgres en Railway. Enfoque unidireccional (VFP → Cloud). Usa ODBC para simplicidad inicial; considera API REST para seguridad.</p>
+
+    <section>
+        <h2>Pasos Iniciales Comunes (Tú y el Programador VFP)</h2>
+        <div class="paso">
+            <h3>1. Definir Alcance y Mapeo de Tablas</h3>
+            <p>Lista tablas/claves a sincronizar. Ejemplo de mapeo:</p>
+            <table>
+                <tr><th>Tabla VFP</th><th>Tabla Postgres</th><th>Campos Clave a Sync</th><th>Notas</th></tr>
+                <tr><td>Productos.dbf</td><td>productos</td><td>codigo_producto, nombre, stock_actual, precio_base, fecha_actualizacion</td><td>Upsert por codigo_producto UNIQUE</td></tr>
+                <tr><td>Precios.dbf</td><td>precios</td><td>producto_id, tipo_cliente_id, precio, fecha_vigencia</td><td>Actualizar solo si activo=TRUE</td></tr>
+                <tr><td>Clientes.dbf</td><td>clientes</td><td>ruc, razon_social, tipo_cliente_id, direccion</td><td>Opcional: Solo si se usa en pedidos</td></tr>
+                <tr><td>TiposCliente.dbf</td><td>tipos_cliente</td><td>codigo, nombre</td><td>Máster: Sync inicial una vez</td></tr>
+                <tr><td>Pedidos.dbf</td><td>pedidos</td><td>numero_pedido, cliente_id, total, estado</td><td>Sync al crear/aprobar pedido (afecta stock)</td></tr>
+                <tr><td>PedidoItems.dbf</td><td>pedido_items</td><td>pedido_id, producto_id, cantidad, precio_unitario_venta</td><td>Actualiza stock_actual en productos post-sync</td></tr>
+            </table>
+            <ul>
+                <li>Regla: Agrega <code>fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP</code> en Postgres para trackear cambios.</li>
+                <li>Migración inicial: Usa <a href="https://www.withdata.com/dbcopier/" target="_blank">Withdata DBCopier</a> para exportar datos base de VFP a Postgres.</li>
+            </ul>
+        </div>
+
+        <div class="paso">
+            <h3>2. Entorno de Prueba</h3>
+            <ul>
+                <li>En Railway: Clona DB de producción a una de dev. Comparte HOST/PORT/DB/USER/PASS.</li>
+                <li>En local: Copia DB VFP a una carpeta de prueba.</li>
+                <li>Prueba: Cambia stock_actual en VFP y verifica en Postgres via pgAdmin.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>Pasos para el Programador VFP (Middleware en VFP)</h2>
+        <div class="paso">
+            <h3>3. Configurar ODBC a Postgres</h3>
+            <ul>
+                <li>Descarga <a href="https://www.postgresql.org/ftp/odbc/versions/msi/" target="_blank">psqlODBC</a> e instala.</li>
+                <li>En ODBC Data Sources (Windows): Crea DSN "RailwayPostgres" con creds de Railway.</li>
+                <li>Prueba conexión en VFP:</li>
+            </ul>
+            <pre><code>LOCAL lcConexion
+lcConexion = SQLSTRINGCONNECT("DRIVER={PostgreSQL Unicode};Server=tu-host.railway.app;Port=5432;Database=tu-db;Uid=tu-user;Pwd=tu-pass;")
+IF lcConexion > 0
+    ? "Conexión OK"
+    SQLDISCONNECT(lcConexion)
+ENDIF</code></pre>
+        </div>
+
+        <div class="paso">
+            <h3>4. Implementar Sync Básico</h3>
+            <p>Función genérica para UPDATE/INSERT. Llama al final de transacciones en VFP (ej.: después de <code>TABLEUPDATE()</code> en forms).</p>
+            <p><strong>Ejemplo Básico con Datos de Tus Tablas:</strong> Sync <em>stock_actual</em> y <em>precio_base</em> de un producto (ej.: ID 123, código "ABC001", nuevo stock 50, precio 15.50). Asume tablas VFP con campos idénticos.</p>
+            <pre><code>FUNCTION SincronizarProducto(lnIdProducto, lcCodigo, lcNombre, lnStockNuevo, lnPrecioNuevo)
+    LOCAL lcConexion, lcSQL, lnHandle
+    lcConexion = SQLSTRINGCONNECT("DRIVER={PostgreSQL Unicode};Server=tu-host.railway.app;Port=5432;Database=tu-db;Uid=tu-user;Pwd=tu-pass;")
+    IF lcConexion > 0
+        && Sync productos (upsert por codigo_producto)
+        lcSQL = "INSERT INTO productos (codigo_producto, nombre, stock_actual, precio_base, fecha_actualizacion) " + ;
+                "VALUES ('" + lcCodigo + "', '" + lcNombre + "', " + TRANSFORM(lnStockNuevo) + ", " + TRANSFORM(lnPrecioNuevo) + ", NOW()) " + ;
+                "ON CONFLICT (codigo_producto) DO UPDATE SET " + ;
+                "stock_actual = EXCLUDED.stock_actual, precio_base = EXCLUDED.precio_base, fecha_actualizacion = NOW()"
+        lnHandle = SQLEXEC(lcConexion, lcSQL)
+        IF lnHandle > 0
+            ? "Producto sync OK: " + lcCodigo + " (Stock: " + TRANSFORM(lnStockNuevo) + ")"
+            
+            && Sync precios (ej.: para tipo_cliente_id=1, precio=lnPrecioNuevo)
+            lcSQL = "INSERT INTO precios (producto_id, tipo_cliente_id, precio, fecha_vigencia) " + ;
+                    "VALUES (" + TRANSFORM(lnIdProducto) + ", 1, " + TRANSFORM(lnPrecioNuevo) + ", CURRENT_DATE) " + ;
+                    "ON CONFLICT (producto_id, tipo_cliente_id) DO UPDATE SET " + ;
+                    "precio = EXCLUDED.precio, fecha_vigencia = CURRENT_DATE"
+            SQLEXEC(lcConexion, lcSQL)
+            ? "Precio sync OK para tipo_cliente 1"
+        ELSE
+            ? "Error: " + MESSAGE()
+        ENDIF
+        SQLDISCONNECT(lcConexion)
+    ENDIF
+ENDFUNC
+
+&& Uso ejemplo: Llama después de editar en VFP
+SincronizarProducto(123, "ABC001", "Harina 1kg", 50.00, 15.50)</code></pre>
+            <ul>
+                <li>Adapta para otras tablas: Ej. para pedidos, agrega sync de pedido_items y actualiza stock_actual -= cantidad.</li>
+                <li>Para real-time: Integra en forms VFP. Logs: Escribe a archivo .txt en errores.</li>
+            </ul>
+        </div>
+
+        <div class="paso">
+            <h3>5. Pruebas</h3>
+            <ul>
+                <li>Ejecuta función con datos de prueba. Verifica en Postgres: <code>SELECT * FROM productos WHERE codigo_producto='ABC001' ORDER BY fecha_actualizacion DESC;</code></li>
+                <li>Escala: Para pedidos, sync batch si multi-items.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>Pasos para Ti (Desarrollador en Railway)</h2>
+        <div class="paso">
+            <h3>6. Preparar Postgres</h3>
+            <ul>
+                <li>Crea tablas (ya las tienes). Agrega índices: <code>CREATE INDEX idx_prod_codigo ON productos(codigo_producto);</code></li>
+                <li>Usuario sync: <code>CREATE USER sync_vfp WITH PASSWORD 'pass'; GRANT INSERT, UPDATE ON productos, precios TO sync_vfp;</code></li>
+                <li>Monitoreo: Usa Railway Metrics para queries.</li>
+            </ul>
+        </div>
+
+        <div class="paso">
+            <h3>7. Alternativa: API REST (Recomendada)</h3>
+            <p>Hostea en Railway (ej. Node.js). Endpoint ejemplo:</p>
+            <pre><code>POST /api/sync/producto
+Body: { "codigo_producto": "ABC001", "stock_actual": 50, "precio_base": 15.50 }
+Auth: Bearer token</code></pre>
+            <p>En VFP: Usa XMLHTTP para POST JSON. Más seguro que ODBC.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p><strong>Tiempo estimado:</strong> 2-3 días. Recursos: <a href="https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-foxpro/sqlconnect-function" target="_blank">VFP SQLConnect</a> | <a href="https://www.postgresql.org/docs/current/sql-insert.html#SQL-ON-CONFLICT" target="_blank">Postgres Upsert</a>. ¡Pregunta por más!</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Detallada: API REST con FastAPI para Sincronización VFP a Postgres en Railway</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; color: #333; }
+        h1, h2 { color: #007acc; border-bottom: 2px solid #007acc; padding-bottom: 5px; }
+        h3 { color: #555; }
+        table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background: #f4f4f4; padding: 15px; border-left: 4px solid #007acc; overflow-x: auto; border-radius: 5px; }
+        code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; font-family: monospace; }
+        ul, ol { margin: 10px 0; padding-left: 20px; }
+        .paso { background: #e8f4fd; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid #007acc; }
+        .codigo-bloque { margin: 10px 0; }
+        .advertencia { background: #fff3cd; padding: 10px; border-radius: 5px; border-left: 4px solid #ffc107; }
+        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center; color: #666; }
+
+        /* Tabs Styles */
+        .tabs { display: flex; margin-bottom: 20px; }
+        .tab-button { background: #007acc; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-right: 5px; border-radius: 5px 5px 0 0; }
+        .tab-button.active { background: #005a99; }
+        .tab-button:hover { background: #005a99; }
+        .tab-content { display: none; padding: 20px; background: white; border: 1px solid #ddd; border-radius: 0 5px 5px 5px; }
+        .tab-content.active { display: block; }
+    </style>
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</head>
+<body>
+    <h1>Guía Detallada: Implementación de API REST con FastAPI para Sincronización en Tiempo Real (VFP → Postgres en Railway)</h1>
+    <p><strong>Objetivo:</strong> Adaptada a tu stack (Python + FastAPI + PostgreSQL + Alembic + Pydantic + SQLAlchemy + HTMX/Hyperscript/JS/CSS). La API recibe actualizaciones desde VFP vía HTTP POST (JSON), valida con Pydantic, y actualiza Postgres con SQLAlchemy. Usa Alembic para futuras migraciones. La API se integra con tu frontend (HTMX para actualizaciones dinámicas si es necesario). Hosteada en Railway.</p>
+    <p><strong>Por qué FastAPI:</strong> Rápido, auto-docs (Swagger), validación nativa con Pydantic, async con SQLAlchemy. Tiempo real vía POST asíncronos. Endpoints específicos para tus tablas.</p>
+    <p><strong>Requisitos previos:</strong> Python 3.10+, pip install fastapi uvicorn sqlalchemy pydantic alembic psycopg2-binary. Tu DB Postgres en Railway ya con tablas. Tiempo: 3-5 días.</p>
+
+    <div class="tabs">
+        <button class="tab-button active" onclick="openTab('vfp')">Para el Desarrollador VFP</button>
+        <button class="tab-button" onclick="openTab('python')">Para el Desarrollador Python</button>
+    </div>
+
+    <div id="vfp" class="tab-content active">
+        <section>
+            <h2>Pasos para el Programador VFP (Integrar Llamadas HTTP a la API)</h2>
+            <div class="paso">
+                <h3>1. Definir Alcance y Autenticación</h3>
+                <p>La API usa un <strong>token API simple</strong> (cadena fija, ej.: "mi-token-secreto-vfp-2025") en header <code>X-API-Key</code>. En producción, rota con JWT (pídele al dev Python que lo implemente).</p>
+                <ul>
+                    <li><strong>Endpoints clave (de la API):</strong>
+                        <ul>
+                            <li>POST /api/sync/productos: Upsert producto (stock_actual, precio_base).</li>
+                            <li>POST /api/sync/precios: Upsert precio.</li>
+                            <li>POST /api/sync/clientes: Upsert cliente.</li>
+                            <li>POST /api/sync/tipos-cliente: Upsert tipo_cliente.</li>
+                            <li>POST /api/sync/pedidos: Crea pedido + items, resta stock en productos.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Formato JSON:</strong> Incluye <code>timestamp</code>. Ej.: <code>{ "codigo_producto": "ABC001", "nombre": "Harina 1kg", "stock_actual": 50.00, "precio_base": 15.50 }</code>.</li>
+                    <li>Mapeo: Igual a tablas VFP (ej.: Productos.dbf → productos).</li>
+                </ul>
+                <div class="advertencia">
+                    <strong>Seguridad:</strong> Guarda token en .ini, no en código.
+                </div>
+            </div>
+
+            <div class="paso">
+                <h3>2. Migración Inicial</h3>
+                <ul>
+                    <li>Usa Withdata DBCopier para datos base. Luego, solo deltas vía API.</li>
+                </ul>
+            </div>
+
+            <div class="paso">
+                <h3>3. Entorno de Prueba</h3>
+                <ul>
+                    <li>Prueba con Postman primero (pídele la URL al dev Python).</li>
+                    <li>Local: Copia DB VFP.</li>
+                </ul>
+            </div>
+
+            <div class="paso">
+                <h3>4. Código VFP para Llamadas HTTP</h3>
+                <p>Usa <code>XMLHTTP</code>. Llama al final de transacciones (ej.: post-TABLEUPDATE). Serializa JSON con VFPJSON.prg (descarga si no tienes).</p>
+                <div class="codigo-bloque">
+                    <pre><code>* Función genérica POST JSON
+FUNCTION EnviarASync(lcEndpoint, loData)
+    LOCAL loHttp, lcUrl, lcJson, lcResponse, lnStatus
+    lcUrl = "https://tu-app.railway.app" + lcEndpoint  && URL de la API
+    loData.timestamp = TTOC(DATETIME(), 1)
+
+    * Serializar JSON (usa librería VFPJSON.prg)
+    #INCLUDE "VFPJSON.PRG"  && Descarga de foxpro.com
+    lcJson = JSON_Encode(loData)
+
+    loHttp = CREATEOBJECT("MSXML2.ServerXMLHTTP")
+    loHttp.Open("POST", lcUrl, .F.)
+    loHttp.setRequestHeader("Content-Type", "application/json")
+    loHttp.setRequestHeader("X-API-Key", "mi-token-secreto-vfp-2025")
+    loHttp.Send(lcJson)
+
+    lnStatus = loHttp.Status
+    lcResponse = loHttp.responseText
+    loHttp = NULL
+
+    IF lnStatus = 200
+        ? "Sync OK: " + lcResponse
+        RETURN .T.
+    ELSE
+        * Log error
+        STRTOFILE("Error " + TRANSFORM(lnStatus) + ": " + lcResponse, "sync_log.txt", 1)
+        RETURN .F.
+    ENDIF
+ENDFUNC
+
+* Ejemplo: Sync Producto
+FUNCTION SincronizarProducto()
+    LOCAL loData
+    loData = CREATEOBJECT("Empty")
+    ADDPROPERTY(loData, "codigo_producto", ALLTRIM(Productos.codigo_producto))
+    ADDPROPERTY(loData, "nombre", ALLTRIM(Productos.nombre))
+    ADDPROPERTY(loData, "stock_actual", Productos.stock_actual)
+    ADDPROPERTY(loData, "precio_base", Productos.precio_base)
+    * Agrega otros: descripcion, etc.
+
+    EnviarASync("/api/sync/productos", loData)
+ENDFUNC
+
+* Para Pedidos: loData.items = array de objetos (usa loop para agregar)
+FUNCTION SincronizarPedido()
+    * ... recopila datos de Pedidos.dbf y PedidoItems.dbf
+    loData.numero_pedido = ALLTRIM(Pedidos.numero_pedido)
+    loData.cliente_id = Pedidos.cliente_id
+    * ... otros campos
+    loData.items = CREATEOBJECT("Collection")
+    * Loop por items: ADDPROPERTY(loData.items, "producto_id", ...)  && O usa array
+    EnviarASync("/api/sync/pedidos", loData)
+ENDFUNC
+
+* Integra en forms: En Save event: SincronizarProducto()</code></pre>
+                </div>
+                <ul>
+                    <li><strong>JSON:</strong> Descarga VFPJSON.prg para encode/decode.</li>
+                    <li><strong>Real-time:</strong> Llama en eventos de forms.</li>
+                </ul>
+            </div>
+
+            <div class="paso">
+                <h3>5. Pruebas</h3>
+                <ul>
+                    <li>Ejecuta funciones con datos prueba. Verifica logs y DB via pgAdmin.</li>
+                    <li>Simula: Edita stock local → sync → chequea cloud.</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <div id="python" class="tab-content">
+        <section>
+            <h2>Pasos para Ti (Desarrollador Python: Crear API con FastAPI + SQLAlchemy + Pydantic)</h2>
+            <div class="paso">
+                <h3>1. Setup del Proyecto</h3>
+                <ol>
+                    <li><strong>Entorno:</strong> <code>pip install fastapi uvicorn sqlalchemy pydantic alembic psycopg2-binary python-dotenv</code>.</li>
+                    <li><strong>Estructura:</strong>
+                        <ul>
+                            <li><code>main.py</code>: App FastAPI.</li>
+                            <li><code>models.py</code>: SQLAlchemy models (basados en tus CREATE TABLE).</li>
+                            <li><code>schemas.py</code>: Pydantic schemas para validación.</li>
+                            <li><code>database.py</code>: Conexión SQLAlchemy.</li>
+                            <li><code>.env</code>: <code>DATABASE_URL=postgresql://user:pass@host:5432/db<br>API_KEY=mi-token-secreto-vfp-2025<br>SECRET_KEY=tu-secret-jwt</code> (de Railway).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Alembic:</strong> <code>alembic init migrations</code>, configura <code>alembic.ini</code> con sqlalchemy.url = ${DATABASE_URL}. Para migraciones futuras: <code>alembic revision --autogenerate -m "Add sync fields"</code>.</li>
+                </ol>
+            </div>
+
+            <div class="paso">
+                <h3>2. Código: Models SQLAlchemy (models.py)</h3>
+                <p>Define ORM models para tus tablas. Agrega <code>fecha_actualizacion</code> si no está.</p>
+                <div class="codigo-bloque">
+                    <pre><code>from sqlalchemy import Column, Integer, String, Text, Float, Boolean, Date, Time, ForeignKey, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.sql import func
+from sqlalchemy.dialects.postgresql import DECIMAL
+
+Base = declarative_base()
+
+class Producto(Base):
+    __tablename__ = "productos"
+    id = Column(Integer, primary_key=True, index=True)
+    codigo_producto = Column(String(50), unique=True, nullable=False)
+    nombre = Column(String(255), nullable=False)
+    descripcion = Column(Text)
+    marca_id = Column(Integer)
+    categoria_id = Column(Integer)
+    unidad_base = Column(String(50))
+    precio_base = Column(DECIMAL(10, 2))
+    stock_actual = Column(DECIMAL(10, 2))
+    stock_minimo = Column(DECIMAL(10, 2))
+    activo = Column(Boolean, default=True)
+    fecha_creacion = Column(DateTime, server_default=func.now())
+    fecha_actualizacion = Column(DateTime, default=func.now(), onupdate=func.now())
+
+class Precio(Base):
+    __tablename__ = "precios"
+    id = Column(Integer, primary_key=True, index=True)
+    producto_id = Column(Integer, ForeignKey("productos.id"))
+    tipo_cliente_id = Column(Integer, ForeignKey("tipos_cliente.id"))
+    precio = Column(DECIMAL(10, 2), nullable=False)
+    fecha_vigencia = Column(Date)
+    activo = Column(Boolean, default=True)
+    __table_args__ = (UniqueConstraint('producto_id', 'tipo_cliente_id'),)
+
+# Similar para Clientes, TiposCliente, Pedidos, PedidoItems...
+class Cliente(Base):
+    __tablename__ = "clientes"
+    id = Column(Integer, primary_key=True, index=True)
+    ruc = Column(String(11))
+    dni = Column(String(8))
+    razon_social = Column(String(255), nullable=False)
+    # ... otros campos
+
+class TipoCliente(Base):
+    __tablename__ = "tipos_cliente"
+    id = Column(Integer, primary_key=True, index=True)
+    codigo = Column(String(20), unique=True, nullable=False)
+    nombre = Column(String(100), nullable=False)
+    # ... 
+
+class Pedido(Base):
+    __tablename__ = "pedidos"
+    id = Column(Integer, primary_key=True, index=True)
+    numero_pedido = Column(String(50), unique=True, nullable=False)
+    fecha = Column(Date, nullable=False)
+    hora = Column(Time, nullable=False)
+    # ... otros
+
+class PedidoItem(Base):
+    __tablename__ = "pedido_items"
+    id = Column(Integer, primary_key=True, index=True)
+    pedido_id = Column(Integer, ForeignKey("pedidos.id"))
+    producto_id = Column(Integer, ForeignKey("productos.id"))
+    # ...</code></pre>
+                </div>
+            </div>
+
+            <div class="paso">
+                <h3>3. Código: Schemas Pydantic (schemas.py)</h3>
+                <p>Para validación de requests/responses.</p>
+                <div class="codigo-bloque">
+                    <pre><code>from pydantic import BaseModel
+from typing import List, Optional
+from datetime import datetime
+
+class ProductoSync(BaseModel):
+    codigo_producto: str
+    nombre: str
+    descripcion: Optional[str] = None
+    marca_id: Optional[int] = None
+    categoria_id: Optional[int] = None
+    unidad_base: Optional[str] = None
+    precio_base: Optional[float] = None
+    stock_actual: Optional[float] = None
+    stock_minimo: Optional[float] = None
+    activo: bool = True
+
+class PrecioSync(BaseModel):
+    producto_id: int
+    tipo_cliente_id: int
+    precio: float
+    fecha_vigencia: Optional[str] = None  # YYYY-MM-DD
+    activo: bool = True
+
+# Similar para otros
+class PedidoItemSync(BaseModel):
+    producto_id: int
+    cantidad: float
+    precio_unitario_venta: float
+    unidad_medida_venta: Optional[str] = "unidad"
+
+class PedidoSync(BaseModel):
+    numero_pedido: str
+    fecha: str  # YYYY-MM-DD
+    hora: str   # HH:MM:SS
+    vendedor_id: Optional[int] = None
+    cliente_id: int
+    tipo_venta: str
+    tipo_pago: str
+    metodo_pago: str
+    estado: str
+    total: float
+    monto_total: float
+    observaciones: Optional[str] = None
+    latitud_pedido: Optional[float] = None
+    longitud_pedido: Optional[float] = None
+    items: List[PedidoItemSync]</code></pre>
+                </div>
+            </div>
+
+            <div class="paso">
+                <h3>4. Código: Database y Main FastAPI (database.py y main.py)</h3>
+                <div class="codigo-bloque">
+                    <pre><code># database.py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from .env import load_dotenv
+import os
+
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()</code></pre>
+                </div>
+                <div class="codigo-bloque">
+                    <pre><code># main.py
+from fastapi import FastAPI, Depends, HTTPException, Header
+from sqlalchemy.orm import Session
+from sqlalchemy import update
+from .database import get_db, engine
+from .models import Base, Producto, Precio, Cliente, TipoCliente, Pedido, PedidoItem  # Importa todos
+from .schemas import ProductoSync, PrecioSync, ClienteSync, TipoClienteSync, PedidoSync  # Define todos
+from .env import load_dotenv
+import os
+from datetime import datetime
+
+load_dotenv()
+app = FastAPI(title="API Sync VFP", version="1.0")
+
+Base.metadata.create_all(bind=engine)  # Crea tablas si no existen (usa Alembic en prod)
+
+API_KEY = os.getenv("API_KEY")
+
+# Dependencia auth
+def verify_key(x_api_key: str = Header(None)):
+    if x_api_key != API_KEY:
+        raise HTTPException(status_code=401, detail="Token inválido")
+    return x_api_key
+
+# Endpoint Productos
+@app.post("/api/sync/productos", response_model=dict)
+def sync_producto(producto: ProductoSync, db: Session = Depends(get_db), _=Depends(verify_key)):
+    try:
+        # Busca por codigo_producto
+        existing = db.query(Producto).filter(Producto.codigo_producto == producto.codigo_producto).first()
+        if existing:
+            # Update
+            for field, value in producto.dict(exclude_unset=True).items():
+                setattr(existing, field, value)
+            existing.fecha_actualizacion = datetime.now()
+            db.commit()
+            db.refresh(existing)
+            return {"success": True, "message": f"Producto {producto.codigo_producto} actualizado. ID: {existing.id}"}
+        else:
+            # Insert
+            new_producto = Producto(**producto.dict())
+            db.add(new_producto)
+            db.commit()
+            db.refresh(new_producto)
+            return {"success": True, "message": f"Producto {producto.codigo_producto} creado. ID: {new_producto.id}"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Endpoint Precios
+@app.post("/api/sync/precios", response_model=dict)
+def sync_precio(precio: PrecioSync, db: Session = Depends(get_db), _=Depends(verify_key)):
+    try:
+        existing = db.query(Precio).filter(Precio.producto_id == precio.producto_id, Precio.tipo_cliente_id == precio.tipo_cliente_id).first()
+        if existing:
+            for field, value in precio.dict(exclude_unset=True).items():
+                setattr(existing, field, value)
+            db.commit()
+            return {"success": True, "message": f"Precio actualizado"}
+        else:
+            new_precio = Precio(**precio.dict())
+            db.add(new_precio)
+            db.commit()
+            return {"success": True, "message": f"Precio creado"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Endpoint Clientes (upsert por ruc/dni/razon_social)
+@app.post("/api/sync/clientes", response_model=dict)
+def sync_cliente(cliente: ClienteSync, db: Session = Depends(get_db), _=Depends(verify_key)):
+    # Lógica similar: query por ruc o dni o razon_social, update o insert
+    # ... (implementa como en productos, con fallback en query)
+    pass  # Placeholder: Copia patrón de productos
+
+# Endpoint Tipos Cliente
+@app.post("/api/sync/tipos-cliente", response_model=dict)
+def sync_tipo_cliente(tipo: TipoClienteSync, db: Session = Depends(get_db), _=Depends(verify_key)):
+    # Similar upsert por codigo
+    pass
+
+# Endpoint Pedidos (con transacción)
+@app.post("/api/sync/pedidos", response_model=dict)
+def sync_pedido(pedido: PedidoSync, db: Session = Depends(get_db), _=Depends(verify_key)):
+    try:
+        db.begin()  # Transacción manual
+        # Insert/upsert pedido (por numero_pedido)
+        existing_pedido = db.query(Pedido).filter(Pedido.numero_pedido == pedido.numero_pedido).first()
+        if not existing_pedido:
+            new_pedido = Pedido(**pedido.dict(exclude={"items"}))
+            db.add(new_pedido)
+            db.flush()  # Para obtener ID
+        else:
+            new_pedido = existing_pedido
+            # Update campos si necesario
+
+        pedido_id = new_pedido.id
+
+        # Insert items
+        for item in pedido.items:
+            new_item = PedidoItem(
+                pedido_id=pedido_id,
+                producto_id=item.producto_id,
+                unidad_medida_venta=item.unidad_medida_venta,
+                cantidad=item.cantidad,
+                precio_unitario_venta=item.precio_unitario_venta,
+                subtotal=item.cantidad * item.precio_unitario_venta
+            )
+            db.add(new_item)
+
+            # Actualiza stock
+            db.execute(
+                update(Producto).where(Producto.id == item.producto_id).values(
+                    stock_actual=Producto.stock_actual - item.cantidad,
+                    fecha_actualizacion=datetime.now()
+                )
+            )
+
+        db.commit()
+        return {"success": True, "message": f"Pedido {pedido.numero_pedido} sincronizado con {len(pedido.items)} items"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/health")
+def health():
+    return {"status": "OK", "timestamp": datetime.now().isoformat()}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)</code></pre>
+                </div>
+                <ul>
+                    <li><strong>Explicación:</strong> Pydantic valida input, SQLAlchemy maneja CRUD con upsert. Transacciones evitan inconsistencias. Auto-docs en /docs.</li>
+                    <li><strong>Integración frontend:</strong> Usa HTMX para calls async desde tu UI (ej.: hx-post="/api/sync" hx-trigger="save").</li>
+                </ul>
+            </div>
+
+            <div class="paso">
+                <h3>5. Pruebas Locales</h3>
+                <ol>
+                    <li>Ejecuta: <code>uvicorn main:app --reload</code>. Ve http://localhost:8000/docs para Swagger.</li>
+                    <li>Postman: POST /api/sync/productos con JSON, header X-API-Key.</li>
+                    <li>Verifica DB: Usa SQLAlchemy en shell o pgAdmin.</li>
+                </ol>
+            </div>
+
+            <div class="paso">
+                <h3>6. Deploy en Railway</h3>
+                <ol>
+                    <li><code>requirements.txt</code>: Lista paquetes (pip freeze > requirements.txt).</li>
+                    <li><code>Procfile</code>: <code>web: uvicorn main:app --host 0.0.0.0 --port $PORT</code>.</li>
+                    <li>Git: Commit y push a GitHub.</li>
+                    <li>Railway: New Project > GitHub repo. Vincula a Postgres (inyecta DATABASE_URL). Agrega var API_KEY.</li>
+                    <li>Deploy auto. URL: https://tu-app.railway.app/docs para test.</li>
+                    <li>Alembic en Railway: Usa Railway cron para migraciones si needed.</li>
+                </ol>
+                <div class="advertencia">
+                    <strong>Costos:</strong> Bajo para sync; monitorea con Railway Metrics.
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p><strong>Próximos:</strong> Implementa local, prueba cross-team. Errores? Avísame. Recursos: <a href="https://fastapi.tiangolo.com/" target="_blank">FastAPI Docs</a> | <a href="https://docs.sqlalchemy.org/" target="_blank">SQLAlchemy</a> | <a href="https://alembic.sqlalchemy.org/" target="_blank">Alembic</a>. ¡Listo para vendedores! 😊</p>
+        <p><em>Fecha: 14 de octubre de 2025</em></p>
+    </footer>
+</body>
+</html>
