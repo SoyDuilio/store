@@ -442,3 +442,11 @@ async def configuracion(request: Request):
 @app.get("/vfp", response_class=HTMLResponse)
 async def vfp(request: Request):
     return templates.TemplateResponse("vfp.html", {"request": request})
+
+@app.get("/odbc", response_class=HTMLResponse)
+async def odbc(request: Request):
+    return templates.TemplateResponse("odbc.html", {"request": request})
+
+@app.get("/api", response_class=HTMLResponse)
+async def api(request: Request):
+    return templates.TemplateResponse("api_rest.html", {"request": request})
