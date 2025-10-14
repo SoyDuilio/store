@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Técnica: Sincronización de Bases de Datos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #0f1419;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+            overflow: hidden;
+            border: 1px solid #2a2a3e;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .header .meta {
+            margin-top: 20px;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 16px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .content {
+            padding: 50px 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            padding: 35px;
+            background: #1a1d2e;
+            border-radius: 16px;
+            border: 1px solid #2a2d4e;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #2a2d4e;
+        }
+        
+        .section h3 {
+            color: #8b92ea;
+            font-size: 1.5em;
+            margin: 30px 0 20px 0;
+            padding-left: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .icon {
+            font-size: 1.4em;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        
+        .alert-box {
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 5px solid;
+            backdrop-filter: blur(10px);
+        }
+        
+        .alert-critical {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(220, 38, 38, 0.1) 100%);
+            border-color: #ef4444;
+        }
+        
+        .alert-critical h4 {
+            color: #fca5a5;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+        
+        .alert-warning {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border-color: #fbbf24;
+        }
+        
+        .alert-warning h4 {
+            color: #fcd34d;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+        
+        .alert-info {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.1) 100%);
+            border-color: #3b82f6;
+        }
+        
+        .alert-info h4 {
+            color: #93c5fd;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(22, 163, 74, 0.1) 100%);
+            border-color: #22c55e;
+        }
+        
+        .alert-success h4 {
+            color: #86efac;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+        
+        .code-block {
+            background: #0d1117;
+            color: #c9d1d9;
+            padding: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            border: 1px solid #30363d;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .code-block .comment {
+            color: #8b949e;
+            font-style: italic;
+        }
+        
+        .code-block .keyword {
+            color: #ff7b72;
+            font-weight: 600;
+        }
+        
+        .code-block .string {
+            color: #a5d6ff;
+        }
+        
+        .code-block .function {
+            color: #d2a8ff;
+        }
+        
+        .code-block .number {
+            color: #79c0ff;
+        }
+        
+        .architecture-diagram {
+            background: #1a1d2e;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+            text-align: center;
+            border: 2px dashed #2a2d4e;
+        }
+        
+        .system-box {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px 30px;
+            border-radius: 12px;
+            color: white;
+            margin: 15px;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            min-width: 200px;
+        }
+        
+        .arrow {
+            font-size: 2em;
+            color: #667eea;
+            margin: 0 20px;
+            display: inline-block;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1a1d2e;
+        }
+        
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #2a2d4e;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+        
+        tr:hover {
+            background: #252837;
+        }
+        
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 25px 0;
+            padding: 25px;
+            background: #252837;
+            border-radius: 12px;
+            position: relative;
+            padding-left: 80px;
+            border: 1px solid #2a2d4e;
+            transition: all 0.3s ease;
+        }
+        
+        .step-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+        
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 25px;
+            top: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 3px 8px;
+            border-radius: 6px;
+            color: #0f1419;
+            font-weight: 600;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 0 5px;
+        }
+        
+        .badge-critical {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .badge-warning {
+            background: #fbbf24;
+            color: #0f1419;
+        }
+        
+        .badge-success {
+            background: #22c55e;
+            color: white;
+        }
+        
+        .footer {
+            background: #0d1117;
+            color: #8b949e;
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid #2a2d4e;
+        }
+        
+        .footer p {
+            margin: 10px 0;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>🔄 Guía Técnica de Integración</h1>
+                <div class="subtitle">Sincronización Visual FoxPro ↔ PostgreSQL (Railway)</div>
+                <div class="meta">
+                    <div class="meta-item">📅 Octubre 2025</div>
+                    <div class="meta-item">🎯 Sistema de Distribución</div>
+                    <div class="meta-item">⚡ Crítico para Operación</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <!-- RESUMEN EJECUTIVO -->
+            <div class="section">
+                <h2><span class="icon">📋</span>Resumen Ejecutivo</h2>
+                
+                <div class="alert-box alert-critical">
+                    <h4>🚨 SITUACIÓN ACTUAL</h4>
+                    <p>Actualmente operamos con <strong>DOS sistemas independientes</strong> que NO se comunican entre sí:</p>
+                    <ul style="margin-top: 15px; padding-left: 25px;">
+                        <li><strong>Sistema Local (Visual FoxPro):</strong> Gestiona el 100% de las operaciones internas: ventas en tienda, inventario, clientes, precios, compras.</li>
+                        <li><strong>Sistema Web (PostgreSQL/Railway):</strong> Gestiona vendedores externos, pedidos de campo, seguimiento GPS, estadísticas en línea.</li>
+                    </ul>
+                </div>
+                
+                <div class="alert-box alert-warning">
+                    <h4>⚠️ PROBLEMA CRÍTICO</h4>
+                    <p><strong>Los vendedores externos NO pueden acceder a información actualizada</strong> porque el sistema web no conoce los cambios que ocurren en el sistema local:</p>
+                    <ul style="margin-top: 15px; padding-left: 25px;">
+                        <li>❌ Productos nuevos agregados en VFP no aparecen en la app móvil</li>
+                        <li>❌ Cambios de precios no se reflejan en tiempo real</li>
+                        <li>❌ Stock actualizado en tienda no es visible para vendedores</li>
+                        <li>❌ Nuevos clientes registrados no están disponibles</li>
+                        <li>❌ Categorías de clientes desactualizadas generan precios incorrectos</li>
+                    </ul>
+                </div>
+                
+                <div class="alert-box alert-success">
+                    <h4>✅ SOLUCIÓN NECESARIA</h4>
+                    <p>Implementar un <strong>sistema de sincronización bidireccional</strong> que mantenga ambas bases de datos actualizadas en tiempo real o mediante procesos programados.</p>
+                </div>
+            </div>
+            
+            <!-- ARQUITECTURA ACTUAL -->
+            <div class="section">
+                <h2><span class="icon">🏗️</span>Arquitectura Actual del Sistema</h2>
+                
+                <div class="architecture-diagram">
+                    <div style="margin-bottom: 30px;">
+                        <div class="system-box">
+                            <div style="font-size: 2em; margin-bottom: 10px;">🖥️</div>
+                            <strong>VISUAL FOXPRO</strong><br>
+                            <small>Sistema Local (DBF)</small><br>
+                            <small>Operaciones Internas</small>
+                        </div>
+                        
+                        <div class="arrow">⚠️</div>
+                        <div style="display: inline-block; color: #ef4444; font-weight: bold; vertical-align: middle;">
+                            SIN COMUNICACIÓN
+                        </div>
+                        <div class="arrow">⚠️</div>
+                        
+                        <div class="system-box">
+                            <div style="font-size: 2em; margin-bottom: 10px;">☁️</div>
+                            <strong>POSTGRESQL</strong><br>
+                            <small>Railway Cloud</small><br>
+                            <small>Vendedores Externos</small>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding-top: 30px; border-top: 2px dashed #2a2d4e;">
+                        <h3 style="color: #22c55e; margin-bottom: 20px;">✅ ARQUITECTURA OBJETIVO</h3>
+                        
+                        <div class="system-box">
+                            <div style="font-size: 2em; margin-bottom: 10px;">🖥️</div>
+                            <strong>VISUAL FOXPRO</strong><br>
+                            <small>Fuente Principal</small>
+                        </div>
+                        
+                        <div class="arrow" style="color: #22c55e;">⟷</div>
+                        
+                        <div class="system-box" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);">
+                            <div style="font-size: 2em; margin-bottom: 10px;">🔄</div>
+                            <strong>API REST</strong><br>
+                            <small>Middleware de Sincronización</small>
+                        </div>
+                        
+                        <div class="arrow" style="color: #22c55e;">⟷</div>
+                        
+                        <div class="system-box">
+                            <div style="font-size: 2em; margin-bottom: 10px;">☁️</div>
+                            <strong>POSTGRESQL</strong><br>
+                            <small>Réplica Sincronizada</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TABLAS A SINCRONIZAR -->
+            <div class="section">
+                <h2><span class="icon">📊</span>Datos Críticos que Deben Sincronizarse</h2>
+                
+                <h3>🔴 Prioridad CRÍTICA (Sincronización en Tiempo Real)</h3>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tabla</th>
+                                <th>Descripción</th>
+                                <th>Dirección</th>
+                                <th>Impacto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>productos</strong></td>
+                                <td>Catálogo completo de productos</td>
+                                <td>VFP → PostgreSQL</td>
+                                <td><span class="badge badge-critical">CRÍTICO</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>precios</strong></td>
+                                <td>Precios por tipo de cliente</td>
+                                <td>VFP → PostgreSQL</td>
+                                <td><span class="badge badge-critical">CRÍTICO</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>stock / inventario</strong></td>
+                                <td>Disponibilidad de productos</td>
+                                <td>VFP → PostgreSQL</td>
+                                <td><span class="badge badge-critical">CRÍTICO</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>clientes</strong></td>
+                                <td>Base de clientes activos</td>
+                                <td>VFP ⟷ PostgreSQL</td>
+                                <td><span class="badge badge-critical">CRÍTICO</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>tipos_cliente</strong></td>
+                                <td>Categorías (bodega, mercado, etc.)</td>
+                                <td>VFP → PostgreSQL</td>
+                                <td><span class="badge badge-critical">CRÍTICO</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>🟡 Prioridad ALTA (Sincronización Cada 30 minutos)</h3>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tabla</th>
+                                <th>Descripción</th>
+                                <th>Dirección</th>
+                                <th>Impacto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>pedidos</strong></td>
+                                <td>Pedidos creados por vendedores</td>
+                                <td>PostgreSQL → VFP</td>
+                                <td><span class="badge badge-warning">ALTO</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>pedido_items</strong></td>
+                                <td>Detalle de productos en pedidos</td>
+                                <td>PostgreSQL → VFP</td>
+                                <td><span class="badge badge-warning">ALTO</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>vendedores</strong></td>
+                                <td>Datos de vendedores externos</td>
+                                <td>VFP ⟷ PostgreSQL</td>
+                                <td><span class="badge badge-warning">ALTO</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>rutas_vendedor</strong></td>
+                                <td>Asignación de zonas</td>
+                                <td>VFP → PostgreSQL</td>
+                                <td><span class="badge badge-warning">ALTO</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>🟢 Prioridad MEDIA (Sincronización Diaria)</h3>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tabla</th>
+                                <th>Descripción</th>
+                                <th>Dirección</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>promociones</strong></td>
+                                <td>Ofertas y descuentos activos</td>
+                                <td>VFP → PostgreSQL</td>
+                            </tr>
+                            <tr>
+                                <td><strong>unidades_medida</strong></td>
+                                <td>Catálogo de unidades (caja, paquete, etc.)</td>
+                                <td>VFP → PostgreSQL</td>
+                            </tr>
+                            <tr>
+                                <td><strong>marcas</strong></td>
+                                <td>Marcas de productos</td>
+                                <td>VFP → PostgreSQL</td>
+                            </tr>
+                            <tr>
+                                <td><strong>categorias_producto</strong></td>
+                                <td>Clasificación de productos</td>
+                                <td>VFP → PostgreSQL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- ESTRUCTURA DE POSTGRESQL -->
+            <div class="section">
+                <h2><span class="icon">🗄️</span>Estructura de PostgreSQL (Railway)</h2>
+                
+                <div class="alert-box alert-info">
+                    <h4>📌 INFORMACIÓN PARA EL DESARROLLADOR VFP</h4>
+                    <p>A continuación se detallan las tablas principales que YA EXISTEN en PostgreSQL y que necesitan recibir datos desde Visual FoxPro.</p>
+                </div>
+                
+                <h3>Tabla: <span class="highlight">productos</span></h3>
+                
+                <div class="code-block">
+<span class="keyword">CREATE TABLE</span> productos (
+    id                  <span class="keyword">SERIAL PRIMARY KEY</span>,
+    codigo_producto     <span class="keyword">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">UNIQUE NOT NULL</span>,
+    nombre              <span class="keyword">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT NULL</span>,
+    descripcion         <span class="keyword">TEXT</span>,
+    marca_id            <span class="keyword">INTEGER</span>,
+    categoria_id        <span class="keyword">INTEGER</span>,
+    unidad_base         <span class="keyword">VARCHAR</span>(<span class="number">50</span>),
+    precio_base         <span class="keyword">DECIMAL</span>(<span class="number">10</span>,<span class="number">2</span>),
+    stock_actual        <span class="keyword">DECIMAL</span>(<span class="number">10</span>,<span class="number">2</span>),
+    stock_minimo        <span class="keyword">DECIMAL</span>(<span class="number">10</span>,<span class="number">2</span>),
+    activo              <span class="keyword">BOOLEAN DEFAULT TRUE</span>,
+    fecha_creacion      <span class="keyword">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>,
+    fecha_actualizacion <span class="keyword">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span class="comment">-- Ejemplo de datos:</span>
+<span class="comment">-- codigo_producto: 'CERV-PIL-CHI'</span>
+<span class="comment">-- nombre: 'Cerveza Pilsen Callao 330ml'</span>
+<span class="comment">-- stock_actual: 2000.00</span>
+<span class="comment">-- precio_base: 3.50</span>
+                </div>
+                
+                <h3>Tabla: <span class="highlight">precios</span></h3>
+                
+                <div class="code-block">
+<span class="keyword">CREATE TABLE</span> precios (
+    id                <span class="keyword">SERIAL PRIMARY KEY</span>,
+    producto_id       <span class="keyword">INTEGER REFERENCES</span> productos(id),
+    tipo_cliente_id   <span class="keyword">INTEGER REFERENCES</span> tipos_cliente(id),
+    precio            <span class="keyword">DECIMAL</span>(<span class="number">10</span>,<span class="number">2</span>) <span class="keyword">NOT NULL</span>,
+    fecha_vigencia    <span class="keyword">DATE</span>,
+    activo            <span class="keyword">BOOLEAN DEFAULT TRUE</span>,
+    <span class="keyword">UNIQUE</span>(producto_id, tipo_cliente_id)
+);
+
+<span class="comment">-- ⚠️ CRÍTICO: Esta tabla define precios diferenciados</span>
+<span class="comment">-- Ejemplo:</span>
+<span class="comment">-- Cerveza Pilsen para BODEGA: S/. 3.50</span>
+<span class="comment">-- Cerveza Pilsen para MINIMARKET: S/. 3.20</span>
+<span class="comment">-- Cerveza Pilsen para RESTAURANTE: S/. 3.80</span>
+                </div>
+                
+                <h3>Tabla: <span class="highlight">clientes</span></h3>
+                
+                <div class="code-block">
+<span class="keyword">CREATE TABLE</span> clientes (
+    id                  <span class="keyword">SERIAL PRIMARY KEY</span>,
+    ruc                 <span class="keyword">VARCHAR</span>(<span class="number">11</span>),
+    dni                 <span class="keyword">VARCHAR</span>(<span class="number">8</span>),
+    razon_social        <span class="keyword">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT NULL</span>,
+    nombre_comercial    <span class="keyword">VARCHAR</span>(<span class="number">255</span>),
+    tipo_cliente_id     <span class="keyword">INTEGER REFERENCES</span> tipos_cliente(id),
+    direccion           <span class="keyword">TEXT</span>,
+    distrito            <span class="keyword">VARCHAR</span>(<span class="number">100</span>),
+    provincia           <span class="keyword">VARCHAR</span>(<span class="number">100</span>),
+    departamento        <span class="keyword">VARCHAR</span>(<span class="number">100</span>),
+    telefono            <span class="keyword">VARCHAR</span>(<span class="number">20</span>),
+    email               <span class="keyword">VARCHAR</span>(<span class="number">100</span>),
+    activo              <span class="keyword">BOOLEAN DEFAULT TRUE</span>,
+    fecha_registro      <span class="keyword">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span class="comment">-- ⚠️ MUY IMPORTANTE: tipo_cliente_id define qué precios aplican</span>
+                </div>
+                
+                <h3>Tabla: <span class="highlight">tipos_cliente</span></h3>
+                
+                <div class="code-block">
+<span class="keyword">CREATE TABLE</span> tipos_cliente (
+    id          <span class="keyword">SERIAL PRIMARY KEY</span>,
+    codigo      <span class="keyword">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">UNIQUE NOT NULL</span>,
+    nombre      <span class="keyword">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">NOT NULL</span>,
+    descripcion <span class="keyword">TEXT</span>,
+    activo      <span class="keyword">BOOLEAN DEFAULT TRUE</span>
+);
+
+<span class="comment">-- Ejemplos de tipos:</span>
+<span class="comment">-- 'BODEGA' - Bodegas de barrio</span>
+<span class="comment">-- 'MINIMARKET' - Minimarkets</span>
+<span class="comment">-- 'RESTAURANTE' - Restaurantes</span>
+<span class="comment">-- 'PUESTO_MERCADO' - Puestos en mercados</span>
+                </div>
+                
+                <h3>Tabla: <span class="highlight">pedidos</span> (recibe datos de vendedores)</h3>
+                
+                <div class="code-block">
+<span class="keyword">CREATE TABLE</span> pedidos (
+    id                      <span class="keyword">SERIAL PRIMARY KEY</span>,
+    numero_pedido           <span class="keyword">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">UNIQUE NOT NULL</span>,
+    fecha                   <span class="keyword">DATE NOT NULL</span>,
+    hora                    <span class="keyword">TIME NOT NULL</span>,
+    vendedor_id             <span class="keyword">INTEGER REFERENCES</span> vendedores(vendedor_id),
+    cliente_id              <span class="keyword">INTEGER REFERENCES</span> clientes(id),
+    tipo_venta              <span class="keyword">VARCHAR</span>(<span class="number">20</span>), <span class="comment">-- 'interna' o 'externa'</span>
+    tipo_pago               <span class="keyword">VARCHAR</span>(<span class="number">20</span>), <span class="comment">-- 'contado' o 'credito'</span>
+    metodo_pago             <span class="keyword">VARCHAR</span>(<span class="number">50</span>), <span class="comment">-- 'efectivo', 'transferencia', etc.</span>
+    estado                  <span class="keyword">VARCHAR</span>(<span class="number">30</span>), <span class="comment">-- 'pendiente_aprobacion', 'aprobado', 'rechazado'</span>
+    total                   <span class="keyword">DECIMAL</span>(<span class="number">12</span>,<span class="number">2</span>) <span class="keyword">NOT NULL</span>,
+    monto_total             <span class="keyword">DECIMAL</span>(<span class="number">12</span>,<span class="number">2</span>) <span class="keyword">NOT NULL</span>,
+    observaciones           <span class="keyword">TEXT</span>,
+    latitud_pedido          <span class="keyword">DECIMAL</span>(<span class="number">10</span>,<span class="number">7</span>),
+    longitud_pedido         <span class="keyword">DECIMAL</span>(<span class="number">10</span>,<span class="number">7</span>),
+    fecha_creacion          <span class="keyword">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span class="comment">-- ⚠️ IMPORTANTE: Los pedidos desde la web deben SINCRONIZARSE a VFP</span>
+<span class="comment">-- para procesamiento en el sistema principal</span>
+                </div>
+                
+                <h3>Tabla: <span class="highlight">pedido_items</span></h3>
+                
+                <div class="code-block">
+<span class="keyword">CREATE TABLE</span> pedido_items (
+    id                      <span class="keyword">SERIAL PRIMARY KEY</span>,
+    pedido_id               <span class="keyword">INTEGER REFERENCES</span> pedidos(id),
+    producto_id             <span class="keyword">INTEGER REFERENCES</span> productos(id),
+    unidad_medida_venta     <span class="keyword">VARCHAR</span>(<span class="number">50</span>),
+    cantidad                <span class="keyword">DECIMAL</span>(<span class="number">10</span>,<span class="number">2</span>) <span class="keyword">NOT NULL</span>,
+    precio_unitario_venta   <span class="keyword">DECIMAL</span>(<span class="number">10</span>,<span class="number">2</span>) <span class="keyword">NOT NULL</span>,
+    subtotal                <span class="keyword">DECIMAL</span>(<span class="number">12</span>,<span class="number">2</span>) <span class="keyword">NOT NULL</span>
+);
+                </div>
+            </div>
+            
+            <!-- MÉTODOS DE SINCRONIZACIÓN -->
+            <div class="section">
+                <h2><span class="icon">🔄</span>Métodos de Sincronización Propuestos</h2>
+                
+                <div class="grid-2">
+                    <div class="alert-box alert-info">
+                        <h4>📤 OPCIÓN 1: API REST (Recomendado)</h4>
+                        <p><strong>Visual FoxPro envía datos vía HTTP</strong></p>
+                        <ul style="margin-top: 15px; padding-left: 25px;">
+                            <li>✅ Tiempo real o programado</li>
+                            <li>✅ Fácil de implementar</li>
+                            <li>✅ No requiere acceso directo a BD</li>
+                            <li>✅ Seguro (autenticación por token)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="alert-box alert-warning">
+                        <h4>📥 OPCIÓN 2: Conexión Directa PostgreSQL</h4>
+                        <p><strong>VFP conecta directamente a Railway</strong></p>
+                        <ul style="margin-top: 15px; padding-left: 25px;">
+                            <li>⚠️ Requiere driver ODBC/libpq</li>
+                            <li>⚠️ Expone la base de datos</li>
+                            <li>✅ Queries SQL directos</li>
+                            <li>⚠️ Más complejo de mantener</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>🚀 Implementación Recomendada: API REST</h3>
+                
+                <div class="alert-box alert-success">
+                    <h4>✅ ENFOQUE PROPUESTO</h4>
+                    <p>Crear <strong>endpoints API</strong> en el sistema web que reciban datos desde Visual FoxPro mediante peticiones HTTP POST/PUT.</p>
+                </div>
+                
+                <h3>Endpoints Necesarios (Ya disponibles en el sistema):</h3>
+                
+                <div class="code-block">
+<span class="comment">-- PRODUCTOS</span>
+<span class="keyword">POST</span>   /api/sync/productos              <span class="comment">→ Crear/actualizar productos</span>
+<span class="keyword">PUT</span>    /api/sync/productos/{codigo}     <span class="comment">→ Actualizar producto específico</span>
+
+<span class="comment">-- PRECIOS</span>
+<span class="keyword">POST</span>   /api/sync/precios                <span class="comment">→ Actualizar tabla de precios</span>
+
+<span class="comment">-- STOCK</span>
+<span class="keyword">PUT</span>    /api/sync/stock/{codigo}         <span class="comment">→ Actualizar stock de producto</span>
+<span class="keyword">POST</span>   /api/sync/stock/bulk             <span class="comment">→ Actualizar stock masivo (JSON array)</span>
+
+<span class="comment">-- CLIENTES</span>
+<span class="keyword">POST</span>   /api/sync/clientes               <span class="comment">→ Crear/actualizar clientes</span>
+<span class="keyword">PUT</span>    /api/sync/clientes/{ruc_dni}     <span class="comment">→ Actualizar cliente específico</span>
+
+<span class="comment">-- PEDIDOS (desde PostgreSQL a VFP)</span>
+<span class="keyword">GET</span>    /api/sync/pedidos/pendientes     <span class="comment">→ Obtener pedidos nuevos</span>
+<span class="keyword">PUT</span>    /api/sync/pedidos/{id}/estado    <span class="comment">→ Marcar como procesado</span>
+                </div>
+                
+                <h3>Ejemplo de Código Visual FoxPro para Sincronizar:</h3>
+                
+                <div class="code-block">
+<span class="comment">*-- ====================================</span>
+<span class="comment">*-- SINCRONIZAR PRODUCTOS A POSTGRESQL</span>
+<span class="comment">*-- ====================================</span>
+
+<span class="keyword">LOCAL</span> loHTTP, lcURL, lcJSON, lcToken, lcResponse
+
+<span class="comment">*-- Token de autenticación (debe solicitarse previamente)</span>
+lcToken = <span class="string">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>
+
+<span class="comment">*-- URL del endpoint</span>
+lcURL = <span class="string">"https://tu-api-railway.up.railway.app/api/sync/productos"</span>
+
+<span class="comment">*-- Crear objeto HTTP</span>
+loHTTP = <span class="function">CREATEOBJECT</span>(<span class="string">"MSXML2.ServerXMLHTTP"</span>)
+
+<span class="comment">*-- Recorrer tabla de productos en VFP</span>
+<span class="keyword">SELECT</span> productos
+<span class="keyword">SCAN</span>
+    <span class="comment">*-- Construir JSON del producto</span>
+    lcJSON = <span class="string">'{'</span> + ;
+             <span class="string">'"codigo_producto":"'</span> + <span class="function">ALLTRIM</span>(productos.codigo) + <span class="string">'",'</span> + ;
+             <span class="string">'"nombre":"'</span> + <span class="function">ALLTRIM</span>(productos.nombre) + <span class="string">'",'</span> + ;
+             <span class="string">'"precio_base":'</span> + <span class="function">TRANSFORM</span>(productos.precio) + <span class="string">','</span> + ;
+             <span class="string">'"stock_actual":'</span> + <span class="function">TRANSFORM</span>(productos.stock) + <span class="string">','</span> + ;
+             <span class="string">'"activo":'</span> + <span class="keyword">IIF</span>(productos.activo, <span class="string">"true"</span>, <span class="string">"false"</span>) + ;
+             <span class="string">'}'</span>
+    
+    <span class="comment">*-- Enviar petición POST</span>
+    loHTTP.<span class="function">Open</span>(<span class="string">"POST"</span>, lcURL, <span class="keyword">.F.</span>)
+    loHTTP.<span class="function">setRequestHeader</span>(<span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>)
+    loHTTP.<span class="function">setRequestHeader</span>(<span class="string">"Authorization"</span>, <span class="string">"Bearer "</span> + lcToken)
+    loHTTP.<span class="function">Send</span>(lcJSON)
+    
+    <span class="comment">*-- Verificar respuesta</span>
+    <span class="keyword">IF</span> loHTTP.Status = <span class="number">200</span> <span class="keyword">OR</span> loHTTP.Status = <span class="number">201</span>
+        <span class="function">WAIT WINDOW</span> <span class="string">"✅ "</span> + <span class="function">ALLTRIM</span>(productos.nombre) + <span class="string">" sincronizado"</span> <span class="keyword">NOWAIT</span>
+    <span class="keyword">ELSE</span>
+        <span class="function">MESSAGEBOX</span>(<span class="string">"❌ Error: "</span> + loHTTP.responseText, <span class="number">16</span>, <span class="string">"Error Sincronización"</span>)
+    <span class="keyword">ENDIF</span>
+<span class="keyword">ENDSCAN</span>
+
+<span class="function">MESSAGEBOX</span>(<span class="string">"Sincronización completada"</span>, <span class="number">64</span>, <span class="string">"Sistema"</span>)
+                </div>
+                
+                <h3>Ejemplo: Obtener Pedidos Nuevos desde PostgreSQL</h3>
+                
+                <div class="code-block">
+<span class="comment">*-- ====================================</span>
+<span class="comment">*-- TRAER PEDIDOS NUEVOS DESDE LA WEB</span>
+<span class="comment">*-- ====================================</span>
+
+<span class="keyword">LOCAL</span> loHTTP, lcURL, lcToken, lcResponse, loPedidos
+
+lcToken = <span class="string">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>
+lcURL = <span class="string">"https://tu-api-railway.up.railway.app/api/sync/pedidos/pendientes"</span>
+
+loHTTP = <span class="function">CREATEOBJECT</span>(<span class="string">"MSXML2.ServerXMLHTTP"</span>)
+loHTTP.<span class="function">Open</span>(<span class="string">"GET"</span>, lcURL, <span class="keyword">.F.</span>)
+loHTTP.<span class="function">setRequestHeader</span>(<span class="string">"Authorization"</span>, <span class="string">"Bearer "</span> + lcToken)
+loHTTP.<span class="function">Send</span>()
+
+<span class="keyword">IF</span> loHTTP.Status = <span class="number">200</span>
+    lcResponse = loHTTP.responseText
+    
+    <span class="comment">*-- Parsear JSON (usar librería JSON para VFP)</span>
+    loPedidos = <span class="function">json_decode</span>(lcResponse)
+    
+    <span class="comment">*-- Procesar cada pedido</span>
+    <span class="keyword">FOR EACH</span> loPedido <span class="keyword">IN</span> loPedidos
+        <span class="comment">*-- Insertar en tabla local de VFP</span>
+        <span class="keyword">INSERT INTO</span> pedidos_externos ;
+            (<span class="string">numero</span>, <span class="string">cliente</span>, <span class="string">fecha</span>, <span class="string">total</span>, <span class="string">estado</span>) ;
+            <span class="keyword">VALUES</span> ;
+            (loPedido.numero_pedido, loPedido.cliente_id, ;
+             loPedido.fecha, loPedido.total, <span class="string">"NUEVO"</span>)
+        
+        <span class="comment">*-- Marcar como procesado en PostgreSQL</span>
+        lcURLUpdate = <span class="string">"https://tu-api.../api/sync/pedidos/"</span> + ;
+                      <span class="function">TRANSFORM</span>(loPedido.id) + <span class="string">"/estado"</span>
+        
+        loHTTP2 = <span class="function">CREATEOBJECT</span>(<span class="string">"MSXML2.ServerXMLHTTP"</span>)
+        loHTTP2.<span class="function">Open</span>(<span class="string">"PUT"</span>, lcURLUpdate, <span class="keyword">.F.</span>)
+        loHTTP2.<span class="function">setRequestHeader</span>(<span class="string">"Authorization"</span>, <span class="string">"Bearer "</span> + lcToken)
+        loHTTP2.<span class="function">setRequestHeader</span>(<span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>)
+        loHTTP2.<span class="function">Send</span>(<span class="string">'{"estado":"procesado"}'</span>)
+    <span class="keyword">ENDFOR</span>
+    
+    <span class="function">MESSAGEBOX</span>(<span class="string">"Pedidos importados exitosamente"</span>, <span class="number">64</span>)
+<span class="keyword">ENDIF</span>
+                </div>
+            </div>
+            
+            <!-- PLAN DE IMPLEMENTACIÓN -->
+            <div class="section">
+                <h2><span class="icon">📅</span>Plan de Implementación Sugerido</h2>
+                
+                <h3>Fase 1: Configuración Inicial (1-2 días)</h3>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>Obtener credenciales de acceso API</strong><br>
+                        Solicitar al equipo web el token de autenticación y la URL base de la API en Railway.
+                    </li>
+                    <li>
+                        <strong>Instalar librerías necesarias en VFP</strong><br>
+                        Descargar librería JSON para Visual FoxPro (VFP-JSON-master) desde GitHub.
+                    </li>
+                    <li>
+                        <strong>Crear módulo de prueba</strong><br>
+                        Hacer un PRG de prueba que envíe UN producto a PostgreSQL y verifique que se reciba correctamente.
+                    </li>
+                </ol>
+                
+                <h3>Fase 2: Sincronización de Maestros (3-5 días)</h3>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>Sincronizar Tipos de Cliente</strong><br>
+                        Enviar catálogo completo de tipos (BODEGA, MINIMARKET, etc.)
+                    </li>
+                    <li>
+                        <strong>Sincronizar Productos</strong><br>
+                        Enviar catálogo completo con código, nombre, unidad base, marca, categoría.
+                    </li>
+                    <li>
+                        <strong>Sincronizar Precios</strong><br>
+                        Cargar matriz completa de precios: cada producto × cada tipo de cliente.
+                    </li>
+                    <li>
+                        <strong>Sincronizar Clientes</strong><br>
+                        Enviar base completa de clientes activos con su tipo asignado.
+                    </li>
+                    <li>
+                        <strong>Sincronizar Stock Inicial</strong><br>
+                        Actualizar stock disponible de todos los productos.
+                    </li>
+                </ol>
+                
+                <h3>Fase 3: Automatización (2-3 días)</h3>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>Crear triggers en VFP</strong><br>
+                        Cuando se actualice stock, precio o producto → enviar automáticamente a PostgreSQL.
+                    </li>
+                    <li>
+                        <strong>Programar tareas periódicas</strong><br>
+                        Usar Windows Task Scheduler para ejecutar sincronización cada 30 minutos.
+                    </li>
+                    <li>
+                        <strong>Implementar log de errores</strong><br>
+                        Guardar en archivo LOG las sincronizaciones fallidas para revisión.
+                    </li>
+                </ol>
+                
+                <h3>Fase 4: Recepción de Pedidos (2 días)</h3>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>Crear rutina de importación</strong><br>
+                        Consultar cada 15 minutos si hay pedidos nuevos desde la web.
+                    </li>
+                    <li>
+                        <strong>Validar e insertar en VFP</strong><br>
+                        Verificar que productos y clientes existan antes de registrar el pedido.
+                    </li>
+                    <li>
+                        <strong>Notificar al personal</strong><br>
+                        Mostrar alerta visual o sonora cuando llegue un pedido nuevo.
+                    </li>
+                </ol>
+            </div>
+            
+            <!-- CONSIDERACIONES TÉCNICAS -->
+            <div class="section">
+                <h2><span class="icon">⚙️</span>Consideraciones Técnicas Importantes</h2>
+                
+                <div class="alert-box alert-warning">
+                    <h4>⚠️ MANEJO DE CONFLICTOS</h4>
+                    <p><strong>¿Qué pasa si el mismo cliente se actualiza en ambos sistemas?</strong></p>
+                    <ul style="margin-top: 15px; padding-left: 25px;">
+                        <li><strong>Regla propuesta:</strong> Visual FoxPro es la fuente de verdad (master)</li>
+                        <li>PostgreSQL solo recibe actualizaciones, no genera cambios en maestros</li>
+                        <li>Los vendedores pueden crear clientes nuevos en la app → estos sí se sincronizan a VFP</li>
+                        <li>Usar campo <code>fecha_actualizacion</code> para resolver conflictos por timestamp</li>
+                    </ul>
+                </div>
+                
+                <div class="alert-box alert-critical">
+                    <h4>🔒 SEGURIDAD</h4>
+                    <ul style="padding-left: 25px;">
+                        <li><strong>Nunca</strong> guardar tokens en código fuente, usar archivo de configuración cifrado</li>
+                        <li>Los tokens deben tener fecha de expiración (renovar cada 30 días)</li>
+                        <li>Usar HTTPS siempre (Railway ya lo proporciona)</li>
+                        <li>Limitar IP de origen si es posible (firewall de Railway)</li>
+                    </ul>
+                </div>
+                
+                <div class="alert-box alert-info">
+                    <h4>📊 MONITOREO</h4>
+                    <p><strong>Crear tabla de log en VFP para registrar sincronizaciones:</strong></p>
+                </div>
+                
+                <div class="code-block">
+<span class="keyword">CREATE TABLE</span> sync_log (
+    id          I,           <span class="comment">&& ID autoincremental</span>
+    fecha       D,           <span class="comment">&& Fecha de sincronización</span>
+    hora        C(<span class="number">8</span>),       <span class="comment">&& Hora HH:MM:SS</span>
+    tabla       C(<span class="number">30</span>),      <span class="comment">&& Tabla sincronizada</span>
+    operacion   C(<span class="number">20</span>),      <span class="comment">&& 'INSERT', 'UPDATE', 'GET'</span>
+    registros   N(<span class="number">10</span>),      <span class="comment">&& Cantidad de registros</span>
+    exitoso     L,           <span class="comment">&& .T. si fue exitoso</span>
+    error_msg   M            <span class="comment">&& Mensaje de error si falló</span>
+)
+                </div>
+            </div>
+            
+            <!-- BENEFICIOS -->
+            <div class="section">
+                <h2><span class="icon">🎯</span>Beneficios de la Sincronización</h2>
+                
+                <div class="grid-2">
+                    <div class="alert-box alert-success">
+                        <h4>✅ PARA LA EMPRESA</h4>
+                        <ul style="padding-left: 25px; margin-top: 10px;">
+                            <li>Información unificada y consistente</li>
+                            <li>Reducción de errores por datos desactualizados</li>
+                            <li>Mayor control sobre vendedores externos</li>
+                            <li>Estadísticas consolidadas en tiempo real</li>
+                            <li>Mejor toma de decisiones</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="alert-box alert-success">
+                        <h4>✅ PARA LOS VENDEDORES</h4>
+                        <ul style="padding-left: 25px; margin-top: 10px;">
+                            <li>Catálogo siempre actualizado</li>
+                            <li>Precios correctos según tipo de cliente</li>
+                            <li>Conocen disponibilidad real de stock</li>
+                            <li>Evitan vender productos agotados</li>
+                            <li>Proceso de pedido más rápido</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CONTACTO -->
+            <div class="section">
+                <h2><span class="icon">📞</span>Soporte y Contacto</h2>
+                
+                <div class="alert-box alert-info">
+                    <h4>🤝 COORDINACIÓN ENTRE EQUIPOS</h4>
+                    <p>Para implementar esta sincronización correctamente, es necesaria la colaboración entre:</p>
+                    <ul style="margin-top: 15px; padding-left: 25px;">
+                        <li><strong>Equipo Visual FoxPro:</strong> Desarrollar rutinas de sincronización</li>
+                        <li><strong>Equipo Web (FastAPI/PostgreSQL):</strong> Proporcionar endpoints y documentación</li>
+                        <li><strong>Equipo de Infraestructura:</strong> Configurar accesos y seguridad</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #252837; padding: 25px; border-radius: 12px; margin-top: 25px;">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">📋 Checklist de Coordinación</h3>
+                    <ul style="padding-left: 25px; line-height: 2;">
+                        <li>☐ Revisar estructura de tablas en PostgreSQL</li>
+                        <li>☐ Solicitar credenciales API (token de sincronización)</li>
+                        <li>☐ Acordar frecuencia de sincronización por tabla</li>
+                        <li>☐ Definir reglas de resolución de conflictos</li>
+                        <li>☐ Establecer plan de pruebas en ambiente de desarrollo</li>
+                        <li>☐ Programar capacitación al personal clave</li>
+                        <li>☐ Definir protocolo de respaldo antes de cada sincronización</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>📄 Documento Técnico de Integración</strong></p>
+            <p>Sistema de Distribución - Octubre 2025</p>
+            <p style="margin-top: 20px; opacity: 0.7;">
+                Este documento debe ser revisado con el equipo de desarrollo web<br>
+                para coordinar la implementación de la sincronización.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
