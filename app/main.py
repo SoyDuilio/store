@@ -438,3 +438,7 @@ async def reportes(request: Request):
 async def configuracion(request: Request):
     return templates.TemplateResponse("configuracion.html", {"request": request})
 
+
+@app.get("/vfp", response_class=HTMLResponse)
+async def vfp(request: Request):
+    return templates.TemplateResponse("vfp.html", {"request": request})
