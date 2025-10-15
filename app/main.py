@@ -450,3 +450,9 @@ async def odbc(request: Request):
 @app.get("/api", response_class=HTMLResponse)
 async def api(request: Request):
     return templates.TemplateResponse("api_rest.html", {"request": request})
+
+
+@app.get("/guia", response_class=HTMLResponse)
+async def guia(request: Request):
+    return templates.TemplateResponse("guia2.html", {"request": request})
+
