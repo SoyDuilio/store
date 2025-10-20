@@ -456,3 +456,7 @@ async def api(request: Request):
 async def guia(request: Request):
     return templates.TemplateResponse("guia2.html", {"request": request})
 
+
+@app.get("/misaas", response_class=HTMLResponse)
+async def misaas(request: Request):
+    return templates.TemplateResponse("saas.html", {"request": request})
