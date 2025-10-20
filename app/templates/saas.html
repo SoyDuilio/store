@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Propuesta SAAS - Sistema de Comercio con IA</title>
+    <title>Duilio Restuccia - Desarrollo SaaS a Medida</title>
     <style>
         * {
             margin: 0;
@@ -12,967 +12,1140 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 50%, #2d2d5f 100%);
-            color: #e2e8f0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            color: white;
+            overflow-x: hidden;
             line-height: 1.6;
-            min-height: 100vh;
+        }
+
+        .background-animated {
+            position: fixed;
+            inset: 0;
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-30px) translateX(15px); }
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .header {
-            text-align: center;
-            padding: 60px 0 40px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #60a5fa, #3b82f6, #8b5cf6, #fbbf24);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            color: #94a3b8;
-            max-width: 800px;
-            margin: 0 auto 30px;
-        }
-
-        .credit-link {
-            display: inline-block;
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #fbbf24);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-        }
-
-        .credit-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
-        }
-
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 8px;
-            backdrop-filter: blur(10px);
-        }
-
-        .tab-button {
-            padding: 15px 30px;
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .tab-button.active {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #fbbf24);
-            color: white;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-section {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
-            border: 2px solid #fbbf24;
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-section::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(251, 191, 36, 0.1), transparent);
-            animation: shimmer 3s infinite linear;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(30deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(30deg); }
-        }
-
-        .hero-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fbbf24, #f59e0b, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            padding: 0 1.5rem;
             position: relative;
             z-index: 1;
         }
 
-        .hero-section p {
-            font-size: 1.3rem;
-            color: #e2e8f0;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-highlight {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            padding: 20px;
-            border-radius: 15px;
-            color: #1e293b;
-            font-weight: 700;
-            font-size: 1.1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .summary-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .summary-card:nth-child(odd) {
-            border-left: 4px solid #fbbf24;
-        }
-
-        .summary-card:nth-child(even) {
-            border-left: 4px solid #3b82f6;
-        }
-
-        .summary-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(251, 191, 36, 0.5);
-        }
-
-        .summary-card h3 {
-            color: #fbbf24;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .summary-card ul {
-            list-style: none;
-        }
-
-        .summary-card li {
-            margin-bottom: 10px;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .summary-card li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #fbbf24;
-            font-weight: bold;
-        }
-
-        .pricing-section {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), rgba(59, 130, 246, 0.05));
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 16px;
-            padding: 30px;
-            margin: 30px 0;
-        }
-
-        .pricing-section h3 {
-            color: #fbbf24;
-            font-size: 2rem;
-            margin-bottom: 25px;
-            text-align: center;
-            font-weight: 800;
-        }
-
-        .modules-grid {
-            display: grid;
-            gap: 25px;
-        }
-
-        .module {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .module:hover {
-            border-color: rgba(251, 191, 36, 0.5);
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(251, 191, 36, 0.1);
-        }
-
-        .module h3 {
-            color: #fbbf24;
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            font-weight: 700;
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-        }
-
-        .module-price {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 800;
-        }
-
-        .submodules {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .submodule {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid #fbbf24;
-        }
-
-        .submodule h4 {
-            color: #e2e8f0;
-            font-size: 1rem;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .submodule p {
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-
-        .plan-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px 30px;
+            justify-content: center;
             text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #a5b4fc;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #818cf8, #a78bfa, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        .hero-description {
+            font-size: clamp(1.125rem, 2vw, 1.5rem);
+            color: #cbd5e1;
+            max-width: 48rem;
+            margin: 0 auto 2rem;
+            font-weight: 300;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1.125rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+            color: white;
+            box-shadow: 0 10px 40px rgba(79, 70, 229, 0.5);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 50px rgba(79, 70, 229, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            max-width: 64rem;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            padding: 1rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+        }
+
+        .stat-value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #818cf8;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 0;
             position: relative;
-            overflow: hidden;
+        }
+
+        .section-backdrop {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(40px);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 1.125rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight {
+            color: #818cf8;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            border-radius: 1rem;
             transition: all 0.3s ease;
         }
 
-        .plan-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        .feature-card:hover {
+            transform: scale(1.05);
+            border-color: rgba(99, 102, 241, 0.5);
         }
 
-        .plan-card.popular {
-            border-color: #fbbf24;
-            box-shadow: 0 15px 30px rgba(251, 191, 36, 0.3);
+        .feature-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            color: #818cf8;
+            margin-bottom: 1rem;
         }
 
-        .plan-card.popular::before {
-            content: "MÁS POPULAR";
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: #1e293b;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+        .feature-title {
+            font-size: 1.25rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
         }
 
-        .plan-name {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            color: #e2e8f0;
-        }
-
-        .plan-price {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #fbbf24;
-            margin-bottom: 5px;
-        }
-
-        .plan-price span {
-            font-size: 1rem;
+        .feature-desc {
             color: #94a3b8;
-            font-weight: 500;
+            line-height: 1.6;
         }
 
-        .plan-features {
+        /* Models Section */
+        .model-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .model-btn {
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid #334155;
+            background: rgba(30, 41, 59, 0.5);
+            color: white;
+        }
+
+        .model-btn.active-hire {
+            background: linear-gradient(90deg, #2563eb, #0891b2);
+            border-color: transparent;
+            box-shadow: 0 10px 40px rgba(37, 99, 235, 0.5);
+        }
+
+        .model-btn.active-partner {
+            background: linear-gradient(90deg, #9333ea, #ec4899);
+            border-color: transparent;
+            box-shadow: 0 10px 40px rgba(147, 51, 234, 0.5);
+        }
+
+        .model-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .model-details {
+            background: rgba(30, 41, 59, 0.5);
+            border: 2px solid #334155;
+            border-radius: 1.5rem;
+            padding: 3rem;
+        }
+
+        .model-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .model-icon-box {
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .model-icon {
+            width: 3rem;
+            height: 3rem;
+            color: white;
+        }
+
+        .model-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+        }
+
+        .model-subtitle {
+            color: #94a3b8;
+            font-size: 1.125rem;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 0.75rem;
+        }
+
+        .check-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: #10b981;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .step-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-desc {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        .pricing-box {
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* Tech Stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tech-card {
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            border-radius: 1rem;
+        }
+
+        .tech-category {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #818cf8;
+            margin-bottom: 1rem;
+        }
+
+        .tech-list {
             list-style: none;
-            margin: 30px 0;
+        }
+
+        .tech-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #cbd5e1;
+        }
+
+        /* Industries */
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .industry-card {
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .industry-card:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .industry-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .industry-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .industry-desc {
+            color: #94a3b8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.3), rgba(147, 51, 234, 0.3));
+            border-top: 1px solid rgba(99, 102, 241, 0.3);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            background: #0f172a;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-info {
             text-align: left;
         }
 
-        .plan-features li {
-            padding: 12px 0;
-            padding-left: 30px;
-            position: relative;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .plan-features li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #10b981;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .calculator {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 30px;
-            margin-top: 40px;
-        }
-
-        .calculator h3 {
-            color: #fbbf24;
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            text-align: center;
-            font-weight: 700;
-        }
-
-        .calculator-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .calc-input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 15px;
-        }
-
-        .calc-input label {
-            display: block;
-            color: #94a3b8;
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .calc-input input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: #e2e8f0;
-            font-size: 1.1rem;
-            padding: 8px 0;
-            outline: none;
-        }
-
-        .calc-input input:focus {
-            color: #fbbf24;
-        }
-
-        .results {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .result-card {
-            background: linear-gradient(135deg, #1e293b, #334155);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            border: 1px solid rgba(251, 191, 36, 0.2);
-        }
-
-        .result-card h4 {
-            color: #fbbf24;
-            font-size: 1rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .result-value {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #10b981;
-            margin-bottom: 5px;
-        }
-
-        .result-subtitle {
-            font-size: 0.8rem;
-            color: #94a3b8;
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 12px;
-            padding: 25px;
-            margin: 30px 0;
-            text-align: center;
-        }
-
-        .highlight-box h4 {
-            color: #fbbf24;
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .highlight-box p {
-            color: #94a3b8;
-            font-size: 1rem;
-            line-height: 1.8;
-        }
-
-        .guarantee-section {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(251, 191, 36, 0.1));
-            border: 2px solid #10b981;
-            border-radius: 16px;
-            padding: 30px;
-            margin: 30px 0;
-            text-align: center;
-        }
-
-        .guarantee-section h4 {
-            color: #10b981;
+        .footer-name {
             font-size: 1.5rem;
-            margin-bottom: 15px;
-            font-weight: 800;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
-        .guarantee-section p {
-            color: #e2e8f0;
-            font-size: 1.1rem;
-            line-height: 1.8;
+        .footer-desc {
+            color: #94a3b8;
         }
 
+        .footer-location {
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            text-align: right;
+        }
+
+        .footer-links a {
+            color: #818cf8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #a5b4fc;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1e293b;
+            padding-top: 2rem;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-            
-            .tabs {
+            .footer-content {
                 flex-direction: column;
-            }
-            
-            .tab-button {
-                margin-bottom: 5px;
-            }
-            
-            .plans-grid {
-                grid-template-columns: 1fr;
+                text-align: center;
             }
 
-            .hero-section h2 {
-                font-size: 2rem;
+            .footer-info,
+            .footer-links {
+                text-align: center;
             }
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>Sistema SAAS para Comercio</h1>
-            <p>Una solución completa con Inteligencia Artificial para revolucionar la gestión comercial. Desde inventarios hasta insights predictivos, todo en una plataforma moderna y escalable.</p>
-            <a href="https://duilio.store" class="credit-link" target="_blank">🚀 Desarrollado por Duilio Restuccia</a>
-        </header>
+    <!-- Animated Background -->
+    <div class="background-animated" id="floatingElements"></div>
 
-        <div class="tabs">
-            <button class="tab-button active" onclick="showTab('resumen')">Resumen General</button>
-            <button class="tab-button" onclick="showTab('modulos')">Módulos del Sistema</button>
-            <button class="tab-button" onclick="showTab('planes')">Planes de Suscripción</button>
-        </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">
+                ✨ 20 años de experiencia • Economista + Desarrollador + IA
+            </div>
+            
+            <h1>
+                Transformo Ideas en
+                <span class="gradient-text">SaaS Rentables</span>
+            </h1>
+            
+            <p class="hero-description">
+                No solo escribo código. Entiendo tu modelo de negocio, optimizo procesos y construyo productos que escalan.
+            </p>
 
-        <div id="resumen" class="tab-content active">
-            <div class="hero-section">
-                <h2>🎯 De 30 Años de Trabajo Individual a una Máquina Automatizada</h2>
-                <p>Después de tres décadas desarrollando soluciones personalizadas cliente por cliente, es hora de construir UN SOLO PRODUCTO que genere ingresos recurrentes sin esfuerzo adicional.</p>
-                <div class="hero-highlight">
-                    💡 Una vez desarrollado, cada nuevo cliente suma ingresos SIN desarrollo adicional. ¡Es la diferencia entre vender tu tiempo y vender un activo!
-                </div>
+            <div class="button-group">
+                <a href="#models" class="btn btn-primary">
+                    Explorar Modalidades
+                    <span>→</span>
+                </a>
+                <a href="https://duilio.store" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                    Ver Portafolio Completo
+                </a>
             </div>
 
-            <div class="summary-grid">
-                <div class="summary-card">
-                    <h3>🚀 Servicios Incluidos</h3>
-                    <ul>
-                        <li>Desarrollo de SAAS completo</li>
-                        <li>Integración con Inteligencia Artificial</li>
-                        <li>Mentoría técnica personalizada</li>
-                        <li>Videos de capacitación</li>
-                        <li>Asesoría de estrategia comercial</li>
-                        <li>Estrategia de captación nacional</li>
-                        <li>Capacitación en videos publicitarios con IA</li>
-                        <li>Gestión completa de usuarios/clientes</li>
-                    </ul>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">20+</div>
+                    <div class="stat-label">Años Experiencia</div>
                 </div>
-
-                <div class="summary-card">
-                    <h3>⚡ Tecnologías Modernas</h3>
-                    <ul>
-                        <li>Python + FastAPI (Backend)</li>
-                        <li>PostgreSQL + SQLAlchemy</li>
-                        <li>HTMX + JavaScript (Frontend)</li>
-                        <li>APIs de IA para OCR y análisis</li>
-                        <li>Comprobantes electrónicos integrados</li>
-                        <li>Arquitectura multi-tienda escalable</li>
-                    </ul>
+                <div class="stat-card">
+                    <div class="stat-value">Full-Stack</div>
+                    <div class="stat-label">Web Moderno</div>
                 </div>
-
-                <div class="summary-card">
-                    <h3>💰 Revolución del Modelo de Negocio</h3>
-                    <ul>
-                        <li>Ingresos recurrentes vs. trabajos únicos</li>
-                        <li>Escalabilidad infinita sin límites</li>
-                        <li>Tres niveles de suscripción premium</li>
-                        <li>IA como diferenciador de alto valor</li>
-                        <li>Mercado nacional como objetivo</li>
-                        <li>Actualizaciones que benefician a todos</li>
-                    </ul>
+                <div class="stat-card">
+                    <div class="stat-value">IA/ML</div>
+                    <div class="stat-label">Análisis Datos</div>
                 </div>
-
-                <div class="summary-card">
-                    <h3>🎯 Diferenciadores Únicos</h3>
-                    <ul>
-                        <li>Comprobantes electrónicos SIN proveedores</li>
-                        <li>IA para extracción automática de datos</li>
-                        <li>Análisis predictivo empresarial</li>
-                        <li>Módulos contables integrados</li>
-                        <li>Multi-tienda desde el primer día</li>
-                        <li>Insights automáticos inteligentes</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="pricing-section">
-                <h3>💎 Inversión Total: S/. 9,500</h3>
-                <div class="highlight-box">
-                    <h4>🔧 Condición Especial - Infraestructura</h4>
-                    <p>Para garantizar los plazos comprometidos, se requiere una antena satelital portátil (S/. 1,500). Este costo será descontado proporcionalmente en cada entrega de módulo, asegurando conectividad óptima durante todo el desarrollo.</p>
-                </div>
-            </div>
-
-            <div class="guarantee-section">
-                <h4>🛡️ Garantía Extendida de 6 Meses</h4>
-                <p>Soporte completo por 6 meses desde la fecha del último entregable. Los módulos pueden evolucionar sin alterar el precio final, salvo cambios drásticos en la lógica total o estructura de base de datos.</p>
-            </div>
-        </div>
-
-        <div id="modulos" class="tab-content">
-            <div class="modules-grid">
-                <div class="module">
-                    <h3>🏗️ Módulo 1: Fundación del Sistema <span class="module-price">S/. 1,200</span></h3>
-                    <p>Base arquitectónica sólida para soportar el crecimiento del SAAS.</p>
-                    <div class="submodules">
-                        <div class="submodule">
-                            <h4>Gestión de Usuarios</h4>
-                            <p>Sistema completo de roles y permisos granulares</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Multi-empresa/Multi-tienda</h4>
-                            <p>Arquitectura escalable para múltiples organizaciones</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Configuración General</h4>
-                            <p>Panel de administración y parámetros del sistema</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="module">
-                    <h3>📦 Módulo 2: Inventario Inteligente <span class="module-price">S/. 1,800</span></h3>
-                    <p>Gestión avanzada con múltiples presentaciones y control de vencimientos.</p>
-                    <div class="submodules">
-                        <div class="submodule">
-                            <h4>Catálogo de Productos</h4>
-                            <p>Productos con múltiples presentaciones y variantes</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Stock Multi-almacén</h4>
-                            <p>Control de inventario por ubicaciones</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Precios Dinámicos</h4>
-                            <p>Modalidades mayorista, minorista y promocional</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Control de Lotes</h4>
-                            <p>Seguimiento de vencimientos y trazabilidad</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="module">
-                    <h3>💳 Módulo 3: POS + Comprobantes Electrónicos <span class="module-price">S/. 1,500</span></h3>
-                    <p>POS moderno con integración de comprobantes electrónicos SIN proveedores externos.</p>
-                    <div class="submodules">
-                        <div class="submodule">
-                            <h4>POS Intuitivo</h4>
-                            <p>Interfaz rápida y amigable para vendedores</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Comprobantes Electrónicos</h4>
-                            <p>Emisión directa sin proveedores externos</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Gestión de Cajas</h4>
-                            <p>Control de apertura, cierre y arqueos</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Métodos de Pago</h4>
-                            <p>Efectivo, tarjetas, transferencias y crédito</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="module">
-                    <h3>🛒 Módulo 4: Compras y Proveedores <span class="module-price">S/. 1,200</span></h3>
-                    <p>Gestión completa del ciclo de compras y relación con proveedores.</p>
-                    <div class="submodules">
-                        <div class="submodule">
-                            <h4>Registro de Proveedores</h4>
-                            <p>Base de datos completa con historial</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Órdenes de Compra</h4>
-                            <p>Generación y seguimiento automatizado</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Recepción de Mercadería</h4>
-                            <p>Control de calidad y actualización de stock</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Cuentas por Pagar</h4>
-                            <p>Seguimiento de vencimientos y pagos</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="module">
-                    <h3>📊 Módulo 5: Contabilidad Integrada <span class="module-price">S/. 1,300</span></h3>
-                    <p>Módulos contables esenciales para control financiero completo.</p>
-                    <div class="submodules">
-                        <div class="submodule">
-                            <h4>Kardex Automático</h4>
-                            <p>Registro detallado de movimientos de inventario</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Registro de Compras</h4>
-                            <p>Cumplimiento de obligaciones tributarias</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Registro de Ventas</h4>
-                            <p>Control automático de ingresos y impuestos</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Estados Financieros</h4>
-                            <p>Reportes de pérdidas y ganancias</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="module">
-                    <h3>🤖 Módulo 6: Inteligencia Artificial Premium <span class="module-price">S/. 1,800</span></h3>
-                    <p>Funciones premium que diferencian tu producto de toda la competencia.</p>
-                    <div class="submodules">
-                        <div class="submodule">
-                            <h4>OCR de Facturas</h4>
-                            <p>Extracción automática de datos de comprobantes</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Análisis Predictivo</h4>
-                            <p>Proyecciones de demanda y ventas</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Insights Automáticos</h4>
-                            <p>Recomendaciones basadas en patrones</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Optimización de Precios</h4>
-                            <p>Sugerencias de pricing dinámico</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="module">
-                    <h3>👥 Módulo 7: Gestión de Clientes y Marketing <span class="module-price">S/. 700</span></h3>
-                    <p>CRM integrado y herramientas de marketing con IA.</p>
-                    <div class="submodules">
-                        <div class="submodule">
-                            <h4>CRM de Clientes</h4>
-                            <p>Gestión completa de la base de clientes</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Estrategia de Captación Nacional</h4>
-                            <p>Plan de marketing y expansión a nivel país</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Videos Publicitarios con IA</h4>
-                            <p>Capacitación en creación de contenido automático</p>
-                        </div>
-                        <div class="submodule">
-                            <h4>Automatización de Marketing</h4>
-                            <p>Campañas y seguimiento automatizado</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="highlight-box">
-                <h4>🎯 Flexibilidad Total en el Desarrollo</h4>
-                <p>Los módulos pueden evolucionar y expandirse según las necesidades del mercado, sin alterar el precio final acordado. Solo cambios drásticos en la lógica total o estructura de base de datos requerirían renegociación.</p>
-            </div>
-        </div>
-
-        <div id="planes" class="tab-content">
-            <div class="plans-grid">
-                <div class="plan-card">
-                    <div class="plan-name">BÁSICO</div>
-                    <div class="plan-price">S/. 80<span>/mes</span></div>
-                    <ul class="plan-features">
-                        <li>Una tienda/almacén</li>
-                        <li>Hasta 500 productos</li>
-                        <li>POS básico</li>
-                        <li>Comprobantes electrónicos</li>
-                        <li>Reportes básicos</li>
-                        <li>Inventario estándar</li>
-                        <li>Módulos contables básicos</li>
-                        <li>Soporte por email</li>
-                    </ul>
-                </div>
-
-                <div class="plan-card popular">
-                    <div class="plan-name">PROFESIONAL</div>
-                    <div class="plan-price">S/. 120<span>/mes</span></div>
-                    <ul class="plan-features">
-                        <li>Hasta 3 tiendas/almacenes</li>
-                        <li>Productos ilimitados</li>
-                        <li>POS avanzado</li>
-                        <li>Comprobantes electrónicos</li>
-                        <li>OCR de facturas con IA</li>
-                        <li>Reportes avanzados y estadísticas</li>
-                        <li>Módulos contables completos</li>
-                        <li>Análisis básico con IA</li>
-                        <li>CRM de clientes</li>
-                        <li>Proyecciones simples</li>
-                        <li>Soporte prioritario</li>
-                    </ul>
-                </div>
-
-                <div class="plan-card">
-                    <div class="plan-name">ENTERPRISE</div>
-                    <div class="plan-price">S/. 250<span>/mes</span></div>
-                    <ul class="plan-features">
-                        <li>Tiendas y almacenes ilimitados</li>
-                        <li>Productos y usuarios ilimitados</li>
-                        <li>Todas las funciones básicas</li>
-                        <li>IA completa y predictiva</li>
-                        <li>Insights automáticos avanzados</li>
-                        <li>Optimización de precios con IA</li>
-                        <li>Análisis de competencia</li>
-                        <li>Proyecciones y sugerencias avanzadas</li>
-                        <li>Dashboards ejecutivos</li>
-                        <li>API personalizada</li>
-                        <li>Automatización de marketing</li>
-                        <li>Soporte 24/7</li>
-                        <li>Consultoría mensual</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="hero-section">
-                <h2>🚀 La Oportunidad de Transformación</h2>
-                <p>Después de 30 años desarrollando soluciones individuales, tienes la experiencia y la visión. Ahora construyamos juntos la plataforma que generará ingresos mientras duermes.</p>
-                <div class="hero-highlight">
-                    🎯 Un cliente en plan Enterprise (S/. 250/mes) equivale a más de 3 desarrollos individuales al año. ¡Y se renueva automáticamente!
-                </div>
-            </div>
-
-            <div class="calculator">
-                <h3>💰 Calculadora de Ingresos Proyectados</h3>
-                <div class="calculator-grid">
-                    <div class="calc-input">
-                        <label for="basicClients">Clientes Plan Básico (S/. 80)</label>
-                        <input type="number" id="basicClients" value="20" onchange="calculateRevenue()">
-                    </div>
-                    <div class="calc-input">
-                        <label for="proClients">Clientes Plan Profesional (S/. 120)</label>
-                        <input type="number" id="proClients" value="45" onchange="calculateRevenue()">
-                    </div>
-                    <div class="calc-input">
-                        <label for="enterpriseClients">Clientes Plan Enterprise (S/. 250)</label>
-                        <input type="number" id="enterpriseClients" value="15" onchange="calculateRevenue()">
-                    </div>
-                </div>
-
-                <div class="highlight-box">
-                    <h4>📈 Análisis del Mercado Objetivo</h4>
-                    <p><strong>Cartera total:</strong> 800 clientes | <strong>Nicho objetivo:</strong> 200 clientes (25%) | <strong>Interés estimado:</strong> 80 clientes (40% del nicho) | <strong>Proyección conservadora inicial</strong></p>
-                </div>
-
-                <div class="results">
-                    <div class="result-card">
-                        <h4>Ingresos Mensuales</h4>
-                        <div class="result-value" id="monthlyRevenue">S/. 9,750</div>
-                        <div class="result-subtitle">Recurrente</div>
-                    </div>
-                    <div class="result-card">
-                        <h4>Ingresos Anuales</h4>
-                        <div class="result-value" id="yearlyRevenue">S/. 117,000</div>
-                        <div class="result-subtitle">Proyectado</div>
-                    </div>
-                    <div class="result-card">
-                        <h4>Total Clientes</h4>
-                        <div class="result-value" id="totalClients">80</div>
-                        <div class="result-subtitle">Suscritos</div>
-                    </div>
-                    <div class="result-card">
-                        <h4>Ticket Promedio</h4>
-                        <div class="result-value" id="avgTicket">S/. 122</div>
-                        <div class="result-subtitle">Por cliente</div>
-                    </div>
-                </div>
-
-                <div class="guarantee-section">
-                    <h4>💎 ROI Proyectado</h4>
-                    <p>Con solo 80 clientes iniciales, la inversión de S/. 9,500 se recupera en el primer mes de operación. A partir del mes 2, son ingresos puros y escalables.</p>
+                <div class="stat-card">
+                    <div class="stat-value">Economía</div>
+                    <div class="stat-label">Visión Negocio</div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Why Me Section -->
+    <section class="section-backdrop">
+        <div class="container">
+            <h2>¿Por qué trabajar conmigo?</h2>
+            <p class="section-subtitle">
+                No soy solo un desarrollador más. Soy tu socio estratégico.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                    <div class="feature-title">Visión de Negocio</div>
+                    <p class="feature-desc">
+                        Como Ingeniero Economista, entiendo tus KPIs, flujos de caja y modelo de ingresos. Diseño software que impulsa resultados financieros reales.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                    </svg>
+                    <div class="feature-title">Stack Moderno</div>
+                    <p class="feature-desc">
+                        React, Node.js, Python, PostgreSQL, AWS. Arquitecturas escalables, APIs RESTful, Progressive Web Apps. Todo lo necesario para un SaaS profesional.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <div class="feature-title">IA & Datos</div>
+                    <p class="feature-desc">
+                        Machine Learning, Computer Vision, análisis predictivo. Tus competidores tienen dashboards; tú tendrás inteligencia artificial trabajando 24/7.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                    <div class="feature-title">Seguridad & Cumplimiento</div>
+                    <p class="feature-desc">
+                        He trabajado en instituciones de máxima responsabilidad ética. Tu producto será seguro, escalable y cumplirá regulaciones.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    <div class="feature-title">Comunicación Clara</div>
+                    <p class="feature-desc">
+                        Nada de jerga técnica innecesaria. Te explico en español claro. Demos cada 2 semanas para que veas el progreso real.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
+                    </svg>
+                    <div class="feature-title">Velocidad Estratégica</div>
+                    <p class="feature-desc">
+                        MVP en 8-12 semanas. No un año de desarrollo. Validamos rápido, ajustamos según feedback, escalamos lo que funciona.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models Section -->
+    <section id="models">
+        <div class="container">
+            <h2>Dos Modalidades. <span class="highlight">Tú Decides.</span></h2>
+            <p class="section-subtitle">
+                ¿Prefieres contratar un servicio o construir algo juntos como socios?
+            </p>
+
+            <div class="model-selector">
+                <button class="model-btn active-hire" onclick="switchModel('hire')">
+                    💼 Contrátame
+                </button>
+                <button class="model-btn" onclick="switchModel('partner')">
+                    🤝 Seamos Socios
+                </button>
+            </div>
+
+            <!-- Hire Model -->
+            <div id="hire-model" class="model-details">
+                <div class="model-header">
+                    <div class="model-icon-box" style="background: linear-gradient(90deg, #2563eb, #0891b2);">
+                        <svg class="model-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="model-title">Contrátame</div>
+                        <div class="model-subtitle">Desarrollo profesional por proyecto</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 3rem;">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>⭐</span> Qué Incluye
+                    </h3>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Entrega en fases con pagos escalonados</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Propiedad 100% del código</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Soporte post-lanzamiento incluido (3 meses)</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Arquitectura escalable desde el inicio</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Documentación técnica completa</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Testing y QA profesional</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem;">Cómo Funciona</h3>
+                    <div class="process-grid">
+                        <div class="process-step">
+                            <div class="step-number" style="background: linear-gradient(90deg, #2563eb, #0891b2);">1</div>
+                            <div class="step-title">Discovery</div>
+                            <p class="step-desc">Analizamos tu negocio y definimos el MVP</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number" style="background: linear-gradient(90deg, #2563eb, #0891b2);">2</div>
+                            <div class="step-title">Propuesta</div>
+                            <p class="step-desc">Alcance, cronograma y presupuesto claro</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number" style="background: linear-gradient(90deg, #2563eb, #0891b2);">3</div>
+                            <div class="step-title">Desarrollo</div>
+                            <p class="step-desc">Sprints de 2 semanas con demos continuas</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number" style="background: linear-gradient(90deg, #2563eb, #0891b2);">4</div>
+                            <div class="step-title">Lanzamiento</div>
+                            <p class="step-desc">Deploy, capacitación y soporte inicial</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pricing-box">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <svg style="width: 1.5rem; height: 1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span style="font-weight: 700; font-size: 1.125rem;">Inversión</span>
+                    </div>
+                    <p style="color: #cbd5e1;">Desde S/ 15,000 (MVP básico) hasta proyectos complejos</p>
+                </div>
+            </div>
+
+            <!-- Partner Model -->
+            <div id="partner-model" class="model-details hidden">
+                <div class="model-header">
+                    <div class="model-icon-box" style="background: linear-gradient(90deg, #9333ea, #ec4899);">
+                        <svg class="model-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="model-title">Seamos Socios</div>
+                        <div class="model-subtitle">Co-creamos tu startup SaaS</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 3rem;">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>⭐</span> Qué Incluye
+                    </h3>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Desarrollo sin inversión inicial de tu parte</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Socio tecnológico comprometido con el éxito</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Participación activa en producto y estrategia</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Infraestructura cloud optimizada</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Iteración rápida basada en feedback real</span>
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span>Equity compartido según aporte</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem;">Cómo Funciona</h3>
+                    <div class="process-grid">
+                        <div class="process-step">
+                            <div class="step-number" style="background: linear-gradient(90deg, #9333ea, #ec4899);">1</div>
+                            <div class="step-title">Pitch</div>
+                            <p class="step-desc">Presentas tu idea y modelo de negocio</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number" style="background: linear-gradient(90deg, #9333ea, #ec4899);">2</div>
+                            <div class="step-title">Evaluación</div>
+                            <p class="step-desc">Analizo viabilidad técnica y de mercado</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number" style="background: linear-gradient(90deg, #9333ea, #ec4899);">3</div>
+                            <div class="step-title">Acuerdo</div>
+                            <p class="step-desc">Definimos equity, roles y roadmap</p>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number" style="background: linear-gradient(90deg, #9333ea, #ec4899);">4</div>
+                            <div class="step-title">Build & Grow</div>
+                            <p class="step-desc">Construimos juntos, iteramos y escalamos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pricing-box" style="border-color: rgba(147, 51, 234, 0.3); background: rgba(147, 51, 234, 0.1);">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <svg style="width: 1.5rem; height: 1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span style="font-weight: 700; font-size: 1.125rem;">Inversión</span>
+                    </div>
+                    <p style="color: #cbd5e1;">Equity negociable (típicamente 20-40% por desarrollo completo)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="section-backdrop">
+        <div class="container">
+            <h2>Stack Tecnológico <span class="highlight">de Primera</span></h2>
+            <p class="section-subtitle">Herramientas modernas para soluciones escalables</p>
+
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-category">Frontend</div>
+                    <ul class="tech-list">
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            React
+                        </li>
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Next.js
+                        </li>
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Tailwind CSS
+                        </li>
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            PWA
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-category">Backend</div>
+                    <ul class="tech-list">
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Node.js
+                        </li>
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Python
+                        </li>
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            PostgreSQL
+                        </li>
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Redis
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-category">Cloud & DevOps</div>
+                    <ul class="tech-list">
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            AWS
+                        </li>
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Azure
+                        </li>
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Docker
+                        </li>
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            CI/CD
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-category">IA & Data</div>
+                    <ul class="tech-list">
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            TensorFlow
+                        </li>
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            OpenCV
+                        </li>
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Pandas
+                        </li>
+                        <li>
+                            <svg style="width: 1rem; height: 1rem; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Scikit-learn
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industries -->
+    <section>
+        <div class="container">
+            <h2>Industrias que Domino</h2>
+            <p class="section-subtitle">Especialización que marca la diferencia</p>
+
+            <div class="industries-grid">
+                <div class="industry-card">
+                    <div class="industry-emoji">🎰</div>
+                    <div class="industry-title">Entretenimiento & Gaming</div>
+                    <p class="industry-desc">
+                        ERPs para tragamonedas, casinos, gestión multi-local con cumplimiento regulatorio.
+                    </p>
+                </div>
+
+                <div class="industry-card">
+                    <div class="industry-emoji">🏪</div>
+                    <div class="industry-title">Retail & E-commerce</div>
+                    <p class="industry-desc">
+                        Sistemas de inventario, POS, marketplace integrados con pagos y logística.
+                    </p>
+                </div>
+
+                <div class="industry-card">
+                    <div class="industry-emoji">📊</div>
+                    <div class="industry-title">Fintech & Analytics</div>
+                    <p class="industry-desc">
+                        Dashboards financieros, análisis predictivo, automatización de reportes.
+                    </p>
+                </div>
+
+                <div class="industry-card">
+                    <div class="industry-emoji">🏥</div>
+                    <div class="industry-title">Salud & Wellness</div>
+                    <p class="industry-desc">
+                        Gestión de citas, historiales médicos, telemedicina con cumplimiento de privacidad.
+                    </p>
+                </div>
+
+                <div class="industry-card">
+                    <div class="industry-emoji">🎓</div>
+                    <div class="industry-title">EdTech</div>
+                    <p class="industry-desc">
+                        Plataformas de aprendizaje, LMS personalizados, seguimiento de progreso con IA.
+                    </p>
+                </div>
+
+                <div class="industry-card">
+                    <div class="industry-emoji">🚚</div>
+                    <div class="industry-title">Logística & Supply Chain</div>
+                    <p class="industry-desc">
+                        Tracking en tiempo real, optimización de rutas, gestión de flotas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>¿Listo para <span class="highlight">Construir algo Grande</span>?</h2>
+            <p style="font-size: 1.25rem; color: #cbd5e1; text-align: center; margin-bottom: 3rem; max-width: 48rem; margin-left: auto; margin-right: auto;">
+                Ya sea que necesites un desarrollador profesional o un socio tecnológico, 
+                hablemos de tu proyecto sin compromiso.
+            </p>
+
+            <div class="button-group">
+                <a href="https://wa.me/51967317946?text=Hola%20Duilio,%20vi%20tu%20página%20de%20desarrollo%20SaaS%20y%20quiero%20conversar" 
+                   target="_blank" 
+                   class="btn btn-primary">
+                    💬 Conversemos por WhatsApp
+                    <span>→</span>
+                </a>
+                <a href="https://www.linkedin.com/in/duiliorestuccia/" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="btn btn-secondary">
+                    Ver LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-name">Duilio Restuccia Eslava</div>
+                    <p class="footer-desc">
+                        Ingeniero Economista • Full-Stack Developer • IA/ML Specialist
+                    </p>
+                    <p class="footer-location">Lima, Perú 🇵🇪</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://duilio.store" target="_blank" rel="noopener noreferrer">
+                        🌐 duilio.store
+                    </a>
+                    <a href="https://www.linkedin.com/in/duiliorestuccia/" target="_blank" rel="noopener noreferrer">
+                        💼 LinkedIn
+                    </a>
+                    <a href="https://wa.me/51967317946">
+                        📱 +51 967 317 946
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Duilio Restuccia. Transformando ideas en soluciones digitales rentables.</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        function showTab(tabName) {
-            // Ocultar todas las pestañas
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
+        // Generate floating elements
+        const floatingContainer = document.getElementById('floatingElements');
+        for (let i = 0; i < 20; i++) {
+            const element = document.createElement('div');
+            element.className = 'floating-element';
+            const size = Math.random() * 100 + 50;
+            element.style.width = size + 'px';
+            element.style.height = size + 'px';
+            element.style.left = Math.random() * 100 + '%';
+            element.style.top = Math.random() * 100 + '%';
+            element.style.animationDelay = (i * 0.3) + 's';
+            element.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            floatingContainer.appendChild(element);
+        }
 
-            // Mostrar la pestaña seleccionada
-            document.getElementById(tabName).classList.add('active');
+        // Model switcher
+        function switchModel(model) {
+            const hireBtn = document.querySelector('.model-btn:first-child');
+            const partnerBtn = document.querySelector('.model-btn:last-child');
+            const hireModel = document.getElementById('hire-model');
+            const partnerModel = document.getElementById('partner-model');
 
-            // Actualizar botones
-            const buttons = document.querySelectorAll('.tab-button');
-            buttons.forEach(button => button.classList.remove('active'));
-            
-            // Encontrar el botón correcto y marcarlo como activo
-            const clickedButton = Array.from(buttons).find(button => 
-                button.textContent.toLowerCase().includes(tabName.toLowerCase()) ||
-                (tabName === 'resumen' && button.textContent.includes('Resumen')) ||
-                (tabName === 'modulos' && button.textContent.includes('Módulos')) ||
-                (tabName === 'planes' && button.textContent.includes('Planes'))
-            );
-            
-            if (clickedButton) {
-                clickedButton.classList.add('active');
+            if (model === 'hire') {
+                hireBtn.classList.add('active-hire');
+                hireBtn.classList.remove('active-partner');
+                partnerBtn.classList.remove('active-hire', 'active-partner');
+                hireModel.classList.remove('hidden');
+                partnerModel.classList.add('hidden');
+            } else {
+                partnerBtn.classList.add('active-partner');
+                partnerBtn.classList.remove('active-hire');
+                hireBtn.classList.remove('active-hire', 'active-partner');
+                partnerModel.classList.remove('hidden');
+                hireModel.classList.add('hidden');
             }
         }
 
-        function calculateRevenue() {
-            const basicClients = parseInt(document.getElementById('basicClients').value) || 0;
-            const proClients = parseInt(document.getElementById('proClients').value) || 0;
-            const enterpriseClients = parseInt(document.getElementById('enterpriseClients').value) || 0;
-
-            const basicPrice = 80;
-            const proPrice = 120;
-            const enterprisePrice = 250;
-
-            const monthlyRevenue = (basicClients * basicPrice) + (proClients * proPrice) + (enterpriseClients * enterprisePrice);
-            const yearlyRevenue = monthlyRevenue * 12;
-            const totalClients = basicClients + proClients + enterpriseClients;
-            const avgTicket = totalClients > 0 ? Math.round(monthlyRevenue / totalClients) : 0;
-
-            // Formatear números con comas
-            const formatNumber = (num) => {
-                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            };
-
-            // Actualizar valores en la interfaz
-            document.getElementById('monthlyRevenue').textContent = `S/. ${formatNumber(monthlyRevenue)}`;
-            document.getElementById('yearlyRevenue').textContent = `S/. ${formatNumber(yearlyRevenue)}`;
-            document.getElementById('totalClients').textContent = totalClients;
-            document.getElementById('avgTicket').textContent = `S/. ${avgTicket}`;
-        }
-
-        // Calcular valores iniciales al cargar la página
-        document.addEventListener('DOMContentLoaded', function() {
-            calculateRevenue();
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
     </script>
 </body>
