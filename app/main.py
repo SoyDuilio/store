@@ -460,3 +460,7 @@ async def guia(request: Request):
 @app.get("/misaas", response_class=HTMLResponse)
 async def misaas(request: Request):
     return templates.TemplateResponse("saas.html", {"request": request})
+
+@app.get("/serviplus", response_class=HTMLResponse)
+async def serviplus(request: Request):
+    return templates.TemplateResponse("serviplus1.html", {"request": request})
