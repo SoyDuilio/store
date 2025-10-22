@@ -471,3 +471,8 @@ async def serviplus(request: Request):
 async def serviplus2(request: Request):
     return templates.TemplateResponse("serviplus2.html", {"request": request})
 
+#COSTOS DE RAILWAY
+@app.get("/serviplus3", response_class=HTMLResponse)
+async def serviplus3(request: Request):
+    return templates.TemplateResponse("serviplus3.html", {"request": request})
+
