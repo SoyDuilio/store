@@ -461,6 +461,13 @@ async def guia(request: Request):
 async def misaas(request: Request):
     return templates.TemplateResponse("saas.html", {"request": request})
 
+#PROPUESTA TÉCNICA PARA SERVIPLUS
 @app.get("/serviplus", response_class=HTMLResponse)
 async def serviplus(request: Request):
     return templates.TemplateResponse("serviplus1.html", {"request": request})
+
+#ACLARACIONES TÉCNIAS POR PLAN
+@app.get("/serviplus2", response_class=HTMLResponse)
+async def serviplus2(request: Request):
+    return templates.TemplateResponse("serviplus2.html", {"request": request})
+
