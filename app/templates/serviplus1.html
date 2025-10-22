@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERVI-PLUS - Propuesta Técnica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --gold: #fbbf24;
+            --gold-dark: #f59e0b;
+            --dark: #111827;
+            --gray: #64748b;
+            --light-gray: #f1f5f9;
+            --white: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --shadow-strong: rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header con efecto moderno */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--accent) 100%);
+            color: var(--white);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(251, 191, 36, 0.15) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hero section minimalista */
+        .hero {
+            background: var(--white);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Pricing Cards con efecto premium */
+        .pricing-section {
+            padding: 80px 20px;
+            background: linear-gradient(to bottom, var(--white) 0%, var(--light-gray) 100%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: var(--primary);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .pricing-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 
+                0 25px 50px var(--shadow),
+                0 0 0 1px rgba(59, 130, 246, 0.1);
+        }
+
+        .pricing-card.recommended {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            box-shadow: 
+                0 20px 60px rgba(59, 130, 246, 0.15),
+                0 0 0 2px var(--accent);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.recommended:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .pricing-card.recommended::before {
+            background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+            transform: scaleX(1);
+        }
+
+        .pricing-card.recommended::after {
+            content: "⭐ RECOMENDADA";
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--white);
+            padding: 8px 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transform: rotate(45deg);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .card-header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .card-description {
+            font-size: 0.95rem;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        .card-price {
+            text-align: center;
+            padding: 35px 0;
+        }
+
+        .price-amount {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+        }
+
+        .pricing-card.recommended .price-amount {
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .price-period {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--gray);
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .card-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .card-features li {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.95rem;
+        }
+
+        .card-features li:last-child {
+            border-bottom: none;
+        }
+
+        .card-features li::before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .card-features li.feature-no {
+            opacity: 0.5;
+        }
+
+        .card-features li.feature-no::before {
+            content: "○";
+            color: var(--gray);
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .info-icon {
+            color: var(--accent);
+            cursor: help;
+            font-size: 0.85rem;
+            margin-left: 6px;
+            position: relative;
+            font-weight: 600;
+        }
+
+        /* Tooltip mejorado */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 280px;
+            background: var(--primary);
+            color: var(--white);
+            text-align: left;
+            border-radius: 12px;
+            padding: 12px 16px;
+            position: absolute;
+            z-index: 1000;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -140px;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            font-weight: 400;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: var(--primary) transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+            bottom: 135%;
+        }
+
+        /* Video Gallery Section - LUXURY */
+        .video-section {
+            padding: 100px 20px;
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 70% 80%, rgba(251, 191, 36, 0.1) 0%, transparent 40%);
+        }
+
+        .video-section .section-title {
+            color: var(--white);
+            position: relative;
+            z-index: 1;
+            margin-bottom: 70px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-container {
+            position: relative;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .video-container:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 35px 70px rgba(0, 0, 0, 0.6),
+                0 0 60px rgba(59, 130, 246, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .video-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+        }
+
+        .video-container:hover::before {
+            opacity: 0.15;
+        }
+
+        .video-inner {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-placeholder::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--white);
+            box-shadow: 
+                0 10px 30px rgba(59, 130, 246, 0.5),
+                0 0 0 0 rgba(59, 130, 246, 0.7);
+            transition: all 0.3s ease;
+            animation: pulse-ring 2s infinite;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 
+                    0 10px 30px rgba(59, 130, 246, 0.5),
+                    0 0 0 0 rgba(59, 130, 246, 0.7);
+            }
+            50% {
+                box-shadow: 
+                    0 10px 30px rgba(59, 130, 246, 0.5),
+                    0 0 0 20px rgba(59, 130, 246, 0);
+            }
+            100% {
+                box-shadow: 
+                    0 10px 30px rgba(59, 130, 246, 0.5),
+                    0 0 0 0 rgba(59, 130, 246, 0);
+            }
+        }
+
+        .video-container:hover .play-button {
+            transform: scale(1.1);
+            box-shadow: 
+                0 15px 40px rgba(59, 130, 246, 0.7),
+                0 0 0 0 rgba(59, 130, 246, 0.7);
+        }
+
+        .play-icon {
+            margin-left: 4px;
+        }
+
+        .video-title {
+            margin-top: 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .video-badge {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--white);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            z-index: 3;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+        }
+
+        /* Comparison Table minimalista */
+        .comparison-section {
+            padding: 80px 20px;
+            background: var(--white);
+        }
+
+        .comparison-table {
+            overflow-x: auto;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        th {
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        tr:hover {
+            background: var(--light-gray);
+        }
+
+        .check {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .cross {
+            color: var(--gray);
+            font-weight: bold;
+            opacity: 0.5;
+        }
+
+        /* Included Section */
+        .included-section {
+            padding: 80px 20px;
+            background: var(--light-gray);
+        }
+
+        .included-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .included-item {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            box-shadow: 0 2px 10px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .included-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        .included-item::before {
+            content: "✓";
+            color: var(--accent);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        /* Recommendation */
+        .recommendation {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            color: var(--white);
+            padding: 60px 20px;
+            text-align: center;
+            margin: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recommendation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(251, 191, 36, 0.2) 0%, transparent 50%);
+        }
+
+        .recommendation h3 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .recommendation p {
+            font-size: 1.15rem;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.9;
+            position: relative;
+            z-index: 1;
+            opacity: 0.95;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 35px;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            font-size: 1.2rem;
+            margin-top: 25px;
+            line-height: 1.8;
+        }
+
+        .contact-info strong {
+            color: var(--gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .pricing-grid,
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.recommended {
+                transform: scale(1);
+            }
+
+            .pricing-card.recommended:hover {
+                transform: translateY(-10px);
+            }
+
+            .price-amount {
+                font-size: 2.8rem;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 12px;
+            }
+
+            .video-container {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+
+        /* Animaciones de entrada */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pricing-card, .included-item, .video-container {
+            animation: fadeInUp 0.7s ease-out;
+        }
+
+        /* Animación especial para la card recomendada */
+        .pricing-card.recommended {
+            animation: fadeInUp 0.7s ease-out, glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 
+                    0 20px 60px rgba(59, 130, 246, 0.15),
+                    0 0 0 2px var(--accent);
+            }
+            50% {
+                box-shadow: 
+                    0 20px 60px rgba(59, 130, 246, 0.25),
+                    0 0 0 2px var(--accent),
+                    0 0 30px rgba(59, 130, 246, 0.3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>SERVI-PLUS</h1>
+            <p class="subtitle">Propuesta Técnica Económica - Plataforma Digital de Servicios</p>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Conectamos necesidades con soluciones profesionales</h2>
+            <p>Una plataforma web moderna que conecta clientes con profesionales verificados en minutos. Rápido, confiable y seguro.</p>
+        </div>
+    </section>
+
+    <section class="pricing-section">
+        <div class="container">
+            <h2 class="section-title">Opciones de Implementación</h2>
+            
+            <div class="pricing-grid">
+                <!-- OPCIÓN 1 -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3 class="card-title">🔷 Esencial</h3>
+                        <p class="card-description">La base sólida para empezar</p>
+                    </div>
+                    
+                    <div class="card-price">
+                        <span class="price-amount">S/11,000</span>
+                        <span class="price-period">6-10 semanas</span>
+                    </div>
+
+                    <ul class="card-features">
+                        <li>
+                            <span class="feature-text">4 servicios: Plomería, Electricidad, Reparaciones, Limpieza</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">
+                                Chat en tiempo real
+                                <span class="tooltip">
+                                    <span class="info-icon">ℹ️</span>
+                                    <span class="tooltiptext">Utilizamos WebSockets, la misma tecnología de WhatsApp para mensajes instantáneos</span>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="feature-text">
+                                Notificaciones push &lt;30 seg
+                                <span class="tooltip">
+                                    <span class="info-icon">ℹ️</span>
+                                    <span class="tooltiptext">Progressive Web App (PWA) + Push Notifications. Funciona en iPhone, iPad y Android</span>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="feature-text">Sistema de rating y reseñas</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">Panel administrativo</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">Historial de servicios</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">Reportes básicos</span>
+                        </li>
+                        <li class="feature-no">
+                            <span class="feature-text">Pagos integrados</span>
+                        </li>
+                        <li class="feature-no">
+                            <span class="feature-text">Inteligencia artificial</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- OPCIÓN 2 -->
+                <div class="pricing-card recommended">
+                    <div class="card-header">
+                        <h3 class="card-title">🔶 Pro</h3>
+                        <p class="card-description">Completa y lista para escalar</p>
+                    </div>
+                    
+                    <div class="card-price">
+                        <span class="price-amount">S/15,000</span>
+                        <span class="price-period">8-10 semanas</span>
+                    </div>
+
+                    <ul class="card-features">
+                        <li>
+                            <span class="feature-text">Todo de Opción Esencial +</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">5 servicios (+ Auxilio mecánico)</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">
+                                Pagos integrados
+                                <span class="tooltip">
+                                    <span class="info-icon">ℹ️</span>
+                                    <span class="tooltiptext">Niubiz o Culqi con split payment: retiene tu comisión automáticamente</span>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="feature-text">
+                                Geolocalización con mapas
+                                <span class="tooltip">
+                                    <span class="info-icon">ℹ️</span>
+                                    <span class="tooltiptext">PostGIS + Google Maps API para encontrar profesionales cercanos considerando tráfico</span>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="feature-text">
+                                Chatbot IA 24/7
+                                <span class="tooltip">
+                                    <span class="info-icon">ℹ️</span>
+                                    <span class="tooltiptext">IA para responder preguntas frecuentes: precios, tiempos, servicios incluidos</span>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="feature-text">Agendamiento de servicios</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">Sistema de cupones</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">Reportes avanzados</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">3 imágenes por servicio</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- OPCIÓN 3 -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3 class="card-title">🔸 Premium</h3>
+                        <p class="card-description">Innovación con IA</p>
+                    </div>
+                    
+                    <div class="card-price">
+                        <span class="price-amount">S/21,000</span>
+                        <span class="price-period">10-12 semanas</span>
+                    </div>
+
+                    <ul class="card-features">
+                        <li>
+                            <span class="feature-text">Todo de Opción Pro +</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">7 servicios completos (+ Legal + Matemáticas)</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">
+                                Comandos de voz
+                                <span class="tooltip">
+                                    <span class="info-icon">ℹ️</span>
+                                    <span class="tooltiptext">Web Speech API + IA. Solicita servicios hablando, estilo WhatsApp</span>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="feature-text">
+                                Diagnóstico inteligente
+                                <span class="tooltip">
+                                    <span class="info-icon">ℹ️</span>
+                                    <span class="tooltiptext">IA analiza el problema, estima urgencia y sugiere tipo de profesional necesario</span>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="feature-text">Estimación automática de precios</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">
+                                Business Intelligence
+                                <span class="tooltip">
+                                    <span class="info-icon">ℹ️</span>
+                                    <span class="tooltiptext">Predicción de demanda, análisis de rentabilidad, insights automáticos para tomar decisiones</span>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="feature-text">
+                                Videollamadas integradas
+                                <span class="tooltip">
+                                    <span class="info-icon">ℹ️</span>
+                                    <span class="tooltiptext">Jitsi embebido para clases virtuales con pizarra compartida</span>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="feature-text">9 imágenes por servicio</span>
+                        </li>
+                        <li>
+                            <span class="feature-text">API REST documentada</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIDEO GALLERY SECTION -->
+    <section class="video-section">
+        <div class="container">
+            <h2 class="section-title">Cómo Funciona SERVI-PLUS</h2>
+            
+            <div class="video-grid">
+                <div class="video-container">
+                    <div class="video-badge">CLIENTE</div>
+                    <div class="video-inner">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/cM7tFtQsIBk?si=oucDRCjn0f_JfS9G" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <div class="video-container">
+                    <div class="video-badge">PROFESIONAL</div>
+                    <div class="video-inner">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/XJTV2DEQ7Oc?si=_Vj-vU_EJscjpbu7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <div class="video-container">
+                    <div class="video-badge">PLATAFORMA</div>
+                    <div class="video-inner">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/F2V6xthjb0s?si=AfibdOAuH5kB5pdn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="recommendation">
+        <div class="container">
+            <h3>💡 Nuestra Recomendación: Opción Pro</h3>
+            <p>
+                El balance perfecto entre funcionalidad y tiempo. Incluye pagos integrados (fundamental para no perder comisiones), 
+                todas las herramientas necesarias para destacar, y un tiempo de lanzamiento razonable. 
+                La IA avanzada puede agregarse en 6-9 meses cuando ya tengan tracción y data.
+            </p>
+        </div>
+    </div>
+
+    <section class="comparison-section">
+        <div class="container">
+            <h2 class="section-title">Comparativa Detallada</h2>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Esencial</th>
+                            <th>Pro ⭐</th>
+                            <th>Premium</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Inversión</strong></td>
+                            <td>S/11,000</td>
+                            <td>S/15,000</td>
+                            <td>S/21,000</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tiempo</strong></td>
+                            <td>6-10 semanas</td>
+                            <td>8-10 semanas</td>
+                            <td>10-12 semanas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Servicios</strong></td>
+                            <td>4 básicos</td>
+                            <td>5</td>
+                            <td>7 completos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pagos integrados</strong></td>
+                            <td><span class="cross">○</span></td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chat tiempo real</strong></td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Push Notifications</strong></td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Geolocalización</strong></td>
+                            <td>Básica</td>
+                            <td>Avanzada</td>
+                            <td>Avanzada</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chatbot IA</strong></td>
+                            <td><span class="cross">○</span></td>
+                            <td>FAQ básico</td>
+                            <td>Avanzado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comandos de voz</strong></td>
+                            <td><span class="cross">○</span></td>
+                            <td><span class="cross">○</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Diagnóstico IA</strong></td>
+                            <td><span class="cross">○</span></td>
+                            <td><span class="cross">○</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Business Intelligence</strong></td>
+                            <td><span class="cross">○</span></td>
+                            <td>Reportes</td>
+                            <td>Predictivo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Videollamadas</strong></td>
+                            <td><span class="cross">○</span></td>
+                            <td><span class="cross">○</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sistema membresías</strong></td>
+                            <td><span class="cross">○</span></td>
+                            <td><span class="cross">○</span></td>
+                            <td><span class="check">✓</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="included-section">
+        <div class="container">
+            <h2 class="section-title">Incluido en TODAS las Opciones</h2>
+            <div class="included-grid">
+                <div class="included-item">
+                    <span>2 rondas de ajustes incluidas</span>
+                </div>
+                <div class="included-item">
+                    <span>Deployment profesional en servidor</span>
+                </div>
+                <div class="included-item">
+                    <span>Capacitación completa (4 horas)</span>
+                </div>
+                <div class="included-item">
+                    <span>Documentación de usuario</span>
+                </div>
+                <div class="included-item">
+                    <span>6 meses soporte post-lanzamiento</span>
+                </div>
+                <div class="included-item">
+                    <span>Código fuente completo</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>¿Listo para empezar?</h2>
+            <p>Agendemos una reunión para resolver dudas y ajustar la propuesta a tus necesidades específicas.</p>
+            <div class="contact-info">
+                <p><strong>Forma de pago:</strong> 40% inicio • 30% mitad • 30% entrega</p>
+                <p style="margin-top: 10px;"><em>Propuesta válida por 30 días</em></p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animación de entrada mejorada con Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.pricing-card, .included-item, .video-container').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(40px)';
+            el.style.transition = 'opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(el);
+        });
+
+        // Efecto hover para videos (opcional: abrir modal o reproducir)
+        document.querySelectorAll('.video-container').forEach(container => {
+            container.addEventListener('click', function() {
+                const title = this.querySelector('.video-title').textContent.trim();
+                alert(`Video: ${title}\n\n(Aquí se reproduce el video o se abre en modal)`);
+            });
+        });
+
+        // Track tooltip views
+        document.querySelectorAll('.tooltip').forEach(tooltip => {
+            tooltip.addEventListener('mouseenter', function() {
+                console.log('Tooltip viewed:', this.querySelector('.tooltiptext').textContent);
+            });
+        });
+    </script>
+</body>
+</html>
