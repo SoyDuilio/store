@@ -30,6 +30,57 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 # Configurar plantillas Jinja2
 templates = Jinja2Templates(directory="app/templates")
 
+
+# ==================== PWA ROUTES ====================
+# Estas rutas son para servir los archivos de la PWA
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATES_DIR = os.path.join(BASE_DIR, "app", "templates")
+
+@app.get("/app/templates/service-worker.js")
+async def serve_service_worker():
+    """Servir Service Worker con headers correctos para PWA"""
+    sw_path = os.path.join(TEMPLATES_DIR, "service-worker.js")
+    return FileResponse(
+        sw_path,
+        media_type="application/javascript",
+        headers={
+            "Service-Worker-Allowed": "/app/templates/",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0"
+        }
+    )
+
+@app.get("/app/templates/manifest.json")
+async def serve_manifest():
+    """Servir manifest.json para PWA"""
+    manifest_path = os.path.join(TEMPLATES_DIR, "manifest.json")
+    return FileResponse(
+        manifest_path,
+        media_type="application/json"
+    )
+
+@app.get("/app/templates/icon-{size}.png")
+async def serve_icon(size: int):
+    """Servir iconos de la PWA"""
+    icon_path = os.path.join(TEMPLATES_DIR, f"icon-{size}.png")
+    if os.path.exists(icon_path):
+        return FileResponse(icon_path, media_type="image/png")
+    # Si no existe el icono, devolver 404
+    return Response(status_code=404, content="Icon not found")
+
+@app.get("/serviplus", response_class=HTMLResponse)
+async def serviplus_pwa(request: Request):
+    """Ruta para servir la demo de PWA SERVI-PLUS"""
+    return templates.TemplateResponse(
+        "index_serviplus.html",
+        {"request": request}
+    )
+
+# ==================== FIN PWA ROUTES ====================
+
+
 # ======================================================================
 #             2. DATOS SIMULADOS (MOCK DATA)
 # ======================================================================
@@ -480,5 +531,6 @@ async def serviplus2(request: Request):
 @app.get("/serviplus3", response_class=HTMLResponse)
 async def serviplus3(request: Request):
     return templates.TemplateResponse("serviplus3.html", {"request": request})
+
 
 
