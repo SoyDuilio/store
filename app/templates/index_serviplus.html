@@ -808,7 +808,7 @@
                         body: '¡Juan Pérez aceptó tu solicitud de electricidad!\n\nLlegará a Miraflores en aproximadamente 25 minutos.',
                         icon: '/static/img/icon-192.png',
                         badge: '/static/img/icon-192.png',
-                        image: 'https://ui-avatars.com/api/?name=Juan+Perez&size=512&background=3b82f6&color=fff&bold=true',
+                        image: '/static/img/juan-perez.jpg',  // ✅ FOTO LOCAL
                         vibrate: [300, 100, 300, 100, 500],
                         tag: 'servicio-123',
                         requireInteraction: true,
@@ -830,7 +830,7 @@
                         body: 'Juan Pérez te escribió:\n\n"Ya estoy saliendo hacia tu domicilio. Llego en 20 minutos 👍"',
                         icon: '/static/img/icon-192.png',
                         badge: '/static/img/icon-192.png',
-                        image: 'https://ui-avatars.com/api/?name=JP&size=512&background=10b981&color=fff&bold=true&font-size=0.5',
+                        image: '/static/img/juan-perez.jpg',  // ✅ MISMA FOTO (es el mismo profesional)
                         vibrate: [200, 100, 200],
                         tag: 'mensaje-789',
                         requireInteraction: false,
@@ -852,7 +852,10 @@
                         body: '¡Hay una nueva solicitud de gasfitería en San Isidro!\n\nPago: S/180 • Distancia: 3.5km',
                         icon: '/static/img/icon-192.png',
                         badge: '/static/img/icon-192.png',
-                        image: 'https://ui-avatars.com/api/?name=S+180&size=512&background=fbbf24&color=0f172a&bold=true&font-size=0.4',
+                        // Aquí puedes usar foto del cliente o una imagen del servicio
+                        image: '/static/img/cliente-ejemplo.jpg',  // ✅ Foto del cliente (si la tienes)
+                        // O usa un placeholder si no tienes foto del cliente:
+                        // image: 'https://ui-avatars.com/api/?name=S+180&size=512&background=fbbf24&color=0f172a&bold=true&font-size=0.4',
                         vibrate: [400, 200, 400, 200, 600],
                         tag: 'trabajo-nuevo-555',
                         requireInteraction: true,
@@ -874,7 +877,8 @@
                         body: 'El cliente canceló la solicitud de electricidad.\n\nNo se realizó ningún cargo a tu cuenta.',
                         icon: '/static/img/icon-192.png',
                         badge: '/static/img/icon-192.png',
-                        image: 'https://ui-avatars.com/api/?name=X&size=512&background=ef4444&color=fff&bold=true&font-size=0.6',
+                        // Para cancelación, usa una imagen genérica o el logo
+                        image: '/static/img/icon-512.png',  // ✅ Logo grande como imagen
                         vibrate: [200, 100, 200, 100, 200],
                         tag: 'cancelacion-333',
                         requireInteraction: false,
