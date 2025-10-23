@@ -14,7 +14,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
-from fastapi.responses import HTMLResponse, Response, RedirectResponse
+from fastapi.responses import HTMLResponse, Response, RedirectResponse, FileResponse
 import os
 # Base.metadata.create_all(bind=engine) # Esto ya estaba comentado, pero es correcto
 
@@ -30,20 +30,29 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 # Configurar plantillas Jinja2
 templates = Jinja2Templates(directory="app/templates")
 
+# ==================== FAVICON ====================
+@app.get("/favicon.ico")
+async def favicon():
+    favicon_path = os.path.join("app", "static", "img", "favicon.ico")
+    if os.path.exists(favicon_path):
+        return FileResponse(favicon_path, media_type="image/x-icon")
+    return Response(status_code=204)  # No Content si no existe
+
 # ==================== SERVICE WORKER ====================
-# Servir Service Worker desde la RAÍZ con headers especiales
 @app.get("/service-worker.js")
 async def serve_service_worker():
-    sw_path = os.path.join("app", "templates", "service-worker.js")
+    # El service-worker está en app/static/js/ según tu captura
+    sw_path = os.path.join("app", "static", "js", "service-worker.js")
     return FileResponse(
         sw_path,
         media_type="application/javascript",
         headers={
             "Service-Worker-Allowed": "/",
-            "Cache-Control": "no-cache, no-store, must-revalidate"
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0"
         }
     )
-
 # ==================== PWA ====================
 
 
@@ -497,6 +506,7 @@ async def serviplus2(request: Request):
 @app.get("/serviplus3", response_class=HTMLResponse)
 async def serviplus3(request: Request):
     return templates.TemplateResponse("serviplus3.html", {"request": request})
+
 
 
 
