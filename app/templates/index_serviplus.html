@@ -668,7 +668,7 @@
         // Service Worker Registration
         function registerServiceWorker() {
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('service-worker.js', {
+                navigator.serviceWorker.register('/service-worker.js', {
                     scope: '/'
                 })
                     .then(reg => {
@@ -901,3 +901,4 @@
 </body>
 
 </html>
+
