@@ -2,12 +2,12 @@
   "name": "SERVI-PLUS Demo",
   "short_name": "SERVI-PLUS",
   "description": "Demo de Progressive Web App - Plataforma de servicios profesionales",
-  "start_url": "/app/static/templates/index_serviplus.html",
+  "start_url": "/app/templates/index_serviplus.html",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
   "orientation": "portrait",
-  "scope": "/app/static/templates/",
+  "scope": "/app/templates/",
   "icons": [
     {
       "src": "./icon-192.png",
