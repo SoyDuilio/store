@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SERVI-PLUS">
+    
+    <title>SERVI-PLUS Demo</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- iOS Icons -->
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --gold: #fbbf24;
+            --success: #10b981;
+            --white: #ffffff;
+            --gray: #64748b;
+            --light-gray: #f1f5f9;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--light-gray);
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+
+        /* Header fijo estilo app */
+        .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: env(safe-area-inset-top, 20px) 20px 20px;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .app-header h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .app-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Main content */
+        .app-content {
+            padding-top: calc(env(safe-area-inset-top, 20px) + 90px);
+            padding-bottom: calc(env(safe-area-inset-bottom, 20px) + 80px);
+            min-height: 100vh;
+        }
+
+        /* Install Banner */
+        .install-banner {
+            background: linear-gradient(135deg, var(--accent) 0%, #2563eb 100%);
+            color: var(--white);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+            display: none;
+        }
+
+        .install-banner.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .install-banner h2 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .install-banner p {
+            margin-bottom: 15px;
+            opacity: 0.95;
+        }
+
+        .install-btn {
+            background: var(--white);
+            color: var(--accent);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            gap: 15px;
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:active {
+            transform: scale(0.98);
+            border-color: var(--accent);
+        }
+
+        .feature-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* Notification Button */
+        .notification-section {
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        .notification-btn {
+            background: linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%);
+            color: var(--white);
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .notification-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .modal-content p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .modal-btn {
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .modal-btn.secondary {
+            background: var(--light-gray);
+            color: var(--primary);
+        }
+
+        /* Professional Profile */
+        .professional-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 0 20px 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .professional-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .professional-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #2563eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .professional-info h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .professional-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gold);
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--success);
+            color: var(--white);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .professional-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-top: 1px solid var(--light-gray);
+            padding: 10px 0 calc(env(safe-area-inset-bottom, 10px) + 10px);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            text-align: center;
+            padding: 8px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item.active {
+            color: var(--accent);
+        }
+
+        .nav-item .nav-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .nav-item .nav-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            position: fixed;
+            top: calc(env(safe-area-inset-top, 20px) + 100px);
+            right: 20px;
+            background: var(--success);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            z-index: 999;
+        }
+
+        /* iOS-specific adjustments */
+        @supports (-webkit-touch-callout: none) {
+            .app-header {
+                padding-top: max(env(safe-area-inset-top), 20px);
+            }
+        }
+
+        /* Hide on desktop */
+        @media (min-width: 768px) {
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
+
+            .desktop-warning {
+                display: block !important;
+                max-width: 500px;
+                text-align: center;
+                padding: 40px;
+            }
+
+            .app-header,
+            .app-content,
+            .bottom-nav,
+            .status-badge {
+                display: none;
+            }
+        }
+
+        .desktop-warning {
+            display: none;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .desktop-warning h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .desktop-warning p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: var(--light-gray);
+            border-radius: 12px;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Desktop Warning -->
+    <div class="desktop-warning">
+        <h2>📱 Esta es una Demo Móvil</h2>
+        <p>Por favor, abre esta página desde tu <strong>smartphone</strong> para experimentar la PWA completa.</p>
+        <div class="qr-placeholder">📱</div>
+        <p style="font-size: 0.95rem;">Escanea el código QR o envía este link a tu celular</p>
+    </div>
+
+    <!-- App Header -->
+    <header class="app-header">
+        <h1>SERVI-PLUS</h1>
+        <p>Demo - Progressive Web App</p>
+    </header>
+
+    <!-- Status Badge -->
+    <div class="status-badge">
+        ✓ PWA Activa
+    </div>
+
+    <!-- Main Content -->
+    <main class="app-content">
+        <!-- Install Banner -->
+        <div class="install-banner" id="installBanner">
+            <h2>📲 Instalar App</h2>
+            <p>Instala SERVI-PLUS en tu teléfono para acceso rápido y notificaciones.</p>
+            <button class="install-btn" id="installButton">
+                Instalar Ahora
+            </button>
+        </div>
+
+        <!-- Notification Section -->
+        <div class="notification-section">
+            <button class="notification-btn" id="notificationBtn">
+                🔔 Probar Notificación Push
+            </button>
+        </div>
+
+        <!-- Professional Profile -->
+        <div class="professional-card">
+            <div class="professional-header">
+                <div class="professional-avatar">👨‍🔧</div>
+                <div class="professional-info">
+                    <h3>Juan Pérez</h3>
+                    <div class="professional-rating">
+                        ⭐⭐⭐⭐⭐ 4.9 <span style="color: var(--gray);">(127 reseñas)</span>
+                    </div>
+                    <span class="badge">✓ Verificado</span>
+                </div>
+            </div>
+            <p style="color: var(--gray); margin-bottom: 15px;">
+                Electricista certificado con 8 años de experiencia. Especializado en instalaciones residenciales y reparaciones urgentes.
+            </p>
+            <div class="professional-stats">
+                <div class="stat">
+                    <span class="stat-number">143</span>
+                    <span class="stat-label">Trabajos</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label">Satisfacción</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">&lt;30min</span>
+                    <span class="stat-label">Respuesta</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="features-grid">
+            <div class="feature-card" onclick="showModal('solicitar')">
+                <div class="icon">⚡</div>
+                <h3>Solicitar Servicio</h3>
+                <p>Encuentra profesionales verificados en segundos</p>
+            </div>
+
+            <div class="feature-card" onclick="showModal('chat')">
+                <div class="icon">💬</div>
+                <h3>Chat en Tiempo Real</h3>
+                <p>Comunícate directamente con el profesional</p>
+            </div>
+
+            <div class="feature-card" onclick="showModal('pago')">
+                <div class="icon">💳</div>
+                <h3>Pago Seguro</h3>
+                <p>Transacciones protegidas con encriptación bancaria</p>
+            </div>
+
+            <div class="feature-card" onclick="showModal('tracking')">
+                <div class="icon">📍</div>
+                <h3>Tracking en Vivo</h3>
+                <p>Ve la ubicación del profesional en tiempo real</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-item active">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Inicio</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">🔍</div>
+            <div class="nav-label">Buscar</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">📋</div>
+            <div class="nav-label">Servicios</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">Perfil</div>
+        </div>
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Título</h2>
+            <p id="modalText">Contenido del modal</p>
+            <button class="modal-btn" onclick="closeModal()">Entendido</button>
+            <button class="modal-btn secondary" onclick="closeModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // PWA Install
+        let deferredPrompt;
+        const installBanner = document.getElementById('installBanner');
+        const installButton = document.getElementById('installButton');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBanner.classList.add('show');
+        });
+
+        installButton.addEventListener('click', async () => {
+            if (!deferredPrompt) {
+                alert('La app ya está instalada o tu navegador no soporta instalación.');
+                return;
+            }
+
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                installBanner.classList.remove('show');
+            }
+            
+            deferredPrompt = null;
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(reg => console.log('Service Worker registrado', reg))
+                .catch(err => console.log('Error en Service Worker', err));
+        }
+
+        // Push Notifications
+        const notificationBtn = document.getElementById('notificationBtn');
+
+        notificationBtn.addEventListener('click', async () => {
+            if (!('Notification' in window)) {
+                alert('Tu navegador no soporta notificaciones');
+                return;
+            }
+
+            if (Notification.permission === 'granted') {
+                sendNotification();
+            } else if (Notification.permission !== 'denied') {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    sendNotification();
+                } else {
+                    alert('Necesitas permitir notificaciones para esta función');
+                }
+            } else {
+                alert('Las notificaciones están bloqueadas. Actívalas en configuración del navegador.');
+            }
+        });
+
+        function sendNotification() {
+            const options = {
+                body: '¡Juan aceptó tu solicitud de electricidad! Llegará en 25 minutos.',
+                icon: 'icon-192.png',
+                badge: 'icon-192.png',
+                vibrate: [200, 100, 200],
+                tag: 'serviplus-demo',
+                requireInteraction: false,
+                actions: [
+                    { action: 'view', title: 'Ver detalles' },
+                    { action: 'close', title: 'Cerrar' }
+                ]
+            };
+
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                navigator.serviceWorker.ready.then(registration => {
+                    registration.showNotification('SERVI-PLUS - Servicio Confirmado ✓', options);
+                });
+            } else {
+                new Notification('SERVI-PLUS - Servicio Confirmado ✓', options);
+            }
+
+            // Feedback visual
+            notificationBtn.textContent = '✅ Notificación Enviada';
+            notificationBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            
+            setTimeout(() => {
+                notificationBtn.textContent = '🔔 Probar Notificación Push';
+                notificationBtn.style.background = 'linear-gradient(135deg, var(--gold), #f59e0b)';
+            }, 3000);
+        }
+
+        // Modal Functions
+        function showModal(type) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modalTitle');
+            const text = document.getElementById('modalText');
+
+            const content = {
+                solicitar: {
+                    title: '⚡ Solicitar Servicio',
+                    text: 'En la app real, aquí podrías: seleccionar el tipo de servicio, describir el problema, subir fotos, y elegir tu ubicación. Los profesionales cercanos recibirían la notificación en menos de 30 segundos.'
+                },
+                chat: {
+                    title: '💬 Chat en Tiempo Real',
+                    text: 'El chat usa WebSockets (misma tecnología de WhatsApp) para mensajes instantáneos. Puedes coordinar detalles, enviar fotos, y recibir actualizaciones del profesional en tiempo real.'
+                },
+                pago: {
+                    title: '💳 Pago Seguro',
+                    text: 'Los pagos se procesan con Niubiz o Culqi (pasarelas certificadas PCI-DSS). Tu comisión del 15% se retiene automáticamente, y el 85% va directo al profesional. Todo encriptado con TLS 1.3.'
+                },
+                tracking: {
+                    title: '📍 Tracking en Vivo',
+                    text: 'Una vez que el profesional acepta, puedes ver su ubicación en tiempo real en un mapa. El sistema calcula el tiempo de llegada considerando el tráfico de Lima.'
+                }
+            };
+
+            title.textContent = content[type].title;
+            text.textContent = content[type].text;
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        // Bottom Nav interaction
+        document.querySelectorAll('.nav-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // Detect if already installed
+        window.addEventListener('appinstalled', () => {
+            installBanner.classList.remove('show');
+            console.log('PWA instalada exitosamente');
+        });
+
+        // Check if running as installed app
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+            console.log('Corriendo como app instalada');
+            installBanner.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
