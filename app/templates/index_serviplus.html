@@ -11,10 +11,10 @@
     <title>SERVI-PLUS Demo</title>
     
     <!-- PWA Manifest -->
-    <link rel="manifest" href="/app/templates/manifest.json">
+    <link rel="manifest" href="/static/js/manifest.json">
     
     <!-- iOS Icons -->
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="/static/img/icon-192.png">
     
     <style>
         * {
@@ -667,8 +667,8 @@
         // Service Worker Registration
         function registerServiceWorker() {
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/app/templates/service-worker.js', {
-                    scope: '/app/templates/'
+                navigator.serviceWorker.register('/static/js/service-worker.js', {
+                    scope: '/'
                 })
                     .then(reg => {
                         console.log('✅ Service Worker registrado', reg);
