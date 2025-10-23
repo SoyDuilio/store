@@ -75,6 +75,6 @@ self.addEventListener('push', event => {
 self.addEventListener('notificationclick', event => {
   event.notification.close();
   event.waitUntil(
-    clients.openWindow('/index_serviplus.html')
+    clients.openWindow('/app/static/templates/index_serviplus.html')
   );
 });
