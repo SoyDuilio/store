@@ -15,7 +15,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from fastapi.responses import HTMLResponse, Response, RedirectResponse
-
+import os
 # Base.metadata.create_all(bind=engine) # Esto ya estaba comentado, pero es correcto
 
 app = FastAPI()
@@ -531,6 +531,7 @@ async def serviplus2(request: Request):
 @app.get("/serviplus3", response_class=HTMLResponse)
 async def serviplus3(request: Request):
     return templates.TemplateResponse("serviplus3.html", {"request": request})
+
 
 
 
