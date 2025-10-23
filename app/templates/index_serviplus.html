@@ -83,23 +83,6 @@
             margin: 20px;
             border-radius: 16px;
             box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
-            display: none;
-        }
-
-        .install-banner.show {
-            display: block;
-            animation: slideIn 0.5s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .install-banner h2 {
@@ -110,6 +93,7 @@
         .install-banner p {
             margin-bottom: 15px;
             opacity: 0.95;
+            line-height: 1.5;
         }
 
         .install-btn {
@@ -123,6 +107,32 @@
             cursor: pointer;
             width: 100%;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .install-btn:active {
+            transform: scale(0.98);
+        }
+
+        .install-steps {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .install-steps h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .install-steps ol {
+            padding-left: 20px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .install-steps li {
+            margin-bottom: 5px;
         }
 
         /* Feature Cards */
@@ -192,6 +202,11 @@
             transform: scale(0.98);
         }
 
+        .notification-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         /* Modal */
         .modal {
             position: fixed;
@@ -224,6 +239,8 @@
             max-width: 400px;
             width: 100%;
             animation: slideUp 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         @keyframes slideUp {
@@ -398,10 +415,35 @@
             z-index: 999;
         }
 
-        /* iOS-specific adjustments */
-        @supports (-webkit-touch-callout: none) {
-            .app-header {
-                padding-top: max(env(safe-area-inset-top), 20px);
+        .status-badge.installed {
+            background: var(--gold);
+        }
+
+        /* Alert Box */
+        .alert-box {
+            background: var(--success);
+            color: var(--white);
+            padding: 15px 20px;
+            margin: 20px;
+            border-radius: 12px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.5s ease;
+        }
+
+        .alert-box.show {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
@@ -469,7 +511,7 @@
         <h2>📱 Esta es una Demo Móvil</h2>
         <p>Por favor, abre esta página desde tu <strong>smartphone</strong> para experimentar la PWA completa.</p>
         <div class="qr-placeholder">📱</div>
-        <p style="font-size: 0.95rem;">Escanea el código QR o envía este link a tu celular</p>
+        <p style="font-size: 0.95rem;">Envía este link a tu celular</p>
     </div>
 
     <!-- App Header -->
@@ -479,8 +521,14 @@
     </header>
 
     <!-- Status Badge -->
-    <div class="status-badge">
-        ✓ PWA Activa
+    <div class="status-badge" id="statusBadge">
+        ⏳ Cargando...
+    </div>
+
+    <!-- Success Alert -->
+    <div class="alert-box" id="successAlert">
+        <span style="font-size: 1.5rem;">✅</span>
+        <span id="alertText">Mensaje</span>
     </div>
 
     <!-- Main Content -->
@@ -488,16 +536,20 @@
         <!-- Install Banner -->
         <div class="install-banner" id="installBanner">
             <h2>📲 Instalar App</h2>
-            <p>Instala SERVI-PLUS en tu teléfono para acceso rápido y notificaciones.</p>
+            <p>Instala SERVI-PLUS en tu teléfono para acceso rápido y notificaciones push.</p>
             <button class="install-btn" id="installButton">
                 Instalar Ahora
             </button>
+            <div class="install-steps" id="installSteps" style="display: none;">
+                <h3>Instrucciones:</h3>
+                <ol id="stepsList"></ol>
+            </div>
         </div>
 
         <!-- Notification Section -->
         <div class="notification-section">
             <button class="notification-btn" id="notificationBtn">
-                🔔 Probar Notificación Push
+                🔔 Enviar Notificación de Prueba
             </button>
         </div>
 
@@ -586,101 +638,201 @@
             <h2 id="modalTitle">Título</h2>
             <p id="modalText">Contenido del modal</p>
             <button class="modal-btn" onclick="closeModal()">Entendido</button>
-            <button class="modal-btn secondary" onclick="closeModal()">Cerrar</button>
         </div>
     </div>
 
     <script>
-        // PWA Install
+        // Variables globales
         let deferredPrompt;
         const installBanner = document.getElementById('installBanner');
         const installButton = document.getElementById('installButton');
+        const installSteps = document.getElementById('installSteps');
+        const stepsList = document.getElementById('stepsList');
+        const notificationBtn = document.getElementById('notificationBtn');
+        const statusBadge = document.getElementById('statusBadge');
+        const successAlert = document.getElementById('successAlert');
+        const alertText = document.getElementById('alertText');
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBanner.classList.add('show');
-        });
+        // Detectar plataforma
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isAndroid = /Android/.test(navigator.userAgent);
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
-        installButton.addEventListener('click', async () => {
-            if (!deferredPrompt) {
-                alert('La app ya está instalada o tu navegador no soporta instalación.');
-                return;
-            }
-
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            
-            if (outcome === 'accepted') {
-                installBanner.classList.remove('show');
-            }
-            
-            deferredPrompt = null;
+        // Inicialización
+        window.addEventListener('load', () => {
+            checkInstallStatus();
+            registerServiceWorker();
         });
 
         // Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(reg => console.log('Service Worker registrado', reg))
-                .catch(err => console.log('Error en Service Worker', err));
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => {
+                        console.log('✅ Service Worker registrado', reg);
+                        statusBadge.textContent = '✓ PWA Activa';
+                        statusBadge.style.background = 'var(--success)';
+                    })
+                    .catch(err => {
+                        console.error('❌ Error en Service Worker', err);
+                        statusBadge.textContent = '⚠️ SW Error';
+                        statusBadge.style.background = 'var(--gray)';
+                    });
+            }
         }
 
-        // Push Notifications
-        const notificationBtn = document.getElementById('notificationBtn');
+        // Check Install Status
+        function checkInstallStatus() {
+            if (isStandalone) {
+                // Ya está instalada
+                installBanner.style.display = 'none';
+                statusBadge.textContent = '✓ App Instalada';
+                statusBadge.classList.add('installed');
+                showAlert('✅ App ya instalada!');
+            } else {
+                // Mostrar banner según plataforma
+                if (isIOS) {
+                    showIOSInstructions();
+                } else if (isAndroid) {
+                    // Esperar evento beforeinstallprompt
+                } else {
+                    installButton.textContent = 'Solo disponible en móviles';
+                    installButton.disabled = true;
+                }
+            }
+        }
+
+        // iOS Install Instructions
+        function showIOSInstructions() {
+            installButton.textContent = 'Ver Instrucciones para iOS';
+            installButton.onclick = () => {
+                installSteps.style.display = 'block';
+                stepsList.innerHTML = `
+                    <li>Toca el botón <strong>Compartir</strong> (📤) en Safari</li>
+                    <li>Desplázate y selecciona <strong>"Añadir a pantalla de inicio"</strong></li>
+                    <li>Toca <strong>"Añadir"</strong> en la esquina superior derecha</li>
+                    <li>¡Listo! El ícono aparecerá en tu home</li>
+                `;
+            };
+        }
+
+        // Android Install Prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            installButton.textContent = 'Instalar Ahora (Android)';
+            installButton.disabled = false;
+            installButton.onclick = async () => {
+                if (!deferredPrompt) return;
+
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    showAlert('✅ App instalada exitosamente!');
+                    installBanner.style.display = 'none';
+                } else {
+                    showAlert('ℹ️ Instalación cancelada');
+                }
+                
+                deferredPrompt = null;
+            };
+        });
+
+        // App Installed Event
+        window.addEventListener('appinstalled', () => {
+            console.log('✅ PWA instalada');
+            showAlert('✅ SERVI-PLUS instalada correctamente!');
+            installBanner.style.display = 'none';
+            statusBadge.textContent = '✓ App Instalada';
+            statusBadge.classList.add('installed');
+        });
+
+        // ========== NOTIFICACIONES ==========
 
         notificationBtn.addEventListener('click', async () => {
+            // Verificar soporte
             if (!('Notification' in window)) {
-                alert('Tu navegador no soporta notificaciones');
+                showModal('error-notif');
                 return;
             }
 
+            // Si ya tiene permiso, enviar directamente
             if (Notification.permission === 'granted') {
-                sendNotification();
-            } else if (Notification.permission !== 'denied') {
+                sendTestNotification();
+                return;
+            }
+
+            // Si puede pedir permiso
+            if (Notification.permission !== 'denied') {
                 const permission = await Notification.requestPermission();
+                
                 if (permission === 'granted') {
-                    sendNotification();
+                    sendTestNotification();
                 } else {
-                    alert('Necesitas permitir notificaciones para esta función');
+                    alert('❌ Necesitas permitir notificaciones en la configuración del navegador.');
                 }
             } else {
-                alert('Las notificaciones están bloqueadas. Actívalas en configuración del navegador.');
+                alert('❌ Las notificaciones están bloqueadas. Ve a Configuración → Sitios web → Notificaciones y permite este sitio.');
             }
         });
 
-        function sendNotification() {
+        // Enviar notificación de prueba
+        function sendTestNotification() {
+            const title = 'SERVI-PLUS - ¡Servicio Confirmado! ✓';
             const options = {
-                body: '¡Juan aceptó tu solicitud de electricidad! Llegará en 25 minutos.',
+                body: '¡Juan aceptó tu solicitud! Llegará en 25 minutos a Miraflores.',
                 icon: 'icon-192.png',
                 badge: 'icon-192.png',
-                vibrate: [200, 100, 200],
+                vibrate: [200, 100, 200, 100, 200],
                 tag: 'serviplus-demo',
                 requireInteraction: false,
                 actions: [
-                    { action: 'view', title: 'Ver detalles' },
+                    { action: 'view', title: 'Ver Detalles', icon: 'icon-192.png' },
                     { action: 'close', title: 'Cerrar' }
-                ]
+                ],
+                data: {
+                    url: window.location.href
+                }
             };
 
+            // Intentar con Service Worker primero
             if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
                 navigator.serviceWorker.ready.then(registration => {
-                    registration.showNotification('SERVI-PLUS - Servicio Confirmado ✓', options);
+                    registration.showNotification(title, options)
+                        .then(() => {
+                            showAlert('✅ Notificación enviada!');
+                            flashButton();
+                        })
+                        .catch(err => {
+                            console.error('Error al enviar notificación:', err);
+                            // Fallback a Notification API básica
+                            new Notification(title, options);
+                            showAlert('✅ Notificación enviada (fallback)!');
+                            flashButton();
+                        });
                 });
             } else {
-                new Notification('SERVI-PLUS - Servicio Confirmado ✓', options);
+                // Fallback: Notification API básica
+                new Notification(title, options);
+                showAlert('✅ Notificación enviada!');
+                flashButton();
             }
+        }
 
-            // Feedback visual
-            notificationBtn.textContent = '✅ Notificación Enviada';
-            notificationBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+        function flashButton() {
+            notificationBtn.textContent = '✅ Notificación Enviada!';
+            notificationBtn.style.background = 'linear-gradient(135deg, var(--success), #059669)';
             
             setTimeout(() => {
-                notificationBtn.textContent = '🔔 Probar Notificación Push';
+                notificationBtn.textContent = '🔔 Enviar Notificación de Prueba';
                 notificationBtn.style.background = 'linear-gradient(135deg, var(--gold), #f59e0b)';
             }, 3000);
         }
 
-        // Modal Functions
+        // ========== MODALS ==========
+
         function showModal(type) {
             const modal = document.getElementById('modal');
             const title = document.getElementById('modalTitle');
@@ -702,6 +854,10 @@
                 tracking: {
                     title: '📍 Tracking en Vivo',
                     text: 'Una vez que el profesional acepta, puedes ver su ubicación en tiempo real en un mapa. El sistema calcula el tiempo de llegada considerando el tráfico de Lima.'
+                },
+                'error-notif': {
+                    title: '❌ Notificaciones No Soportadas',
+                    text: 'Tu navegador no soporta notificaciones push. Intenta abrir esta página en Chrome, Safari o Firefox en tu smartphone.'
                 }
             };
 
@@ -714,25 +870,30 @@
             document.getElementById('modal').classList.remove('show');
         }
 
+        // Alert Box
+        function showAlert(message) {
+            alertText.textContent = message;
+            successAlert.classList.add('show');
+            
+            setTimeout(() => {
+                successAlert.classList.remove('show');
+            }, 4000);
+        }
+
         // Bottom Nav interaction
-        document.querySelectorAll('.nav-item').forEach((item, index) => {
+        document.querySelectorAll('.nav-item').forEach((item) => {
             item.addEventListener('click', () => {
                 document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
                 item.classList.add('active');
             });
         });
 
-        // Detect if already installed
-        window.addEventListener('appinstalled', () => {
-            installBanner.classList.remove('show');
-            console.log('PWA instalada exitosamente');
+        // Click outside modal to close
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') {
+                closeModal();
+            }
         });
-
-        // Check if running as installed app
-        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-            console.log('Corriendo como app instalada');
-            installBanner.style.display = 'none';
-        }
     </script>
 </body>
 </html>
