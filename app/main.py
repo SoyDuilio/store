@@ -464,6 +464,11 @@ async def misaas(request: Request):
 #PROPUESTA TÉCNICA PARA SERVIPLUS
 @app.get("/serviplus", response_class=HTMLResponse)
 async def serviplus(request: Request):
+    return templates.TemplateResponse("index_serviplus.html", {"request": request})
+
+#PROPUESTA TÉCNICA PARA SERVIPLUS
+@app.get("/serviplus1", response_class=HTMLResponse)
+async def serviplus1(request: Request):
     return templates.TemplateResponse("serviplus1.html", {"request": request})
 
 #ACLARACIONES TÉCNIAS POR PLAN
@@ -475,4 +480,5 @@ async def serviplus2(request: Request):
 @app.get("/serviplus3", response_class=HTMLResponse)
 async def serviplus3(request: Request):
     return templates.TemplateResponse("serviplus3.html", {"request": request})
+
 
