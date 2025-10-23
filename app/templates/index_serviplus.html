@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f172a">
-    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="SERVI-PLUS">
@@ -549,8 +548,18 @@
 
         <!-- Notification Section -->
         <div class="notification-section">
-            <button class="notification-btn" id="notificationBtn">
-                🔔 Enviar Notificación de Prueba
+            <h3>🔔 Probar Notificaciones Push</h3>
+            <button class="notification-btn success" id="notificationBtn1" style="background: linear-gradient(135deg, #10b981, #059669);">
+                ✅ Servicio Aceptado
+            </button>
+            <button class="notification-btn accent" id="notificationBtn2" style="background: linear-gradient(135deg, #3b82f6, #2563eb); margin-top: 10px;">
+                💬 Nuevo Mensaje del Profesional
+            </button>
+            <button class="notification-btn" id="notificationBtn3" style="margin-top: 10px;">
+                ⚡ Nuevo Trabajo Disponible
+            </button>
+            <button class="notification-btn red" id="notificationBtn4" style="background: linear-gradient(135deg, #ef4444, #dc2626); margin-top: 10px;">
+                🚨 Servicio Cancelado
             </button>
         </div>
 
@@ -649,10 +658,15 @@
         const installButton = document.getElementById('installButton');
         const installSteps = document.getElementById('installSteps');
         const stepsList = document.getElementById('stepsList');
-        const notificationBtn = document.getElementById('notificationBtn');
         const statusBadge = document.getElementById('statusBadge');
         const successAlert = document.getElementById('successAlert');
         const alertText = document.getElementById('alertText');
+
+        // Botones de notificación (4 nuevos)
+        const notificationBtn1 = document.getElementById('notificationBtn1');
+        const notificationBtn2 = document.getElementById('notificationBtn2');
+        const notificationBtn3 = document.getElementById('notificationBtn3');
+        const notificationBtn4 = document.getElementById('notificationBtn4');
 
         // Detectar plataforma
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -663,6 +677,7 @@
         window.addEventListener('load', () => {
             checkInstallStatus();
             registerServiceWorker();
+            setupNotificationButtons();
         });
 
         // Service Worker Registration
@@ -687,13 +702,11 @@
         // Check Install Status
         function checkInstallStatus() {
             if (isStandalone) {
-                // Ya está instalada
                 installBanner.style.display = 'none';
                 statusBadge.textContent = '✓ App Instalada';
                 statusBadge.classList.add('installed');
                 showAlert('✅ App ya instalada!');
             } else {
-                // Mostrar banner según plataforma
                 if (isIOS) {
                     showIOSInstructions();
                 } else if (isAndroid) {
@@ -752,86 +765,159 @@
             statusBadge.classList.add('installed');
         });
 
-        // ========== NOTIFICACIONES ==========
+        // ==================== NOTIFICACIONES RICAS ====================
 
-        notificationBtn.addEventListener('click', async () => {
-            // Verificar soporte
-            if (!('Notification' in window)) {
-                showModal('error-notif');
-                return;
+        function setupNotificationButtons() {
+            if (notificationBtn1) {
+                notificationBtn1.addEventListener('click', () => enviarNotificacion('servicio-aceptado'));
             }
-
-            // Si ya tiene permiso, enviar directamente
-            if (Notification.permission === 'granted') {
-                sendTestNotification();
-                return;
+            if (notificationBtn2) {
+                notificationBtn2.addEventListener('click', () => enviarNotificacion('nuevo-mensaje'));
             }
-
-            // Si puede pedir permiso
-            if (Notification.permission !== 'denied') {
-                const permission = await Notification.requestPermission();
-                
-                if (permission === 'granted') {
-                    sendTestNotification();
-                } else {
-                    alert('❌ Necesitas permitir notificaciones en la configuración del navegador.');
-                }
-            } else {
-                alert('❌ Las notificaciones están bloqueadas. Ve a Configuración → Sitios web → Notificaciones y permite este sitio.');
+            if (notificationBtn3) {
+                notificationBtn3.addEventListener('click', () => enviarNotificacion('nuevo-trabajo'));
             }
-        });
-
-        // Enviar notificación de prueba
-        function sendTestNotification() {
-            const title = 'SERVI-PLUS - ¡Servicio Confirmado! ✓';
-            const options = {
-                body: '¡Juan aceptó tu solicitud! Llegará en 25 minutos a Miraflores.',
-                icon: 'icon-192.png',
-                badge: 'icon-192.png',
-                vibrate: [200, 100, 200, 100, 200],
-                tag: 'serviplus-demo',
-                requireInteraction: false,
-                actions: [
-                    { action: 'view', title: 'Ver Detalles', icon: 'icon-192.png' },
-                    { action: 'close', title: 'Cerrar' }
-                ],
-                data: {
-                    url: window.location.href
-                }
-            };
-
-            // Intentar con Service Worker primero
-            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-                navigator.serviceWorker.ready.then(registration => {
-                    registration.showNotification(title, options)
-                        .then(() => {
-                            showAlert('✅ Notificación enviada!');
-                            flashButton();
-                        })
-                        .catch(err => {
-                            console.error('Error al enviar notificación:', err);
-                            // Fallback a Notification API básica
-                            new Notification(title, options);
-                            showAlert('✅ Notificación enviada (fallback)!');
-                            flashButton();
-                        });
-                });
-            } else {
-                // Fallback: Notification API básica
-                new Notification(title, options);
-                showAlert('✅ Notificación enviada!');
-                flashButton();
+            if (notificationBtn4) {
+                notificationBtn4.addEventListener('click', () => enviarNotificacion('servicio-cancelado'));
             }
         }
 
-        function flashButton() {
-            notificationBtn.textContent = '✅ Notificación Enviada!';
-            notificationBtn.style.background = 'linear-gradient(135deg, var(--success), #059669)';
-            
-            setTimeout(() => {
-                notificationBtn.textContent = '🔔 Enviar Notificación de Prueba';
-                notificationBtn.style.background = 'linear-gradient(135deg, var(--gold), #f59e0b)';
-            }, 3000);
+        async function enviarNotificacion(tipo) {
+            // Verificar soporte
+            if (!('Notification' in window)) {
+                alert('❌ Tu navegador no soporta notificaciones');
+                return;
+            }
+
+            // Pedir permiso si no lo tiene
+            if (Notification.permission !== 'granted') {
+                const permission = await Notification.requestPermission();
+                if (permission !== 'granted') {
+                    alert('❌ Necesitas permitir notificaciones para esta demo');
+                    return;
+                }
+            }
+
+            // Configuración según tipo
+            let notificationConfig = {};
+
+            switch(tipo) {
+                case 'servicio-aceptado':
+                    notificationConfig = {
+                        title: 'SERVI-PLUS',
+                        body: '¡Juan Pérez aceptó tu solicitud de electricidad!\n\nLlegará a Miraflores en aproximadamente 25 minutos.',
+                        icon: '/static/img/icon-192.png',
+                        badge: '/static/img/icon-192.png',
+                        image: 'https://ui-avatars.com/api/?name=Juan+Perez&size=512&background=3b82f6&color=fff&bold=true',
+                        vibrate: [300, 100, 300, 100, 500],
+                        tag: 'servicio-123',
+                        requireInteraction: true,
+                        actions: [
+                            { action: 'ver-detalles', title: '📍 Ver en Mapa' },
+                            { action: 'chat', title: '💬 Enviar Mensaje' }
+                        ],
+                        data: {
+                            servicio_id: 123,
+                            profesional_id: 456,
+                            tipo: 'servicio-aceptado'
+                        }
+                    };
+                    break;
+
+                case 'nuevo-mensaje':
+                    notificationConfig = {
+                        title: 'SERVI-PLUS - Nuevo Mensaje',
+                        body: 'Juan Pérez te escribió:\n\n"Ya estoy saliendo hacia tu domicilio. Llego en 20 minutos 👍"',
+                        icon: '/static/img/icon-192.png',
+                        badge: '/static/img/icon-192.png',
+                        image: 'https://ui-avatars.com/api/?name=JP&size=512&background=10b981&color=fff&bold=true&font-size=0.5',
+                        vibrate: [200, 100, 200],
+                        tag: 'mensaje-789',
+                        requireInteraction: false,
+                        actions: [
+                            { action: 'chat', title: '💬 Responder' },
+                            { action: 'ignorar', title: 'Cerrar' }
+                        ],
+                        data: {
+                            chat_id: 789,
+                            profesional_id: 456,
+                            tipo: 'nuevo-mensaje'
+                        }
+                    };
+                    break;
+
+                case 'nuevo-trabajo':
+                    notificationConfig = {
+                        title: 'SERVI-PLUS - ⚡ Nuevo Trabajo',
+                        body: '¡Hay una nueva solicitud de gasfitería en San Isidro!\n\nPago: S/180 • Distancia: 3.5km',
+                        icon: '/static/img/icon-192.png',
+                        badge: '/static/img/icon-192.png',
+                        image: 'https://ui-avatars.com/api/?name=S+180&size=512&background=fbbf24&color=0f172a&bold=true&font-size=0.4',
+                        vibrate: [400, 200, 400, 200, 600],
+                        tag: 'trabajo-nuevo-555',
+                        requireInteraction: true,
+                        actions: [
+                            { action: 'ver-detalles', title: '👀 Ver Detalles' },
+                            { action: 'ignorar', title: '❌ Ignorar' }
+                        ],
+                        data: {
+                            trabajo_id: 555,
+                            monto: 180,
+                            tipo: 'nuevo-trabajo'
+                        }
+                    };
+                    break;
+
+                case 'servicio-cancelado':
+                    notificationConfig = {
+                        title: 'SERVI-PLUS - Servicio Cancelado',
+                        body: 'El cliente canceló la solicitud de electricidad.\n\nNo se realizó ningún cargo a tu cuenta.',
+                        icon: '/static/img/icon-192.png',
+                        badge: '/static/img/icon-192.png',
+                        image: 'https://ui-avatars.com/api/?name=X&size=512&background=ef4444&color=fff&bold=true&font-size=0.6',
+                        vibrate: [200, 100, 200, 100, 200],
+                        tag: 'cancelacion-333',
+                        requireInteraction: false,
+                        actions: [
+                            { action: 'ver-detalles', title: 'Ver Detalles' },
+                            { action: 'ignorar', title: 'Cerrar' }
+                        ],
+                        data: {
+                            servicio_id: 333,
+                            tipo: 'servicio-cancelado'
+                        }
+                    };
+                    break;
+            }
+
+            // Enviar notificación
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                navigator.serviceWorker.ready.then(registration => {
+                    registration.showNotification(notificationConfig.title, {
+                        body: notificationConfig.body,
+                        icon: notificationConfig.icon,
+                        badge: notificationConfig.badge,
+                        image: notificationConfig.image,
+                        vibrate: notificationConfig.vibrate,
+                        tag: notificationConfig.tag,
+                        requireInteraction: notificationConfig.requireInteraction,
+                        actions: notificationConfig.actions,
+                        data: notificationConfig.data
+                    }).then(() => {
+                        showAlert('✅ Notificación enviada!');
+                        console.log('Notificación enviada:', tipo);
+                    }).catch(err => {
+                        console.error('Error al enviar notificación:', err);
+                        // Fallback
+                        new Notification(notificationConfig.title, notificationConfig);
+                        showAlert('✅ Notificación enviada (fallback)!');
+                    });
+                });
+            } else {
+                // Fallback: Notification API básica
+                new Notification(notificationConfig.title, notificationConfig);
+                showAlert('✅ Notificación enviada!');
+            }
         }
 
         // ========== MODALS ==========
@@ -857,10 +943,6 @@
                 tracking: {
                     title: '📍 Tracking en Vivo',
                     text: 'Una vez que el profesional acepta, puedes ver su ubicación en tiempo real en un mapa. El sistema calcula el tiempo de llegada considerando el tráfico de Lima.'
-                },
-                'error-notif': {
-                    title: '❌ Notificaciones No Soportadas',
-                    text: 'Tu navegador no soporta notificaciones push. Intenta abrir esta página en Chrome, Safari o Firefox en tu smartphone.'
                 }
             };
 
@@ -899,6 +981,4 @@
         });
     </script>
 </body>
-
 </html>
-
