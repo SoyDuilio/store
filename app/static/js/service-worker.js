@@ -1,4 +1,4 @@
-const CACHE_NAME = 'serviplus-v1';
+const CACHE_NAME = 'serviplus-v2';
 const urlsToCache = [
   '/serviplus',
   '/static/js/manifest.json',
@@ -6,17 +6,16 @@ const urlsToCache = [
   '/static/img/icon-512.png'
 ];
 
-// Install Service Worker
+// ==================== INSTALL ====================
 self.addEventListener('install', (event) => {
-  console.log('[SW] 🔧 Instalando Service Worker...');
+  console.log('[SW] 🔧 Instalando Service Worker v2...');
   
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('[SW] ✅ Cache abierto');
+        console.log('[SW] ✅ Cache abierto:', CACHE_NAME);
         return cache.addAll(urlsToCache).catch((err) => {
           console.error('[SW] ❌ Error al cachear archivos:', err);
-          // No fallar si algunos archivos no existen (como los iconos)
         });
       })
   );
@@ -24,7 +23,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate Service Worker
+// ==================== ACTIVATE ====================
 self.addEventListener('activate', (event) => {
   console.log('[SW] 🚀 Activando Service Worker...');
   
@@ -42,15 +41,14 @@ self.addEventListener('activate', (event) => {
   );
   
   self.clients.claim();
-  console.log('[SW] ✅ Service Worker activado');
+  console.log('[SW] ✅ Service Worker activado y en control');
 });
 
-// Fetch - Network first, fallback to cache
+// ==================== FETCH ====================
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // Solo cachear respuestas exitosas
         if (response && response.status === 200) {
           const responseToCache = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
@@ -60,43 +58,110 @@ self.addEventListener('fetch', (event) => {
         return response;
       })
       .catch(() => {
-        // Si falla la red, buscar en cache
         return caches.match(event.request);
       })
   );
 });
 
-// Push Notifications
+// ==================== PUSH NOTIFICATIONS ====================
 self.addEventListener('push', (event) => {
-  console.log('[SW] 📬 Push recibido');
+  console.log('[SW] 📬 Push notification recibida');
   
-  const title = 'SERVI-PLUS';
-  const options = {
-    body: event.data ? event.data.text() : 'Tienes una nueva notificación',
+  let notificationData = {
+    title: 'SERVI-PLUS',
+    body: 'Tienes una nueva notificación',
     icon: '/static/img/icon-192.png',
-    badge: '/static/img/icon-192.png',
-    vibrate: [200, 100, 200],
-    tag: 'serviplus-notification',
-    requireInteraction: false,
-    data: {
-      url: '/serviplus'
+    badge: '/static/img/icon-192.png'
+  };
+  
+  if (event.data) {
+    try {
+      notificationData = event.data.json();
+    } catch (e) {
+      notificationData.body = event.data.text();
     }
+  }
+  
+  const options = {
+    body: notificationData.body || 'Nueva notificación de SERVI-PLUS',
+    icon: notificationData.icon || '/static/img/icon-192.png',
+    badge: notificationData.badge || '/static/img/icon-192.png',
+    image: notificationData.image,
+    vibrate: notificationData.vibrate || [200, 100, 200],
+    tag: notificationData.tag || 'serviplus-notification',
+    requireInteraction: notificationData.requireInteraction || false,
+    actions: notificationData.actions || [],
+    data: notificationData.data || {}
   };
 
   event.waitUntil(
-    self.registration.showNotification(title, options)
+    self.registration.showNotification(notificationData.title || 'SERVI-PLUS', options)
   );
 });
 
-// Notification Click
+// ==================== NOTIFICATION CLICK ====================
 self.addEventListener('notificationclick', (event) => {
   console.log('[SW] 👆 Notificación clickeada');
+  console.log('[SW] Acción:', event.action);
+  console.log('[SW] Datos:', event.notification.data);
+  
   event.notification.close();
   
+  const action = event.action;
+  const data = event.notification.data || {};
+  
+  let targetUrl = '/serviplus';
+  
+  if (action === 'ver-detalles' || action === 'ver') {
+    if (data.servicio_id) {
+      targetUrl = `/serviplus?servicio=${data.servicio_id}`;
+    } else {
+      targetUrl = '/serviplus?action=servicios';
+    }
+  } else if (action === 'chat') {
+    if (data.profesional_id) {
+      targetUrl = `/serviplus?action=chat&profesional=${data.profesional_id}`;
+    } else {
+      targetUrl = '/serviplus?action=mensajes';
+    }
+  } else if (action === 'tracking') {
+    if (data.servicio_id) {
+      targetUrl = `/serviplus?action=tracking&servicio=${data.servicio_id}`;
+    }
+  } else if (action === 'ignorar' || action === 'dismiss') {
+    console.log('[SW] Usuario ignoró la notificación');
+    return;
+  } else {
+    if (data.url) {
+      targetUrl = data.url;
+    } else if (data.servicio_id) {
+      targetUrl = `/serviplus?servicio=${data.servicio_id}`;
+    }
+  }
+  
   event.waitUntil(
-    clients.openWindow('/serviplus')
+    clients.matchAll({ type: 'window', includeUncontrolled: true })
+      .then((clientList) => {
+        for (let client of clientList) {
+          if (client.url.includes('/serviplus') && 'focus' in client) {
+            return client.focus().then(() => {
+              if ('navigate' in client) {
+                return client.navigate(targetUrl);
+              }
+            });
+          }
+        }
+        
+        if (clients.openWindow) {
+          return clients.openWindow(targetUrl);
+        }
+      })
   );
 });
 
-// Log de inicio
-console.log('[SW] 📝 Service Worker cargado desde:', self.location.href);
+// ==================== NOTIFICATION CLOSE ====================
+self.addEventListener('notificationclose', (event) => {
+  console.log('[SW] 🔕 Notificación cerrada sin interacción');
+});
+
+console.log('[SW] 📝 Service Worker v2 cargado desde:', self.location.href);
