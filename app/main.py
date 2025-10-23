@@ -30,6 +30,23 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 # Configurar plantillas Jinja2
 templates = Jinja2Templates(directory="app/templates")
 
+# ==================== SERVICE WORKER ====================
+# Servir Service Worker desde la RAÍZ con headers especiales
+@app.get("/service-worker.js")
+async def serve_service_worker():
+    sw_path = os.path.join("app", "templates", "service-worker.js")
+    return FileResponse(
+        sw_path,
+        media_type="application/javascript",
+        headers={
+            "Service-Worker-Allowed": "/",
+            "Cache-Control": "no-cache, no-store, must-revalidate"
+        }
+    )
+
+# ==================== PWA ====================
+
+
 # ======================================================================
 #             2. DATOS SIMULADOS (MOCK DATA)
 # ======================================================================
@@ -480,6 +497,7 @@ async def serviplus2(request: Request):
 @app.get("/serviplus3", response_class=HTMLResponse)
 async def serviplus3(request: Request):
     return templates.TemplateResponse("serviplus3.html", {"request": request})
+
 
 
 
