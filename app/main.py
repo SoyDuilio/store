@@ -248,8 +248,8 @@ async def servidor(request: Request): # He cambiado el nombre de la función par
 
 
 # ✔ IMAGENES - JUAN NEYRA 🌦🔥
-@app.get("/juan-cni", response_class=HTMLResponse)
-async def juancni(request: Request): # He cambiado el nombre de la función para que no se repita
+@app.get("/roger", response_class=HTMLResponse)
+async def roger(request: Request): # He cambiado el nombre de la función para que no se repita
     """
     Servidor, mínimo necesario, para servidor local
     """
@@ -506,6 +506,7 @@ async def serviplus2(request: Request):
 @app.get("/serviplus3", response_class=HTMLResponse)
 async def serviplus3(request: Request):
     return templates.TemplateResponse("serviplus3.html", {"request": request})
+
 
 
 
