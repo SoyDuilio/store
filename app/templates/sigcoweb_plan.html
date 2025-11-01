@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Migración - Sistema ERP Web SAAS</title>
+    <style>
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #151932;
+            --bg-tertiary: #1e2139;
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --text-tertiary: #71717a;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --border-color: #27272a;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-primary);
+            border-bottom: 2px solid var(--accent-primary);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--accent-secondary);
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .highlight-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--accent-primary);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--accent-warning);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .success-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--accent-success);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: var(--bg-primary);
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--accent-primary);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        tr:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .module-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-primary);
+        }
+
+        .module-card h4 {
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .module-card .module-code {
+            display: inline-block;
+            background: var(--accent-primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .tech-badge {
+            background: var(--bg-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            border: 3px solid var(--bg-secondary);
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .phase-duration {
+            background: var(--accent-secondary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .config-table {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .config-category {
+            background: var(--bg-primary);
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .config-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .config-item:last-child {
+            border-bottom: none;
+        }
+
+        .config-editable {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            color: var(--accent-primary);
+            font-size: 0.85rem;
+        }
+
+        footer {
+            background: var(--bg-tertiary);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 3rem;
+        }
+
+        .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+
+            header {
+                padding: 2rem 1rem;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+
+            section {
+                padding: 1rem;
+            }
+
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Plan de Migración</h1>
+            <p>Sistema ERP - De Visual FoxPro a Plataforma Web SAAS</p>
+        </header>
+
+        <div class="content">
+            <!-- RESUMEN EJECUTIVO -->
+            <section id="resumen">
+                <h2>📊 Resumen Ejecutivo</h2>
+                <p>
+                    El presente documento detalla el plan de migración del sistema ERP actual desarrollado en Visual FoxPro 
+                    hacia una moderna plataforma web SAAS (Software as a Service), accesible desde cualquier navegador web 
+                    y dispositivo con conexión a internet.
+                </p>
+
+                <div class="highlight-box">
+                    <h4>🎯 Objetivo Principal</h4>
+                    <p>
+                        Transformar el sistema de gestión empresarial actual en una solución web moderna, escalable y 
+                        altamente configurable, que permita acceso remoto, actualizaciones automáticas y operación 
+                        multi-empresa desde una infraestructura centralizada en la nube.
+                    </p>
+                </div>
+
+                <h3>Beneficios Clave del Nuevo Sistema</h3>
+                <ul>
+                    <li><strong>Acceso desde cualquier lugar:</strong> Internet, smartphone, tablet o computadora</li>
+                    <li><strong>Sin instalación:</strong> Solo requiere navegador web actualizado</li>
+                    <li><strong>Actualizaciones automáticas:</strong> Nuevas funcionalidades sin reinstalar</li>
+                    <li><strong>Backup automático:</strong> Información respaldada en la nube</li>
+                    <li><strong>Multi-establecimiento:</strong> Gestione varias sucursales desde un solo sistema</li>
+                    <li><strong>Alta configurabilidad:</strong> Adapte el sistema a sus necesidades específicas</li>
+                    <li><strong>Seguridad bancaria:</strong> Cifrado, auditoría completa y control de accesos</li>
+                    <li><strong>Facturación electrónica integrada:</strong> Cumplimiento automático con SUNAT</li>
+                </ul>
+            </section>
+
+            <!-- ARQUITECTURA TÉCNICA -->
+            <section id="tecnologia">
+                <h2>🔧 Arquitectura Técnica</h2>
+                <p>
+                    El nuevo sistema se desarrollará utilizando tecnologías modernas, probadas y de alto rendimiento, 
+                    garantizando estabilidad, seguridad y escalabilidad a largo plazo.
+                </p>
+
+                <h3>Stack Tecnológico</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">Python 3.12+</span>
+                    <span class="tech-badge">FastAPI</span>
+                    <span class="tech-badge">PostgreSQL</span>
+                    <span class="tech-badge">SQLAlchemy</span>
+                    <span class="tech-badge">Alembic</span>
+                    <span class="tech-badge">HTMX</span>
+                    <span class="tech-badge">HyperScript</span>
+                    <span class="tech-badge">JavaScript Puro</span>
+                    <span class="tech-badge">CSS Puro</span>
+                    <span class="tech-badge">Redis</span>
+                    <span class="tech-badge">Celery</span>
+                </div>
+
+                <h3>Integraciones Externas</h3>
+                <ul>
+                    <li><strong>APIs de Inteligencia Artificial:</strong> Asistencia inteligente y automatización</li>
+                    <li><strong>SUNAT/OSE:</strong> Facturación electrónica oficial</li>
+                    <li><strong>RENIEC:</strong> Validación de DNI</li>
+                    <li><strong>SUNAT RUC:</strong> Validación y consulta de RUC</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>⚠️ Información Requerida para Dimensionamiento</h4>
+                    <p>
+                        Para determinar correctamente la capacidad del servidor, costos de hosting y garantizar un 
+                        rendimiento óptimo, necesitamos conocer:
+                    </p>
+                    <ul>
+                        <li><strong>Número de usuarios concurrentes:</strong> ¿Cuántas personas trabajarán simultáneamente?</li>
+                        <li><strong>Volumen de transacciones:</strong> ¿Cuántas facturas/documentos por día?</li>
+                        <li><strong>Cantidad de productos:</strong> Catálogo aproximado de ítems</li>
+                        <li><strong>Base de clientes:</strong> Número de clientes activos</li>
+                        <li><strong>Historial a migrar:</strong> ¿Cuántos años de información histórica?</li>
+                        <li><strong>Número de establecimientos:</strong> Sucursales/puntos de venta</li>
+                        <li><strong>Proyección de crecimiento:</strong> Estimado a 1-2 años</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">
+                        <strong>¿Por qué es importante?</strong> Esta información determina:
+                    </p>
+                    <ul>
+                        <li>Memoria RAM necesaria en el servidor</li>
+                        <li>Capacidad de almacenamiento en disco</li>
+                        <li>Ancho de banda requerido</li>
+                        <li>Estrategia de backup</li>
+                        <li>Costos mensuales de operación</li>
+                        <li>Tiempo de respuesta del sistema</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- MÓDULOS DEL SISTEMA -->
+            <section id="modulos">
+                <h2>📦 Módulos del Sistema</h2>
+                <p>
+                    El sistema estará organizado en módulos funcionales independientes pero integrados, permitiendo 
+                    activar solo los que su empresa necesite.
+                </p>
+
+                <div class="module-grid">
+                    <div class="module-card">
+                        <span class="module-code">001</span>
+                        <h4>ADMINISTRADOR</h4>
+                        <p>
+                            Gestión de catálogos maestros: productos, servicios, insumos, activos, clientes, proveedores, 
+                            clasificadores, unidades de medida, marcas, formas de pago, transportistas, 
+                            personal, cajas y bancos, rutas, áreas de trabajo y centros de costo.
+                        </p>
+                        <p><strong>Opciones:</strong> 24 funcionalidades</p>
+                    </div>
+
+                    <div class="module-card">
+                        <span class="module-code">002</span>
+                        <h4>ALMACÉN</h4>
+                        <p>
+                            Control completo de inventarios: kardex valorizado, movimientos de ingreso y salida, 
+                            transferencias entre almacenes, toma de inventarios físicos, guías de remisión electrónicas, 
+                            reportes y consultas.
+                        </p>
+                        <p><strong>Opciones:</strong> 11 funcionalidades</p>
+                    </div>
+
+                    <div class="module-card">
+                        <span class="module-code">003</span>
+                        <h4>LOGÍSTICA</h4>
+                        <p>
+                            Gestión de compras: facturas de compras, gastos, honorarios, notas de crédito/débito, 
+                            canje de letras, vinculación de facturas, órdenes de compra, cotizaciones y control 
+                            de percepciones.
+                        </p>
+                        <p><strong>Opciones:</strong> 11 funcionalidades</p>
+                    </div>
+
+                    <div class="module-card">
+                        <span class="module-code">004</span>
+                        <h4>VENTAS</h4>
+                        <p>
+                            Facturación electrónica completa: facturas, boletas, notas de crédito/débito, guías de 
+                            remisión, pedidos, proformas, canje a letras, retenciones. Integración directa con SUNAT/OSE.
+                        </p>
+                        <p><strong>Opciones:</strong> 14 funcionalidades</p>
+                    </div>
+
+                    <div class="module-card">
+                        <span class="module-code">005</span>
+                        <h4>PUNTO DE VENTA</h4>
+                        <p>
+                            Interfaz optimizada para ventas rápidas: facturación electrónica desde POS, pedidos de mesa, 
+                            venta mostrador, proformas, consulta de comprobantes, apertura/cierre de caja y arqueo.
+                        </p>
+                        <p><strong>Opciones:</strong> 9 funcionalidades</p>
+                    </div>
+
+                    <div class="module-card">
+                        <span class="module-code">006</span>
+                        <h4>CAJA Y BANCOS</h4>
+                        <p>
+                            Control financiero: cobranzas, pagos a proveedores, ingresos varios, egresos, transferencias 
+                            entre cuentas, conciliación bancaria y reportes de flujo de caja.
+                        </p>
+                        <p><strong>Opciones:</strong> Por definir según necesidad</p>
+                    </div>
+
+                    <div class="module-card">
+                        <span class="module-code">007</span>
+                        <h4>PRODUCCIÓN</h4>
+                        <p>
+                            Para empresas manufactureras: vales de salida de insumos, registro de producción, 
+                            maestro de fórmulas/recetas, control de costos de producción por órdenes de trabajo.
+                        </p>
+                        <p><strong>Opciones:</strong> Por definir según necesidad</p>
+                    </div>
+
+                    <div class="module-card">
+                        <span class="module-code">008</span>
+                        <h4>FINANCIAMIENTO</h4>
+                        <p>
+                            Gestión de créditos: cuentas corrientes por cuotas, refinanciamientos, pagarés, 
+                            amortizaciones, cancelaciones y control de cartera.
+                        </p>
+                        <p><strong>Opciones:</strong> Por definir según necesidad</p>
+                    </div>
+
+                    <div class="module-card">
+                        <span class="module-code">009</span>
+                        <h4>RECURSOS HUMANOS</h4>
+                        <p>
+                            Gestión de personal: planillas, boletas de pago, datos del trabajador, conceptos de 
+                            ingresos/egresos, aportaciones, AFP, CTS y reportes laborales.
+                        </p>
+                        <p><strong>Opciones:</strong> Por definir según necesidad</p>
+                    </div>
+
+                    <div class="module-card">
+                        <span class="module-code">010</span>
+                        <h4>CONTABILIDAD</h4>
+                        <p>
+                            Procesos contables completos: plan de cuentas, asientos contables, libro diario, mayor, 
+                            balance de comprobación, estados financieros y reportes tributarios.
+                        </p>
+                        <p><strong>Opciones:</strong> Por definir según necesidad</p>
+                    </div>
+
+                    <div class="module-card">
+                        <span class="module-code">011</span>
+                        <h4>CONFIGURACIONES</h4>
+                        <p>
+                            Parámetros del sistema: permisos granulares por usuario, configuraciones de seguridad, 
+                            personalización de interfaces, límites y restricciones operativas.
+                        </p>
+                        <p><strong>Opciones:</strong> Múltiples opciones configurables</p>
+                    </div>
+
+                    <div class="module-card">
+                        <span class="module-code">012</span>
+                        <h4>GERENCIAL</h4>
+                        <p>
+                            Dashboard ejecutivo: indicadores clave de desempeño (KPIs), gráficos de tendencias, 
+                            análisis comparativos, reportes gerenciales y alertas inteligentes.
+                        </p>
+                        <p><strong>Opciones:</strong> Por definir según necesidad</p>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h4>✅ Enfoque Modular</h4>
+                    <p>
+                        Cada módulo puede ser activado o desactivado según las necesidades de su empresa. 
+                        Pague solo por lo que realmente utiliza. Los módulos se integran automáticamente 
+                        cuando ambos están activos.
+                    </p>
+                </div>
+            </section>
+
+            <!-- RELACIONES ENTRE MÓDULOS -->
+            <section id="relaciones">
+                <h2>🔗 Análisis de Relaciones entre Módulos</h2>
+                <p>
+                    Basándonos en las opciones detalladas de cada módulo, las relaciones identificadas son coherentes 
+                    y siguen el flujo natural de operaciones empresariales:
+                </p>
+
+                <h3>Flujos Principales Identificados</h3>
+
+                <h4>1. Flujo de Compras (Logística → Almacén → Caja)</h4>
+                <ul>
+                    <li><strong>Logística (003):</strong> Registra factura de compra</li>
+                    <li><strong>Almacén (002):</strong> Genera ingreso automático al inventario</li>
+                    <li><strong>Caja (006):</strong> Registra la deuda con proveedor o pago directo</li>
+                </ul>
+
+                <h4>2. Flujo de Ventas (Ventas/POS → Almacén → Caja)</h4>
+                <ul>
+                    <li><strong>Ventas (004) o POS (005):</strong> Genera factura electrónica</li>
+                    <li><strong>Almacén (002):</strong> Descuenta automáticamente del stock</li>
+                    <li><strong>Caja (006):</strong> Registra el ingreso por cobro</li>
+                </ul>
+
+                <h4>3. Flujo de Producción (Almacén → Producción → Almacén)</h4>
+                <ul>
+                    <li><strong>Almacén (002):</strong> Salida de insumos</li>
+                    <li><strong>Producción (007):</strong> Procesa según fórmulas</li>
+                    <li><strong>Almacén (002):</strong> Ingreso de productos terminados</li>
+                </ul>
+
+                <h4>4. Flujo de Créditos (Ventas → Financiamiento → Caja)</h4>
+                <ul>
+                    <li><strong>Ventas (004):</strong> Venta al crédito</li>
+                    <li><strong>Financiamiento (008):</strong> Controla cuotas y amortizaciones</li>
+                    <li><strong>Caja (006):</strong> Registra pagos parciales o totales</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h4>📋 Evaluación de Relaciones</h4>
+                    <p><strong>Las relaciones propuestas son ADECUADAS porque:</strong></p>
+                    <ul>
+                        <li>Siguen el flujo lógico de operaciones comerciales estándar</li>
+                        <li>Evitan duplicidad de información (principio de normalización)</li>
+                        <li>Permiten trazabilidad completa de transacciones</li>
+                        <li>Facilitan la generación de reportes consolidados</li>
+                        <li>Son compatibles con prácticas contables peruanas</li>
+                    </ul>
+
+                    <p style="margin-top: 1rem;"><strong>Recomendación:</strong></p>
+                    <p>
+                        Mantener esta estructura base. Durante el desarrollo, se refinará cada relación específica 
+                        (llaves foráneas, cascadas, restricciones) según las reglas de negocio particulares de su empresa.
+                    </p>
+                </div>
+
+                <h3>Entidades Compartidas (Maestros Comunes)</h3>
+                <p>Estas entidades del módulo ADMINISTRADOR son utilizadas por múltiples módulos:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Entidad Maestra</th>
+                            <th>Módulos que la Utilizan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Productos</td>
+                            <td>Almacén, Logística, Ventas, POS, Producción</td>
+                        </tr>
+                        <tr>
+                            <td>Clientes</td>
+                            <td>Ventas, POS, Caja, Financiamiento</td>
+                        </tr>
+                        <tr>
+                            <td>Proveedores</td>
+                            <td>Logística, Caja</td>
+                        </tr>
+                        <tr>
+                            <td>Personal</td>
+                            <td>Ventas, POS, RR.HH., Auditoría</td>
+                        </tr>
+                        <tr>
+                            <td>Cajas/Bancos</td>
+                            <td>Ventas, POS, Caja, Logística</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- CONFIGURABILIDAD -->
+            <section id="configuracion">
+                <h2>⚙️ Sistema de Configuración</h2>
+                <p>
+                    Una de las características más importantes del nuevo sistema es su <strong>alta configurabilidad</strong>. 
+                    Cada empresa podrá ajustar el comportamiento del sistema según sus necesidades particulares, 
+                    sin necesidad de modificar código.
+                </p>
+
+                <div class="warning-box">
+                    <h4>📝 IMPORTANTE: Solicitud de Feedback</h4>
+                    <p>
+                        La lista de parámetros configurables presentada a continuación es una <strong>propuesta inicial</strong>. 
+                        Requerimos que revise cuidadosamente cada opción e indique:
+                    </p>
+                    <ul>
+                        <li>¿Qué otras configuraciones necesita su empresa?</li>
+                        <li>¿Qué parámetros adicionales serían útiles?</li>
+                        <li>¿Qué comportamientos específicos requieren opciones?</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">
+                        Su retroalimentación es crucial para construir un sistema verdaderamente adaptable a sus procesos.
+                    </p>
+                </div>
+
+                <h3>Parámetros Configurables Propuestos</h3>
+
+                <div class="config-table">
+                    <div class="config-category">🔐 SEGURIDAD Y ACCESO</div>
+                    <div class="config-item">
+                        <span>Tiempo de sesión por usuario (minutos)</span>
+                        <span class="config-editable">Configurable</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Requerir cambio de contraseña cada X días</span>
+                        <span class="config-editable">Configurable</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Permitir sesiones simultáneas</span>
+                        <span class="config-editable">Sí/No</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Autenticación de dos factores (2FA)</span>
+                        <span class="config-editable">Obligatorio/Opcional/Desactivado</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Validación de huella digital</span>
+                        <span class="config-editable">Activar/Desactivar</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Validar ubicación GPS al conectarse</span>
+                        <span class="config-editable">Sí/No</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Radio máximo permitido desde establecimiento (metros)</span>
+                        <span class="config-editable">Configurable</span>
+                    </div>
+                    <div class="config-item">
+                        <span>IPs permitidas (whitelist)</span>
+                        <span class="config-editable">Lista configurable</span>
+                    </div>
+                </div>
+
+                <div class="config-table" style="margin-top: 1rem;">
+                    <div class="config-category">💼 INTERFAZ Y EXPERIENCIA</div>
+                    <div class="config-item">
+                        <span>Tema visual por defecto</span>
+                        <span class="config-editable">Oscuro/Dim</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Permitir cambio de tema al usuario</span>
+                        <span class="config-editable">Sí/No</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Cajera puede ver total vendido del día</span>
+                        <span class="config-editable">Sí/No</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Mostrar stock en punto de venta</span>
+                        <span class="config-editable">Sí/No/Solo si es bajo</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Permitir descuentos en POS</span>
+                        <span class="config-editable">Sí/No/Con autorización</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Confirmación antes de anular documento</span>
+                        <span class="config-editable">Siempre/Solo facturas/Nunca</span>
+                    </div>
+                </div>
+
+                <div class="config-table" style="margin-top: 1rem;">
+                    <div class="config-category">📦 INVENTARIOS Y ALMACÉN</div>
+                    <div class="config-item">
+                        <span>Permitir ventas con stock negativo</span>
+                        <span class="config-editable">Sí/No/Solo con autorización</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Método de valorización de inventario</span>
+                        <span class="config-editable">Promedio/FIFO/LIFO</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Alertar cuando stock llega a X unidades</span>
+                        <span class="config-editable">Configurable por producto</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Requerir autorización para ajustes de inventario</span>
+                        <span class="config-editable">Sí/No</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Bloquear productos sin código de barras en POS</span>
+                        <span class="config-editable">Sí/No</span>
+                    </div>
+                </div>
+
+                <div class="config-table" style="margin-top: 1rem;">
+                    <div class="config-category">💰 PRECIOS Y FACTURACIÓN</div>
+                    <div class="config-item">
+                        <span>Lista de precios activa por defecto</span>
+                        <span class="config-editable">Configurable</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Permitir modificar precio en venta</span>
+                        <span class="config-editable">Sí/No/Con autorización</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Redondear montos en factura</span>
+                        <span class="config-editable">Sí/No</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Incluir IGV en precios mostrados</span>
+                        <span class="config-editable">Sí/No</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Servicio de facturación electrónica (OSE)</span>
+                        <span class="config-editable">Seleccionable</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Envío automático a SUNAT/OSE</span>
+                        <span class="config-editable">Inmediato/Manual/Programado</span>
+                    </div>
+                </div>
+
+                <div class="config-table" style="margin-top: 1rem;">
+                    <div class="config-category">🏢 MULTI-ESTABLECIMIENTO</div>
+                    <div class="config-item">
+                        <span>Número de sucursales/anexos activos</span>
+                        <span class="config-editable">Licenciado</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Permitir transferencias entre sucursales</span>
+                        <span class="config-editable">Sí/No</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Compartir inventario entre sucursales</span>
+                        <span class="config-editable">Sí/No/Parcial</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Reportes consolidados multi-sucursal</span>
+                        <span class="config-editable">Activar/Desactivar</span>
+                    </div>
+                </div>
+
+                <div class="config-table" style="margin-top: 1rem;">
+                    <div class="config-category">🔔 NOTIFICACIONES Y ALERTAS</div>
+                    <div class="config-item">
+                        <span>Notificar ventas en tiempo real</span>
+                        <span class="config-editable">A quién (roles)</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Alertar cuando caja supera X soles</span>
+                        <span class="config-editable">Configurable</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Notificar productos por vencer</span>
+                        <span class="config-editable">Con X días de anticipación</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Alertar clientes con deudas vencidas</span>
+                        <span class="config-editable">Diario/Semanal/Mensual</span>
+                    </div>
+                </div>
+
+                <div class="config-table" style="margin-top: 1rem;">
+                    <div class="config-category">🖨️ IMPRESIÓN</div>
+                    <div class="config-item">
+                        <span>Formato de impresión de tickets</span>
+                        <span class="config-editable">80mm/58mm</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Imprimir automáticamente al facturar</span>
+                        <span class="config-editable">Sí/No/Preguntar</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Incluir promoción/mensaje en ticket</span>
+                        <span class="config-editable">Texto configurable</span>
+                    </div>
+                </div>
+
+                <div class="config-table" style="margin-top: 1rem;">
+                    <div class="config-category">🤖 INTELIGENCIA ARTIFICIAL</div>
+                    <div class="config-item">
+                        <span>Proveedor de API de IA</span>
+                        <span class="config-editable">Seleccionable</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Créditos/balance disponible para IA</span>
+                        <span class="config-editable">Recargable</span>
+                    </div>
+                    <div class="config-item">
+                        <span>Funciones de IA activadas</span>
+                        <span class="config-editable">Selección múltiple</span>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 1.5rem;">
+                    <h4>💡 Solicitud de Parámetros Adicionales</h4>
+                    <p>
+                        Por favor, revise esta lista y proporciónenos:
+                    </p>
+                    <ol>
+                        <li>Configuraciones adicionales que su empresa requiere</li>
+                        <li>Valores por defecto preferidos para cada parámetro</li>
+                        <li>Comportamientos específicos que deben ser configurables</li>
+                        <li>Restricciones particulares de su sector/giro de negocio</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- CRONOGRAMA -->
+            <section id="cronograma">
+                <h2>📅 Cronograma de Desarrollo</h2>
+                <p>
+                    El desarrollo se organizará en fases incrementales, entregando funcionalidad completa y probada 
+                    al final de cada fase. Este enfoque permite:
+                </p>
+                <ul>
+                    <li>Validación temprana de funcionalidades</li>
+                    <li>Ajustes sobre la marcha según feedback</li>
+                    <li>Puesta en marcha progresiva del sistema</li>
+                    <li>Menor riesgo al dividir el proyecto en entregas pequeñas</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>⏱️ Dedicación Horaria</h4>
+                    <p>
+                        El cronograma está calculado considerando una <strong>dedicación de 6-8 horas diarias efectivas</strong> 
+                        de desarrollo por parte de un desarrollador senior. Las estimaciones incluyen:
+                    </p>
+                    <ul>
+                        <li>Desarrollo de código (backend + frontend)</li>
+                        <li>Pruebas unitarias e integración</li>
+                        <li>Documentación técnica y de usuario</li>
+                        <li>Revisiones y ajustes</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">
+                        <strong>Nota:</strong> Los tiempos pueden variar según la complejidad específica de cada 
+                        funcionalidad y los requisitos particulares que surjan durante el desarrollo.
+                    </p>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="phase-header">
+                            <h3>FASE 0: Infraestructura Base</h3>
+                            <span class="phase-duration">3 semanas · 120 horas</span>
+                        </div>
+                        <p><strong>Objetivo:</strong> Establecer los cimientos técnicos del sistema.</p>
+                        <h4>Semana 1: Setup del Proyecto (40h)</h4>
+                        <ul>
+                            <li>Configuración del repositorio Git</li>
+                            <li>Estructura de carpetas y archivos base</li>
+                            <li>Configuración Railway + PostgreSQL + Redis</li>
+                            <li>Variables de entorno y configuraciones</li>
+                            <li>Dockerización del proyecto</li>
+                        </ul>
+                        <h4>Semana 2: Sistema de Seguridad (40h)</h4>
+                        <ul>
+                            <li>Autenticación JWT con refresh tokens</li>
+                            <li>Sistema de sesión única (Redis)</li>
+                            <li>Permisos granulares por micro-procesos</li>
+                            <li>Cifrado de datos sensibles (precios/costos)</li>
+                            <li>Sistema de auditoría completa</li>
+                            <li>Validación GPS y restricciones geográficas</li>
+                        </ul>
+                        <h4>Semana 3: Interfaz Base (40h)</h4>
+                        <ul>
+                            <li>Templates Jinja2 con layout base</li>
+                            <li>Implementación de temas (oscuro/dim)</li>
+                            <li>Componentes reutilizables (navbar, sidebar, modals)</li>
+                            <li>Diseño responsive para móviles</li>
+                            <li>Configuración HTMX + HyperScript</li>
+                            <li>Sistema de notificaciones WebSocket</li>
+                        </ul>
+                        <p><strong>✅ Entregable:</strong> Sistema base funcional con autenticación y panel de control vacío.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="phase-header">
+                            <h3>FASE 1: Módulo Administrador</h3>
+                            <span class="phase-duration">4 semanas · 160 horas</span>
+                        </div>
+                        <p><strong>Objetivo:</strong> Implementar todos los catálogos maestros y configuraciones.</p>
+                        <h4>Semanas 4-5: Catálogos Principales (80h)</h4>
+                        <ul>
+                            <li>001-01: Catálogo de productos (incluye servicios, insumos, activos)</li>
+                            <li>001-05: Agenda de clientes con validación RUC/DNI</li>
+                            <li>001-06: Agenda de proveedores</li>
+                            <li>Integración con APIs: RENIEC, SUNAT, apisperu.com</li>
+                            <li>Sistema de búsqueda inteligente</li>
+                            <li>Importación masiva desde Excel</li>
+                        </ul>
+                        <h4>Semana 6: Clasificadores y Parámetros (40h)</h4>
+                        <ul>
+                            <li>001-07 a 001-13: Todos los clasificadores</li>
+                            <li>001-14: Tipos de documentos SUNAT</li>
+                            <li>001-16 a 001-24: Parámetros operativos</li>
+                        </ul>
+                        <h4>Semana 7: Configuraciones y Permisos (40h)</h4>
+                        <ul>
+                            <li>Sistema de configuración por tenant</li>
+                            <li>Asignación de permisos por usuario/rol</li>
+                            <li>Micro-permisos por proceso específico</li>
+                            <li>Configuración multi-establecimiento</li>
+                            <li>Panel de parámetros del sistema</li>
+                        </ul>
+                        <p><strong>✅ Entregable:</strong> Módulo administrador completo y documentado.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="phase-header">
+                            <h3>FASE 2: Facturación Electrónica</h3>
+                            <span class="phase-duration">3 semanas · 120 horas</span>
+                        </div>
+                        <p><strong>Objetivo:</strong> Implementar facturación electrónica integrada con SUNAT/OSE.</p>
+                        <h4>Semana 8: Generación XML y Firma Digital (40h)</h4>
+                        <ul>
+                            <li>Generación de XML UBL 2.1 (facturas, boletas, NC, ND)</li>
+                            <li>Firma digital con certificado</li>
+                            <li>Validación de estructuras XML</li>
+                            <li>Hash codes y códigos QR</li>
+                        </ul>
+                        <h4>Semana 9: Integración SUNAT (40h)</h4>
+                        <ul>
+                            <li>Cliente API SUNAT directa</li>
+                            <li>Cola de reintentos con Celery</li>
+                            <li>Manejo de respuestas y errores</li>
+                            <li>Registro de CDRs (Constancias)</li>
+                            <li>Comunicaciones de baja y resúmenes diarios</li>
+                        </ul>
+                        <h4>Semana 10: OSE Configurable (40h)</h4>
+                        <ul>
+                            <li>Patrón Adapter para múltiples OSEs</li>
+                            <li>Configuración de OSE por tenant</li>
+                            <li>Sincronización de estados</li>
+                            <li>Logs detallados de envíos</li>
+                            <li>Panel de monitoreo de envíos</li>
+                        </ul>
+                        <p><strong>✅ Entregable:</strong> Sistema de facturación electrónica funcional y homologado.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="phase-header">
+                            <h3>FASE 3: Punto de Venta</h3>
+                            <span class="phase-duration">4 semanas · 160 horas</span>
+                        </div>
+                        <p><strong>Objetivo:</strong> Interfaz POS completa con facturación y control de caja.</p>
+                        <h4>Semanas 11-12: Interfaz POS (80h)</h4>
+                        <ul>
+                            <li>Diseño de interfaz optimizada para touch</li>
+                            <li>Búsqueda rápida de productos (código de barras, nombre)</li>
+                            <li>Carrito de compra con modificaciones</li>
+                            <li>Cálculo automático de IGV, descuentos</li>
+                            <li>Múltiples formas de pago</li>
+                            <li>Gestión de clientes en venta</li>
+                        </ul>
+                        <h4>Semana 13: Impresión Térmica (40h)</h4>
+                        <ul>
+                            <li>Generación de comandos ESC/POS</li>
+                            <li>Templates para tickets 80mm y 58mm</li>
+                            <li>Impresión vía USB Serial API</li>
+                            <li>Preview de tickets antes de imprimir</li>
+                            <li>Configuración de impresoras por estación</li>
+                        </ul>
+                        <h4>Semana 14: Control de Caja (40h)</h4>
+                        <ul>
+                            <li>005-07: Apertura de caja</li>
+                            <li>005-08: Cierre de caja</li>
+                            <li>005-09: Arqueo de caja</li>
+                            <li>Control de efectivo/tarjetas/transferencias</li>
+                            <li>Reportes de turno</li>
+                            <li>Conciliación automática</li>
+                        </ul>
+                        <p><strong>✅ Entregable:</strong> Punto de venta operativo con impresión y control de caja.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="phase-header">
+                            <h3>FASE 4: Módulo Ventas</h3>
+                            <span class="phase-duration">3 semanas · 120 horas</span>
+                        </div>
+                        <p><strong>Objetivo:</strong> Completar funcionalidades de ventas no incluidas en POS.</p>
+                        <h4>Semanas 15-16: Documentos de Venta (80h)</h4>
+                        <ul>
+                            <li>004-06: Factura pedidos</li>
+                            <li>004-09: Pedidos de venta</li>
+                            <li>004-10: Proformas</li>
+                            <li>004-05: Guías de remisión electrónicas</li>
+                            <li>004-11: Canje a letras</li>
+                            <li>004-07: Retenciones</li>
+                        </ul>
+                        <h4>Semana 17: Gestión y Reportes (40h)</h4>
+                        <ul>
+                            <li>004-12: Anulación de documentos</li>
+                            <li>Consulta avanzada de ventas</li>
+                            <li>Reportes por vendedor, periodo, cliente</li>
+                            <li>Análisis de rentabilidad</li>
+                            <li>Exportación a Excel/PDF</li>
+                        </ul>
+                        <p><strong>✅ Entregable:</strong> Módulo de ventas completo.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="phase-header">
+                            <h3>FASE 5: Módulo Almacén</h3>
+                            <span class="phase-duration">3 semanas · 120 horas</span>
+                        </div>
+                        <p><strong>Objetivo:</strong> Control completo de inventarios y movimientos.</p>
+                        <h4>Semanas 18-19: Movimientos de Almacén (80h)</h4>
+                        <ul>
+                            <li>002-04: Guías de ingreso</li>
+                            <li>002-05: Guías de salida</li>
+                            <li>002-06: Transferencias entre almacenes</li>
+                            <li>002-07: Toma de inventario físico</li>
+                            <li>Ajustes de inventario</li>
+                            <li>Integración con compras y ventas</li>
+                        </ul>
+                        <h4>Semana 20: Kardex y Reportes (40h)</h4>
+                        <ul>
+                            <li>002-08: Kardex general valorizado</li>
+                            <li>002-09: Kardex individual por producto</li>
+                            <li>Cálculo automático de costos (promedio/FIFO)</li>
+                            <li>Reportes de rotación de inventario</li>
+                            <li>Alertas de stock mínimo</li>
+                            <li>Análisis ABC de productos</li>
+                        </ul>
+                        <p><strong>✅ Entregable:</strong> Módulo de almacén completo.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="phase-header">
+                            <h3>FASE 6: Módulo Logística (Compras)</h3>
+                            <span class="phase-duration">2 semanas · 80 horas</span>
+                        </div>
+                        <h4>Semanas 21-22: Gestión de Compras (80h)</h4>
+                        <ul>
+                            <li>003-01: Factura de compras</li>
+                            <li>003-04: Factura de gastos</li>
+                            <li>003-05: Recibo por honorarios</li>
+                            <li>003-06 y 003-07: Notas de crédito/débito</li>
+                            <li>003-10: Orden de compra</li>
+                            <li>003-11: Cotizaciones</li>
+                            <li>Integración automática con almacén</li>
+                            <li>Control de cuentas por pagar</li>
+                        </ul>
+                        <p><strong>✅ Entregable:</strong> Módulo de compras operativo.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="phase-header">
+                            <h3>FASE 7: Módulo Caja y Bancos</h3>
+                            <span class="phase-duration">2 semanas · 80 horas</span>
+                        </div>
+                        <h4>Semanas 23-24: Operaciones Financieras (80h)</h4>
+                        <ul>
+                            <li>Cobranzas de clientes</li>
+                            <li>Pagos a proveedores</li>
+                            <li>Ingresos y egresos varios</li>
+                            <li>Transferencias entre cuentas</li>
+                            <li>Conciliación bancaria</li>
+                            <li>Flujo de caja proyectado</li>
+                            <li>Reportes financieros</li>
+                        </ul>
+                        <p><strong>✅ Entregable:</strong> Módulo financiero básico operativo.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="phase-header">
+                            <h3>FASES ADICIONALES (Según Prioridad)</h3>
+                            <span class="phase-duration">Por definir</span>
+                        </div>
+                        <p>Los siguientes módulos se desarrollarán según las necesidades específicas:</p>
+                        <ul>
+                            <li><strong>Producción (007):</strong> 2-3 semanas</li>
+                            <li><strong>Financiamiento (008):</strong> 2-3 semanas</li>
+                            <li><strong>Recursos Humanos (009):</strong> 3-4 semanas</li>
+                            <li><strong>Contabilidad (010):</strong> 4-5 semanas</li>
+                            <li><strong>Gerencial (012):</strong> 2 semanas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h4>📊 Resumen de Tiempos</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fase</th>
+                                <th>Duración</th>
+                                <th>Horas Totales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>FASE 0: Infraestructura</td>
+                                <td>3 semanas</td>
+                                <td>120 horas</td>
+                            </tr>
+                            <tr>
+                                <td>FASE 1: Administrador</td>
+                                <td>4 semanas</td>
+                                <td>160 horas</td>
+                            </tr>
+                            <tr>
+                                <td>FASE 2: Facturación Electrónica</td>
+                                <td>3 semanas</td>
+                                <td>120 horas</td>
+                            </tr>
+                            <tr>
+                                <td>FASE 3: Punto de Venta</td>
+                                <td>4 semanas</td>
+                                <td>160 horas</td>
+                            </tr>
+                            <tr>
+                                <td>FASE 4: Ventas</td>
+                                <td>3 semanas</td>
+                                <td>120 horas</td>
+                            </tr>
+                            <tr>
+                                <td>FASE 5: Almacén</td>
+                                <td>3 semanas</td>
+                                <td>120 horas</td>
+                            </tr>
+                            <tr>
+                                <td>FASE 6: Logística</td>
+                                <td>2 semanas</td>
+                                <td>80 horas</td>
+                            </tr>
+                            <tr>
+                                <td>FASE 7: Caja y Bancos</td>
+                                <td>2 semanas</td>
+                                <td>80 horas</td>
+                            </tr>
+                            <tr style="background: var(--bg-primary); font-weight: 600;">
+                                <td><strong>TOTAL MÓDULOS CORE</strong></td>
+                                <td><strong>24 semanas</strong></td>
+                                <td><strong>960 horas</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 1rem;">
+                        <strong>Nota:</strong> Este cronograma representa aproximadamente 6 meses de desarrollo dedicado 
+                        para los módulos principales del sistema. Módulos adicionales se planificarán según prioridad 
+                        y necesidad del negocio.
+                    </p>
+                </div>
+            </section>
+
+            <!-- MIGRACIÓN DE DATOS -->
+            <section id="migracion">
+                <h2>📤 Migración de Datos desde Visual FoxPro</h2>
+                <p>
+                    El proceso de migración de datos desde su sistema actual en Visual FoxPro hacia PostgreSQL 
+                    se realizará de manera sistemática y segura, garantizando la integridad de su información histórica.
+                </p>
+
+                <h3>Proceso de Migración</h3>
+                <ol>
+                    <li>
+                        <strong>Análisis de Estructura Actual</strong>
+                        <ul>
+                            <li>Extracción de esquema de tablas VFP (DBF)</li>
+                            <li>Identificación de relaciones y dependencias</li>
+                            <li>Análisis de volumen de datos por tabla</li>
+                            <li>Detección de inconsistencias y datos huérfanos</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Mapeo de Datos</strong>
+                        <ul>
+                            <li>Correspondencia tabla VFP → tabla PostgreSQL</li>
+                            <li>Conversión de tipos de datos</li>
+                            <li>Transformación de codificaciones (CP850 → UTF-8)</li>
+                            <li>Normalización de datos según nuevo modelo</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Herramienta de Migración</strong>
+                        <ul>
+                            <li>Script Python automatizado para leer DBF</li>
+                            <li>Wizard web paso a paso</li>
+                            <li>Preview de datos antes de importar</li>
+                            <li>Validación de integridad referencial</li>
+                            <li>Logs detallados del proceso</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Validación Post-Migración</strong>
+                        <ul>
+                            <li>Conteo de registros (VFP vs PostgreSQL)</li>
+                            <li>Validación de totales y saldos</li>
+                            <li>Verificación de relaciones</li>
+                            <li>Pruebas de consultas críticas</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>⚠️ Importante para la Migración</h4>
+                    <p>
+                        Para planificar adecuadamente el proceso de migración, necesitamos:
+                    </p>
+                    <ul>
+                        <li>Acceso a la estructura completa de su base de datos VFP actual</li>
+                        <li>Cantidad aproximada de registros por tabla principal</li>
+                        <li>Período histórico que desea migrar (¿todo o últimos X años?)</li>
+                        <li>Identificación de datos que NO deben migrarse</li>
+                        <li>Disponibilidad de un ambiente de prueba</li>
+                    </ul>
+                </div>
+
+                <h3>Estrategia Recomendada</h3>
+                <p>Sugerimos un enfoque de migración gradual:</p>
+                <ol>
+                    <li><strong>Maestros primero:</strong> Productos, clientes, proveedores</li>
+                    <li><strong>Saldos actuales:</strong> Inventario, cuentas por cobrar/pagar</li>
+                    <li><strong>Histórico reciente:</strong> Último año de transacciones</li>
+                    <li><strong>Histórico completo:</strong> Solo si es crítico (opcional)</li>
+                </ol>
+
+                <p>
+                    Esta estrategia permite iniciar operaciones rápidamente con los datos esenciales, 
+                    mientras el histórico se migra en segundo plano sin interrumpir el trabajo diario.
+                </p>
+            </section>
+
+            <!-- CAPACITACIÓN -->
+            <section id="capacitacion">
+                <h2>👥 Capacitación y Documentación</h2>
+                <p>
+                    Cada módulo incluirá documentación completa para garantizar el uso efectivo del sistema.
+                </p>
+
+                <h3>Documentación Técnica</h3>
+                <ul>
+                    <li>Arquitectura del sistema</li>
+                    <li>Modelo de base de datos</li>
+                    <li>APIs y endpoints disponibles</li>
+                    <li>Flujos de procesos internos</li>
+                </ul>
+
+                <h3>Documentación Operativa (Manuales de Usuario)</h3>
+                <ul>
+                    <li>Manual general del sistema</li>
+                    <li>Manuales específicos por módulo</li>
+                    <li>Guías rápidas por proceso</li>
+                    <li>FAQ - Preguntas frecuentes</li>
+                </ul>
+
+                <h3>Capacitación Sugerida</h3>
+                <p>Al finalizar cada fase, se recomienda:</p>
+                <ul>
+                    <li>Sesión de demostración del módulo (1-2 horas)</li>
+                    <li>Sesión práctica con casos reales (2-3 horas)</li>
+                    <li>Periodo de acompañamiento inicial (1 semana)</li>
+                    <li>Soporte vía chat/email durante estabilización</li>
+                </ul>
+            </section>
+
+            <!-- SOPORTE Y MANTENIMIENTO -->
+            <section id="soporte">
+                <h2>🛠️ Soporte y Mantenimiento</h2>
+                
+                <h3>Durante el Desarrollo</h3>
+                <ul>
+                    <li>Reuniones de avance semanales</li>
+                    <li>Acceso a ambiente de prueba</li>
+                    <li>Validación de funcionalidades entregadas</li>
+                    <li>Ajustes según feedback</li>
+                </ul>
+
+                <h3>Post-Implementación</h3>
+                <ul>
+                    <li>Periodo de garantía (a definir)</li>
+                    <li>Corrección de bugs sin costo</li>
+                    <li>Actualizaciones de seguridad</li>
+                    <li>Mejoras evolutivas (cotizadas separadamente)</li>
+                </ul>
+
+                <h3>Hosting y Mantenimiento Mensual</h3>
+                <p>Costos recurrentes estimados (sujetos a dimensionamiento):</p>
+                <ul>
+                    <li>Servidor Railway (PostgreSQL + Redis + App)</li>
+                    <li>Backups automáticos diarios</li>
+                    <li>Monitoreo y alertas</li>
+                    <li>Actualizaciones de dependencias</li>
+                    <li>Soporte técnico básico</li>
+                </ul>
+                
+                <div class="warning-box">
+                    <p>
+                        <strong>Nota:</strong> Los costos de hosting varían según el volumen de datos, 
+                        número de usuarios y recursos necesarios. Se calcularán con precisión una vez 
+                        recibida la información solicitada en la sección de dimensionamiento.
+                    </p>
+                </div>
+            </section>
+
+            <!-- PRÓXIMOS PASOS -->
+            <section id="proximos-pasos">
+                <h2>🚀 Próximos Pasos</h2>
+                
+                <h3>Para Iniciar el Proyecto</h3>
+                <ol>
+                    <li>
+                        <strong>Revisión del Plan</strong>
+                        <ul>
+                            <li>Validar módulos propuestos</li>
+                            <li>Priorizar funcionalidades</li>
+                            <li>Sugerir parámetros configurables adicionales</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Información de Dimensionamiento</strong>
+                        <ul>
+                            <li>Proporcionar datos de volumen de información</li>
+                            <li>Estimar usuarios concurrentes</li>
+                            <li>Definir proyección de crecimiento</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Análisis de Sistema Actual</strong>
+                        <ul>
+                            <li>Acceso a estructura VFP</li>
+                            <li>Identificar procesos críticos</li>
+                            <li>Documentar flujos especiales</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Definiciones de Facturación</strong>
+                        <ul>
+                            <li>Seleccionar proveedor OSE</li>
+                            <li>Validar certificado digital</li>
+                            <li>Verificar requisitos SUNAT</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Acuerdos Contractuales</strong>
+                        <ul>
+                            <li>Cotización formal por fases</li>
+                            <li>Cronograma definitivo</li>
+                            <li>Términos de pago</li>
+                            <li>Acuerdos de soporte</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+
+            <!-- CONTACTO -->
+            <section id="contacto">
+                <h2>📞 Contacto y Comunicación</h2>
+                <p>
+                    Durante todo el proyecto, mantendremos comunicación fluida para garantizar que 
+                    el sistema se desarrolle según sus necesidades específicas.
+                </p>
+
+                <h3>Canales de Comunicación</h3>
+                <ul>
+                    <li><strong>Email:</strong> Para comunicaciones formales y documentación</li>
+                    <li><strong>WhatsApp/Telegram:</strong> Para consultas rápidas y urgentes</li>
+                    <li><strong>Videollamadas:</strong> Para reuniones de avance semanales</li>
+                    <li><strong>Sistema de tickets:</strong> Para reportar bugs o solicitar cambios (post-implementación)</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h4>💬 Estamos para Escucharte</h4>
+                    <p>
+                        Este plan es un documento vivo. Tus comentarios, observaciones y sugerencias 
+                        son fundamentales para construir el sistema que realmente necesitas.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        No dudes en señalar cualquier aspecto que consideres debe modificarse, 
+                        agregarse o priorizarse de manera diferente.
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p><strong>Plan de Migración - Sistema ERP SAAS</strong></p>
+            <p>Documento versión 1.0 - Octubre 2025</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-tertiary);">
+                Este documento debe ser revisado y validado por ambas partes antes de iniciar el desarrollo.
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
