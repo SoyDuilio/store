@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propuesta: Actualización en IA y Sistemas Digitales - Contadores Públicos</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-dark: #0a0e12;
+      --bg-card-dark: #111519;
+      --bg-accent-dark: #1a1f24;
+      --text-dark: #e8eef2;
+      --text-muted-dark: #9ba5ab;
+      --border-dark: rgba(255, 255, 255, 0.06);
+      --accent: #3b82f6;
+      --accent-dim: rgba(59, 130, 246, 0.15);
+      --shadow: rgba(0, 0, 0, 0.4);
+      --font-size: 16px;
+    }
+
+    [data-theme="medium"] {
+      --bg-dark: #1a1f25;
+      --bg-card-dark: #232930;
+      --bg-accent-dark: #2d333a;
+      --text-dark: #e8eef2;
+      --text-muted-dark: #a8b2b8;
+      --border-dark: rgba(255, 255, 255, 0.08);
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-dark);
+      font-size: var(--font-size);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* Header */
+    .header {
+      background: var(--bg-card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .header-content {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent), #2563eb);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.25rem;
+      color: white;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .subtitle {
+      color: var(--text-muted-dark);
+      font-size: 0.95rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      background: var(--bg-accent-dark);
+      border: 1px solid var(--border-dark);
+      color: var(--text-dark);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: var(--bg-card-dark);
+      border-color: var(--accent);
+    }
+
+    .btn-primary {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .control-group {
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+      background: var(--bg-accent-dark);
+      padding: 0.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-dark);
+    }
+
+    .control-group label {
+      font-size: 0.85rem;
+      color: var(--text-muted-dark);
+      padding: 0 0.5rem;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .tab {
+      background: var(--bg-card-dark);
+      border: 1px solid var(--border-dark);
+      color: var(--text-muted-dark);
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      white-space: nowrap;
+      font-weight: 500;
+    }
+
+    .tab:hover {
+      border-color: var(--accent);
+      color: var(--text-dark);
+    }
+
+    .tab.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Content */
+    .content-pane {
+      display: none;
+    }
+
+    .content-pane.active {
+      display: block;
+    }
+
+    .card {
+      background: var(--bg-card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.15rem;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .info-box {
+      background: var(--bg-accent-dark);
+      border: 1px solid var(--border-dark);
+      border-left: 3px solid var(--accent);
+      padding: 1rem;
+      border-radius: 6px;
+      margin: 1rem 0;
+    }
+
+    .info-box-title {
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+
+    .tag {
+      background: var(--bg-accent-dark);
+      border: 1px solid var(--border-dark);
+      color: var(--text-muted-dark);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+
+    .tag.highlight {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    ul, ol {
+      padding-left: 1.5rem;
+      margin: 0.75rem 0;
+    }
+
+    li {
+      margin: 0.5rem 0;
+      color: var(--text-muted-dark);
+    }
+
+    li strong {
+      color: var(--text-dark);
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .text-muted {
+      color: var(--text-muted-dark);
+      font-size: 0.9rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .stat-card {
+      background: var(--bg-accent-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted-dark);
+      margin-top: 0.5rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+      text-align: center;
+      color: var(--text-muted-dark);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-top {
+        flex-direction: column;
+      }
+      
+      .controls {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .btn, .control-group {
+        flex: 1;
+      }
+
+      h1 {
+        font-size: 1.25rem;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+      
+      .controls, .tabs {
+        display: none;
+      }
+
+      .content-pane {
+        display: block !important;
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-top">
+        <div class="header-content">
+          <div class="logo-section">
+            <div class="logo">CPC</div>
+            <div>
+              <h1>Programa de Actualización Profesional en IA y Sistemas Digitales</h1>
+              <p class="subtitle">Colegio de Contadores Públicos de Loreto — Iquitos</p>
+            </div>
+          </div>
+        </div>
+        <div class="controls">
+          <div class="control-group">
+            <label>Texto</label>
+            <button class="btn" id="decreaseFont">A-</button>
+            <button class="btn" id="increaseFont">A+</button>
+          </div>
+          <button class="btn" id="toggleTheme">Modo Medio</button>
+          <button class="btn btn-primary" id="shareBtn">📤 Compartir</button>
+          <button class="btn" id="downloadBtn">💾 Descargar</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="tabs">
+      <button class="tab active" data-tab="resumen">📋 Resumen Ejecutivo</button>
+      <button class="tab" data-tab="contexto">🎯 Contexto Profesional</button>
+      <button class="tab" data-tab="programa">💡 Programa de Formación</button>
+      <button class="tab" data-tab="casos">💼 Casos de Uso</button>
+      <button class="tab" data-tab="implementacion">⚙️ Implementación</button>
+      <button class="tab" data-tab="beneficios">✨ Beneficios</button>
+      <button class="tab" data-tab="inversion">💰 Inversión</button>
+      <button class="tab" data-tab="contacto">📞 Contacto</button>
+    </nav>
+
+    <!-- Content -->
+    <main>
+      <!-- Resumen Ejecutivo -->
+      <section class="content-pane active" id="resumen">
+        <div class="card">
+          <h2 class="card-title">Resumen Ejecutivo</h2>
+          <p>El Colegio de Contadores Públicos de Loreto tiene la oportunidad de <strong>liderar la transformación digital</strong> de la profesión contable en la región, ofreciendo a sus agremiados un programa de actualización en <strong>Inteligencia Artificial y Sistemas Digitales</strong> que incremente su competitividad, eficiencia y empleabilidad.</p>
+          
+          <div class="tags">
+            <span class="tag highlight">Actualización Profesional</span>
+            <span class="tag highlight">Competitividad</span>
+            <span class="tag highlight">Eficiencia Operativa</span>
+            <span class="tag highlight">Certificación Continua</span>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat-card">
+            <div class="stat-number">72%</div>
+            <div class="stat-label">de empresas buscan contadores con competencias digitales</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">50%</div>
+            <div class="stat-label">de reducción en tiempo de procesos con automatización</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">3x</div>
+            <div class="stat-label">más oportunidades laborales con certificación en IA</div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">Objetivos del Programa</h3>
+            <ul>
+              <li><strong>Actualizar competencias</strong> de contadores en herramientas digitales, IA y automatización contable</li>
+              <li><strong>Incrementar competitividad</strong> profesional y oportunidades en el mercado laboral</li>
+              <li><strong>Modernizar prácticas</strong> contables mediante análisis de datos y auditoría asistida por IA</li>
+              <li><strong>Posicionar al Colegio</strong> como referente en formación continua y transformación digital</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">¿Por qué es urgente?</h3>
+            <ul>
+              <li>La <strong>transformación digital</strong> de empresas exige contadores actualizados</li>
+              <li>Herramientas de IA están <strong>cambiando radicalmente</strong> los procesos contables y de auditoría</li>
+              <li>Contadores sin competencias digitales enfrentan <strong>desventajas competitivas</strong> crecientes</li>
+              <li>La <strong>automatización</strong> reemplaza tareas repetitivas, creando demanda de habilidades analíticas</li>
+              <li><strong>Oportunidad de liderazgo:</strong> el Colegio puede ser pionero regional en esta formación</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-title">🚀 Propuesta de Inicio Rápido</div>
+          <p><strong>Programa Piloto (8 semanas):</strong> Curso intensivo de 40 horas para 30 contadores colegiados + Certificación oficial del Colegio + Evaluación de impacto y satisfacción.</p>
+        </div>
+      </section>
+
+      <!-- Contexto -->
+      <section class="content-pane" id="contexto">
+        <div class="card">
+          <h2 class="card-title">Contexto Profesional</h2>
+          
+          <h3 style="margin-top: 1.5rem; color: var(--text-dark);">Transformación de la Profesión Contable</h3>
+          <p>La profesión contable está experimentando una <strong>revolución tecnológica sin precedentes</strong>. Las herramientas tradicionales ya no son suficientes para responder a las demandas del mercado actual.</p>
+
+          <div class="grid" style="margin-top: 1rem;">
+            <div style="padding: 1rem; background: var(--bg-accent-dark); border-radius: 8px;">
+              <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Antes (Contabilidad Tradicional)</h4>
+              <ul>
+                <li>Registro manual de transacciones</li>
+                <li>Conciliaciones manuales</li>
+                <li>Reportes estáticos mensuales</li>
+                <li>Auditoría por muestreo</li>
+                <li>Análisis retrospectivo limitado</li>
+              </ul>
+            </div>
+            <div style="padding: 1rem; background: var(--bg-accent-dark); border-radius: 8px;">
+              <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Ahora (Contabilidad Digital + IA)</h4>
+              <ul>
+                <li>Automatización de registros</li>
+                <li>Conciliación automática con IA</li>
+                <li>Dashboards en tiempo real</li>
+                <li>Auditoría continua con algoritmos</li>
+                <li>Análisis predictivo y prescriptivo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Situación Actual en Loreto</h3>
+          <ul>
+            <li>La mayoría de contadores colegiados trabajan con <strong>herramientas tradicionales</strong> (Excel, software contable básico)</li>
+            <li><strong>Limitada adopción</strong> de análisis de datos, automatización y herramientas de IA</li>
+            <li>Empresas modernas buscan contadores con <strong>competencias digitales avanzadas</strong> que no encuentran localmente</li>
+            <li><strong>Brecha de formación:</strong> no existen programas estructurados de actualización en IA para contadores en la región</li>
+            <li>Riesgo de <strong>obsolescencia profesional</strong> frente a la automatización y la IA</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Oportunidades</h3>
+          <ul>
+            <li><strong>Demanda creciente:</strong> Empresas de Loreto están digitalizándose y requieren contadores actualizados</li>
+            <li><strong>Ventaja competitiva:</strong> Contadores con certificación en IA pueden acceder a mejores posiciones y honorarios</li>
+            <li><strong>Trabajo remoto:</strong> Competencias digitales abren oportunidades de trabajo para empresas nacionales e internacionales</li>
+            <li><strong>Liderazgo institucional:</strong> El Colegio puede posicionarse como líder en formación continua</li>
+            <li><strong>Alianzas estratégicas:</strong> Convenios con empresas, universidades e institutos para formación conjunta</li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-title">💡 Dato Importante</div>
+          <p>Según estudios internacionales, <strong>60% de las tareas contables rutinarias</strong> pueden automatizarse con tecnología actual. Esto no elimina empleos, sino que <strong>libera tiempo para tareas de mayor valor</strong> como análisis estratégico, consultoría y toma de decisiones.</p>
+        </div>
+      </section>
+
+      <!-- Programa -->
+      <section class="content-pane" id="programa">
+        <div class="card">
+          <h2 class="card-title">Programa de Formación Propuesto</h2>
+          <p class="text-muted">Estructura modular, práctica y aplicable inmediatamente en el ejercicio profesional</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">📚 Opción 1: Programa Completo (80 horas)</h3>
+          <p><strong>Duración:</strong> 10 semanas (8h semanales, sábados)<br>
+          <strong>Modalidad:</strong> Híbrida (presencial + online)<br>
+          <strong>Certificación:</strong> 80 horas de capacitación continua</p>
+
+          <div style="margin-top: 1.5rem;">
+            <h4 style="color: var(--accent); margin-bottom: 1rem;">Módulo I: Fundamentos de Sistemas Digitales (16 horas)</h4>
+            <div style="padding-left: 1rem; border-left: 3px solid var(--accent); margin-bottom: 1.5rem;">
+              <ul>
+                <li>Arquitectura de sistemas contables modernos</li>
+                <li>Cloud computing y seguridad de datos financieros</li>
+                <li>Bases de datos relacionales aplicadas a contabilidad</li>
+                <li>APIs contables: integración entre sistemas (SUNAT, bancos, ERP)</li>
+                <li>Excel avanzado: macros, Power Query, Power Pivot</li>
+              </ul>
+            </div>
+
+            <h4 style="color: var(--accent); margin-bottom: 1rem;">Módulo II: Análisis de Datos Financieros (24 horas)</h4>
+            <div style="padding-left: 1rem; border-left: 3px solid var(--accent); margin-bottom: 1.5rem;">
+              <ul>
+                <li>Introducción a Power BI para contadores</li>
+                <li>Creación de dashboards financieros interactivos</li>
+                <li>Análisis de rentabilidad, liquidez y solvencia con visualizaciones</li>
+                <li>Google Data Studio / Looker Studio para reportes automáticos</li>
+                <li>SQL básico para consultas contables</li>
+                <li>Proyecto práctico: Dashboard ejecutivo financiero</li>
+              </ul>
+            </div>
+
+            <h4 style="color: var(--accent); margin-bottom: 1rem;">Módulo III: Inteligencia Artificial para Contabilidad (24 horas)</h4>
+            <div style="padding-left: 1rem; border-left: 3px solid var(--accent); margin-bottom: 1.5rem;">
+              <ul>
+                <li>Fundamentos de IA: qué es, qué puede hacer, limitaciones</li>
+                <li>Asistentes IA para redacción de informes, memorias y notas contables</li>
+                <li>Automatización de procesos contables (RPA básico)</li>
+                <li>Detección de anomalías y fraudes con algoritmos de IA</li>
+                <li>Auditoría continua y análisis de riesgos asistido por IA</li>
+                <li>Conciliaciones bancarias automatizadas</li>
+                <li>Análisis predictivo: proyección de flujos de caja, costos, ingresos</li>
+              </ul>
+            </div>
+
+            <h4 style="color: var(--accent); margin-bottom: 1rem;">Módulo IV: Automatización y Cumplimiento Normativo (16 horas)</h4>
+            <div style="padding-left: 1rem; border-left: 3px solid var(--accent);">
+              <ul>
+                <li>Automatización de reportes tributarios (PDT, declaraciones)</li>
+                <li>Integración con sistemas de SUNAT (facturación electrónica, libros electrónicos)</li>
+                <li>Herramientas no-code para automatizar tareas repetitivas</li>
+                <li>Gestión documental digital y archivo electrónico</li>
+                <li>Ética profesional y privacidad en el uso de IA</li>
+                <li>Proyecto final integrador: Caso real de automatización contable</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">⚡ Opción 2: Programa Express (40 horas)</h3>
+          <p><strong>Duración:</strong> 5 semanas (8h semanales, sábados)<br>
+          <strong>Modalidad:</strong> Intensiva presencial<br>
+          <strong>Certificación:</strong> 40 horas de capacitación continua</p>
+
+          <div style="margin-top: 1rem;">
+            <ul>
+              <li><strong>Semana 1-2:</strong> Excel avanzado + Power BI + Dashboards financieros (16h)</li>
+              <li><strong>Semana 3:</strong> IA para contadores: asistentes, automatización básica (8h)</li>
+              <li><strong>Semana 4:</strong> Detección de anomalías, auditoría con IA, análisis predictivo (8h)</li>
+              <li><strong>Semana 5:</strong> Automatización de procesos y proyecto práctico (8h)</li>
+            </ul>
+          </div>
+
+          <p style="margin-top: 1rem;" class="text-muted"><strong>Ideal para:</strong> Contadores que buscan una actualización rápida y práctica en las herramientas más demandadas.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">🎯 Opción 3: Talleres Especializados (8-16 horas cada uno)</h3>
+          <p class="text-muted">Talleres independientes para necesidades específicas</p>
+
+          <div class="grid" style="margin-top: 1rem;">
+            <div style="padding: 1rem; background: var(--bg-accent-dark); border-radius: 8px;">
+              <h4 style="color: var(--accent);">Power BI para Contadores</h4>
+              <p class="text-muted">16 horas</p>
+              <p>Creación de dashboards financieros profesionales desde cero</p>
+            </div>
+            <div style="padding: 1rem; background: var(--bg-accent-dark); border-radius: 8px;">
+              <h4 style="color: var(--accent);">IA en Auditoría</h4>
+              <p class="text-muted">12 horas</p>
+              <p>Detección de anomalías, análisis de riesgos y auditoría continua</p>
+            </div>
+            <div style="padding: 1rem; background: var(--bg-accent-dark); border-radius: 8px;">
+              <h4 style="color: var(--accent);">Automatización Contable</h4>
+              <p class="text-muted">12 horas</p>
+              <p>RPA para procesos repetitivos, conciliaciones automáticas</p>
+            </div>
+            <div style="padding: 1rem; background: var(--bg-accent-dark); border-radius: 8px;">
+              <h4 style="color: var(--accent);">Excel Avanzado</h4>
+              <p class="text-muted">16 horas</p>
+              <p>Macros, Power Query, Power Pivot para análisis financiero</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Casos de Uso -->
+      <section class="content-pane" id="casos">
+        <div class="card">
+          <h2 class="card-title">Casos de Uso Prácticos</h2>
+          <p class="text-muted">Aplicaciones reales de IA y automatización en el ejercicio contable profesional</p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">📊 Dashboards Financieros en Tiempo Real</h3>
+            <p><strong>Problema tradicional:</strong> Reportes mensuales estáticos que llegan tarde para la toma de decisiones.</p>
+            <p style="margin-top: 0.5rem;"><strong>Solución con IA:</strong></p>
+            <ul>
+              <li>Dashboards interactivos que se actualizan automáticamente</li>
+              <li>Visualización de KPIs financieros en tiempo real</li>
+              <li>Alertas automáticas de desviaciones presupuestarias</li>
+              <li>Análisis comparativo automático (mes vs mes, año vs año)</li>
+            </ul>
+            <p style="margin-top: 0.5rem;"><strong>Herramientas:</strong> Power BI, Google Data Studio</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🔍 Detección de Anomalías y Fraudes</h3>
+            <p><strong>Problema tradicional:</strong> Auditoría por muestreo puede no detectar irregularidades.</p>
+            <p style="margin-top: 0.5rem;"><strong>Solución con IA:</strong></p>
+            <ul>
+              <li>Análisis del 100% de transacciones, no solo muestras</li>
+              <li>Detección automática de patrones inusuales</li>
+              <li>Identificación de duplicados y errores sistemáticos</li>
+              <li>Alertas de transacciones sospechosas en tiempo real</li>
+            </ul>
+            <p style="margin-top: 0.5rem;"><strong>Herramientas:</strong> Python + pandas, Power BI, algoritmos de ML</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🤖 Automatización de Conciliaciones</h3>
+            <p><strong>Problema tradicional:</strong> Conciliaciones bancarias manuales consumen horas cada mes.</p>
+            <p style="margin-top: 0.5rem;"><strong>Solución con IA:</strong></p>
+            <ul>
+              <li>Importación automática de movimientos bancarios</li>
+              <li>Matching inteligente con registros contables</li>
+              <li>Identificación automática de diferencias</li>
+              <li>Reducción del 80% del tiempo de conciliación</li>
+            </ul>
+            <p style="margin-top: 0.5rem;"><strong>Herramientas:</strong> RPA tools, Excel con macros, APIs bancarias</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">💬 Asistentes IA para Documentación</h3>
+            <p><strong>Problema tradicional:</strong> Redacción de informes, memorias y notas es repetitiva y consume tiempo.</p>
+            <p style="margin-top: 0.5rem;"><strong>Solución con IA:</strong></p>
+            <ul>
+              <li>Generación automática de borradores de informes</li>
+              <li>Resúmenes automáticos de estados financieros</li>
+              <li>Redacción asistida de notas a los EEFF</li>
+              <li>Revisión automática de consistencia y errores</li>
+            </ul>
+            <p style="margin-top: 0.5rem;"><strong>Herramientas:</strong> ChatGPT, Claude AI, Gemini con prompts especializados</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">📈 Análisis Predictivo</h3>
+            <p><strong>Problema tradicional:</strong> Análisis financiero solo mira al pasado.</p>
+            <p style="margin-top: 0.5rem;"><strong>Solución con IA:</strong></p>
+            <ul>
+              <li>Proyección de flujos de caja basada en históricos</li>
+              <li>Predicción de comportamiento de clientes (morosidad, pagos)</li>
+              <li>Estimación de costos y gastos futuros</li>
+              <li>Análisis de escenarios automático (optimista, base, pesimista)</li>
+            </ul>
+            <p style="margin-top: 0.5rem;"><strong>Herramientas:</strong> Excel avanzado, Power BI con forecasting, Python</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">📋 Automatización Tributaria</h3>
+            <p><strong>Problema tradicional:</strong> Llenado manual de PDTs y declaraciones es propenso a errores.</p>
+            <p style="margin-top: 0.5rem;"><strong>Solución con IA:</strong></p>
+            <ul>
+              <li>Generación automática de PDTs desde el sistema contable</li>
+              <li>Validación automática de requisitos formales</li>
+              <li>Alertas de vencimientos y obligaciones pendientes</li>
+              <li>Integración directa con plataformas SUNAT</li>
+            </ul>
+            <p style="margin-top: 0.5rem;"><strong>Herramientas:</strong> Software contable integrado, RPA, APIs SUNAT</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-title">✅ Todos estos casos se abordan en el programa con ejemplos prácticos</div>
+          <p>Los participantes aprenderán a implementar estas soluciones en sus propias prácticas profesionales, con ejercicios hands-on y casos reales de la región.</p>
+        </div>
+      </section>
+
+      <!-- Implementación -->
+      <section class="content-pane" id="implementacion">
+        <div class="card">
+          <h2 class="card-title">Plan de Implementación</h2>
+          
+          <h3 style="margin-top: 1.5rem; color: var(--accent);">Fase 1: Diseño y Preparación (Mes 1)</h3>
+          <ul>
+            <li><strong>Semana 1:</strong> Presentación formal al Consejo Directivo del Colegio y aprobación</li>
+            <li><strong>Semana 2:</strong> Definición de modalidad (Programa completo vs Express vs Talleres)</li>
+            <li><strong>Semana 3:</strong> Convocatoria y difusión entre agremiados, inscripciones</li>
+            <li><strong>Semana 4:</strong> Preparación de materiales, plataforma online y logística</li>
+          </ul>
+
+          <h3 style="margin-top: 1.5rem; color: var(--accent);">Fase 2: Ejecución del Piloto (Meses 2-3)</h3>
+          <ul>
+            <li><strong>Primera cohorte:</strong> 25-30 contadores en programa piloto</li>
+            <li><strong>Seguimiento semanal:</strong> Evaluación de satisfacción y ajustes</li>
+            <li><strong>Evaluación continua:</strong> Tests prácticos y proyectos aplicados</li>
+            <li><strong>Certificación:</strong> Entrega de certificados oficiales del Colegio</li>
+          </ul>
+
+          <h3 style="margin-top: 1.5rem; color: var(--accent);">Fase 3: Escalamiento (Mes 4+)</h3>
+          <ul>
+            <li>Lanzamiento de nuevas cohortes cada 2-3 meses</li>
+            <li>Ampliación de oferta con talleres especializados</li>
+            <li>Programa de actualización continua (nuevos contenidos cada año)</li>
+            <li>Convenios con empresas para prácticas y casos reales</li>
+          </ul>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">👨‍🏫 Equipo Docente Propuesto</h3>
+            <ul>
+              <li><strong>Instructor principal:</strong> Especialista en análisis de datos y IA aplicada</li>
+              <li><strong>Co-instructor:</strong> Contador Público con experiencia en transformación digital</li>
+              <li><strong>Invitados especiales:</strong> Profesionales de empresas que usan estas tecnologías</li>
+              <li><strong>Soporte técnico:</strong> Asistente para resolver dudas técnicas durante prácticas</li>
+            </ul>
+            <p style="margin-top: 1rem;" class="text-muted"><strong>Nota:</strong> Los proponentes de este documento están disponibles para participar como instructores.</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">📍 Logística</h3>
+            <ul>
+              <li><strong>Sede:</strong> Local del Colegio de Contadores o aula alquilada</li>
+              <li><strong>Horario:</strong> Sábados 8:00 AM - 5:00 PM (con breaks)</li>
+              <li><strong>Modalidad:</strong> Híbrida (presencial prioritario + grabaciones online)</li>
+              <li><strong>Materiales:</strong> Manuales digitales, datasets de práctica, acceso a plataformas</li>
+              <li><strong>Requisitos:</strong> Laptop personal, internet, instalación de software gratuito</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">📊 Indicadores de Éxito</h3>
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-number">25+</div>
+              <div class="stat-label">Contadores en primera cohorte</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">85%</div>
+              <div class="stat-label">Satisfacción mínima esperada</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Participantes certificados</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">3+</div>
+              <div class="stat-label">Cohortes por año</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Beneficios -->
+      <section class="content-pane" id="beneficios">
+        <div class="card">
+          <h2 class="card-title">Beneficios del Programa</h2>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">✨ Para los Contadores Agremiados</h3>
+            <ul>
+              <li><strong>Actualización profesional:</strong> Competencias digitales demandadas por el mercado</li>
+              <li><strong>Incremento de ingresos:</strong> Acceso a mejores posiciones y honorarios profesionales</li>
+              <li><strong>Eficiencia operativa:</strong> Reducción drástica de tiempo en tareas repetitivas</li>
+              <li><strong>Ventaja competitiva:</strong> Diferenciación frente a colegas no actualizados</li>
+              <li><strong>Oportunidades remotas:</strong> Calificación para trabajo con empresas nacionales/internacionales</li>
+              <li><strong>Certificación oficial:</strong> Respaldo del Colegio para acreditar competencias</li>
+              <li><strong>Red profesional:</strong> Conexión con otros contadores en proceso de transformación digital</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🏛️ Para el Colegio de Contadores</h3>
+            <ul>
+              <li><strong>Liderazgo regional:</strong> Posicionamiento como referente en formación continua</li>
+              <li><strong>Valor agregado:</strong> Servicio diferencial para agremiados</li>
+              <li><strong>Ingresos adicionales:</strong> Modelo sostenible mediante cuotas de formación</li>
+              <li><strong>Alianzas estratégicas:</strong> Convenios con empresas, universidades e institutos</li>
+              <li><strong>Actualización institucional:</strong> Colegio a la vanguardia de la transformación profesional</li>
+              <li><strong>Atracción de nuevos miembros:</strong> Programa atractivo para jóvenes contadores</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🏢 Para las Empresas de Loreto</h3>
+            <ul>
+              <li><strong>Talento disponible:</strong> Contadores con competencias digitales en la región</li>
+              <li><strong>Reducción de costos:</strong> Procesos contables más eficientes</li>
+              <li><strong>Mejor información:</strong> Análisis financiero más profundo y oportuno</li>
+              <li><strong>Modernización:</strong> Facilitadores de la transformación digital empresarial</li>
+              <li><strong>Cumplimiento:</strong> Mejor gestión de obligaciones tributarias y contables</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🌎 Para la Región</h3>
+            <ul>
+              <li><strong>Desarrollo profesional:</strong> Mejora del capital humano en Loreto</li>
+              <li><strong>Competitividad:</strong> Profesionales que pueden competir a nivel nacional</li>
+              <li><strong>Atracción de inversión:</strong> Disponibilidad de talento calificado atrae empresas</li>
+              <li><strong>Modelo replicable:</strong> Ejemplo para otros colegios profesionales de la región</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-title">💼 Testimonios Esperados (post-programa)</div>
+          <p><em>"Reduje el tiempo de conciliación bancaria de 2 días a 2 horas"</em> - Contador Público Senior</p>
+          <p style="margin-top: 0.5rem;"><em>"Conseguí un trabajo remoto con empresa de Lima gracias a mi certificación en Power BI"</em> - Contador Público Junior</p>
+          <p style="margin-top: 0.5rem;"><em>"Mis clientes valoran mucho mis nuevos reportes automatizados"</em> - Contador Independiente</p>
+        </div>
+      </section>
+
+      <!-- Inversión -->
+      <section class="content-pane" id="inversion">
+        <div class="card">
+          <h2 class="card-title">Inversión y Sostenibilidad</h2>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">💰 Opción 1: Programa Completo (80 horas)</h3>
+            <p><strong>Inversión por participante:</strong> S/. 1,200 - 1,500</p>
+            <p style="margin-top: 0.5rem;"><strong>Incluye:</strong></p>
+            <ul>
+              <li>80 horas de formación presencial/híbrida</li>
+              <li>Materiales digitales completos</li>
+              <li>Acceso a plataforma online con grabaciones</li>
+              <li>Certificado oficial del Colegio (80 horas)</li>
+              <li>Soporte técnico durante y 1 mes post-programa</li>
+            </ul>
+            <p style="margin-top: 1rem;" class="text-muted"><strong>Con 25 participantes:</strong> Ingreso de S/. 30,000 - 37,500</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">💰 Opción 2: Programa Express (40 horas)</h3>
+            <p><strong>Inversión por participante:</strong> S/. 700 - 900</p>
+            <p style="margin-top: 0.5rem;"><strong>Incluye:</strong></p>
+            <ul>
+              <li>40 horas de formación intensiva</li>
+              <li>Materiales digitales esenciales</li>
+              <li>Certificado oficial del Colegio (40 horas)</li>
+              <li>Acceso a comunidad de egresados</li>
+            </ul>
+            <p style="margin-top: 1rem;" class="text-muted"><strong>Con 25 participantes:</strong> Ingreso de S/. 17,500 - 22,500</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">💰 Opción 3: Talleres Especializados</h3>
+            <p><strong>Inversión por taller (8-16 horas):</strong> S/. 300 - 500</p>
+            <p style="margin-top: 0.5rem;"><strong>Incluye:</strong></p>
+            <ul>
+              <li>Formación específica en tema seleccionado</li>
+              <li>Material digital del taller</li>
+              <li>Certificado de participación</li>
+            </ul>
+            <p style="margin-top: 1rem;" class="text-muted"><strong>Con 20 participantes por taller:</strong> Ingreso de S/. 6,000 - 10,000</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">📊 Costos de Operación (Programa Completo)</h3>
+          <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+            <tr style="border-bottom: 1px solid var(--border-dark);">
+              <td style="padding: 0.5rem;"><strong>Concepto</strong></td>
+              <td style="padding: 0.5rem; text-align: right;"><strong>Costo (S/.)</strong></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-dark);">
+              <td style="padding: 0.5rem;">Honorarios instructores (80h x 2)</td>
+              <td style="padding: 0.5rem; text-align: right;">8,000 - 12,000</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-dark);">
+              <td style="padding: 0.5rem;">Alquiler de local (10 sábados)</td>
+              <td style="padding: 0.5rem; text-align: right;">2,000 - 3,000</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-dark);">
+              <td style="padding: 0.5rem;">Plataforma online y herramientas</td>
+              <td style="padding: 0.5rem; text-align: right;">1,000 - 1,500</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-dark);">
+              <td style="padding: 0.5rem;">Materiales y certificados</td>
+              <td style="padding: 0.5rem; text-align: right;">1,500 - 2,000</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-dark);">
+              <td style="padding: 0.5rem;">Marketing y difusión</td>
+              <td style="padding: 0.5rem; text-align: right;">1,000 - 1,500</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-dark);">
+              <td style="padding: 0.5rem;">Gastos administrativos</td>
+              <td style="padding: 0.5rem; text-align: right;">1,500 - 2,000</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.5rem;"><strong>TOTAL COSTOS</strong></td>
+              <td style="padding: 0.5rem; text-align: right; font-weight: 600;">15,000 - 22,000</td>
+            </tr>
+          </table>
+
+          <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-accent-dark); border-radius: 8px;">
+            <p style="font-weight: 600; color: var(--accent); margin-bottom: 0.5rem;">Proyección Financiera (25 participantes):</p>
+            <p><strong>Ingresos:</strong> S/. 30,000 - 37,500</p>
+            <p><strong>Costos:</strong> S/. 15,000 - 22,000</p>
+            <p style="color: var(--accent); font-weight: 600; margin-top: 0.5rem;"><strong>Margen:</strong> S/. 15,000 - 15,500 (40-50% margen)</p>
+          </div>
+
+          <p style="margin-top: 1rem;" class="text-muted">Este margen permite reinvertir en mejora del programa, subsidiar parcialmente a agremiados con dificultades económicas, y generar ingresos para el Colegio.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">🎯 Facilidades de Pago</h3>
+          <ul>
+            <li><strong>Pago único:</strong> 10% de descuento</li>
+            <li><strong>2 cuotas:</strong> Sin intereses (50% al inscribirse, 50% a mitad del programa)</li>
+            <li><strong>3-4 cuotas:</strong> Con tarjeta de crédito</li>
+            <li><strong>Subsidios:</strong> Becas parciales (20-30%) para contadores jóvenes recién colegiados</li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-title">💡 Modelo de Sostenibilidad</div>
+          <p><strong>Año 1:</strong> 3 cohortes (75 contadores) = S/. 45,000 - 60,000 de margen neto</p>
+          <p style="margin-top: 0.5rem;"><strong>Año 2+:</strong> Programa consolidado + talleres especializados + actualización anual = Fuente de ingresos recurrente para el Colegio</p>
+        </div>
+      </section>
+
+      <!-- Contacto -->
+      <section class="content-pane" id="contacto">
+        <div class="card">
+          <h2 class="card-title">Información de Contacto</h2>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">👥 Autores de la Propuesta</h3>
+            
+            <div style="padding: 1rem; background: var(--bg-accent-dark); border-radius: 6px; margin-bottom: 1rem;">
+              <p style="font-weight: 600; color: var(--accent);">Duilio Restuccia</p>
+              <p class="text-muted">Data Engineering Specialist</p>
+              <p style="margin-top: 0.5rem;"><strong>Correo:</strong> [incluir email]</p>
+              <p><strong>Teléfono:</strong> [incluir teléfono]</p>
+              <p style="margin-top: 0.5rem;" class="text-muted">Experiencia en análisis de datos, automatización y formación en herramientas BI</p>
+            </div>
+
+            <div style="padding: 1rem; background: var(--bg-accent-dark); border-radius: 6px;">
+              <p style="font-weight: 600; color: var(--accent);">Walter Sánchez</p>
+              <p class="text-muted">Programador Senior</p>
+              <p style="margin-top: 0.5rem;"><strong>Correo:</strong> [incluir email]</p>
+              <p><strong>Teléfono:</strong> [incluir teléfono]</p>
+              <p style="margin-top: 0.5rem;" class="text-muted">Especialista en desarrollo de soluciones de automatización y sistemas</p>
+            </div>
+
+            <p style="margin-top: 1rem;" class="text-muted"><strong>Disponibilidad:</strong> Ambos autores están disponibles para participar como instructores principales del programa.</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">📋 Próximos Pasos</h3>
+            <ol>
+              <li style="margin-bottom: 1rem;">
+                <strong>Reunión con el Decanato (30-45 min):</strong>
+                <p class="text-muted">Presentación de la propuesta completa y resolución de consultas</p>
+              </li>
+              <li style="margin-bottom: 1rem;">
+                <strong>Presentación al Consejo Directivo (1 semana):</strong>
+                <p class="text-muted">Aprobación formal del programa y asignación de presupuesto</p>
+              </li>
+              <li style="margin-bottom: 1rem;">
+                <strong>Diseño detallado del programa (2 semanas):</strong>
+                <p class="text-muted">Sílabos específicos, cronograma, logística y difusión</p>
+              </li>
+              <li style="margin-bottom: 1rem;">
+                <strong>Convocatoria e inscripciones (3 semanas):</strong>
+                <p class="text-muted">Campaña de difusión entre agremiados y proceso de inscripción</p>
+              </li>
+              <li>
+                <strong>Lanzamiento del programa (8-10 semanas desde aprobación):</strong>
+                <p class="text-muted">Inicio de la primera cohorte</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">📄 Documentación Adicional Disponible</h3>
+          <p>Esta propuesta puede complementarse con:</p>
+          <ul>
+            <li><strong>Resumen ejecutivo de 1 página</strong> para el Consejo Directivo</li>
+            <li><strong>Sílabos detallados</strong> por módulo y taller</li>
+            <li><strong>Presupuesto detallado</strong> con cotizaciones específicas</li>
+            <li><strong>Cronograma de implementación</strong> con hitos y responsables</li>
+            <li><strong>Ejemplos de certificados</strong> y materiales de marketing</li>
+            <li><strong>Casos de estudio</strong> de programas similares en otros colegios profesionales</li>
+            <li><strong>Encuesta de interés</strong> para enviar a agremiados</li>
+          </ul>
+          <p style="margin-top: 1rem;" class="text-muted">Todos estos documentos pueden prepararse según las necesidades del Colegio.</p>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-title">✉️ Compromiso de los Proponentes</div>
+          <p>Estamos comprometidos con el éxito de este programa y ofrecemos:</p>
+          <ul style="margin-top: 0.5rem;">
+            <li>Participación como instructores principales</li>
+            <li>Diseño curricular completo y actualizado</li>
+            <li>Seguimiento y evaluación del programa piloto</li>
+            <li>Ajustes y mejoras continuas basadas en feedback</li>
+            <li>Disponibilidad para reuniones de coordinación y planificación</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Propuesta presentada al Colegio de Contadores Públicos de Loreto</p>
+      <p style="margin-top: 0.5rem;">Iquitos, Perú — Documento generado: Noviembre 2025</p>
+      <p style="margin-top: 1rem; font-size: 0.85rem;">Para el éxito de la profesión contable en la era digital</p>
+    </footer>
+  </div>
+
+  <script>
+    // Tabs functionality
+    const tabs = document.querySelectorAll('.tab');
+    const panes = document.querySelectorAll('.content-pane');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        
+        tabs.forEach(t => t.classList.remove('active'));
+        panes.forEach(p => p.classList.remove('active'));
+        
+        tab.classList.add('active');
+        document.getElementById(target).classList.add('active');
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // Theme toggle
+    const themeBtn = document.getElementById('toggleTheme');
+    let currentTheme = 'dark';
+
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'medium' : 'dark';
+      document.body.setAttribute('data-theme', currentTheme);
+      themeBtn.textContent = currentTheme === 'dark' ? 'Modo Medio' : 'Modo Oscuro';
+    });
+
+    // Font size controls
+    let fontSize = 16;
+    const root = document.documentElement;
+
+    document.getElementById('increaseFont').addEventListener('click', () => {
+      fontSize = Math.min(fontSize + 1, 20);
+      root.style.setProperty('--font-size', fontSize + 'px');
+    });
+
+    document.getElementById('decreaseFont').addEventListener('click', () => {
+      fontSize = Math.max(fontSize - 1, 14);
+      root.style.setProperty('--font-size', fontSize + 'px');
+    });
+
+    // Share functionality
+    document.getElementById('shareBtn').addEventListener('click', async () => {
+      const shareData = {
+        title: 'Programa de Actualización en IA - Contadores Públicos',
+        text: 'Propuesta de formación continua en IA y Sistemas Digitales',
+        url: window.location.href
+      };
+
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+        } else {
+          await navigator.clipboard.writeText(window.location.href);
+          alert('Enlace copiado al portapapeles');
+        }
+      } catch (err) {
+        console.log('Error sharing:', err);
+      }
+    });
+
+    // Download functionality
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'propuesta-contadores-publicos-ia.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>

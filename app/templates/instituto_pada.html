@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propuesta: Inteligencia Artificial y Sistemas - IESTP Pedro A. del Águila</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-dark: #0a0e12;
+      --bg-card-dark: #111519;
+      --bg-accent-dark: #1a1f24;
+      --text-dark: #e8eef2;
+      --text-muted-dark: #9ba5ab;
+      --border-dark: rgba(255, 255, 255, 0.06);
+      --accent: #10b981;
+      --accent-dim: rgba(16, 185, 129, 0.15);
+      --shadow: rgba(0, 0, 0, 0.4);
+      --font-size: 16px;
+    }
+
+    [data-theme="medium"] {
+      --bg-dark: #1a1f25;
+      --bg-card-dark: #232930;
+      --bg-accent-dark: #2d333a;
+      --text-dark: #e8eef2;
+      --text-muted-dark: #a8b2b8;
+      --border-dark: rgba(255, 255, 255, 0.08);
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-dark);
+      font-size: var(--font-size);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* Header */
+    .header {
+      background: var(--bg-card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .header-content {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent), #059669);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.25rem;
+      color: white;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .subtitle {
+      color: var(--text-muted-dark);
+      font-size: 0.95rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      background: var(--bg-accent-dark);
+      border: 1px solid var(--border-dark);
+      color: var(--text-dark);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: var(--bg-card-dark);
+      border-color: var(--accent);
+    }
+
+    .btn-primary {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .control-group {
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+      background: var(--bg-accent-dark);
+      padding: 0.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-dark);
+    }
+
+    .control-group label {
+      font-size: 0.85rem;
+      color: var(--text-muted-dark);
+      padding: 0 0.5rem;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .tab {
+      background: var(--bg-card-dark);
+      border: 1px solid var(--border-dark);
+      color: var(--text-muted-dark);
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      white-space: nowrap;
+      font-weight: 500;
+    }
+
+    .tab:hover {
+      border-color: var(--accent);
+      color: var(--text-dark);
+    }
+
+    .tab.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Content */
+    .content-pane {
+      display: none;
+    }
+
+    .content-pane.active {
+      display: block;
+    }
+
+    .card {
+      background: var(--bg-card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.15rem;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .info-box {
+      background: var(--bg-accent-dark);
+      border: 1px solid var(--border-dark);
+      border-left: 3px solid var(--accent);
+      padding: 1rem;
+      border-radius: 6px;
+      margin: 1rem 0;
+    }
+
+    .info-box-title {
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+
+    .tag {
+      background: var(--bg-accent-dark);
+      border: 1px solid var(--border-dark);
+      color: var(--text-muted-dark);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+
+    .tag.highlight {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    ul, ol {
+      padding-left: 1.5rem;
+      margin: 0.75rem 0;
+    }
+
+    li {
+      margin: 0.5rem 0;
+      color: var(--text-muted-dark);
+    }
+
+    li strong {
+      color: var(--text-dark);
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .text-muted {
+      color: var(--text-muted-dark);
+      font-size: 0.9rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-card-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+      text-align: center;
+      color: var(--text-muted-dark);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-top {
+        flex-direction: column;
+      }
+      
+      .controls {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .btn, .control-group {
+        flex: 1;
+      }
+
+      h1 {
+        font-size: 1.25rem;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+      
+      .controls, .tabs {
+        display: none;
+      }
+
+      .content-pane {
+        display: block !important;
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-top">
+        <div class="header-content">
+          <div class="logo-section">
+            <div class="logo">IA</div>
+            <div>
+              <h1>Propuesta: Inteligencia Artificial y Sistemas Digitales</h1>
+              <p class="subtitle">IESTP Pedro A. del Águila Hidalgo — Iquitos, Loreto</p>
+            </div>
+          </div>
+        </div>
+        <div class="controls">
+          <div class="control-group">
+            <label>Texto</label>
+            <button class="btn" id="decreaseFont">A-</button>
+            <button class="btn" id="increaseFont">A+</button>
+          </div>
+          <button class="btn" id="toggleTheme">Modo Medio</button>
+          <button class="btn btn-primary" id="shareBtn">📤 Compartir</button>
+          <button class="btn" id="downloadBtn">💾 Descargar</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="tabs">
+      <button class="tab active" data-tab="resumen">📋 Resumen Ejecutivo</button>
+      <button class="tab" data-tab="contexto">🎯 Contexto</button>
+      <button class="tab" data-tab="propuesta">💡 Propuesta Curricular</button>
+      <button class="tab" data-tab="talleres">🎓 Talleres Inmediatos</button>
+      <button class="tab" data-tab="implementacion">⚙️ Implementación</button>
+      <button class="tab" data-tab="egresados">👥 Para Egresados</button>
+      <button class="tab" data-tab="recursos">💰 Recursos</button>
+      <button class="tab" data-tab="contacto">📞 Contacto</button>
+    </nav>
+
+    <!-- Content -->
+    <main>
+      <!-- Resumen Ejecutivo -->
+      <section class="content-pane active" id="resumen">
+        <div class="card">
+          <h2 class="card-title">Resumen Ejecutivo</h2>
+          <p>Esta propuesta busca <strong>integrar la Inteligencia Artificial y competencias digitales avanzadas</strong> en el Instituto Tecnológico Pedro A. del Águila, mediante un enfoque escalonado y práctico que prepare a estudiantes y egresados para las demandas del mercado laboral actual.</p>
+          
+          <div class="tags">
+            <span class="tag highlight">Bajo Costo</span>
+            <span class="tag highlight">Alto Impacto</span>
+            <span class="tag highlight">Empleabilidad Real</span>
+            <span class="tag highlight">Proyectos Regionales</span>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">Objetivos Principales</h3>
+            <ul>
+              <li><strong>Actualizar el currículo</strong> con competencias digitales modernas, desde alfabetización digital avanzada hasta IA aplicada</li>
+              <li><strong>Formar estudiantes y egresados</strong> con habilidades prácticas en automatización, análisis de datos e IA</li>
+              <li><strong>Incrementar empleabilidad</strong> mediante proyectos reales y convenios con empresas locales</li>
+              <li><strong>Posicionar al instituto</strong> como referente regional en formación tecnológica aplicada</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">¿Por qué ahora?</h3>
+            <ul>
+              <li>Las herramientas de IA son <strong>accesibles y gratuitas</strong> (ChatGPT, Google AI, herramientas low-code)</li>
+              <li>La demanda regional de perfiles técnicos con <strong>competencias digitales</strong> está en aumento</li>
+              <li>Los estudiantes actuales solo manejan <strong>ofimática básica</strong> y necesitan actualización urgente</li>
+              <li>Oportunidad de <strong>convenios</strong> con instituciones públicas y empresas privadas</li>
+              <li><strong>Bajo costo de implementación</strong> usando herramientas gratuitas y dispositivos BYOD</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-title">⚡ Inicio Rápido Propuesto</div>
+          <p><strong>Fase Piloto (3 meses):</strong> Taller de sensibilización para docentes (24h) + Primer seminario para estudiantes de Administración y Contabilidad (30h) + Evaluación de resultados.</p>
+        </div>
+      </section>
+
+      <!-- Contexto -->
+      <section class="content-pane" id="contexto">
+        <div class="card">
+          <h2 class="card-title">Contexto y Justificación</h2>
+          
+          <h3 style="margin-top: 1.5rem; color: var(--text-dark);">Situación Actual</h3>
+          <ul>
+            <li>Los estudiantes del instituto tienen <strong>conocimientos limitados</strong> de ofimática (Word, Excel básico, navegación web)</li>
+            <li>No existe formación estructurada en <strong>automatización, análisis de datos o uso de IA</strong></li>
+            <li>Los egresados enfrentan dificultades para <strong>competir en el mercado laboral</strong> que exige competencias digitales</li>
+            <li>El currículo actual no refleja las <strong>necesidades tecnológicas</strong> de empresas e instituciones de la región</li>
+          </ul>
+
+          <h3 style="margin-top: 1.5rem; color: var(--text-dark);">Oportunidades</h3>
+          <ul>
+            <li><strong>Tecnología accesible:</strong> Herramientas de IA y plataformas educativas disponibles sin costo o a bajo costo</li>
+            <li><strong>Demanda regional:</strong> Empresas agropecuarias, comerciales y de servicios buscan personal con competencias digitales</li>
+            <li><strong>Ventaja competitiva:</strong> Pocos institutos en Loreto ofrecen formación práctica en IA y automatización</li>
+            <li><strong>Alianzas estratégicas:</strong> Posibilidad de convenios con municipalidades, empresas y el Colegio de Contadores Públicos</li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-title">💡 Enfoque Diferenciador</div>
+          <p>No se trata solo de "usar ChatGPT". La propuesta construye una <strong>secuencia pedagógica sólida</strong>: alfabetización digital → fundamentos de sistemas → automatización → IA aplicada. Así, los estudiantes comprenden <em>cómo y por qué</em> funcionan estas herramientas, no solo las usan como "caja negra".</p>
+        </div>
+      </section>
+
+      <!-- Propuesta Curricular -->
+      <section class="content-pane" id="propuesta">
+        <div class="card">
+          <h2 class="card-title">Propuesta de Secuencia Curricular</h2>
+          <p class="text-muted">Estructura modular, práctica y escalable para integrar en el currículo existente</p>
+
+          <div style="margin-top: 1.5rem;">
+            <h3 style="color: var(--accent); margin-bottom: 1rem;">🔹 Módulo I: Alfabetización Digital Avanzada (24-30 horas)</h3>
+            <div style="padding-left: 1rem; border-left: 3px solid var(--accent); margin-bottom: 1.5rem;">
+              <p><strong>Objetivo:</strong> Superar la ofimática básica y dominar herramientas de productividad digital.</p>
+              <p style="margin-top: 0.5rem;"><strong>Contenidos:</strong></p>
+              <ul>
+                <li>Excel avanzado: fórmulas complejas, tablas dinámicas, macros básicas</li>
+                <li>Google Workspace: colaboración en tiempo real, formularios, automatizaciones simples</li>
+                <li>Gestión de archivos en la nube (Drive, OneDrive)</li>
+                <li>Herramientas de presentación efectiva (Canva, PowerPoint avanzado)</li>
+                <li>Búsqueda efectiva de información y curación de contenidos</li>
+              </ul>
+            </div>
+
+            <h3 style="color: var(--accent); margin-bottom: 1rem;">🔹 Módulo II: Fundamentos de Sistemas y Automatización (40 horas)</h3>
+            <div style="padding-left: 1rem; border-left: 3px solid var(--accent); margin-bottom: 1.5rem;">
+              <p><strong>Objetivo:</strong> Comprender cómo funcionan los sistemas digitales y la automatización.</p>
+              <p style="margin-top: 0.5rem;"><strong>Contenidos:</strong></p>
+              <ul>
+                <li>Lógica de programación sin código (diagramas de flujo, pseudocódigo)</li>
+                <li>Introducción a bases de datos (estructura, consultas básicas en SQL)</li>
+                <li>APIs y conectores: cómo se comunican las aplicaciones</li>
+                <li>Plataformas low-code/no-code (Zapier, Make, Google Apps Script)</li>
+                <li>Seguridad digital básica y protección de datos</li>
+              </ul>
+            </div>
+
+            <h3 style="color: var(--accent); margin-bottom: 1rem;">🔹 Módulo III: Inteligencia Artificial Aplicada por Carrera (30-50 horas)</h3>
+            <div style="padding-left: 1rem; border-left: 3px solid var(--accent); margin-bottom: 1.5rem;">
+              <p><strong>Objetivo:</strong> Aplicar IA de manera práctica y específica según la especialidad.</p>
+              <p style="margin-top: 0.5rem;"><strong>Contenidos por carrera:</strong></p>
+              
+              <div style="margin-top: 1rem; padding: 1rem; background: var(--bg-accent-dark); border-radius: 6px;">
+                <p style="font-weight: 600; color: var(--accent);">Administración:</p>
+                <ul style="margin-top: 0.5rem;">
+                  <li>Asistentes IA para redacción de documentos (oficios, informes, actas)</li>
+                  <li>Chatbots para atención al cliente</li>
+                  <li>Análisis de encuestas y feedback con IA</li>
+                  <li>Automatización de procesos administrativos</li>
+                </ul>
+              </div>
+
+              <div style="margin-top: 1rem; padding: 1rem; background: var(--bg-accent-dark); border-radius: 6px;">
+                <p style="font-weight: 600; color: var(--accent);">Contabilidad:</p>
+                <ul style="margin-top: 0.5rem;">
+                  <li>Análisis de datos contables con Power BI / Google Data Studio</li>
+                  <li>Detección de anomalías y auditoría asistida por IA</li>
+                  <li>Automatización de reportes y conciliaciones bancarias</li>
+                  <li>Dashboards financieros interactivos</li>
+                </ul>
+              </div>
+
+              <div style="margin-top: 1rem; padding: 1rem; background: var(--bg-accent-dark); border-radius: 6px;">
+                <p style="font-weight: 600; color: var(--accent);">Agropecuaria:</p>
+                <ul style="margin-top: 0.5rem;">
+                  <li>Apps de diagnóstico de plagas usando IA (PlantNet, análisis de imágenes)</li>
+                  <li>Sensores IoT básicos para monitoreo (humedad, temperatura)</li>
+                  <li>Análisis predictivo de cosechas</li>
+                  <li>Optimización de recursos (riego, fertilizantes)</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3 style="color: var(--accent); margin-bottom: 1rem;">🔹 Módulo IV: Proyecto Integrador (24-40 horas)</h3>
+            <div style="padding-left: 1rem; border-left: 3px solid var(--accent);">
+              <p><strong>Objetivo:</strong> Aplicar todos los conocimientos en un proyecto real con impacto.</p>
+              <p style="margin-top: 0.5rem;"><strong>Metodología:</strong></p>
+              <ul>
+                <li>Equipos interdisciplinarios (3-5 estudiantes)</li>
+                <li>Proyecto vinculado con empresa u organización local</li>
+                <li>Entregables: sistema automatizado, dashboard o aplicación funcional</li>
+                <li>Presentación final ante stakeholders</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-title">📚 Fundamento Pedagógico</div>
+          <p>La secuencia respeta el principio de <strong>aprendizaje escalonado</strong>: cada módulo construye sobre el anterior. Sin fundamentos en datos y lógica, los estudiantes usarían la IA como "caja mágica" sin comprenderla. Esta estructura garantiza autonomía y capacidad de adaptación a nuevas herramientas.</p>
+        </div>
+      </section>
+
+      <!-- Talleres Inmediatos -->
+      <section class="content-pane" id="talleres">
+        <div class="card">
+          <h2 class="card-title">Talleres y Seminarios de Corto Plazo</h2>
+          <p class="text-muted">Opciones para implementación inmediata, independientes o como complemento curricular</p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">🎯 Taller A: Alfabetización Digital Avanzada</h3>
+            <p><strong>Duración:</strong> 24 horas (8 sesiones de 3h)</p>
+            <p><strong>Público:</strong> Estudiantes de todos los programas</p>
+            <p><strong>Contenido:</strong></p>
+            <ul>
+              <li>Excel avanzado con macros</li>
+              <li>Google Workspace colaborativo</li>
+              <li>Gestión de archivos en la nube</li>
+              <li>Herramientas de productividad</li>
+            </ul>
+            <p style="margin-top: 1rem;"><strong>Inversión estimada:</strong> S/. 800 - 1,200 (materiales + docente)</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">💻 Taller B: Introducción a Sistemas y Automatización</h3>
+            <p><strong>Duración:</strong> 36 horas (12 sesiones de 3h)</p>
+            <p><strong>Público:</strong> Estudiantes de 2do año en adelante</p>
+            <p><strong>Contenido:</strong></p>
+            <ul>
+              <li>Lógica de programación visual</li>
+              <li>Bases de datos relacionales</li>
+              <li>Herramientas no-code (Zapier, Make)</li>
+              <li>APIs y conectores</li>
+            </ul>
+            <p style="margin-top: 1rem;"><strong>Inversión estimada:</strong> S/. 1,500 - 2,000</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🤖 Taller C: IA para Administración</h3>
+            <p><strong>Duración:</strong> 30 horas (10 sesiones de 3h)</p>
+            <p><strong>Público:</strong> Administración, Secretariado</p>
+            <p><strong>Contenido:</strong></p>
+            <ul>
+              <li>Asistentes IA (ChatGPT, Claude, Gemini)</li>
+              <li>Redacción asistida de documentos</li>
+              <li>Chatbots básicos para atención</li>
+              <li>Automatización de tareas</li>
+            </ul>
+            <p style="margin-top: 1rem;"><strong>Inversión estimada:</strong> S/. 1,200 - 1,800</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">📊 Taller D: IA para Contabilidad</h3>
+            <p><strong>Duración:</strong> 40 horas (10 sesiones de 4h)</p>
+            <p><strong>Público:</strong> Contabilidad</p>
+            <p><strong>Contenido:</strong></p>
+            <ul>
+              <li>Power BI / Google Data Studio</li>
+              <li>Dashboards financieros</li>
+              <li>Detección de anomalías con IA</li>
+              <li>Automatización de reportes</li>
+            </ul>
+            <p style="margin-top: 1rem;"><strong>Inversión estimada:</strong> S/. 1,800 - 2,500</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🌾 Taller E: Agrointeligencia Práctica</h3>
+            <p><strong>Duración:</strong> 32 horas (8 sesiones de 4h)</p>
+            <p><strong>Público:</strong> Producción Agropecuaria</p>
+            <p><strong>Contenido:</strong></p>
+            <ul>
+              <li>Apps de diagnóstico de plagas</li>
+              <li>Sensores IoT económicos (ESP32)</li>
+              <li>Análisis de datos de campo</li>
+              <li>Optimización de recursos</li>
+            </ul>
+            <p style="margin-top: 1rem;"><strong>Inversión estimada:</strong> S/. 2,000 - 2,800 (incluye kits básicos)</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">👨‍🏫 Taller F: Formación de Formadores</h3>
+            <p><strong>Duración:</strong> 24 horas (6 sesiones de 4h)</p>
+            <p><strong>Público:</strong> Docentes del instituto</p>
+            <p><strong>Contenido:</strong></p>
+            <ul>
+              <li>Uso educativo de IA</li>
+              <li>Herramientas para crear contenido</li>
+              <li>Evaluación con IA</li>
+              <li>Ética y uso responsable</li>
+            </ul>
+            <p style="margin-top: 1rem;"><strong>Inversión estimada:</strong> S/. 1,000 - 1,500</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-title">✅ Logística Mínima Requerida</div>
+          <ul style="margin-top: 0.5rem;">
+            <li><strong>Infraestructura:</strong> Aula con proyector, internet estable (10 Mbps mínimo)</li>
+            <li><strong>Equipos:</strong> 10-15 laptops o BYOD (bring your own device)</li>
+            <li><strong>Software:</strong> Cuentas gratuitas en herramientas (ChatGPT, Google, etc.)</li>
+            <li><strong>Docentes:</strong> 1-2 instructores (puede incluir invitados externos)</li>
+            <li><strong>Formato:</strong> 80% práctico, 20% teórico</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Implementación -->
+      <section class="content-pane" id="implementacion">
+        <div class="card">
+          <h2 class="card-title">Plan de Implementación</h2>
+          
+          <h3 style="margin-top: 1.5rem; color: var(--accent);">Fase 1: Preparación (Mes 1)</h3>
+          <ul>
+            <li><strong>Semana 1-2:</strong> Presentación formal al Consejo Directivo y aprobación de propuesta</li>
+            <li><strong>Semana 2-3:</strong> Taller de sensibilización para docentes (24h)</li>
+            <li><strong>Semana 3-4:</strong> Diagnóstico de equipamiento e infraestructura. Gestión de cuentas educativas</li>
+            <li><strong>Semana 4:</strong> Inscripción de estudiantes para talleres piloto</li>
+          </ul>
+
+          <h3 style="margin-top: 1.5rem; color: var(--accent);">Fase 2: Piloto (Meses 2-3)</h3>
+          <ul>
+            <li><strong>Mes 2:</strong> Ejecución de 2 talleres piloto (Alfabetización Digital + IA para Administración o Contabilidad)</li>
+            <li><strong>Mes 3:</strong> Evaluación de resultados, ajustes y preparación de contenidos para integración curricular</li>
+          </ul>
+
+          <h3 style="margin-top: 1.5rem; color: var(--accent);">Fase 3: Escalamiento (Meses 4-6)</h3>
+          <ul>
+            <li>Integración gradual de módulos en el currículo regular</li>
+            <li>Lanzamiento de talleres para egresados</li>
+            <li>Firma de convenios con empresas para prácticas</li>
+            <li>Ejecución de primeros proyectos integradores</li>
+          </ul>
+
+          <h3 style="margin-top: 1.5rem; color: var(--accent);">Fase 4: Consolidación (Mes 7+)</h3>
+          <ul>
+            <li>Todos los programas con módulos de IA aplicada operando</li>
+            <li>Convenios activos para prácticas y empleabilidad</li>
+            <li>Oferta de cursos pagos para empresas (modelo de extensión)</li>
+            <li>Evaluación semestral de empleabilidad y ajustes continuos</li>
+          </ul>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">📈 Indicadores de Éxito</h3>
+            <ul>
+              <li><strong>Cobertura:</strong> 80% de estudiantes con al menos 1 taller en el primer año</li>
+              <li><strong>Empleabilidad:</strong> 40% de egresados con prácticas o empleo en áreas digitales</li>
+              <li><strong>Proyectos:</strong> 5+ proyectos integradores con empresas locales por año</li>
+              <li><strong>Satisfacción:</strong> 85% de estudiantes califican los talleres como "útiles" o "muy útiles"</li>
+              <li><strong>Convenios:</strong> 3+ convenios activos con empresas/instituciones</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🤝 Alianzas Estratégicas Sugeridas</h3>
+            <ul>
+              <li><strong>Colegio de Contadores Públicos:</strong> Talleres especializados, convenios de prácticas</li>
+              <li><strong>Municipalidades:</strong> Digitalización de procesos, prácticas para estudiantes</li>
+              <li><strong>Empresas agropecuarias:</strong> Proyectos de agrointeligencia, monitoreo con IoT</li>
+              <li><strong>Cámaras de comercio:</strong> Talleres para empresarios, financiamiento de equipos</li>
+              <li><strong>Universidades:</strong> Articulación con programas de pregrado</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Egresados -->
+      <section class="content-pane" id="egresados">
+        <div class="card">
+          <h2 class="card-title">Propuesta para Egresados</h2>
+          <p>Los egresados del instituto enfrentan un mercado laboral que ahora exige competencias digitales que no estaban en su currículo. Esta propuesta les ofrece una <strong>vía rápida de actualización</strong>.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">🎓 Curso: Actualización en Sistemas e IA</h3>
+            <p><strong>Duración:</strong> 40 horas (modalidad flexible)</p>
+            <p><strong>Formato:</strong> Fines de semana (8 sábados de 5h) o intensivo (2 semanas)</p>
+            <p><strong>Público objetivo:</strong> Egresados del instituto de cualquier programa</p>
+            
+            <p style="margin-top: 1rem; font-weight: 600;">Contenido del curso:</p>
+            <ul>
+              <li><strong>Módulo 1 (12h):</strong> Alfabetización digital avanzada y productividad</li>
+              <li><strong>Módulo 2 (16h):</strong> Fundamentos de sistemas y automatización</li>
+              <li><strong>Módulo 3 (12h):</strong> IA aplicada según profesión (personalizado por carrera)</li>
+            </ul>
+
+            <p style="margin-top: 1rem;"><strong>Inversión:</strong> S/. 300 - 500 por participante</p>
+            <p><strong>Certificación:</strong> 40 horas emitida por el instituto</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">💼 Beneficios para Egresados</h3>
+            <ul>
+              <li><strong>Re-empleabilidad:</strong> Acceso a posiciones que requieren competencias digitales</li>
+              <li><strong>Promoción interna:</strong> Calificación para ascensos en sus trabajos actuales</li>
+              <li><strong>Emprendimiento:</strong> Herramientas para digitalizar sus propios negocios</li>
+              <li><strong>Red profesional:</strong> Conexión con otros egresados y oportunidades laborales</li>
+              <li><strong>Actualización rápida:</strong> 40 horas equivalentes a meses de aprendizaje autodidacta</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">🚀 Posible Carrera Nueva: Desarrollo de Software</h3>
+          <p>Complementariamente, se sugiere evaluar la creación de una <strong>carrera técnica en Desarrollo de Software</strong> con énfasis práctico y enfoque en empleabilidad.</p>
+          
+          <div style="margin-top: 1rem; padding: 1rem; background: var(--bg-accent-dark); border-radius: 6px;">
+            <p style="font-weight: 600; margin-bottom: 0.5rem;">Pila tecnológica sugerida:</p>
+            <ul>
+              <li><strong>Python:</strong> Lenguaje prioritario (análisis de datos, automatización, IA, backend)</li>
+              <li><strong>JavaScript/Node.js:</strong> Desarrollo web y aplicaciones multiplataforma</li>
+              <li><strong>SQL:</strong> Gestión de bases de datos</li>
+              <li><strong>Git/GitHub:</strong> Control de versiones y colaboración</li>
+              <li><strong>HTML/CSS:</strong> Fundamentos web</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: 1rem; padding: 1rem; background: var(--bg-accent-dark); border-radius: 6px;">
+            <p style="font-weight: 600; margin-bottom: 0.5rem;">Estructura sugerida:</p>
+            <ul>
+              <li><strong>Duración:</strong> 3 años (6 semestres)</li>
+              <li><strong>Enfoque:</strong> 70% práctico, 30% teórico</li>
+              <li><strong>Proyectos:</strong> Al menos 1 por semestre, progresivamente más complejos</li>
+              <li><strong>Prácticas:</strong> Desde el 4to semestre, convenios con empresas de desarrollo</li>
+              <li><strong>Especialización:</strong> Último año con mención (Web Development, Data Analytics, o Mobile Apps)</li>
+            </ul>
+          </div>
+
+          <p style="margin-top: 1rem;" class="text-muted"><strong>Justificación:</strong> La demanda de desarrolladores es alta incluso para trabajo remoto. Una carrera técnica bien estructurada puede posicionar a los egresados en el mercado nacional e internacional.</p>
+        </div>
+      </section>
+
+      <!-- Recursos -->
+      <section class="content-pane" id="recursos">
+        <div class="card">
+          <h2 class="card-title">Recursos y Presupuesto</h2>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">💰 Inversión Inicial Estimada (Piloto)</h3>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+              <tr style="border-bottom: 1px solid var(--border-dark);">
+                <td style="padding: 0.5rem;"><strong>Concepto</strong></td>
+                <td style="padding: 0.5rem; text-align: right;"><strong>Costo (S/.)</strong></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-dark);">
+                <td style="padding: 0.5rem;">Taller de formación docente (24h)</td>
+                <td style="padding: 0.5rem; text-align: right;">1,000 - 1,500</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-dark);">
+                <td style="padding: 0.5rem;">2 talleres piloto para estudiantes</td>
+                <td style="padding: 0.5rem; text-align: right;">2,000 - 3,000</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-dark);">
+                <td style="padding: 0.5rem;">Material didáctico y licencias</td>
+                <td style="padding: 0.5rem; text-align: right;">500 - 800</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-dark);">
+                <td style="padding: 0.5rem;">Mejoras de conectividad</td>
+                <td style="padding: 0.5rem; text-align: right;">1,000 - 1,500</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.5rem;"><strong>TOTAL FASE PILOTO</strong></td>
+                <td style="padding: 0.5rem; text-align: right; color: var(--accent); font-weight: 600;">4,500 - 6,800</td>
+              </tr>
+            </table>
+            <p class="text-muted" style="margin-top: 1rem;">Esta inversión puede reducirse significativamente usando equipos BYOD y herramientas totalmente gratuitas.</p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">🖥️ Recursos Necesarios</h3>
+            
+            <p style="font-weight: 600; margin-top: 1rem;">Infraestructura:</p>
+            <ul>
+              <li>1 aula con capacidad para 15 personas</li>
+              <li>Proyector y pantalla o TV grande</li>
+              <li>Conexión a internet estable (mínimo 20 Mbps)</li>
+              <li>Pizarra o pizarra digital</li>
+            </ul>
+
+            <p style="font-weight: 600; margin-top: 1rem;">Equipamiento:</p>
+            <ul>
+              <li>10-15 laptops (pueden ser de estudiantes - BYOD)</li>
+              <li>Alternativamente: convenio con cabina de cómputo local</li>
+              <li>Para talleres de agro: 2-3 kits ESP32 (S/. 100 c/u)</li>
+            </ul>
+
+            <p style="font-weight: 600; margin-top: 1rem;">Software (principalmente gratuito):</p>
+            <ul>
+              <li>ChatGPT, Claude AI, Google Gemini (cuentas gratuitas)</li>
+              <li>Google Workspace for Education (gratuito)</li>
+              <li>Power BI Desktop (gratuito)</li>
+              <li>Visual Studio Code (gratuito)</li>
+              <li>Python, Node.js (gratuitos)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">📊 Sostenibilidad Financiera</h3>
+            
+            <p style="font-weight: 600;">Fuentes de financiamiento:</p>
+            <ul>
+              <li><strong>Presupuesto institucional:</strong> Asignación anual para innovación educativa</li>
+              <li><strong>Matrículas:</strong> Módulo opcional pagado por estudiantes (S/. 100-150)</li>
+              <li><strong>Cursos para empresas:</strong> Talleres pagos de extensión (S/. 2,000-3,000 por taller)</li>
+              <li><strong>Convenios:</strong> Empresas aportan equipos o financian talleres a cambio de acceso a talento</li>
+              <li><strong>Proyectos con organismos:</strong> Financiamiento de municipalidades, GORE, programas nacionales</li>
+            </ul>
+
+            <p style="margin-top: 1rem;" class="text-muted"><strong>Modelo sugerido:</strong> Inversión inicial del instituto, recuperación a partir del 2do año mediante cursos de extensión y convenios. Objetivo: autofinanciamiento al 3er año.</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-title">💡 Estrategia de Bajo Costo</div>
+          <p>La propuesta se diseñó para minimizar costos aprovechando: (1) herramientas gratuitas y planes educativos, (2) dispositivos BYOD, (3) docentes internos capacitados, (4) proyectos con empresas que aportan casos reales, (5) contenido digital reutilizable.</p>
+        </div>
+      </section>
+
+      <!-- Contacto -->
+      <section class="content-pane" id="contacto">
+        <div class="card">
+          <h2 class="card-title">Información de Contacto</h2>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3 class="card-title">👥 Autores de la Propuesta</h3>
+            
+            <div style="padding: 1rem; background: var(--bg-accent-dark); border-radius: 6px; margin-bottom: 1rem;">
+              <p style="font-weight: 600; color: var(--accent);">Duilio Restuccia</p>
+              <p class="text-muted">Data Engineering</p>
+              <p style="margin-top: 0.5rem;"><strong>Correo:</strong> [incluir email]</p>
+              <p><strong>Teléfono:</strong> [incluir teléfono]</p>
+            </div>
+
+            <div style="padding: 1rem; background: var(--bg-accent-dark); border-radius: 6px;">
+              <p style="font-weight: 600; color: var(--accent);">Walter Sánchez</p>
+              <p class="text-muted">Programador Senior</p>
+              <p style="margin-top: 0.5rem;"><strong>Correo:</strong> [incluir email]</p>
+              <p><strong>Teléfono:</strong> [incluir teléfono]</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">📋 Próximos Pasos Sugeridos</h3>
+            <ol>
+              <li style="margin-bottom: 1rem;">
+                <strong>Reunión con la Dirección (30 min):</strong>
+                <p class="text-muted">Presentación del resumen ejecutivo y respuesta a consultas iniciales</p>
+              </li>
+              <li style="margin-bottom: 1rem;">
+                <strong>Evaluación de factibilidad (1 semana):</strong>
+                <p class="text-muted">Revisión de presupuesto disponible, infraestructura actual y voluntad institucional</p>
+              </li>
+              <li style="margin-bottom: 1rem;">
+                <strong>Diseño de fase piloto (1 semana):</strong>
+                <p class="text-muted">Definir talleres específicos, fechas, recursos y responsables</p>
+              </li>
+              <li>
+                <strong>Lanzamiento del piloto (mes 2):</strong>
+                <p class="text-muted">Taller para docentes + primer taller para estudiantes</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">📄 Documentos Adicionales Disponibles</h3>
+          <p>Esta propuesta puede complementarse con:</p>
+          <ul>
+            <li><strong>Resumen ejecutivo</strong> (1 página) para presentación rápida</li>
+            <li><strong>Sílabos detallados</strong> de cada taller o módulo</li>
+            <li><strong>Presupuesto detallado</strong> con cotizaciones específicas</li>
+            <li><strong>Cronograma</strong> de implementación por fases</li>
+            <li><strong>Modelos de convenio</strong> con empresas e instituciones</li>
+          </ul>
+          <p style="margin-top: 1rem;" class="text-muted">Estos documentos pueden prepararse según los requerimientos de la institución.</p>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-title">✉️ Disponibilidad</div>
+          <p>Los autores de esta propuesta están disponibles para reuniones, aclaraciones, y colaboración en el diseño e implementación de los talleres y módulos curriculares. También se ofrece participación como docentes en la fase piloto.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Propuesta presentada al IESTP Pedro A. del Águila Hidalgo — Iquitos, Loreto</p>
+      <p style="margin-top: 0.5rem;">Documento generado: Noviembre 2025</p>
+    </footer>
+  </div>
+
+  <script>
+    // Tabs functionality
+    const tabs = document.querySelectorAll('.tab');
+    const panes = document.querySelectorAll('.content-pane');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        
+        tabs.forEach(t => t.classList.remove('active'));
+        panes.forEach(p => p.classList.remove('active'));
+        
+        tab.classList.add('active');
+        document.getElementById(target).classList.add('active');
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // Theme toggle
+    const themeBtn = document.getElementById('toggleTheme');
+    let currentTheme = 'dark';
+
+    themeBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'medium' : 'dark';
+      document.body.setAttribute('data-theme', currentTheme);
+      themeBtn.textContent = currentTheme === 'dark' ? 'Modo Medio' : 'Modo Oscuro';
+    });
+
+    // Font size controls
+    let fontSize = 16;
+    const root = document.documentElement;
+
+    document.getElementById('increaseFont').addEventListener('click', () => {
+      fontSize = Math.min(fontSize + 1, 20);
+      root.style.setProperty('--font-size', fontSize + 'px');
+    });
+
+    document.getElementById('decreaseFont').addEventListener('click', () => {
+      fontSize = Math.max(fontSize - 1, 14);
+      root.style.setProperty('--font-size', fontSize + 'px');
+    });
+
+    // Share functionality
+    document.getElementById('shareBtn').addEventListener('click', async () => {
+      const shareData = {
+        title: 'Propuesta IA - IESTP Pedro A. del Águila',
+        text: 'Propuesta de implementación de IA y Sistemas Digitales',
+        url: window.location.href
+      };
+
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+        } else {
+          await navigator.clipboard.writeText(window.location.href);
+          alert('Enlace copiado al portapapeles');
+        }
+      } catch (err) {
+        console.log('Error sharing:', err);
+      }
+    });
+
+    // Download functionality
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'propuesta-ia-instituto-tecnologico.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
