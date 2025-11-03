@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Técnica - Reconversión Sistema ERP</title>
+    <style>
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #151932;
+            --bg-tertiary: #1e2139;
+            --bg-card: #1a1e35;
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --text-tertiary: #71717a;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            --border-color: #27272a;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding: 0.5rem;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .tab:hover {
+            background: var(--bg-secondary);
+            border-color: var(--accent-primary);
+        }
+
+        .tab.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+        }
+
+        .card-content h4 {
+            color: var(--text-primary);
+            margin: 1rem 0 0.5rem;
+            font-size: 1rem;
+        }
+
+        .card-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content li {
+            margin-bottom: 0.3rem;
+        }
+
+        .highlight-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--accent-primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--accent-warning);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+        }
+
+        .success-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--accent-success);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin: 0.5rem 0;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .comparison-item {
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .comparison-bad {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--accent-danger);
+        }
+
+        .comparison-good {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--accent-success);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tech-badge {
+            background: var(--accent-primary);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: var(--bg-primary);
+            padding: 0.75rem;
+            text-align: left;
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        td {
+            padding: 0.75rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .accordion {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: var(--bg-secondary);
+        }
+
+        .accordion-header.active {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 1.5rem;
+        }
+
+        .accordion-content.active {
+            display: block;
+        }
+
+        .deployment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .deployment-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .deployment-card.recommended {
+            border-color: var(--accent-success);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+        }
+
+        .deployment-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .badge-success {
+            background: var(--accent-success);
+            color: white;
+        }
+
+        .badge-info {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        footer {
+            background: var(--bg-tertiary);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 12px;
+            margin-top: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .deployment-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Propuesta Técnica de Reconversión</h1>
+            <p>Sistema ERP - De Visual FoxPro a Arquitectura Web Moderna</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.9;">
+                Solución Híbrida: SAAS en la Nube + Instalación Local en Servidores Propios
+            </p>
+        </header>
+
+        <!-- Navegación por pestañas -->
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('vision')">📋 Visión General</div>
+            <div class="tab" onclick="showTab('deployment')">🏢 Modelos de Despliegue</div>
+            <div class="tab" onclick="showTab('backend')">⚙️ Backend</div>
+            <div class="tab" onclick="showTab('frontend')">🎨 Frontend</div>
+            <div class="tab" onclick="showTab('apis')">🔌 Integraciones</div>
+            <div class="tab" onclick="showTab('security')">🔐 Seguridad</div>
+            <div class="tab" onclick="showTab('project')">📊 Gestión del Proyecto</div>
+        </div>
+
+        <!-- VISIÓN GENERAL -->
+        <div id="vision" class="tab-content active">
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🎯</span>
+                        <h3 class="card-title">Contexto del Proyecto</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="highlight-box">
+                            <strong>Base de clientes actual:</strong>
+                            <div class="metric">
+                                <div class="metric-value">300-400</div>
+                                <div class="metric-label">Clientes activos estimados</div>
+                            </div>
+                        </div>
+                        
+                        <h4>Sectores atendidos:</h4>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Bodegas</span>
+                            <span class="tech-badge">Minimarkets</span>
+                            <span class="tech-badge">Distribuidoras</span>
+                            <span class="tech-badge">Ferreterías</span>
+                            <span class="tech-badge">Grifos</span>
+                            <span class="tech-badge">Farmacias</span>
+                            <span class="tech-badge">Restaurantes</span>
+                        </div>
+
+                        <div class="warning-box">
+                            <strong>Desafío único:</strong> Sistema unificado que atiende múltiples rubros 
+                            con un solo código base, manteniendo flexibilidad y especialización por sector.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">💼</span>
+                        <h3 class="card-title">Necesidades Identificadas</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Del Programador:</h4>
+                        <ul>
+                            <li>Modernizar sistema Visual FoxPro</li>
+                            <li>Mantener base de clientes actual</li>
+                            <li>Proteger propiedad intelectual</li>
+                            <li>Escalabilidad para nuevos clientes</li>
+                        </ul>
+
+                        <h4>De los Clientes:</h4>
+                        <ul>
+                            <li><strong>Empresas en la nube:</strong> SAAS accesible desde cualquier lugar</li>
+                            <li><strong>Empresas con intranet:</strong> Instalación local pero con tecnología web</li>
+                            <li>Seguridad de información garantizada</li>
+                            <li>Facilidad de uso (navegador web)</li>
+                            <li>Compartir facturas por WhatsApp</li>
+                            <li>Cumplimiento normativo SUNAT</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">✨</span>
+                        <h3 class="card-title">Propuesta de Solución</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="success-box">
+                            <strong>Arquitectura Híbrida Única</strong>
+                            <p style="margin-top: 0.5rem;">
+                                El mismo código base se despliega en dos modalidades según necesidad del cliente:
+                            </p>
+                        </div>
+
+                        <div class="comparison-grid">
+                            <div class="comparison-good">
+                                <strong>☁️ SAAS (Nube)</strong>
+                                <ul style="margin-top: 0.5rem; font-size: 0.9rem;">
+                                    <li>Railway/AWS</li>
+                                    <li>Multi-tenant</li>
+                                    <li>Pago mensual</li>
+                                    <li>Sin infraestructura</li>
+                                </ul>
+                            </div>
+                            <div class="comparison-good">
+                                <strong>🏢 On-Premise</strong>
+                                <ul style="margin-top: 0.5rem; font-size: 0.9rem;">
+                                    <li>Servidor local</li>
+                                    <li>Intranet corporativa</li>
+                                    <li>Licencia perpetua</li>
+                                    <li>Control total</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p style="font-size: 0.95rem; margin-top: 1rem;">
+                            <strong>Ventaja clave:</strong> Mismo sistema, mismas funcionalidades, 
+                            mismo mantenimiento, dos modelos de negocio.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODELOS DE DESPLIEGUE -->
+        <div id="deployment" class="tab-content">
+            <div class="deployment-options">
+                <div class="deployment-card">
+                    <div class="deployment-title">☁️ SAAS Cloud</div>
+                    <span class="badge badge-info">Para clientes sin infraestructura</span>
+                    
+                    <div style="text-align: left; margin-top: 1rem;">
+                        <h4>Características:</h4>
+                        <ul>
+                            <li>Acceso desde cualquier lugar con internet</li>
+                            <li>Sin inversión en hardware</li>
+                            <li>Actualizaciones automáticas</li>
+                            <li>Backup en la nube</li>
+                            <li>Escalable según demanda</li>
+                        </ul>
+
+                        <h4 style="margin-top: 1rem;">Modelo de Negocio:</h4>
+                        <ul>
+                            <li>Suscripción mensual por usuario</li>
+                            <li>Cobro por sucursales adicionales</li>
+                            <li>Sin costos de setup</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="deployment-card recommended">
+                    <div class="deployment-title">🏢 On-Premise</div>
+                    <span class="badge badge-success">RECOMENDADO para empresas con intranet</span>
+                    
+                    <div style="text-align: left; margin-top: 1rem;">
+                        <h4>Características:</h4>
+                        <ul>
+                            <li>Instalación en servidor propio</li>
+                            <li>Funcionamiento en intranet</li>
+                            <li>Interfaz web (navegador)</li>
+                            <li>Datos 100% bajo control del cliente</li>
+                            <li>Independiente de conexión internet</li>
+                        </ul>
+
+                        <h4 style="margin-top: 1rem;">Modelo de Negocio:</h4>
+                        <ul>
+                            <li>Licencia perpetua (pago único)</li>
+                            <li>Soporte anual (opcional)</li>
+                            <li>Actualizaciones anuales</li>
+                        </ul>
+
+                        <div class="highlight-box" style="margin-top: 1rem;">
+                            <strong>✓ Protección del código:</strong> Sistema compilado + ofuscación 
+                            + licenciamiento por hardware
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deployment-card">
+                    <div class="deployment-title">🔄 Híbrido</div>
+                    <span class="badge badge-info">Lo mejor de ambos mundos</span>
+                    
+                    <div style="text-align: left; margin-top: 1rem;">
+                        <h4>Características:</h4>
+                        <ul>
+                            <li>Sistema local en intranet</li>
+                            <li>Sincronización opcional con nube</li>
+                            <li>Facturación a SUNAT desde local</li>
+                            <li>Backup redundante</li>
+                            <li>Acceso remoto opcional (VPN)</li>
+                        </ul>
+
+                        <h4 style="margin-top: 1rem;">Ideal para:</h4>
+                        <ul>
+                            <li>Empresas con múltiples sucursales</li>
+                            <li>Necesidad de consolidación centralizada</li>
+                            <li>Operación crítica que requiere redundancia</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;">
+                <div class="card-header">
+                    <span class="card-icon">🐳</span>
+                    <h3 class="card-title">Docker: La Clave de la Portabilidad</h3>
+                </div>
+                <div class="card-content">
+                    <p>
+                        Docker permite que el <strong>mismo sistema funcione idénticamente</strong> en cualquier 
+                        entorno: laptop de desarrollo, servidor Railway en la nube, o servidor Dell en la oficina 
+                        del cliente.
+                    </p>
+
+                    <div class="comparison-grid" style="margin: 1.5rem 0;">
+                        <div class="comparison-bad">
+                            <strong>❌ Sin Docker</strong>
+                            <ul style="font-size: 0.9rem; margin-top: 0.5rem;">
+                                <li>Instalar Python manualmente</li>
+                                <li>Configurar PostgreSQL</li>
+                                <li>Instalar Redis</li>
+                                <li>Configurar Celery</li>
+                                <li>Ajustar variables de entorno</li>
+                                <li>Problemas de versiones</li>
+                                <li>2-4 horas por instalación</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-good">
+                            <strong>✅ Con Docker</strong>
+                            <ul style="font-size: 0.9rem; margin-top: 0.5rem;">
+                                <li><code>docker-compose up -d</code></li>
+                                <li>Todo instalado en 5 minutos</li>
+                                <li>Mismas versiones garantizadas</li>
+                                <li>Funciona igual en todos lados</li>
+                                <li>Fácil de actualizar</li>
+                                <li>Rollback instantáneo</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="success-box">
+                        <strong>Beneficio para instalaciones On-Premise:</strong>
+                        <p style="margin-top: 0.5rem;">
+                            Instalación remota sin visitar al cliente. Se envía archivo Docker, 
+                            se ejecuta un comando, y el sistema está funcionando. Actualizaciones 
+                            igual de simples.
+                        </p>
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Protección de código:</strong>
+                        <p style="margin-top: 0.5rem;">
+                            El código Python se compila a bytecode dentro del contenedor Docker, 
+                            haciendo prácticamente imposible la ingeniería inversa. Adicionalmente, 
+                            se implementa licenciamiento por MAC address del servidor.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BACKEND -->
+        <div id="backend" class="tab-content">
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🐍</span>
+                        <h3 class="card-title">Python + FastAPI</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>¿Por qué Python?</h4>
+                        <ul>
+                            <li>Lenguaje más popular para desarrollo backend</li>
+                            <li>Ecosistema maduro de librerías</li>
+                            <li>Excelente para integraciones (APIs, XML, PDF)</li>
+                            <li>Comunidad grande = soluciones rápidas</li>
+                        </ul>
+
+                        <h4>¿Por qué FastAPI?</h4>
+                        <ul>
+                            <li>Framework moderno y ultra-rápido</li>
+                            <li>Documentación automática (Swagger)</li>
+                            <li>Validación automática de datos</li>
+                            <li>Soporte nativo async/await</li>
+                            <li>Ideal para APIs RESTful</li>
+                        </ul>
+
+                        <div class="metric">
+                            <div class="metric-value">3x-5x</div>
+                            <div class="metric-label">Más rápido que Django o Flask</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🐘</span>
+                        <h3 class="card-title">PostgreSQL</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Base de datos empresarial de clase mundial</h4>
+                        <ul>
+                            <li>Open source (sin licencias costosas)</li>
+                            <li>ACID compliant (transacciones seguras)</li>
+                            <li>Excelente para multi-tenancy (esquemas)</li>
+                            <li>JSON nativo (configuraciones flexibles)</li>
+                            <li>Full-text search integrado</li>
+                            <li>Replicación y backup avanzados</li>
+                        </ul>
+
+                        <div class="success-box">
+                            <strong>Multi-tenancy por esquemas:</strong><br>
+                            Cada cliente SAAS tiene su propio esquema aislado. 
+                            Seguridad garantizada, datos separados, backups individuales.
+                        </div>
+
+                        <div class="highlight-box">
+                            <strong>Migración desde VFP:</strong><br>
+                            Desarrollaremos herramienta automatizada para leer DBF 
+                            y migrar a PostgreSQL, mapeando tipos de datos y relaciones.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🔴</span>
+                        <h3 class="card-title">Redis</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Base de datos en memoria (ultra-rápida)</h4>
+                        
+                        <div class="metric">
+                            <div class="metric-value">2ms</div>
+                            <div class="metric-label">vs 500ms en PostgreSQL</div>
+                        </div>
+
+                        <h4>Usos críticos:</h4>
+                        <ul>
+                            <li><strong>Sesión única:</strong> Validar que usuario no esté conectado 2 veces</li>
+                            <li><strong>Cache:</strong> Catálogo de productos, clientes frecuentes</li>
+                            <li><strong>Rate limiting:</strong> Prevenir abuso de API</li>
+                            <li><strong>WebSockets:</strong> Notificaciones en tiempo real</li>
+                            <li><strong>Cola de tareas:</strong> Broker para Celery</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <strong>Instalación local:</strong> Redis se incluye en el contenedor Docker. 
+                            Cliente no necesita configurar nada adicional.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🌾</span>
+                        <h3 class="card-title">Celery</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Sistema de tareas asíncronas</h4>
+                        
+                        <div class="highlight-box">
+                            <strong>Problema resuelto:</strong><br>
+                            Enviar factura a SUNAT tarda 2-5 segundos. Sin Celery, 
+                            la cajera espera bloqueada. Con Celery, respuesta inmediata 
+                            y envío en segundo plano.
+                        </div>
+
+                        <h4>Casos de uso críticos:</h4>
+                        <ul>
+                            <li><strong>Facturación electrónica:</strong> Generar XML, firmar, enviar SUNAT</li>
+                            <li><strong>WhatsApp:</strong> Enviar PDFs de facturas sin bloquear POS</li>
+                            <li><strong>Reportes pesados:</strong> Generar PDFs de 100+ páginas</li>
+                            <li><strong>Reintentos automáticos:</strong> Si SUNAT falla, reintenta cada 5 min</li>
+                            <li><strong>Tareas programadas:</strong> Cierre automático de caja a medianoche</li>
+                        </ul>
+
+                        <div class="comparison-grid">
+                            <div class="comparison-bad">
+                                <strong>❌ Sin Celery</strong>
+                                <ul style="font-size: 0.85rem;">
+                                    <li>Respuesta: 2.5 segundos</li>
+                                    <li>Si SUNAT falla: Error</li>
+                                    <li>Rehacer manual</li>
+                                    <li>Clientes molestos</li>
+                                </ul>
+                            </div>
+                            <div class="comparison-good">
+                                <strong>✅ Con Celery</strong>
+                                <ul style="font-size: 0.85rem;">
+                                    <li>Respuesta: 100ms</li>
+                                    <li>Si falla: Reintento auto</li>
+                                    <li>Notificación al terminar</li>
+                                    <li>Experiencia profesional</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="success-box">
+                            <strong>Costo adicional:</strong> $0 (corre en mismo servidor)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 1.5rem;">
+                <div class="card-header">
+                    <span class="card-icon">🌐</span>
+                    <h3 class="card-title">Redes y Conectividad</h3>
+                </div>
+                <div class="card-content">
+                    <h4>Configuración de Red para Instalaciones Locales</h4>
+                    
+                    <p>
+                        El sistema debe funcionar tanto en intranet pura como con acceso controlado desde internet.
+                    </p>
+
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <strong>🏢 Escenario 1: Intranet Pura (Sin Internet)</strong>
+                            <span>▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li>Sistema funciona 100% local</li>
+                                <li>FastAPI + PostgreSQL + Redis en mismo servidor</li>
+                                <li>Usuarios acceden vía IP local (192.168.x.x)</li>
+                                <li>Facturación electrónica: Se acumula y envía cuando hay conexión</li>
+                                <li>Sin dependencia de internet para operación diaria</li>
+                            </ul>
+                            <div class="success-box" style="margin-top: 1rem;">
+                                <strong>Ideal para:</strong> Empresas con infraestructura robusta 
+                                y conexión a internet inestable.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <strong>🌍 Escenario 2: Acceso Remoto Ocasional</strong>
+                            <span>▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li>Sistema en intranet + túnel seguro (VPN o ngrok)</li>
+                                <li>Gerente accede desde casa o sucursal remota</li>
+                                <li>Vendedores externos consultan inventario</li>
+                                <li>Acceso controlado por usuario/contraseña + IP whitelist</li>
+                            </ul>
+                            <div class="warning-box" style="margin-top: 1rem;">
+                                <strong>Seguridad:</strong> VPN corporativa o ngrok con autenticación. 
+                                SSL/TLS obligatorio. Auditoría de accesos.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <strong>🔄 Escenario 3: Híbrido con Sincronización</strong>
+                            <span>▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li>Cada sucursal con servidor local</li>
+                                <li>Sincronización automática a servidor central</li>
+                                <li>Maestros compartidos (productos, clientes)</li>
+                                <li>Consolidación de reportes en tiempo real</li>
+                            </ul>
+                            <div class="highlight-box" style="margin-top: 1rem;">
+                                <strong>Implementación técnica:</strong> PostgreSQL logical replication 
+                                o sincronización vía API REST con Redis como cola.
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 1.5rem;">Consideraciones de Seguridad de Red:</h4>
+                    <table>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>Solución</th>
+                        </tr>
+                        <tr>
+                            <td>Cifrado de datos</td>
+                            <td>SSL/TLS obligatorio (HTTPS)</td>
+                        </tr>
+                        <tr>
+                            <td>Firewall</td>
+                            <td>Solo puerto 443 abierto, resto bloqueado</td>
+                        </tr>
+                        <tr>
+                            <td>Autenticación</td>
+                            <td>JWT + 2FA opcional + huella digital</td>
+                        </tr>
+                        <tr>
+                            <td>Acceso remoto</td>
+                            <td>VPN corporativa o Cloudflare Tunnel</td>
+                        </tr>
+                        <tr>
+                            <td>Backup</td>
+                            <td>Automático diario + réplica externa</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- FRONTEND -->
+        <div id="frontend" class="tab-content">
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">⚡</span>
+                        <h3 class="card-title">HTMX</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>¿Qué es HTMX?</h4>
+                        <p>
+                            Librería que permite crear aplicaciones web modernas e interactivas 
+                            <strong>sin escribir JavaScript complejo</strong>. 
+                        </p>
+
+                        <h4>Ventajas sobre React/Vue/Angular:</h4>
+                        <ul>
+                            <li>✅ Simplicidad extrema (aprende en 1 hora)</li>
+                            <li>✅ Menos código = menos bugs</li>
+                            <li>✅ Servidor renderiza HTML (mejor performance)</li>
+                            <li>✅ SEO nativo</li>
+                            <li>✅ Funciona sin JavaScript habilitado</li>
+                            <li>✅ Peso: 14KB vs 140KB (React)</li>
+                        </ul>
+
+                        <div class="success-box">
+                            <strong>Perfecto para ERP:</strong><br>
+                            Aplicación de gestión no necesita complejidad de React. 
+                            HTMX da interactividad moderna con simplicidad de HTML.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🎭</span>
+                        <h3 class="card-title">HyperScript</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Complemento perfecto de HTMX</h4>
+                        <p>
+                            Lenguaje de scripting legible que reemplaza JavaScript para 
+                            interacciones simples del DOM.
+                        </p>
+
+                        <h4>Características:</h4>
+                        <ul>
+                            <li>Sintaxis en lenguaje natural (casi inglés)</li>
+                            <li>Se escribe directamente en HTML</li>
+                            <li>Ideal para validaciones, animaciones simples</li>
+                            <li>Menos propenso a errores que JS vanilla</li>
+                        </ul>
+
+                        <div class="highlight-box">
+                            <strong>Ejemplo de uso:</strong><br>
+                            Validar que precio sea mayor que costo antes de guardar,<br>
+                            mostrar/ocultar secciones según permisos del usuario,<br>
+                            confirmar eliminaciones, etc.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">📜</span>
+                        <h3 class="card-title">JavaScript Puro</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Solo para funcionalidades específicas</h4>
+                        <p>
+                            JavaScript moderno (ES6+) se usará únicamente donde HTMX/HyperScript 
+                            no sean suficientes:
+                        </p>
+
+                        <ul>
+                            <li>Escáner de código de barras (WebUSB API)</li>
+                            <li>Impresión térmica (WebSerial API)</li>
+                            <li>Geolocalización GPS</li>
+                            <li>WebSockets (notificaciones en tiempo real)</li>
+                            <li>Autenticación biométrica (WebAuthn)</li>
+                            <li>PWA (Service Workers)</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <strong>Sin frameworks pesados:</strong> No React, no Vue, no Angular. 
+                            JavaScript puro cuando se necesite, maximizando rendimiento.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🎨</span>
+                        <h3 class="card-title">CSS Puro</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>CSS moderno sin frameworks</h4>
+                        
+                        <ul>
+                            <li>CSS Grid y Flexbox para layouts</li>
+                            <li>Custom Properties (variables CSS)</li>
+                            <li>Media Queries para responsive</li>
+                            <li>Animations y Transitions nativas</li>
+                        </ul>
+
+                        <h4>Temas implementados:</h4>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Dark (defecto)</span>
+                            <span class="tech-badge">Dim (intermedio)</span>
+                        </div>
+
+                        <div class="success-box">
+                            <strong>Ventaja:</strong> Sin dependencia de Bootstrap, Tailwind, etc. 
+                            Control total del diseño, peso mínimo, carga ultra-rápida.
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-value">&lt; 50KB</div>
+                            <div class="metric-label">CSS total (vs 300KB+ de frameworks)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 1.5rem;">
+                <div class="card-header">
+                    <span class="card-icon">📱</span>
+                    <h3 class="card-title">Experiencia de Usuario</h3>
+                </div>
+                <div class="card-content">
+                    <h4>Diseño Responsive (Mobile-First)</h4>
+                    <p>
+                        Interfaz se adapta perfectamente a cualquier dispositivo: desktop, tablet, smartphone.
+                    </p>
+
+                    <div class="comparison-grid">
+                        <div class="comparison-good">
+                            <strong>💻 Desktop / Laptop</strong>
+                            <ul style="font-size: 0.9rem;">
+                                <li>Sidebar de navegación</li>
+                                <li>Tablas con muchas columnas</li>
+                                <li>Shortcuts de teclado</li>
+                                <li>Vista multi-panel</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-good">
+                            <strong>📱 Móvil / Tablet</strong>
+                            <ul style="font-size: 0.9rem;">
+                                <li>Menú hamburguesa</li>
+                                <li>Tarjetas apiladas</li>
+                                <li>Botones grandes (touch)</li>
+                                <li>Formularios optimizados</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 1rem;">PWA (Progressive Web App)</h4>
+                    <ul>
+                        <li>Instalable como app nativa (icono en home)</li>
+                        <li>Funciona offline (caché inteligente)</li>
+                        <li>Notificaciones push</li>
+                        <li>Actualización automática en segundo plano</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <strong>Ventaja competitiva:</strong> Usuarios sienten que usan una app móvil 
+                        moderna, pero es solo un navegador. Sin descargas de App Store/Play Store.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- APIS E INTEGRACIONES -->
+        <div id="apis" class="tab-content">
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">💬</span>
+                        <h3 class="card-title">API Oficial de WhatsApp</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="success-box">
+                            <strong>🎯 Ventaja Competitiva Crítica</strong><br>
+                            Tu experiencia previa como Developer Autorizado de Meta es invaluable. 
+                            La mayoría de desarrolladores NO tienen acceso a la API oficial.
+                        </div>
+
+                        <h4>Comparación: API Oficial vs Alternativas</h4>
+                        <table>
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>API No Oficial</th>
+                                <th>API Oficial Meta</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Costo</strong></td>
+                                <td>$30-80/mes</td>
+                                <td>$0.005-0.02 por mensaje</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Confiabilidad</strong></td>
+                                <td>❌ Baneos frecuentes</td>
+                                <td>✅ 99.9% uptime</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Límites</strong></td>
+                                <td>~1000 msg/día</td>
+                                <td>Ilimitado (tier-based)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Soporte</strong></td>
+                                <td>❌ Ninguno</td>
+                                <td>✅ Meta oficial</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Verificación</strong></td>
+                                <td>❌ No</td>
+                                <td>✅ Marca verde</td>
+                            </tr>
+                        </table>
+
+                        <h4>Funcionalidades Implementadas:</h4>
+                        <ul>
+                            <li>Envío automático de facturas PDF</li>
+                            <li>Notificaciones de estado (aceptada/rechazada SUNAT)</li>
+                            <li>Confirmaciones de pedidos</li>
+                            <li>Recordatorios de pago</li>
+                            <li>Respuestas automáticas (chatbot básico)</li>
+                            <li>Templates pre-aprobados por Meta</li>
+                        </ul>
+
+                        <div class="highlight-box">
+                            <strong>Ahorro estimado por cliente:</strong>
+                            <div class="metric">
+                                <div class="metric-value">$360-960</div>
+                                <div class="metric-label">Por año vs APIs no oficiales</div>
+                            </div>
+                        </div>
+
+                        <div class="warning-box">
+                            <strong>Barrera de entrada:</strong> Obtener aprobación como Business 
+                            Service Provider de Meta requiere verificación empresarial, historial, 
+                            y proceso que toma semanas. <strong>Ya lo tienes resuelto.</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">📄</span>
+                        <h3 class="card-title">API SUNAT Directa</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="success-box">
+                            <strong>💰 Ahorro Masivo para Clientes</strong><br>
+                            Facturar directo con SUNAT elimina la necesidad de pagar OSE (Operador de 
+                            Servicios Electrónicos) externos.
+                        </div>
+
+                        <h4>Comparación de Costos:</h4>
+                        <table>
+                            <tr>
+                                <th>Método</th>
+                                <th>Costo Mensual</th>
+                                <th>Costo Anual</th>
+                            </tr>
+                            <tr>
+                                <td>OSE Comercial (Nubefact, etc)</td>
+                                <td>$50-150</td>
+                                <td>$600-1,800</td>
+                            </tr>
+                            <tr>
+                                <td><strong>API SUNAT Directa</strong></td>
+                                <td style="color: var(--accent-success); font-weight: 600;">$0</td>
+                                <td style="color: var(--accent-success); font-weight: 600;">$0</td>
+                            </tr>
+                        </table>
+
+                        <h4>Implementación Técnica:</h4>
+                        <ul>
+                            <li>Generación de XML UBL 2.1 (estándar SUNAT)</li>
+                            <li>Firma digital con certificado del cliente</li>
+                            <li>Envío via SOAP a webservices SUNAT</li>
+                            <li>Validación de CDR (Constancia de Recepción)</li>
+                            <li>Reintentos automáticos con Celery</li>
+                            <li>Logs detallados para auditoría</li>
+                        </ul>
+
+                        <div class="highlight-box">
+                            <strong>Complejidad técnica:</strong> Implementar facturación electrónica 
+                            directa con SUNAT requiere conocimientos especializados en:
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Estándar UBL 2.1 (Universal Business Language)</li>
+                                <li>XML Schema validation</li>
+                                <li>Firma digital XML (XMLDSig)</li>
+                                <li>SOAP web services</li>
+                                <li>Manejo de certificados digitales</li>
+                                <li>Normativa tributaria peruana</li>
+                            </ul>
+                        </div>
+
+                        <div class="warning-box">
+                            <strong>Alternativa OSE:</strong> Para clientes que prefieran usar OSE 
+                            (por soporte o familiaridad), el sistema también soportará múltiples 
+                            proveedores OSE mediante patrón Adapter. <strong>Configurable por tenant.</strong>
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-value">$600-1,800</div>
+                            <div class="metric-label">Ahorro anual por cliente usando API SUNAT</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🆔</span>
+                        <h3 class="card-title">APIs de Validación (RUC/DNI)</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Integraciones Implementadas:</h4>
+                        
+                        <ul>
+                            <li><strong>RENIEC:</strong> Validación de DNI, obtener nombres completos</li>
+                            <li><strong>SUNAT RUC:</strong> Validar RUC, razón social, domicilio fiscal</li>
+                            <li><strong>APIs Perú:</strong> Servicio unificado (backup)</li>
+                        </ul>
+
+                        <div class="highlight-box">
+                            <strong>Experiencia de usuario mejorada:</strong><br>
+                            Cajera solo ingresa DNI/RUC → Sistema autocompleta todos los datos.<br>
+                            Reduce errores y acelera el proceso de venta.
+                        </div>
+
+                        <h4>Consideraciones de Costos:</h4>
+                        <table>
+                            <tr>
+                                <th>Servicio</th>
+                                <th>Costo</th>
+                            </tr>
+                            <tr>
+                                <td>SUNAT RUC (oficial)</td>
+                                <td>Gratis (con limitaciones)</td>
+                            </tr>
+                            <tr>
+                                <td>APIs Perú</td>
+                                <td>$15-30/mes (500-1000 consultas)</td>
+                            </tr>
+                            <tr>
+                                <td>RENIEC indirecto</td>
+                                <td>Variable por proveedor</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🤖</span>
+                        <h3 class="card-title">APIs de Inteligencia Artificial</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Funcionalidades Potenciales:</h4>
+                        <ul>
+                            <li>Asistente virtual para consultas frecuentes</li>
+                            <li>Clasificación automática de gastos</li>
+                            <li>Predicción de demanda de productos</li>
+                            <li>Detección de anomalías en inventario</li>
+                            <li>Generación de descripciones de productos</li>
+                            <li>OCR para digitalizar facturas físicas</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <strong>Implementación modular:</strong> API de IA será configurable 
+                            (OpenAI, Anthropic, o local). El cliente podrá activar/desactivar 
+                            funcionalidades según necesidad y presupuesto.
+                        </div>
+
+                        <div class="highlight-box">
+                            <strong>Sistema de créditos:</strong> Cliente recarga créditos de IA 
+                            según consumo. Sin sorpresas en la factura.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 1.5rem;">
+                <div class="card-header">
+                    <span class="card-icon">🎯</span>
+                    <h3 class="card-title">Valor Agregado de las Integraciones</h3>
+                </div>
+                <div class="card-content">
+                    <div class="success-box">
+                        <h4>Ahorro Consolidado por Cliente:</h4>
+                        <table>
+                            <tr>
+                                <th>Concepto</th>
+                                <th>Ahorro Anual</th>
+                            </tr>
+                            <tr>
+                                <td>API SUNAT vs OSE</td>
+                                <td>$600 - $1,800</td>
+                            </tr>
+                            <tr>
+                                <td>WhatsApp Oficial vs No oficial</td>
+                                <td>$360 - $960</td>
+                            </tr>
+                            <tr>
+                                <td>Validaciones RUC/DNI (optimizado)</td>
+                                <td>$180 - $360</td>
+                            </tr>
+                            <tr style="background: var(--bg-primary); font-weight: 600;">
+                                <td><strong>TOTAL AHORRO</strong></td>
+                                <td style="color: var(--accent-success);"><strong>$1,140 - $3,120</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="highlight-box" style="margin-top: 1rem;">
+                        <strong>🎓 Complejidad Técnica Elevada:</strong>
+                        <p style="margin-top: 0.5rem;">
+                            La integración correcta de estas APIs requiere expertise en:
+                        </p>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Protocolos SOAP y REST</li>
+                            <li>Autenticación OAuth 2.0 y certificados digitales</li>
+                            <li>Manejo de webhooks y callbacks</li>
+                            <li>Retry logic y circuit breakers</li>
+                            <li>Parsing y validación de XML/JSON complejos</li>
+                            <li>Cumplimiento de estándares (UBL, ISO, etc)</li>
+                            <li>Regulaciones específicas de cada servicio</li>
+                        </ul>
+                        <p style="margin-top: 0.5rem; font-style: italic;">
+                            Encontrar un desarrollador que domine Python, FastAPI, PostgreSQL, Docker, 
+                            Celery, Y ADEMÁS tenga experiencia con facturación electrónica SUNAT 
+                            y API oficial de WhatsApp es extremadamente raro en el mercado.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEGURIDAD -->
+        <div id="security" class="tab-content">
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🔒</span>
+                        <h3 class="card-title">Protección del Código</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Estrategia Multi-Capa:</h4>
+
+                        <div class="accordion">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <strong>1. Compilación de Python</strong>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Código fuente (.py) → Bytecode (.pyc)</li>
+                                    <li>Bytecode ofuscado con herramientas especializadas</li>
+                                    <li>Nombres de variables/funciones aleatorizados</li>
+                                    <li>Ingeniería inversa extremadamente difícil</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <strong>2. Containerización Docker</strong>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Código encapsulado en imagen Docker</li>
+                                    <li>Solo se distribuye imagen compilada, no código fuente</li>
+                                    <li>Capas del contenedor firmadas digitalmente</li>
+                                    <li>Imposible extraer código sin romper el contenedor</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <strong>3. Licenciamiento por Hardware</strong>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Sistema valida MAC address del servidor</li>
+                                    <li>Hash de hardware único por instalación</li>
+                                    <li>Licencia cifrada con clave privada del desarrollador</li>
+                                    <li>Sistema no arranca sin licencia válida</li>
+                                    <li>Validación online periódica (opcional)</li>
+                                </ul>
+                                <div class="success-box" style="margin-top: 1rem;">
+                                    <strong>Ventaja:</strong> Si cliente intenta clonar el sistema 
+                                    en otro servidor, no funcionará. Cada instalación requiere 
+                                    licencia específica.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <strong>4. Cifrado de Módulos Críticos</strong>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Lógica de negocio sensible cifrada con AES-256</li>
+                                    <li>Descifrado en memoria en tiempo de ejecución</li>
+                                    <li>Nunca se guarda descifrado en disco</li>
+                                    <li>Algoritmos de facturación especialmente protegidos</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <strong>5. Actualizaciones Controladas</strong>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Actualizaciones solo desde servidor autorizado</li>
+                                    <li>Verificación de firma digital antes de aplicar</li>
+                                    <li>Rollback automático si falla validación</li>
+                                    <li>Log de todas las actualizaciones</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="highlight-box">
+                            <strong>Resultado:</strong> Código prácticamente imposible de piratear. 
+                            Nivel de protección equivalente a software empresarial de alto valor.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🛡️</span>
+                        <h3 class="card-title">Seguridad de Datos del Cliente</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Para Clientes (Empresas Usuarias):</h4>
+
+                        <div class="success-box">
+                            <strong>Tranquilidad Garantizada:</strong> Los datos de su empresa 
+                            están más seguros que en un sistema local tradicional.
+                        </div>
+
+                        <h4>Medidas Implementadas:</h4>
+                        <ul>
+                            <li><strong>Cifrado en reposo:</strong> Base de datos PostgreSQL cifrada con AES-256</li>
+                            <li><strong>Cifrado en tránsito:</strong> SSL/TLS obligatorio (HTTPS)</li>
+                            <li><strong>Datos sensibles doblemente cifrados:</strong> Precios de compra, costos, salarios</li>
+                            <li><strong>Backup automático diario:</strong> Retención de 30 días</li>
+                            <li><strong>Backup offsite:</strong> Copia en ubicación geográfica diferente</li>
+                            <li><strong>Auditoría completa:</strong> Log de cada acción, usuario, IP, timestamp</li>
+                            <li><strong>Autenticación robusta:</strong> Contraseñas hasheadas (bcrypt), 2FA, huella digital</li>
+                            <li><strong>Permisos granulares:</strong> Control fino sobre quién puede hacer qué</li>
+                        </ul>
+
+                        <h4>Aislamiento de Datos (Multi-Tenancy):</h4>
+                        <div class="highlight-box">
+                            <strong>SAAS:</strong> Cada cliente tiene su propio esquema PostgreSQL. 
+                            Imposible que Empresa A vea datos de Empresa B.
+                        </div>
+                        <div class="highlight-box">
+                            <strong>On-Premise:</strong> Datos 100% en servidor del cliente. 
+                            Ni siquiera el desarrollador tiene acceso remoto sin autorización explícita.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">👤</span>
+                        <h3 class="card-title">Control de Acceso</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Sistema de Permisos de Nivel Bancario:</h4>
+
+                        <ul>
+                            <li><strong>Sesión única:</strong> Usuario solo puede estar conectado en un dispositivo</li>
+                            <li><strong>Timeout automático:</strong> Sesión expira tras X minutos de inactividad</li>
+                            <li><strong>Validación GPS:</strong> Solo puede conectarse desde ubicación autorizada</li>
+                            <li><strong>Whitelist de IPs:</strong> Restringir acceso a IPs específicas</li>
+                            <li><strong>Autenticación biométrica:</strong> Huella digital vía WebAuthn</li>
+                            <li><strong>2FA opcional:</strong> Código SMS o app authenticator</li>
+                        </ul>
+
+                        <h4>Permisos Micro-Granulares:</h4>
+                        <p>
+                            No solo roles (Admin, Cajero, Vendedor), sino permisos específicos por proceso:
+                        </p>
+                        <ul>
+                            <li>Usuario puede facturar pero NO anular</li>
+                            <li>Usuario puede ver inventario pero NO ver costos</li>
+                            <li>Usuario puede cobrar pero NO ver total vendido del día</li>
+                            <li>Usuario puede hacer pedidos pero requiere aprobación para descuentos >10%</li>
+                        </ul>
+
+                        <div class="success-box">
+                            <strong>Flexibilidad total:</strong> Cada empresa configura permisos 
+                            según su organigrama y políticas internas.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🔍</span>
+                        <h3 class="card-title">Auditoría Forense</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Registro Detallado de Operaciones:</h4>
+                        
+                        <p>Cada acción en el sistema queda registrada con:</p>
+                        <ul>
+                            <li><strong>Quién:</strong> Usuario exacto que realizó la acción</li>
+                            <li><strong>Qué:</strong> Acción específica (crear, modificar, eliminar, consultar)</li>
+                            <li><strong>Cuándo:</strong> Timestamp preciso al milisegundo</li>
+                            <li><strong>Dónde:</strong> IP, coordenadas GPS, tipo de dispositivo, navegador</li>
+                            <li><strong>Valores antes/después:</strong> Cambios específicos realizados</li>
+                            <li><strong>Resultado:</strong> Éxito o error con detalles</li>
+                        </ul>
+
+                        <div class="highlight-box">
+                            <strong>Casos de uso:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Detectar fraude interno</li>
+                                <li>Investigar discrepancias en inventario</li>
+                                <li>Cumplir con auditorías contables</li>
+                                <li>Resolver disputas laborales</li>
+                                <li>Evidencia legal si es necesario</li>
+                            </ul>
+                        </div>
+
+                        <div class="warning-box">
+                            <strong>Retención:</strong> Logs mantenidos por 1 año (configurable). 
+                            Pueden exportarse para archivo permanente.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GESTIÓN DEL PROYECTO -->
+        <div id="project" class="tab-content">
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">🎯</span>
+                        <h3 class="card-title">Alcance y Complejidad</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Dimensión del Proyecto:</h4>
+                        
+                        <div class="metric">
+                            <div class="metric-value">300-400</div>
+                            <div class="metric-label">Clientes potenciales a migrar</div>
+                        </div>
+
+                        <div class="warning-box">
+                            <strong>Desafío único:</strong> No es migrar UN sistema, sino crear 
+                            una plataforma que pueda soportar cientos de clientes simultáneos, 
+                            cada uno con configuraciones específicas.
+                        </div>
+
+                        <h4>Múltiples Rubros con Un Solo Sistema:</h4>
+                        <p>
+                            El sistema actual en VFP atiende sectores muy diversos con una sola 
+                            base de código. La nueva arquitectura debe mantener esta flexibilidad 
+                            mientras añade especialización:
+                        </p>
+                        <ul>
+                            <li>Bodegas: Venta rápida, control de crédito</li>
+                            <li>Restaurantes: Comandas, mesas, cocina</li>
+                            <li>Distribuidoras: Rutas, preventa, facturación masiva</li>
+                            <li>Ferreterías: Productos por medida, cortes</li>
+                            <li>Farmacias: Lotes, vencimientos, recetas</li>
+                            <li>Grifos: Despachos, tanques, calibración</li>
+                        </ul>
+
+                        <div class="highlight-box">
+                            <strong>Complejidad arquitectónica:</strong> Diseñar un sistema lo 
+                            suficientemente genérico para todos los rubros, pero con módulos 
+                            especializados activables según necesidad.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">⚡</span>
+                        <h3 class="card-title">Perfil Técnico Requerido</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Stack Tecnológico Completo:</h4>
+                        
+                        <div class="tech-stack">
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">FastAPI</span>
+                            <span class="tech-badge">PostgreSQL</span>
+                            <span class="tech-badge">SQLAlchemy</span>
+                            <span class="tech-badge">Alembic</span>
+                            <span class="tech-badge">Redis</span>
+                            <span class="tech-badge">Celery</span>
+                            <span class="tech-badge">Docker</span>
+                            <span class="tech-badge">HTMX</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">CSS</span>
+                        </div>
+
+                        <h4>Especializaciones Adicionales:</h4>
+                        <ul>
+                            <li><strong>Facturación electrónica:</strong> UBL 2.1, XML, firma digital, SOAP</li>
+                            <li><strong>WhatsApp API:</strong> Meta Business Platform, webhooks</li>
+                            <li><strong>Multi-tenancy:</strong> Arquitectura escalable para cientos de clientes</li>
+                            <li><strong>Seguridad:</strong> Cifrado, licenciamiento, protección de código</li>
+                            <li><strong>DevOps:</strong> Docker, CI/CD, deployment automatizado</li>
+                            <li><strong>Networking:</strong> VPN, tunelización, configuración de firewalls</li>
+                            <li><strong>Base de datos:</strong> Diseño, optimización, migraciones complejas</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <strong>Realidad del mercado:</strong> Encontrar un desarrollador que 
+                            domine este stack completo es extremadamente difícil. La mayoría se 
+                            especializa en 2-3 tecnologías. Este proyecto requiere dominio de 10+.
+                        </div>
+
+                        <div class="highlight-box">
+                            <strong>Valor agregado:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Experiencia previa como Developer Autorizado de Meta</li>
+                                <li>Conocimiento profundo de normativa SUNAT</li>
+                                <li>Experiencia en sistemas multi-tenant</li>
+                                <li>Capacidad de trabajar en arquitecturas híbridas (cloud + on-premise)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">📋</span>
+                        <h3 class="card-title">Metodología de Trabajo</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Desarrollo Ágil por Fases:</h4>
+                        
+                        <div class="accordion">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <strong>Fase 0: Infraestructura (3 semanas)</strong>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Setup repositorio y estructura del proyecto</li>
+                                    <li>Configuración Docker multi-entorno</li>
+                                    <li>Sistema de seguridad base</li>
+                                    <li>Templates y componentes UI reutilizables</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <strong>Fase 1: Módulo Administrador (4 semanas)</strong>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Catálogos maestros (productos, clientes, proveedores)</li>
+                                    <li>Clasificadores y parámetros</li>
+                                    <li>Sistema de permisos granular</li>
+                                    <li>Herramienta de migración desde VFP</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <strong>Fase 2: Facturación Electrónica (3 semanas)</strong>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Generación XML UBL 2.1</li>
+                                    <li>Firma digital</li>
+                                    <li>Integración API SUNAT</li>
+                                    <li>Sistema de reintentos con Celery</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <strong>Fase 3: Punto de Venta (4 semanas)</strong>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Interfaz POS optimizada</li>
+                                    <li>Integración con escáner código de barras</li>
+                                    <li>Impresión térmica (ESC/POS)</li>
+                                    <li>Control de caja (apertura/cierre/arqueo)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p style="margin-top: 1rem;">
+                            <em>Fases adicionales: Ventas, Almacén, Logística, según priorización.</em>
+                        </p>
+
+                        <div class="success-box">
+                            <strong>Entregables por fase:</strong> Funcionalidad completa, probada, 
+                            documentada y desplegable. Cliente puede empezar a usar módulos 
+                            completados mientras se desarrollan los siguientes.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-icon">💼</span>
+                        <h3 class="card-title">Consideraciones del Proyecto</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4>Naturaleza del Trabajo:</h4>
+                        
+                        <div class="warning-box">
+                            <strong>Dedicación Requerida:</strong>
+                            <p style="margin-top: 0.5rem;">
+                                Este proyecto demanda <strong>concentración profunda y sostenida</strong>. 
+                                No es posible alternarlo efectivamente con otros proyectos sin 
+                                sacrificar calidad o plazos.
+                            </p>
+                        </div>
+
+                        <h4>Factores Críticos de Éxito:</h4>
+                        <ul>
+                            <li><strong>Planificación exhaustiva:</strong> Cada módulo requiere análisis detallado</li>
+                            <li><strong>Coordinación constante:</strong> Alinear expectativas con desarrollador actual</li>
+                            <li><strong>Comunicación fluida:</strong> Resolver dudas de negocio rápidamente</li>
+                            <li><strong>Testing riguroso:</strong> 300+ clientes no toleran bugs críticos</li>
+                            <li><strong>Documentación completa:</strong> Técnica y operativa desde el inicio</li>
+                        </ul>
+
+                        <h4>Riesgos a Mitigar:</h4>
+                        <ul>
+                            <li>Resistencia al cambio de usuarios acostumbrados a VFP</li>
+                            <li>Procesos de negocio no documentados (conocimiento tácito)</li>
+                            <li>Datos inconsistentes en base VFP tras años de uso</li>
+                            <li>Variaciones entre clientes que requieren configurabilidad</li>
+                            <li>Dependencias externas (APIs SUNAT, WhatsApp) fuera de control</li>
+                        </ul>
+
+                        <div class="highlight-box">
+                            <strong>Enfoque profesional:</strong>
+                            <p style="margin-top: 0.5rem;">
+                                Dado el alcance, complejidad técnica, y cantidad de clientes 
+                                potenciales, este proyecto requiere tratarse con la seriedad 
+                                de un desarrollo empresarial de largo plazo, no como un proyecto 
+                                freelance típico.
+                            </p>
+                            <p style="margin-top: 0.5rem;">
+                                El éxito depende de mantener al desarrollador enfocado, 
+                                disponible y motivado a lo largo de todo el ciclo de vida 
+                                del proyecto, que se extenderá por varios meses de desarrollo 
+                                inicial más años de mantenimiento y evolución.
+                            </p>
+                        </div>
+
+                        <div class="success-box">
+                            <strong>Modalidad de pago recomendada:</strong>
+                            <p style="margin-top: 0.5rem;">
+                                Dado el volumen de trabajo y la necesidad de dedicación exclusiva, 
+                                se sugiere estructura de pagos quincenales con adelanto inicial. 
+                                Esto garantiza:
+                            </p>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Flujo de caja estable para el desarrollador</li>
+                                <li>Compromiso mutuo a largo plazo</li>
+                                <li>Enfoque 100% en este proyecto</li>
+                                <li>Tranquilidad para planificar sin presiones económicas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 1.5rem;">
+                <div class="card-header">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title">Estimación de Esfuerzo</h3>
+                </div>
+                <div class="card-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fase</th>
+                                <th>Duración</th>
+                                <th>Horas</th>
+                                <th>Complejidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Fase 0: Infraestructura</td>
+                                <td>3 semanas</td>
+                                <td>120h</td>
+                                <td>Alta</td>
+                            </tr>
+                            <tr>
+                                <td>Fase 1: Administrador</td>
+                                <td>4 semanas</td>
+                                <td>160h</td>
+                                <td>Media-Alta</td>
+                            </tr>
+                            <tr>
+                                <td>Fase 2: Facturación</td>
+                                <td>3 semanas</td>
+                                <td>120h</td>
+                                <td>Muy Alta</td>
+                            </tr>
+                            <tr>
+                                <td>Fase 3: POS</td>
+                                <td>4 semanas</td>
+                                <td>160h</td>
+                                <td>Alta</td>
+                            </tr>
+                            <tr>
+                                <td>Fase 4: Ventas</td>
+                                <td>3 semanas</td>
+                                <td>120h</td>
+                                <td>Media-Alta</td>
+                            </tr>
+                            <tr>
+                                <td>Fase 5: Almacén</td>
+                                <td>3 semanas</td>
+                                <td>120h</td>
+                                <td>Media</td>
+                            </tr>
+                            <tr>
+                                <td>Fase 6: Logística</td>
+                                <td>2 semanas</td>
+                                <td>80h</td>
+                                <td>Media</td>
+                            </tr>
+                            <tr>
+                                <td>Fase 7: Caja/Bancos</td>
+                                <td>2 semanas</td>
+                                <td>80h</td>
+                                <td>Media</td>
+                            </tr>
+                            <tr style="background: var(--bg-primary); font-weight: 600;">
+                                <td><strong>TOTAL Módulos Core</strong></td>
+                                <td><strong>24 semanas</strong></td>
+                                <td><strong>960h</strong></td>
+                                <td><strong>~6 meses</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="warning-box" style="margin-top: 1rem;">
+                        <strong>Nota importante:</strong> Esta estimación considera solo el desarrollo 
+                        de módulos core. No incluye:
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Módulos adicionales especializados por rubro</li>
+                            <li>Migraciones de datos de clientes existentes</li>
+                            <li>Capacitaciones y soporte inicial</li>
+                            <li>Ajustes post-implementación</li>
+                            <li>Mantenimiento y actualizaciones continuas</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Consideración de ritmo de trabajo:</strong>
+                        <p style="margin-top: 0.5rem;">
+                            Estimaciones basadas en 6-8 horas diarias efectivas de trabajo enfocado. 
+                            La realidad del desarrollo de software incluye:
+                        </p>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Investigación y aprendizaje de tecnologías específicas</li>
+                            <li>Debugging de problemas complejos</li>
+                            <li>Refactoring para mantener calidad de código</li>
+                            <li>Testing exhaustivo (unitario, integración, e2e)</li>
+                            <li>Documentación técnica y de usuario</li>
+                            <li>Reuniones de coordinación y validación</li>
+                        </ul>
+                        <p style="margin-top: 0.5rem;">
+                            Por tanto, el tiempo real del proyecto puede extenderse más allá de 
+                            las 24 semanas estimadas, especialmente considerando la complejidad 
+                            de atender múltiples rubros y requisitos específicos que surgirán 
+                            durante el desarrollo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">Propuesta de Colaboración</h3>
+            <p style="margin-bottom: 1rem;">
+                Este proyecto representa una oportunidad única de crear una plataforma moderna y escalable 
+                que beneficiará a cientos de empresas peruanas, permitiéndoles cumplir con normativas 
+                tributarias mientras optimizan sus operaciones.
+            </p>
+            <p style="margin-bottom: 1rem;">
+                La combinación de expertise técnico en el stack completo, experiencia con APIs oficiales 
+                (SUNAT, WhatsApp), y capacidad de diseñar arquitecturas híbridas (cloud + on-premise) 
+                hace que este sea un proyecto desafiante pero extremadamente valioso.
+            </p>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                Documento Técnico - Versión 1.0<br>
+                Noviembre 2025
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Desactivar todas las pestañas
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar contenido seleccionado
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activar pestaña seleccionada
+            event.target.classList.add('active');
+        }
+
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const isActive = header.classList.contains('active');
+            
+            // Cerrar todos los acordeones
+            document.querySelectorAll('.accordion-header').forEach(h => {
+                h.classList.remove('active');
+                h.nextElementSibling.classList.remove('active');
+            });
+            
+            // Abrir el seleccionado si estaba cerrado
+            if (!isActive) {
+                header.classList.add('active');
+                content.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
