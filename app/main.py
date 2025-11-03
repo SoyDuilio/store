@@ -519,8 +519,16 @@ async def redis(request: Request):
     return templates.TemplateResponse("redis.html", {"request": request})
 
 
+#IST-PEDRO A DEL AGUILA
+@app.get("/instituto", response_class=HTMLResponse)
+async def instituto(request: Request):
+    return templates.TemplateResponse("instituto_pada.html", {"request": request})
 
 
+#COLEGI DE CONTADORES PUBLICOS - LORETO
+@app.get("/colegio", response_class=HTMLResponse)
+async def colegio(request: Request):
+    return templates.TemplateResponse("cpc_loreto.html", {"request": request})
 
 
 
