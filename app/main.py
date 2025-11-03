@@ -511,12 +511,13 @@ async def serviplus3(request: Request):
 #SIGCO-WEB PLAN PARA WALTER
 @app.get("/sigcoweb", response_class=HTMLResponse)
 async def sigcoweb(request: Request):
-    return templates.TemplateResponse("sigcoweb_plan.html", {"request": request})
+    return templates.TemplateResponse("sigcoweb_plan2.html", {"request": request})
 
 #DOCUMENTACION- REDIS y CELERY
 @app.get("/redis", response_class=HTMLResponse)
 async def redis(request: Request):
     return templates.TemplateResponse("redis.html", {"request": request})
+
 
 
 
