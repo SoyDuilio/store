@@ -528,7 +528,8 @@ async def instituto(request: Request):
 #COLEGI DE CONTADORES PUBLICOS - LORETO
 @app.get("/colegio", response_class=HTMLResponse)
 async def colegio(request: Request):
-    return templates.TemplateResponse("cpc_loreto.html", {"request": request})
+    return templates.TemplateResponse("ccp_loreto.html", {"request": request})
+
 
 
 
