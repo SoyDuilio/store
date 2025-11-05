@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía ISO 37001 - Certificación Antisoborno para Contratación Pública</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #1e3c72;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .alert-box {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #1e3c72;
+            margin-bottom: 25px;
+            font-size: 2em;
+            border-bottom: 3px solid #1e3c72;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #2a5298;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .comparison-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid #e0e0e0;
+            transition: transform 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-5px);
+            border-color: #1e3c72;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .card-badge.recommended {
+            background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        }
+
+        .comparison-card h3 {
+            color: #1e3c72;
+            margin-top: 0;
+            font-size: 1.8em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .comparison-card .icon {
+            text-align: center;
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #1e3c72;
+        }
+
+        .info-row.highlight {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+
+        .info-row.warning {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+
+        .info-row.danger {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .info-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #1e3c72 0%, #28a745 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1e3c72;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px #1e3c72;
+        }
+
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #1e3c72;
+        }
+
+        .timeline-content h4 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content .duration {
+            display: inline-block;
+            background: #1e3c72;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .checklist li::before {
+            content: '✓';
+            background: #28a745;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .cost-breakdown {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #1e3c72;
+        }
+
+        .cost-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 10px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .strategy-box {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .strategy-box h3 {
+            color: white;
+            margin-top: 0;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .strategy-steps {
+            display: grid;
+            gap: 15px;
+        }
+
+        .strategy-step {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid white;
+        }
+
+        .strategy-step strong {
+            display: block;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .roi-calculator {
+            background: #e3f2fd;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 3px solid #1e3c72;
+        }
+
+        .roi-calculator h3 {
+            color: #1e3c72;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .roi-item {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .roi-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+
+        .roi-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .contact-box {
+            background: #fff3cd;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #ffc107;
+            margin: 20px 0;
+        }
+
+        .contact-box h4 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .contact-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .contact-item strong {
+            display: block;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .pros, .cons {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .pros {
+            background: #d4edda;
+            border: 3px solid #28a745;
+        }
+
+        .pros h4 {
+            color: #155724;
+            margin-bottom: 15px;
+        }
+
+        .cons {
+            background: #f8d7da;
+            border: 3px solid #dc3545;
+        }
+
+        .cons h4 {
+            color: #721c24;
+            margin-bottom: 15px;
+        }
+
+        .pros ul, .cons ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pros li, .cons li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .pros li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .cons li::before {
+            content: '✗';
+            position: absolute;
+            left: 0;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .action-box {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🏛️ Certificación ISO 37001</h1>
+            <p class="subtitle">Sistema de Gestión Antisoborno para Contratación Pública</p>
+            <div class="alert-box">
+                ⚠️ CRÍTICO: Sin ISO 37001 = 0 puntos | Con ISO 37001 = 5 puntos
+            </div>
+        </div>
+
+        <!-- What is ISO 37001 -->
+        <div class="section">
+            <h2>📖 ¿Qué es ISO 37001?</h2>
+            <p style="font-size: 1.1em; margin-bottom: 20px;">
+                La <strong>ISO 37001:2016</strong> es una norma internacional que especifica los requisitos para un 
+                <strong>Sistema de Gestión Antisoborno</strong>. Demuestra que tu empresa tiene políticas, 
+                procedimientos y controles para prevenir, detectar y responder al soborno y la corrupción.
+            </p>
+
+            <ul class="checklist">
+                <li>Requisito obligatorio para contratar con instituciones públicas en Perú</li>
+                <li>Otorga 5 puntos automáticos en procesos de selección</li>
+                <li>Demuestra integridad y transparencia empresarial</li>
+                <li>Válida por 3 años (con auditorías de seguimiento anuales)</li>
+                <li>Reconocida internacionalmente</li>
+            </ul>
+        </div>
+
+        <!-- Main Comparison -->
+        <div class="section">
+            <h2>⚖️ Comparación: Desarrollador Individual vs Empresa/Equipo</h2>
+            
+            <div class="comparison-grid">
+                <!-- Solo Developer Card -->
+                <div class="comparison-card">
+                    <div class="card-badge recommended">⭐ RECOMENDADO</div>
+                    <div class="icon">👨‍💻</div>
+                    <h3>Desarrollador Individual</h3>
+                    
+                    <div class="info-row highlight">
+                        <span class="info-label">⏱️ Tiempo Total</span>
+                        <span class="info-value">2-3 meses</span>
+                    </div>
+                    
+                    <div class="info-row highlight">
+                        <span class="info-label">💰 Costo Total</span>
+                        <span class="info-value">S/. 8,000 - 15,000</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">📋 Complejidad</span>
+                        <span class="info-value">Baja</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">📄 Documentos</span>
+                        <span class="info-value">~10 documentos</span>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <div class="pros-cons" style="grid-template-columns: 1fr;">
+                            <div class="pros">
+                                <h4>✅ Ventajas</h4>
+                                <ul>
+                                    <li>Proceso simplificado</li>
+                                    <li>Menor inversión inicial</li>
+                                    <li>Documentación mínima</li>
+                                    <li>Sin empleados = menos riesgos</li>
+                                    <li>Auditoría más rápida</li>
+                                    <li>Transparencia natural</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company/Team Card -->
+                <div class="comparison-card">
+                    <div class="icon">🏢</div>
+                    <h3>Empresa/Equipo</h3>
+                    
+                    <div class="info-row warning">
+                        <span class="info-label">⏱️ Tiempo Total</span>
+                        <span class="info-value">5-9 meses</span>
+                    </div>
+                    
+                    <div class="info-row danger">
+                        <span class="info-label">💰 Costo Total</span>
+                        <span class="info-value">S/. 15,000 - 30,000</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">📋 Complejidad</span>
+                        <span class="info-value">Alta</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">📄 Documentos</span>
+                        <span class="info-value">~30+ documentos</span>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <div class="pros-cons" style="grid-template-columns: 1fr;">
+                            <div class="cons">
+                                <h4>⚠️ Desafíos</h4>
+                                <ul>
+                                    <li>Proceso más largo</li>
+                                    <li>Mayor inversión</li>
+                                    <li>Documentación extensa</li>
+                                    <li>Capacitación de personal</li>
+                                    <li>Controles internos complejos</li>
+                                    <li>Auditoría más detallada</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Cost Breakdown -->
+        <div class="section">
+            <h2>💰 Desglose Detallado de Costos</h2>
+
+            <div class="comparison-grid">
+                <!-- Solo Developer Costs -->
+                <div class="cost-breakdown">
+                    <h3 style="color: #1e3c72; text-align: center; margin-bottom: 20px;">👨‍💻 Desarrollador Individual</h3>
+                    
+                    <div class="cost-item">
+                        <span>Consultoría e Implementación</span>
+                        <strong>S/. 3,000 - 5,000</strong>
+                    </div>
+                    
+                    <div class="cost-item">
+                        <span>Documentación y Plantillas</span>
+                        <strong>S/. 1,000 - 2,000</strong>
+                    </div>
+                    
+                    <div class="cost-item">
+                        <span>Auditoría de Certificación</span>
+                        <strong>S/. 3,000 - 5,000</strong>
+                    </div>
+                    
+                    <div class="cost-item">
+                        <span>Certificado (3 años)</span>
+                        <strong>S/. 1,000 - 3,000</strong>
+                    </div>
+
+                    <div class="cost-total">
+                        <span>TOTAL</span>
+                        <span>S/. 8,000 - 15,000</span>
+                    </div>
+
+                    <div style="margin-top: 15px; text-align: center; color: #28a745; font-weight: bold;">
+                        💡 USD 2,100 - 4,000 aprox.
+                    </div>
+                </div>
+
+                <!-- Company/Team Costs -->
+                <div class="cost-breakdown">
+                    <h3 style="color: #1e3c72; text-align: center; margin-bottom: 20px;">🏢 Empresa/Equipo</h3>
+                    
+                    <div class="cost-item">
+                        <span>Consultoría e Implementación</span>
+                        <strong>S/. 8,000 - 12,000</strong>
+                    </div>
+                    
+                    <div class="cost-item">
+                        <span>Documentación y Procedimientos</span>
+                        <strong>S/. 2,000 - 4,000</strong>
+                    </div>
+                    
+                    <div class="cost-item">
+                        <span>Capacitación del Personal</span>
+                        <strong>S/. 1,500 - 3,000</strong>
+                    </div>
+                    
+                    <div class="cost-item">
+                        <span>Auditoría de Certificación</span>
+                        <strong>S/. 5,000 - 8,000</strong>
+                    </div>
+                    
+                    <div class="cost-item">
+                        <span>Certificado (3 años)</span>
+                        <strong>S/. 2,000 - 3,000</strong>
+                    </div>
+
+                    <div class="cost-total">
+                        <span>TOTAL</span>
+                        <span>S/. 18,500 - 30,000</span>
+                    </div>
+
+                    <div style="margin-top: 15px; text-align: center; color: #dc3545; font-weight: bold;">
+                        💡 USD 4,900 - 8,000 aprox.
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center;">
+                <strong style="color: #1e3c72; font-size: 1.2em;">
+                    💡 Ahorro como Desarrollador Individual: S/. 7,000 - 15,000 (47-50% menos)
+                </strong>
+            </div>
+        </div>
+
+        <!-- Timeline Comparison -->
+        <div class="section">
+            <h2>📅 Línea de Tiempo Comparativa</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <!-- Solo Developer Timeline -->
+                <div>
+                    <h3 style="text-align: center; color: #28a745; margin-bottom: 20px;">👨‍💻 Desarrollador Individual (2-3 meses)</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <span class="duration">Semanas 1-2</span>
+                                <h4>Fase 1: Documentación Básica</h4>
+                                <p>Política antisoborno, código de ética, procedimientos básicos</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <span class="duration">Semanas 3-4</span>
+                                <h4>Fase 2: Evaluación de Riesgos</h4>
+                                <p>Identificación de riesgos, controles, registros</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <span class="duration">Semanas 5-6</span>
+                                <h4>Fase 3: Implementación</h4>
+                                <p>Puesta en marcha del sistema, registros iniciales</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <span class="duration">Semanas 7-10</span>
+                                <h4>Fase 4: Auditoría y Certificación</h4>
+                                <p>Auditoría documental, auditoría en sitio, obtención del certificado</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company Timeline -->
+                <div>
+                    <h3 style="text-align: center; color: #dc3545; margin-bottom: 20px;">🏢 Empresa/Equipo (5-9 meses)</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <span class="duration">Mes 1-2</span>
+                                <h4>Fase 1: Diagnóstico y Planificación</h4>
+                                <p>Gap analysis, plan de implementación, asignación de recursos</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <span class="duration">Mes 3-4</span>
+                                <h4>Fase 2: Documentación</h4>
+                                <p>Manual completo, procedimientos, políticas específicas por área</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <span class="duration">Mes 5-6</span>
+                                <h4>Fase 3: Capacitación</h4>
+                                <p>Formación a todo el personal, concienciación, ejercicios prácticos</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <span class="duration">Mes 7</span>
+                                <h4>Fase 4: Auditoría Interna</h4>
+                                <p>Revisión completa, corrección de no conformidades</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <span class="duration">Mes 8-9</span>
+                                <h4>Fase 5: Auditoría Externa</h4>
+                                <p>Auditoría de certificación, correcciones, obtención del certificado</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Requirements Comparison -->
+        <div class="section">
+            <h2>📋 Requisitos de Implementación</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div>
+                    <h3 style="color: #28a745;">👨‍💻 Desarrollador Individual</h3>
+                    <ul class="checklist">
+                        <li>Política antisoborno firmada</li>
+                        <li>Código de ética personal/empresarial</li>
+                        <li>Procedimiento de evaluación de riesgos</li>
+                        <li>Canal de denuncias (email oficial)</li>
+                        <li>Registro de "capacitaciones" (autocapacitación)</li>
+                        <li>Procedimiento de debida diligencia (proveedores)</li>
+                        <li>Declaración de conflictos de interés</li>
+                        <li>Política de regalos y hospitalidad</li>
+                        <li>Registro de incidentes (aunque no haya)</li>
+                        <li>Revisión anual del sistema</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 style="color: #dc3545;">🏢 Empresa/Equipo</h3>
+                    <ul class="checklist">
+                        <li>Política antisoborno detallada por área</li>
+                        <li>Código de ética corporativo completo</li>
+                        <li>Matriz de riesgos por proceso</li>
+                        <li>Canal de denuncias multicanal</li>
+                        <li>Plan de capacitación anual</li>
+                        <li>Registros de asistencia a capacitaciones</li>
+                        <li>Evaluación de desempeño antisoborno</li>
+                        <li>Procedimientos por cada tipo de transacción</li>
+                        <li>Due diligence de socios comerciales</li>
+                        <li>Contratos con cláusulas antisoborno</li>
+                        <li>Auditorías internas trimestrales</li>
+                        <li>Comité de ética</li>
+                        <li>Investigaciones de denuncias</li>
+                        <li>Planes de acción correctiva</li>
+                        <li>Indicadores de desempeño (KPIs)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategic Recommendation -->
+        <div class="section">
+            <h2>🎯 Estrategia Recomendada para Tu Caso</h2>
+            
+            <div class="strategy-box">
+                <h3>📈 Plan de 3 Fases para Maximizar ROI</h3>
+                
+                <div class="strategy-steps">
+                    <div class="strategy-step">
+                        <strong>FASE 1: Primer Cliente Privado (Mes 1-2)</strong>
+                        <p>✅ Vende el sistema a instituto/universidad privada (NO requiere ISO 37001)</p>
+                        <p>💰 Ingreso: S/. 25,000 - 40,000</p>
+                        <p>🎯 Objetivo: Generar caja y construir caso de éxito</p>
+                    </div>
+                    
+                    <div class="strategy-step">
+                        <strong>FASE 2: Certificación ISO 37001 (Mes 3-5)</strong>
+                        <p>✅ Invierte S/. 10,000 - 12,000 del ingreso anterior</p>
+                        <p>⏱️ Proceso: 2-3 meses mientras operas con el primer cliente</p>
+                        <p>🎯 Objetivo: Obtener certificación como desarrollador individual</p>
+                    </div>
+                    
+                    <div class="strategy-step">
+                        <strong>FASE 3: Mercado Público (Mes 6+)</strong>
+                        <p>✅ Con certificación + caso de éxito documentado</p>
+                        <p>💰 Precio público: S/. 40,000 - 80,000 por proyecto</p>
+                        <p>🎯 5 puntos automáticos en licitaciones</p>
+                        <p>🏆 Ventaja competitiva significativa</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROI Calculator -->
+        <div class="section">
+            <div class="roi-calculator">
+                <h3>💹 Retorno de Inversión (ROI)</h3>
+                
+                <div class="roi-grid">
+                    <div class="roi-item">
+                        <div class="roi-label">Inversión ISO 37001</div>
+                        <div class="roi-value" style="color: #dc3545;">S/. 12,000</div>
+                    </div>
+                    
+                    <div class="roi-item">
+                        <div class="roi-label">1 Contrato Público</div>
+                        <div class="roi-value">S/. 50,000</div>
+                    </div>
+                    
+                    <div class="roi-item">
+                        <div class="roi-label">ROI Neto</div>
+                        <div class="roi-value">+317%</div>
+                    </div>
+                    
+                    <div class="roi-item">
+                        <div class="roi-label">Recuperación</div>
+                        <div class="roi-value" style="color: #1e3c72;">1 contrato</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: white; border-radius: 10px;">
+                    <h4 style="text-align: center; color: #1e3c72; margin-bottom: 15px;">Proyección a 1 Año</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: center;">
+                        <div>
+                            <strong style="color: #666;">Sin ISO 37001</strong>
+                            <div style="font-size: 2em; color: #dc3545; font-weight: bold;">S/. 75,000</div>
+                            <div style="color: #666;">3 contratos privados × S/. 25,000</div>
+                        </div>
+                        <div>
+                            <strong style="color: #666;">Con ISO 37001</strong>
+                            <div style="font-size: 2em; color: #28a745; font-weight: bold;">S/. 138,000</div>
+                            <div style="color: #666;">
+                                1 privado (S/. 28,000) + <br>
+                                2 públicos (S/. 55,000 c/u)
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; text-align: center; font-size: 1.3em; color: #28a745; font-weight: bold;">
+                        💰 Diferencia: +S/. 63,000 (84% más ingresos)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Convenience Comparison -->
+        <div class="section">
+            <h2>🎯 Conveniencia: ¿Por Qué es Más Fácil como Desarrollador Individual?</h2>
+
+            <div style="background: #e8f5e9; padding: 30px; border-radius: 15px; border: 3px solid #28a745; margin-bottom: 20px;">
+                <h3 style="color: #155724; margin-bottom: 20px;">✅ Ventajas Clave del Desarrollador Individual</h3>
+                
+                <div style="display: grid; gap: 15px;">
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #28a745;">
+                        <strong style="color: #28a745; display: block; margin-bottom: 10px;">1. Transparencia Natural</strong>
+                        <p>No tienes empleados que puedan recibir o dar sobornos. Eres tú y solo tú, lo que simplifica enormemente la auditoría.</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #28a745;">
+                        <strong style="color: #28a745; display: block; margin-bottom: 10px;">2. Documentación Mínima</strong>
+                        <p>No necesitas procedimientos complejos por departamentos. Un solo conjunto de documentos cubre todas tus operaciones.</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #28a745;">
+                        <strong style="color: #28a745; display: block; margin-bottom: 10px;">3. Sin Capacitación Masiva</strong>
+                        <p>Te capacitas solo a ti mismo. No necesitas organizar sesiones para múltiples empleados ni mantener registros complejos.</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #28a745;">
+                        <strong style="color: #28a745; display: block; margin-bottom: 10px;">4. Auditoría Simplificada</strong>
+                        <p>La auditoría puede ser remota y breve (4-6 horas vs. 2-3 días). El auditor solo te entrevista a ti.</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #28a745;">
+                        <strong style="color: #28a745; display: block; margin-bottom: 10px;">5. Menor Riesgo Real</strong>
+                        <p>Sin intermediarios, sin empleados en campo, sin cadena de pagos compleja. Tu riesgo de soborno es objetivamente menor.</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 5px solid #28a745;">
+                        <strong style="color: #28a745; display: block; margin-bottom: 10px;">6. Código Auditable</strong>
+                        <p>Tu producto (software) es transparente. No hay "cajas negras" ni procesos opacos que ocultar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #fff3cd; padding: 25px; border-radius: 15px; border: 3px solid #ffc107;">
+                <h3 style="color: #856404; margin-bottom: 15px;">💡 Ejemplo Práctico de Simplificación</h3>
+                <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden;">
+                    <thead>
+                        <tr style="background: #1e3c72; color: white;">
+                            <th style="padding: 15px; text-align: left;">Requisito ISO 37001</th>
+                            <th style="padding: 15px; text-align: left;">Desarrollador Individual</th>
+                            <th style="padding: 15px; text-align: left;">Empresa (10 personas)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 15px;"><strong>Canal de denuncias</strong></td>
+                            <td style="padding: 15px; color: #28a745;">1 email oficial</td>
+                            <td style="padding: 15px; color: #dc3545;">Teléfono, email, buzón físico, app</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 15px;"><strong>Capacitaciones anuales</strong></td>
+                            <td style="padding: 15px; color: #28a745;">1 registro (tú mismo)</td>
+                            <td style="padding: 15px; color: #dc3545;">10 registros + sesiones grupales</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 15px;"><strong>Evaluación de riesgos</strong></td>
+                            <td style="padding: 15px; color: #28a745;">1 matriz simple (5 riesgos)</td>
+                            <td style="padding: 15px; color: #dc3545;">Matriz por área (30+ riesgos)</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 15px;"><strong>Conflictos de interés</strong></td>
+                            <td style="padding: 15px; color: #28a745;">1 declaración</td>
+                            <td style="padding: 15px; color: #dc3545;">10 declaraciones + actualizaciones</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px;"><strong>Duración auditoría</strong></td>
+                            <td style="padding: 15px; color: #28a745;">4-6 horas</td>
+                            <td style="padding: 15px; color: #dc3545;">2-3 días</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Certification Bodies -->
+        <div class="section">
+            <h2>🏢 Organismos Certificadores en Perú</h2>
+
+            <div class="contact-box">
+                <h4>📞 Contactos Recomendados para Certificación Rápida</h4>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <strong>SGS Perú</strong>
+                        <p>☎️ (+51) 1 517-1700</p>
+                        <p>📧 pe.certification@sgs.com</p>
+                        <p>💰 Desde S/. 8,000</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <strong>Bureau Veritas</strong>
+                        <p>☎️ (+51) 1 213-2828</p>
+                        <p>📧 peru@bureauveritas.com</p>
+                        <p>💰 Desde S/. 9,000</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <strong>TÜV Rheinland</strong>
+                        <p>☎️ (+51) 1 700-7000</p>
+                        <p>📧 info@tuv.com</p>
+                        <p>💰 Desde S/. 10,000</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <strong>LRQA (Lloyd's Register)</strong>
+                        <p>☎️ (+51) 1 611-1191</p>
+                        <p>📧 lima@lrqa.com</p>
+                        <p>💰 Desde S/. 9,500</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-box" style="background: #e3f2fd; border-left-color: #1e3c72;">
+                <h4 style="color: #1e3c72;">🎓 Consultoría Especializada (Recomendado)</h4>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <strong>Perú Compite</strong>
+                        <p>Especialistas en PYMES</p>
+                        <p>📧 consultas@perucompite.gob.pe</p>
+                        <p>💰 Tarifas preferenciales</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <strong>Consultores ISO Locales</strong>
+                        <p>Buscar en LinkedIn/Google</p>
+                        <p>"ISO 37001 Perú consultor"</p>
+                        <p>💰 S/. 3,000 - 5,000</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <strong>PROMPERU</strong>
+                        <p>Programas de apoyo a exportadores</p>
+                        <p>📧 export@promperu.gob.pe</p>
+                        <p>💰 Subsidios disponibles</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Checklist -->
+        <div class="section">
+            <h2>✅ Checklist de Implementación para Desarrollador Individual</h2>
+
+            <div style="background: #f8f9fa; padding: 30px; border-radius: 15px;">
+                <h3 style="color: #1e3c72; margin-bottom: 20px;">📝 Documentos Esenciales (Descargar Plantillas)</h3>
+                
+                <ul class="checklist">
+                    <li><strong>Política Antisoborno</strong> - Declaración formal de tolerancia cero al soborno</li>
+                    <li><strong>Código de Ética</strong> - Principios y valores empresariales</li>
+                    <li><strong>Evaluación de Riesgos</strong> - Matriz de riesgos de soborno en tu actividad</li>
+                    <li><strong>Procedimiento de Debida Diligencia</strong> - Cómo evalúas a proveedores/socios</li>
+                    <li><strong>Política de Regalos</strong> - Límites y condiciones para aceptar/dar regalos</li>
+                    <li><strong>Canal de Denuncias</strong> - Email oficial para reportar irregularidades</li>
+                    <li><strong>Declaración de Conflictos de Interés</strong> - Tu declaración anual</li>
+                    <li><strong>Registro de Capacitaciones</strong> - Log de cursos/lecturas sobre antisoborno</li>
+                    <li><strong>Procedimiento de Investigación</strong> - Cómo respondes a denuncias</li>
+                    <li><strong>Revisión Anual</strong> - Proceso de evaluación del sistema</li>
+                </ul>
+
+                <div style="margin-top: 30px; text-align: center;">
+                    <p style="color: #666; margin-bottom: 15px;">💡 <strong>Tip:</strong> Los organismos certificadores venden paquetes de plantillas desde S/. 1,500</p>
+                    <p style="color: #666;">También puedes encontrar plantillas gratuitas en ISO.org y adaptarlas</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Recommendation -->
+        <div class="section">
+            <h2>🎯 Recomendación Final</h2>
+
+            <div style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 40px; border-radius: 20px; text-align: center;">
+                <h3 style="color: white; font-size: 2em; margin-bottom: 20px;">
+                    Como desarrollador individual, obtener ISO 37001 es:
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin: 30px 0;">
+                    <div style="background: rgba(255,255,255,0.2); padding: 30px; border-radius: 15px;">
+                        <div style="font-size: 3em; margin-bottom: 10px;">⚡</div>
+                        <h4 style="color: white; margin-bottom: 10px;">Más Rápido</h4>
+                        <p style="font-size: 1.3em; font-weight: bold;">2-3 meses</p>
+                        <p style="font-size: 0.9em;">vs 5-9 meses</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.2); padding: 30px; border-radius: 15px;">
+                        <div style="font-size: 3em; margin-bottom: 10px;">💰</div>
+                        <h4 style="color: white; margin-bottom: 10px;">Más Económico</h4>
+                        <p style="font-size: 1.3em; font-weight: bold;">S/. 8,000-15,000</p>
+                        <p style="font-size: 0.9em;">vs S/. 18,000-30,000</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.2); padding: 30px; border-radius: 15px;">
+                        <div style="font-size: 3em; margin-bottom: 10px;">✅</div>
+                        <h4 style="color: white; margin-bottom: 10px;">Más Simple</h4>
+                        <p style="font-size: 1.3em; font-weight: bold;">10 docs</p>
+                        <p style="font-size: 0.9em;">vs 30+ documentos</p>
+                    </div>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.3); padding: 25px; border-radius: 15px; margin-top: 30px;">
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        <strong>Vale TOTALMENTE la pena.</strong><br>
+                        Con una inversión de S/. 12,000 y 2-3 meses, abres la puerta a un mercado de 
+                        <strong>1,000+ instituciones públicas</strong> donde puedes cobrar <strong>60-100% más</strong> 
+                        y tener <strong>5 puntos automáticos</strong> en cada licitación.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="action-box">
+            <h2 style="color: #1e3c72; margin-bottom: 20px;">🚀 Próximos Pasos</h2>
+            <div style="display: grid; gap: 15px; max-width: 600px; margin: 0 auto;">
+                <a href="mailto:pe.certification@sgs.com" class="btn">
+                    📧 Contactar SGS Perú para Cotización
+                </a>
+                <a href="#" class="btn btn-success">
+                    📄 Descargar Plantillas ISO 37001
+                </a>
+                <a href="https://www.osce.gob.pe" target="_blank" class="btn">
+                    🏛️ Ver Licitaciones en OSCE
+                </a>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
