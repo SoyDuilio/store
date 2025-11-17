@@ -3,569 +3,751 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Propuesta Estratégica | Solución Integral de Gestión</title>
-    
-    <!-- Google Fonts: Poppins para legibilidad y elegancia -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+    <title>POSTULANDO - Propuesta Técnico-Comercial | IST SANTANA</title>
     <style>
-        /* --- VARIABLES DE DISEÑO (Fácil de personalizar) --- */
-        :root {
-            --bg-dark: #121212;
-            --bg-card: #1E1E1E;
-            --text-primary: #EAEAEA;
-            --text-secondary: #B0B0B0;
-            --accent-color: #D4AF37; /* Un dorado elegante */
-            --accent-hover: #E7C665;
-            --border-color: #2c2c2c;
-            --font-family: 'Poppins', sans-serif;
-        }
-
-        /* --- RESET Y ESTILOS GLOBALES --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --accent: #10b981;
+            --accent-dark: #059669;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --light: #f1f5f9;
+            --white: #ffffff;
         }
 
         body {
-            font-family: var(--font-family);
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.7;
-            font-size: 16px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            overflow-x: hidden;
         }
 
-        /* --- CLASES DE UTILIDAD --- */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        section {
-            padding: 80px 0;
-        }
-
-        h1, h2, h3 {
-            font-weight: 600;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            color: var(--text-primary);
-        }
-
-        h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-        }
-
-        h2 {
-            font-size: 2.2rem;
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            color: var(--white);
+            padding: 80px 20px;
             text-align: center;
-        }
-        
-        h3 {
-            font-size: 1.5rem;
-            color: var(--accent-color);
-        }
-
-        p {
-            margin-bottom: 15px;
-            color: var(--text-secondary);
-        }
-        
-        a {
-            color: var(--accent-color);
-            text-decoration: none;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 28px;
-            background-color: var(--accent-color);
-            color: #121212;
-            font-weight: 600;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-3px);
-        }
-
-        /* --- HEADER / NAVEGACIÓN --- */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(18, 18, 18, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 15px 0;
-        }
-
-        .main-header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-        
-        .main-nav a {
-            color: var(--text-primary);
-            margin-left: 25px;
-            font-weight: 400;
-            transition: color 0.3s ease;
-        }
-
-        .main-nav a:hover {
-            color: var(--accent-color);
-        }
-
-        /* --- SECCIÓN HERO --- */
-        #hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            padding-top: 60px; /* Offset para el header fijo */
-        }
-        
-        #hero .container {
-            max-width: 800px;
-        }
-
-        #hero h1 span {
-            color: var(--accent-color);
-        }
-
-        #hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 20px auto 40px auto;
-        }
-
-        /* --- SECCIÓN DESAFÍO --- */
-        .challenge-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .challenge-card {
-            background: var(--bg-card);
-            padding: 30px;
-            border-radius: 8px;
-            border-left: 3px solid var(--accent-color);
-        }
-        
-        .challenge-card h3 {
-            margin-bottom: 10px;
-            color: var(--text-primary);
-        }
-
-        /* --- SECCIÓN SOLUCIÓN --- */
-        .solution-block {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-        
-        .solution-block .text-content {
-            flex: 1;
-            text-align: center;
-        }
-
-        .solution-block .image-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .solution-block img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        /* --- SECCIÓN CRECIMIENTO (SOCIO) --- */
-        #crecimiento {
-            background-color: var(--bg-card);
-            border-radius: 10px;
-        }
-        
-        #crecimiento .container {
-            text-align: center;
-            max-width: 800px;
-        }
-        
-        .growth-features {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .growth-feature {
-            background: var(--bg-dark);
-            padding: 15px 25px;
-            border-radius: 5px;
-            font-weight: 600;
-        }
-
-        .growth-feature span {
-            color: var(--accent-color);
-            margin-right: 10px;
-        }
-
-        /* --- SECCIÓN PLANES --- */
-        .plans-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .plan-card {
-            background-color: var(--bg-card);
-            padding: 40px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
         }
-        
-        .plan-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
-        }
-        
-        .plan-card h3 {
-            font-size: 1.2rem;
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-        }
 
-        .plan-card .plan-name {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--text-primary);
-        }
-        
-        .plan-card .plan-description {
-            min-height: 80px;
-        }
-
-        .plan-card .plan-features {
-            list-style: none;
-            margin: 30px 0;
-        }
-        
-        .plan-card .plan-features li {
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .plan-card .plan-features li:last-child {
-            border-bottom: none;
-        }
-
-        .badge {
+        .hero::before {
+            content: '';
             position: absolute;
-            top: 15px;
-            right: -45px;
-            background: var(--accent-color);
-            color: #121212;
-            padding: 5px 40px;
-            transform: rotate(45deg);
-            font-size: 0.8rem;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            opacity: 0.95;
+        }
+
+        .hero .institution {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            margin-bottom: 40px;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            padding: 18px 40px;
+            background: var(--white);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 50px;
             font-weight: 700;
-        }
-        
-        /* --- SECCIÓN CONTACTO --- */
-        #contacto {
-            text-align: center;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        #contacto .container {
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* SECTION */
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 50px;
             max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        
-        /* --- FOOTER --- */
-        footer {
+
+        /* STATS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .stat-box {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
             text-align: center;
-            padding: 30px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .stat-value {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        /* PROBLEMS VS SOLUTIONS */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .problem-card, .solution-card {
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .problem-card {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 6px solid var(--danger);
+        }
+
+        .solution-card {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 6px solid var(--accent);
+        }
+
+        .comparison h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .problem-card h3 {
+            color: var(--danger);
+        }
+
+        .solution-card h3 {
+            color: var(--accent-dark);
+        }
+
+        .comparison ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        .problem-card li:before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: var(--danger);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .solution-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        /* PRICING CARDS */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            border-color: var(--primary);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.2);
+        }
+
+        .pricing-card.featured::before {
+            height: 8px;
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--accent);
+            color: var(--white);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .pricing-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .pricing-price {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .pricing-period {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1rem;
+        }
+
+        .pricing-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .pricing-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.05rem;
+        }
+
+        .pricing-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .pricing-card.featured .pricing-btn {
+            background: var(--accent);
+        }
+
+        .pricing-card.featured .pricing-btn:hover {
+            background: var(--accent-dark);
+        }
+
+        /* ROI CALCULATOR */
+        .roi-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 60px 40px;
+            border-radius: 30px;
+            margin: 60px 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
             margin-top: 40px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-        
-        /* --- ANIMACIONES DE SCROLL --- */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
-
-        /* --- RESPONSIVE DESIGN (Mobile-First) --- */
-        @media (min-width: 768px) {
-            h1 { font-size: 3.5rem; }
-            h2 { font-size: 2.8rem; }
-            
-            .challenge-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .solution-block {
-                flex-direction: row;
-                text-align: left;
-            }
-            
-            .solution-block:nth-child(even) {
-                flex-direction: row-reverse;
-            }
-
-            .solution-block .text-content {
-                text-align: left;
-            }
-            
-            .plans-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (min-width: 1024px) {
-             .plans-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
+        .roi-item {
+            text-align: center;
         }
 
+        .roi-value {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .roi-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* PRESTIGE SECTION */
+        .prestige-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+            padding: 50px;
+            border-radius: 30px;
+            border-left: 8px solid var(--warning);
+            margin: 40px 0;
+        }
+
+        .prestige-box h3 {
+            font-size: 2rem;
+            color: #92400e;
+            margin-bottom: 20px;
+        }
+
+        .prestige-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .prestige-list li {
+            padding: 15px 0;
+            padding-left: 40px;
+            position: relative;
+            font-size: 1.1rem;
+            color: #78350f;
+        }
+
+        .prestige-list li:before {
+            content: "🏆";
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+        }
+
+        /* TIMELINE */
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding: 30px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin: 0 30px;
+        }
+
+        .timeline-year {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+            }
+
+            .timeline-content {
+                margin: 0 0 0 50px;
+            }
+        }
+
+        /* FLOATING CTA */
+        .floating-cta {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .floating-cta-btn {
+            padding: 20px 30px;
+            background: var(--accent);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .floating-cta-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.5);
+        }
     </style>
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="container">
-            <a href="#" class="logo">Tu Socio Digital</a>
-            <nav class="main-nav">
-                <a href="#solucion">Solución</a>
-                <a href="#planes">Planes</a>
-                <a href="#contacto">Contacto</a>
-            </nav>
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>🎓 POSTULANDO</h1>
+            <p class="tagline">Sistema Integral de Admisión con IA</p>
+            <p class="institution">Instituto Superior Tecnológico SANTANA</p>
+            <a href="#inversion" class="cta-primary">Ver Propuesta de Inversión →</a>
         </div>
-    </header>
+    </div>
 
-    <main>
-
-        <section id="hero">
-            <div class="container fade-in">
-                <h1>Control Total. <span>Crecimiento Real.</span></h1>
-                <p>La plataforma definitiva para tu Discoteca y Licorería. Unifica tu operación, deleita a tus clientes y toma decisiones más inteligentes. Es hora de que la tecnología trabaje para ti.</p>
-                <a href="#planes" class="btn">Descubrir los Planes</a>
+    <!-- STATS IMPACTANTES -->
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-value">95%</div>
+                <div class="stat-label">Reducción de Tiempo</div>
             </div>
-        </section>
-
-        <section id="desafio">
-            <div class="container">
-                <h2 class="fade-in">Gestionar dos negocios es un arte. <br>¿Y si lo hacemos más simple?</h2>
-                <div class="challenge-grid">
-                    <div class="challenge-card fade-in" style="transition-delay: 100ms;">
-                        <h3>Inventario sin Control</h3>
-                        <p>¿Preocupada por el stock del bar mientras atiendes la licorería? Ten una visión unificada y recibe alertas antes de que se agote un producto clave.</p>
-                    </div>
-                    <div class="challenge-card fade-in" style="transition-delay: 200ms;">
-                        <h3>Clientes en Espera</h3>
-                        <p>Las colas para pedir una copa o pagar afectan la experiencia. Permite que tus clientes pidan y paguen desde su móvil, aumentando el consumo y la satisfacción.</p>
-                    </div>
-                    <div class="challenge-card fade-in" style="transition-delay: 300ms;">
-                        <h3>Números a Ciegas</h3>
-                        <p>¿Deseas saber cuánto vendiste anoche, al instante, desde tu celular? Obtén reportes claros y toma decisiones basadas en datos reales, no en suposiciones.</p>
-                    </div>
-                </div>
+            <div class="stat-box">
+                <div class="stat-value">98%</div>
+                <div class="stat-label">Precisión IA</div>
             </div>
-        </section>
-
-        <section id="solucion">
-            <div class="container">
-                <h2 class="fade-in">Te damos una sola plataforma con súper-poderes</h2>
-                
-                <div class="solution-block fade-in">
-                    <div class="image-content">
-                        <img src="https://images.unsplash.com/photo-1572536184510-1c3b7a54a613?q=80&w=800&auto=format&fit=crop" alt="Panel de control centralizado">
-                    </div>
-                    <div class="text-content">
-                        <h3>Unifica y Conquista</h3>
-                        <p>Gestiona ventas, inventario y reportes de tu discoteca, bar y licorería desde un solo panel de control. Simple, intuitivo y potente. Además, el sistema está diseñado para escalar contigo si decides abrir nuevas sucursales.</p>
-                    </div>
-                </div>
-                
-                <div class="solution-block fade-in">
-                    <div class="image-content">
-                        <img src="https://images.unsplash.com/photo-1599227746884-133595a8f76e?q=80&w=800&auto=format&fit=crop" alt="Cliente usando PWA en el celular">
-                    </div>
-                    <div class="text-content">
-                        <h3>Clientes Felices, Más Consumo</h3>
-                        <p>Lanza tu propia app de pedidos (PWA). Tus clientes ordenan desde su mesa o antes de llegar. Cero fricción, máxima satisfacción y un ticket promedio más alto. Comunica promociones directamente a su celular.</p>
-                    </div>
-                </div>
-
+            <div class="stat-box">
+                <div class="stat-value">3000</div>
+                <div class="stat-label">Postulantes/Proceso</div>
             </div>
-        </section>
-
-        <section id="crecimiento">
-            <div class="container fade-in">
-                <h2>No solo entregamos un software. <br>Te traemos a los clientes.</h2>
-                <p>Nuestro Plan Crecimiento es una alianza estratégica. Nos encargamos de la tecnología Y de ejecutar campañas de marketing digital para que tus locales siempre tengan movimiento.</p>
-                <div class="growth-features">
-                    <div class="growth-feature"><span>✓</span>Anuncios en Redes Sociales</div>
-                    <div class="growth-feature"><span>✓</span>Campañas Creativas</div>
-                    <div class="growth-feature"><span>✓</span>Resultados Medibles</div>
-                </div>
+            <div class="stat-box">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Transparencia</div>
             </div>
-        </section>
-        
-        <section id="planes">
-            <div class="container">
-                <h2 class="fade-in">Elige el camino hacia tu tranquilidad</h2>
-                <div class="plans-grid">
-                    
-                    <div class="plan-card fade-in" style="transition-delay: 100ms;">
-                        <h3>Plan A</h3>
-                        <p class="plan-name">Control Total</p>
-                        <p class="plan-description">Instalación en tu propio equipo. Ideal para un pago único y control físico total.</p>
-                        <ul class="plan-features">
-                            <li>Inversión Inicial: Alta</li>
-                            <li>Pago Mensual: No</li>
-                            <li>Gestión Técnica: Tuya</li>
-                            <li>Soporte: Adicional</li>
-                        </ul>
-                        <a href="#contacto" class="btn">Consultar</a>
-                    </div>
-                    
-                    <div class="plan-card fade-in" style="transition-delay: 200ms;">
-                        <h3>Plan B</h3>
-                        <p class="plan-name">Nube Propia</p>
-                        <p class="plan-description">Instalación en tu servidor en la nube. El equilibrio perfecto entre control y flexibilidad.</p>
-                         <ul class="plan-features">
-                            <li>Inversión Inicial: Media</li>
-                            <li>Pago Mensual: Dividido</li>
-                            <li>Gestión Técnica: Compartida</li>
-                            <li>Soporte: Incluido</li>
-                        </ul>
-                        <a href="#contacto" class="btn">Consultar</a>
-                    </div>
-                    
-                    <div class="plan-card fade-in" style="transition-delay: 300ms;">
-                         <div class="badge">Popular</div>
-                        <h3>Plan C</h3>
-                        <p class="plan-name">Todo Incluido</p>
-                        <p class="plan-description">Nos encargamos de todo. Servidor, soporte y mantenimiento por una cuota fija. Tranquilidad absoluta.</p>
-                         <ul class="plan-features">
-                            <li>Inversión Inicial: Baja</li>
-                            <li>Pago Mensual: Fijo</li>
-                            <li>Gestión Técnica: Nuestra</li>
-                            <li>Soporte: Prioritario</li>
-                        </ul>
-                        <a href="#contacto" class="btn">Consultar</a>
-                    </div>
-                    
-                    <div class="plan-card fade-in" style="transition-delay: 400ms;">
-                         <div class="badge" style="background-color: #9b59b6; color: white;">Líder</div>
-                        <h3>Plan Crecimiento</h3>
-                        <p class="plan-name">Socio Estratégico</p>
-                        <p class="plan-description">Todo lo del Plan C, más un motor de marketing digital para hacer crecer activamente tu negocio.</p>
-                         <ul class="plan-features">
-                            <li>Marketing Activo: Incluido</li>
-                            <li>Enfoque: Crecimiento</li>
-                            <li>Gestión Técnica: Nuestra</li>
-                            <li>Soporte: Prioritario</li>
-                        </ul>
-                        <a href="#contacto" class="btn">Consultar</a>
-                    </div>
-                    
-                </div>
-            </div>
-        </section>
-
-        <section id="contacto">
-            <div class="container fade-in">
-                <h2>¿Lista para dar el siguiente paso?</h2>
-                <p>Hablemos de tu visión. Agenda una llamada sin compromiso. Permíteme mostrarte en vivo cómo esta solución te devolverá tiempo y potenciará tu rentabilidad.</p>
-                <br>
-                <p><strong>[Tu Nombre]</strong><br>
-                   Socio Tecnológico<br>
-                   [Tu Teléfono] | <a href="mailto:[Tu Correo]">[Tu Correo]</a>
-                </p>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2024 [Tu Nombre o Empresa]. Todos los derechos reservados.</p>
         </div>
-    </footer>
 
-    <script>
-        // --- SCRIPT PARA ANIMACIÓN DE SCROLL (Intersection Observer) ---
-        document.addEventListener("DOMContentLoaded", function() {
-            const fadeElems = document.querySelectorAll('.fade-in');
+        <!-- EL PROBLEMA -->
+        <section class="section">
+            <h2 class="section-title">El Desafío Actual</h2>
+            <p class="section-subtitle">
+                Procesos manuales que consumen tiempo, generan errores y limitan el crecimiento institucional
+            </p>
 
-            const appearOptions = {
-                threshold: 0.1, // El elemento se activa cuando el 10% es visible
-                rootMargin: "0px 0px -50px 0px" // Activa la animación un poco antes de que llegue al fondo de la pantalla
-            };
+            <div class="comparison">
+                <div class="problem-card">
+                    <h3>❌ Situación Actual</h3>
+                    <ul>
+                        <li><strong>100+ horas</strong> de calificación manual</li>
+                        <li><strong>Alto riesgo</strong> de errores humanos</li>
+                        <li><strong>Proceso opaco</strong> que genera desconfianza</li>
+                        <li><strong>4-6 semanas</strong> registrando en REGISTRA</li>
+                        <li><strong>Sin trazabilidad</strong> de certificados MINEDU</li>
+                        <li><strong>Personal exhausto</strong> en época de admisión</li>
+                    </ul>
+                </div>
 
-            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-                entries.forEach(entry => {
-                    if (!entry.isIntersecting) {
-                        return;
-                    } else {
-                        entry.target.classList.add('visible');
-                        appearOnScroll.unobserve(entry.target); // No animar de nuevo
-                    }
-                });
-            }, appearOptions);
+                <div class="solution-card">
+                    <h3>✅ Con POSTULANDO</h3>
+                    <ul>
+                        <li><strong>5 minutos</strong> de calificación automática</li>
+                        <li><strong>98% precisión</strong> garantizada por IA</li>
+                        <li><strong>Transparencia total</strong> con trazabilidad</li>
+                        <li><strong>2-3 días</strong> registro automático REGISTRA</li>
+                        <li><strong>Verificación automática</strong> con MINEDU</li>
+                        <li><strong>Personal liberado</strong> para tareas estratégicas</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-            fadeElems.forEach(elem => {
-                appearOnScroll.observe(elem);
-            });
-        });
-    </script>
+        <!-- ROI SECTION -->
+        <div class="roi-section" id="roi">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 20px;">
+                📊 Retorno de Inversión Garantizado
+            </h2>
+            <p style="text-align: center; font-size: 1.2rem; opacity: 0.9; margin-bottom: 40px;">
+                Recupere su inversión en solo <strong>2 procesos de admisión</strong>
+            </p>
+
+            <div class="roi-grid">
+                <div class="roi-item">
+                    <div class="roi-value">431%</div>
+                    <div class="roi-label">ROI Primer Año</div>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-value">95h</div>
+                    <div class="roi-label">Ahorro por Proceso</div>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-value">S/ 5,000</div>
+                    <div class="roi-label">Ahorro Monetario</div>
+                </div>
+                <div class="roi-item">
+                    <div class="roi-value">∞</div>
+                    <div class="roi-label">Valor de Prestigio</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRESTIGIO -->
+        <section class="section">
+            <div class="prestige-box">
+                <h3>🏆 Más Allá del Ahorro: Prestigio Institucional</h3>
+                <ul class="prestige-list">
+                    <li><strong>Pioneros en Loreto:</strong> Primera institución con IA en admisión</li>
+                    <li><strong>Referente Nacional:</strong> Modelo para otros ISTs del país</li>
+                    <li><strong>Atracción de Talento:</strong> Más postulantes por confianza en el proceso</li>
+                    <li><strong>Reconocimiento MINEDU:</strong> Innovación tecnológica destacada</li>
+                    <li><strong>Legado Directivo:</strong> Modernización que permanecerá en la historia del IST</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- PRICING -->
+        <section class="section" id="inversion">
+            <h2 class="section-title">Opciones de Inversión</h2>
+            <p class="section-subtitle">
+                Elija el paquete que mejor se adapte a sus necesidades actuales
+            </p>
+
+            <div class="pricing-grid">
+                <!-- BÁSICO -->
+                <div class="pricing-card">
+                    <span class="pricing-badge" style="background: var(--primary);">YA ACORDADO</span>
+                    <h3 class="pricing-title">Módulo de Examen</h3>
+                    <div class="pricing-price">S/ 8,000</div>
+                    <p class="pricing-period">Pago único</p>
+                    <ul class="pricing-features">
+                        <li>Captura con IA (Gemini 2.0)</li>
+                        <li>Calificación automática</li>
+                        <li>3 métodos de gabarito</li>
+                        <li>Publicación de resultados</li>
+                        <li>Soporte 3 meses</li>
+                    </ul>
+                    <button class="pricing-btn">Paquete Acordado</button>
+                </div>
+
+                <!-- RECOMENDADO -->
+                <div class="pricing-card featured">
+                    <span class="pricing-badge">🎯 RECOMENDADO</span>
+                    <h3 class="pricing-title">Sistema Completo</h3>
+                    <div class="pricing-price">S/ 15,000</div>
+                    <p class="pricing-period">Ahorra S/ 9,500</p>
+                    <ul class="pricing-features">
+                        <li><strong>TODO lo anterior +</strong></li>
+                        <li>Registro de postulantes</li>
+                        <li>Asignación automática</li>
+                        <li>Verificación MINEDU</li>
+                        <li>Corrección manual</li>
+                        <li>Dashboard completo</li>
+                        <li>Soporte 6 meses</li>
+                        <li>Capacitación incluida</li>
+                    </ul>
+                    <button class="pricing-btn">Mejor Opción</button>
+                </div>
+
+                <!-- PREMIUM -->
+                <div class="pricing-card">
+                    <span class="pricing-badge" style="background: var(--warning);">⭐ PREMIUM</span>
+                    <h3 class="pricing-title">Solución Total</h3>
+                    <div class="pricing-price">S/ 22,000</div>
+                    <p class="pricing-period">Ahorra S/ 16,500</p>
+                    <ul class="pricing-features">
+                        <li><strong>TODO lo anterior +</strong></li>
+                        <li>🤖 Automatización REGISTRA</li>
+                        <li>Registro masivo (3000)</li>
+                        <li>Trazabilidad certificados</li>
+                        <li>Sin intervención manual</li>
+                        <li>Soporte 1 año</li>
+                        <li>Actualizaciones incluidas</li>
+                        <li>Consultoría continua</li>
+                    </ul>
+                    <button class="pricing-btn">Solución Definitiva</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROYECCIÓN 3 AÑOS -->
+        <section class="section">
+            <h2 class="section-title">Proyección Financiera a 3 Años</h2>
+            <p class="section-subtitle">
+                Con 2 procesos de admisión por año (6 procesos en total)
+            </p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Año 1</div>
+                        <h4 style="color: var(--primary); margin-bottom: 10px;">Inversión Inicial</h4>
+                        <p style="margin-bottom: 10px;"><strong>2 procesos × S/ 5,000 ahorro = S/ 10,000</strong></p>
+                        <p style="color: var(--gray);">Inversión: S/ 15,000 → Beneficio neto: <span style="color: var(--danger);">-S/ 5,000</span></p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Año 2</div>
+                        <h4 style="color: var(--accent); margin-bottom: 10px;">Punto de Equilibrio</h4>
+                        <p style="margin-bottom: 10px;"><strong>2 procesos × S/ 5,000 ahorro = S/ 10,000</strong></p>
+                        <p style="color: var(--gray);">Ahorro acumulado: S/ 20,000 → Beneficio neto: <span style="color: var(--accent);">+S/ 5,000</span></p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Año 3</div>
+                        <h4 style="color: var(--accent); margin-bottom: 10px;">Ganancias Netas</h4>
+                        <p style="margin-bottom: 10px;"><strong>2 procesos × S/ 5,000 ahorro = S/ 10,000</strong></p>
+                        <p style="color: var(--gray);">Ahorro acumulado: S/ 30,000 → Beneficio neto: <span style="color: var(--accent); font-size: 1.3rem;"><strong>+S/ 15,000</strong></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <p style="text-align: center; font-size: 0.95rem; color: var(--gray); margin-top: 30px;">
+                * Sin contar: prestigio institucional, atracción de más postulantes, eficiencia operativa, 
+                reducción de estrés del personal, y posicionamiento como IST tecnológico líder
+            </p>
+        </section>
+
+    </div>
+
+    <!-- FLOATING CTA -->
+    <div class="floating-cta">
+        <a href="#" class="floating-cta-btn" onclick="alert('Gracias por su interés. Nos contactaremos pronto.'); return false;">
+            📞 Agendar Reunión
+        </a>
+    </div>
 
 </body>
 </html>
