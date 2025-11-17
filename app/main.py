@@ -529,17 +529,23 @@ async def instituto(request: Request):
 async def examen(request: Request):
     return templates.TemplateResponse("examen_admision.html", {"request": request})
 
+#IST-PEDRO A DEL AGUILA -PROPUESTA
+@app.get("/propuesta", response_class=HTMLResponse)
+async def propuesta(request: Request):
+    return templates.TemplateResponse("propuesta.html", {"request": request})
+
+
 #ESTADO PERUANO - ANTI SOBORNO
 @app.get("/anti", response_class=HTMLResponse)
 async def anti(request: Request):
     return templates.TemplateResponse("anti_soborno.html", {"request": request})
 
 
-
 #COLEGI DE CONTADORES PUBLICOS - LORETO
 @app.get("/colegio", response_class=HTMLResponse)
 async def colegio(request: Request):
     return templates.TemplateResponse("ccp_loreto.html", {"request": request})
+
 
 
 
