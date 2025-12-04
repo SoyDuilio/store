@@ -514,9 +514,9 @@ async def sigcoweb(request: Request):
     return templates.TemplateResponse("sigcoweb_plan2.html", {"request": request})
 
 #DOCUMENTACION- REDIS y CELERY
-@app.get("/redis", response_class=HTMLResponse)
-async def redis(request: Request):
-    return templates.TemplateResponse("redis.html", {"request": request})
+@app.get("/celery", response_class=HTMLResponse)
+async def celery(request: Request):
+    return templates.TemplateResponse("redis_celery.html", {"request": request})
 
 
 #IST-PEDRO A DEL AGUILA
@@ -556,6 +556,7 @@ async def pasarelas(request: Request):
 @app.get("/redis", response_class=HTMLResponse)
 async def redis(request: Request):
     return templates.TemplateResponse("websockets_redis.html", {"request": request})
+
 
 
 
