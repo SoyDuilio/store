@@ -547,6 +547,13 @@ async def colegio(request: Request):
     return templates.TemplateResponse("ccp_loreto.html", {"request": request})
 
 
+#PASARELAS PAGO - SERVIPLUS
+@app.get("/pasarelas", response_class=HTMLResponse)
+async def colegio(request: Request):
+    return templates.TemplateResponse("pasarelas_pago_peru.html", {"request": request})
+
+
+
 
 
 
