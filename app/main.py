@@ -549,13 +549,14 @@ async def colegio(request: Request):
 
 #PASARELAS PAGO - SERVIPLUS
 @app.get("/pasarelas", response_class=HTMLResponse)
-async def colegio(request: Request):
+async def pasarelas(request: Request):
     return templates.TemplateResponse("pasarelas_pago_peru.html", {"request": request})
 
 #WEB-SOCKETS & REDIS
 @app.get("/redis", response_class=HTMLResponse)
-async def colegio(request: Request):
+async def redis(request: Request):
     return templates.TemplateResponse("websockets_redis.html", {"request": request})
+
 
 
 
