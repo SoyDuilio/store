@@ -558,6 +558,11 @@ async def redis(request: Request):
     return templates.TemplateResponse("websockets_redis.html", {"request": request})
 
 
+#CONDOMINIA - JULIETH
+@app.get("/paso0", response_class=HTMLResponse)
+async def paso0(request: Request):
+    return templates.TemplateResponse("paso0.html", {"request": request})
+
 
 
 
