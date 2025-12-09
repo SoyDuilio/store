@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado de Software para Condominios en Perú 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .fecha-actualidad {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin: 1.5rem 0 1rem 0;
+        }
+        
+        .seccion {
+            margin-bottom: 2rem;
+        }
+        
+        .modelo-negocio {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .modelo-negocio h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .pros, .contras {
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        
+        .pros {
+            background: #d4edda;
+            border-left: 3px solid #28a745;
+        }
+        
+        .contras {
+            background: #f8d7da;
+            border-left: 3px solid #dc3545;
+        }
+        
+        .pros h5, .contras h5 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .pros ul, .contras ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .pros li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .contras li:before {
+            content: "✗ ";
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .competidor {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .competidor:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .competidor strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .problema {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .problema-critico {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .problema h4 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+        
+        .problema-critico h4 {
+            color: #721c24;
+        }
+        
+        .marco-legal {
+            background: #e7f3ff;
+            border: 2px solid #0066cc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .cita-legal {
+            background: white;
+            border-left: 3px solid #0066cc;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+        }
+        
+        .oportunidad {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .precio-tabla {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .precio-tabla th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .precio-tabla td {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .precio-tabla tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .glosario {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .termino {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #667eea;
+        }
+        
+        .termino dt {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .termino dd {
+            margin-left: 0;
+            color: #555;
+        }
+        
+        .alerta {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .alerta strong {
+            color: #856404;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-card .numero {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .referencias {
+            background: #f8f9fa;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: 8px;
+        }
+        
+        .referencias h3 {
+            color: #667eea;
+        }
+        
+        .referencias ol {
+            margin-left: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .referencias li {
+            margin: 0.5rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+        }
+        
+        .ejemplo {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .ejemplo strong {
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💼 Mercado de Software para Administración de Condominios en Perú</h1>
+            <p>Análisis Completo del Sector - Diciembre 2025</p>
+        </header>
+        
+        <div class="content">
+            <div class="fecha-actualidad">
+                <strong>📅 Información actualizada al:</strong> Martes 9 de Diciembre de 2025<br>
+                <strong>🎯 Objetivo:</strong> Este documento te ayudará a entender cómo funciona el mercado de software para condominios, qué opciones existen, qué problemas resuelven y qué oportunidades hay en el sector.
+            </div>
+            
+            <!-- INTRODUCCIÓN -->
+            <div class="seccion">
+                <h2>1. 🏢 Entendiendo el Contexto: ¿Por qué los condominios necesitan software?</h2>
+                
+                <p>En pocas palabras: <strong>administrar un condominio sin software es como llevar la contabilidad de una empresa en cuadernos</strong>. Funciona, pero es lento, propenso a errores y genera desconfianza.</p>
+                
+                <p>Los condominios modernos enfrentan desafíos que van mucho más allá de "cobrar la cuota del mes":</p>
+                
+                <ul style="margin: 1rem 0; padding-left: 2rem;">
+                    <li><strong>Morosidad:</strong> Vecinos que no pagan a tiempo</li>
+                    <li><strong>Transparencia:</strong> Propietarios que quieren saber en qué se gasta su dinero</li>
+                    <li><strong>Seguridad:</strong> Control de quién entra y sale del edificio</li>
+                    <li><strong>Comunicación:</strong> Mantener informados a 50+ propietarios sin que se pierdan mensajes</li>
+                    <li><strong>Cumplimiento legal:</strong> Nuevas leyes peruanas que exigen registros formales</li>
+                </ul>
+                
+                <div class="ejemplo">
+                    <strong>💡 Ejemplo Real:</strong> Un condominio de 68 departamentos como el que administras recibe aproximadamente:
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>68 pagos mensuales a gestionar</li>
+                        <li>200+ visitas al mes a registrar</li>
+                        <li>Decenas de comunicados a enviar</li>
+                        <li>Múltiples reservas de áreas comunes</li>
+                        <li>Reportes financieros mensuales para la junta</li>
+                    </ul>
+                    Hacer todo esto "a mano" consume 20-30 horas semanales. Con software: 5-8 horas.
+                </div>
+            </div>
+            
+            <!-- MODELOS DE NEGOCIO -->
+            <div class="seccion">
+                <h2>2. 💰 ¿Cómo se Vende el Software? Los Modelos de Negocio</h2>
+                
+                <p>Existen básicamente dos formas en que las empresas venden software para condominios:</p>
+                
+                <div class="modelo-negocio">
+                    <h4>🌐 SAAS - Software como Servicio (Software as a Service)</h4>
+                    <p><strong>¿Qué es?</strong> Piensa en Netflix: pagas una mensualidad y usas el servicio. Si dejas de pagar, pierdes el acceso.</p>
+                    
+                    <p><strong>¿Cómo funciona?</strong> Pagas una cuota mensual (ejemplo: S/. 80/mes) y usas el software desde cualquier navegador o app. Todo está en "la nube" (servidores en internet).</p>
+                    
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h5>✅ Ventajas</h5>
+                            <ul>
+                                <li>No necesitas comprar nada de entrada (sin inversión inicial)</li>
+                                <li>Actualizaciones automáticas y gratis</li>
+                                <li>Acceso desde cualquier lugar (celular, computadora, tablet)</li>
+                                <li>Soporte técnico incluido</li>
+                                <li>Si no te gusta, cancelas y listo</li>
+                            </ul>
+                        </div>
+                        <div class="contras">
+                            <h5>❌ Desventajas</h5>
+                            <ul>
+                                <li>Pagas para siempre (costo recurrente)</li>
+                                <li>Dependes del proveedor</li>
+                                <li>Si cierran, pierdes el servicio</li>
+                                <li>A largo plazo puede salir más caro</li>
+                                <li>Necesitas internet para usarlo</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="ejemplo">
+                        <strong>💡 Ejemplo de precios reales:</strong> Para un condominio de 68 departamentos:
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            <li>Plan básico: S/. 80-120/mes</li>
+                            <li>Plan completo: S/. 150-200/mes</li>
+                            <li>En 3 años: S/. 2,880 - S/. 7,200 total</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="modelo-negocio">
+                    <h4>💿 Software Propio (Licencia Perpetua)</h4>
+                    <p><strong>¿Qué es?</strong> Piensa en comprar una película en DVD: pagas una sola vez y es tuyo para siempre.</p>
+                    
+                    <p><strong>¿Cómo funciona?</strong> Pagas un monto único (ejemplo: S/. 5,000) y el software es tuyo. Lo instalas en tu computadora y lo usas cuanto quieras.</p>
+                    
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h5>✅ Ventajas</h5>
+                            <ul>
+                                <li>Pagas una sola vez</li>
+                                <li>Control total del software</li>
+                                <li>No dependes de internet</li>
+                                <li>A largo plazo puede ser más barato</li>
+                                <li>Tus datos están en tu computadora</li>
+                            </ul>
+                        </div>
+                        <div class="contras">
+                            <h5>❌ Desventajas</h5>
+                            <ul>
+                                <li>Inversión inicial alta</li>
+                                <li>Actualizaciones suelen costar extra</li>
+                                <li>Tú te encargas del mantenimiento</li>
+                                <li>Solo funciona en esa computadora</li>
+                                <li>Puede quedar obsoleto</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alerta">
+                    <strong>📊 Dato importante:</strong> Según la investigación de mercado, el 90% de los software nuevos para condominios usan el modelo SAAS porque es más accesible para administradores independientes y empresas pequeñas.
+                </div>
+                
+                <h3>💵 Variaciones de Precios en SAAS</h3>
+                
+                <p>Dentro del modelo SAAS, las empresas cobran de diferentes formas:</p>
+                
+                <table class="precio-tabla">
+                    <thead>
+                        <tr>
+                            <th>Modelo de Cobro</th>
+                            <th>Descripción</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Por Unidades</strong></td>
+                            <td>Pagas según el número de departamentos que administres</td>
+                            <td>S/. 1.50 por depto/mes<br>68 deptos = S/. 102/mes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Por Niveles</strong></td>
+                            <td>Precios escalonados según el tamaño</td>
+                            <td>1-50 deptos: S/. 79/mes<br>51-100 deptos: S/. 129/mes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Por Funcionalidades</strong></td>
+                            <td>Básico + módulos adicionales que pagas extra</td>
+                            <td>Base S/. 60 + Seguridad S/. 30<br>+ WhatsApp S/. 20 = S/. 110/mes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Freemium</strong></td>
+                            <td>Gratis con funciones limitadas, pagas por las avanzadas</td>
+                            <td>Gratis hasta 20 deptos<br>Premium S/. 99/mes sin límite</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- COMPETENCIA -->
+            <div class="seccion">
+                <h2>3. 🏆 ¿Quién ya Vende Software en Perú? La Competencia</h2>
+                
+                <p>El mercado peruano ya tiene varios jugadores. Algunos son 100% peruanos, otros son empresas internacionales. Aquí están los principales:</p>
+                
+                <h3>🇵🇪 Software Peruano</h3>
+                
+                <div class="competidor">
+                    <strong>1. Condominium.pe</strong>
+                    <p>🌐 www.condominium.pe | 📍 Santiago de Surco, Lima</p>
+                    <p><strong>Destacan por:</strong> Transparencia en la gestión. Afirman que reducen la morosidad hasta en 90%.</p>
+                    <p><strong>Funcionalidades clave:</strong> Recibos automáticos, reserva de áreas comunes, agenda de trabajos de mantenimiento, pizarra de mensajes.</p>
+                </div>
+                
+                <div class="competidor">
+                    <strong>2. Aedificium.pe</strong>
+                    <p>🌐 www.aedificium.pe | 📍 Av. Javier Prado Oeste, Lima</p>
+                    <p><strong>Destacan por:</strong> Prometen reducir 40% del tiempo en gestiones administrativas.</p>
+                    <p><strong>Funcionalidades clave:</strong> Pago Multibanco (pagas desde tu banco online), votaciones en línea, control de deliverys con foto, lectura automática de medidores.</p>
+                </div>
+                
+                <div class="competidor">
+                    <strong>3. Edificia.pe</strong>
+                    <p>🌐 www.edificia.pe</p>
+                    <p><strong>Destacan por:</strong> Asistente virtual que "lleva el sistema por ti".</p>
+                    <p><strong>Funcionalidades clave:</strong> Emisión de recibos, videoconferencias integradas, códigos QR para invitados, integración con bancos para cobranza automática.</p>
+                </div>
+                
+                <div class="competidor">
+                    <strong>4. AdminProp</strong>
+                    <p><strong>Destacan por:</strong> Tecnología moderna e interfaz intuitiva.</p>
+                </div>
+                
+                <div class="competidor">
+                    <strong>5. Mi Casita</strong>
+                    <p><strong>Destacan por:</strong> Integran seguridad de conjuntos + administración en una sola app.</p>
+                </div>
+                
+                <div class="competidor">
+                    <strong>6. Vecinos360</strong>
+                    <p>🌐 www.vecinos360.com</p>
+                    <p><strong>Destacan por:</strong> Transparencia económica y comunicación vecinal.</p>
+                </div>
+                
+                <h3>🌎 Software Internacional (con presencia en Perú/Latinoamérica)</h3>
+                
+                <div class="competidor">
+                    <strong>7. EdiPro</strong>
+                    <p>🌐 www.edipro.app | 🌎 Activo en varios países de Latinoamérica</p>
+                    <p><strong>Destacan por:</strong> Solución completa con 3 productos: plataforma para administradores, app móvil para porteros, app móvil para residentes.</p>
+                    <p><strong>Funcionalidades clave:</strong> Digitalización completa, control de seguridad en tiempo real, informes automáticos.</p>
+                </div>
+                
+                <div class="competidor">
+                    <strong>8. ComunidadFeliz</strong>
+                    <p>🌎 Usado en Chile, México, llegó a Perú en 2022</p>
+                    <p><strong>Destacan por:</strong> Enfrentar la delincuencia. Código QR para visitantes, reporte en tiempo real de incidentes.</p>
+                    <p><strong>Dato:</strong> Usado por 3,500 condominios en 10 países de América Latina.</p>
+                </div>
+                
+                <div class="competidor">
+                    <strong>9. Residentia (México)</strong>
+                    <p>🌐 www.residentia.net | 🇲🇽 Software mexicano verificado</p>
+                    <p><strong>Destacan por:</strong> Control de accesos con QR, precios transparentes por número de casas/departamentos.</p>
+                    <p><strong>Dato de precios:</strong> Publican su tabla de precios abiertamente - desde S/. 60/mes aproximadamente.</p>
+                </div>
+                
+                <div class="alerta">
+                    <strong>🔍 Observación clave:</strong> La mayoría de estos software ofrecen funcionalidades similares (cobros, comunicación, reportes). Los diferenciadores están en: <strong>seguridad integrada</strong>, <strong>facilidad de uso</strong>, <strong>integración con bancos peruanos</strong> y <strong>cumplimiento de leyes locales</strong>.
+                </div>
+            </div>
+            
+            <!-- PROBLEMAS DEL SECTOR -->
+            <div class="seccion">
+                <h2>4. 😰 ¿Qué Problemas Reales Enfrentan los Condominios? (Los Pain Points)</h2>
+                
+                <p>Para que un negocio de software funcione, necesita resolver problemas reales. Estos son los dolores de cabeza que viven día a día los administradores y propietarios:</p>
+                
+                <h3>🔴 Para los Administradores</h3>
+                
+                <div class="problema">
+                    <h4>1. 💸 MOROSIDAD (El Problema #1)</h4>
+                    <p><strong>La realidad:</strong> Los vecinos no pagan a tiempo, y eso afecta el mantenimiento de todo el edificio.</p>
+                    <p><strong>¿Por qué pasa?</strong></p>
+                    <ul style="margin: 0.5rem 0; padding-left: 2rem;">
+                        <li>Los balances financieros no son claros (no entienden en qué se gasta)</li>
+                        <li>No reciben recordatorios a tiempo</li>
+                        <li>Es difícil pagar (tienen que ir al banco, hacer transferencias manualmente)</li>
+                        <li>Desconfianza en la administración</li>
+                        <li>Simplemente "se olvidan"</li>
+                    </ul>
+                    <p><strong>Impacto:</strong> Un condominio con 30% de morosidad no puede hacer mantenimientos urgentes, tiene que pedir préstamos o cuotas extraordinarias (lo que genera más malestar).</p>
+                </div>
+                
+                <div class="problema">
+                    <h4>2. 📊 Falta de Transparencia</h4>
+                    <p><strong>La realidad:</strong> Los propietarios no confían en la administración porque no ven claramente a dónde va su dinero.</p>
+                    <p><strong>¿Qué quieren los propietarios?</strong></p>
+                    <ul style="margin: 0.5rem 0; padding-left: 2rem;">
+                        <li>Ver sus estados de cuenta en tiempo real</li>
+                        <li>Entender cada gasto del condominio</li>
+                        <li>Acceder a reportes financieros fácilmente</li>
+                        <li>Recibir evidencias (fotos, facturas) de los trabajos realizados</li>
+                    </ul>
+                    <p><strong>Impacto:</strong> Genera desconfianza, conflictos en asambleas, resistencia a pagar cuotas extras, y hace difícil implementar mejoras.</p>
+                </div>
+                
+                <div class="problema">
+                    <h4>3. 😤 Conflictos entre Vecinos</h4>
+                    <p><strong>La realidad:</strong> Peleas por el uso de áreas comunes, ruidos molestos, mascotas, estacionamientos...</p>
+                    <p><strong>Causas comunes:</strong></p>
+                    <ul style="margin: 0.5rem 0; padding-left: 2rem;">
+                        <li>Normas de convivencia no están claras</li>
+                        <li>No hay un sistema justo para reservar áreas comunes</li>
+                        <li>Algunos vecinos no cumplen las reglas y no hay consecuencias</li>
+                        <li>Chismes y malos entendidos por falta de comunicación oficial</li>
+                    </ul>
+                    <p><strong>Impacto:</strong> El administrador pierde MUCHO tiempo mediando conflictos en lugar de enfocarse en la gestión.</p>
+                </div>
+                
+                <div class="problema">
+                    <h4>4. 📝 Cumplimiento Legal</h4>
+                    <p><strong>La realidad:</strong> El Perú tiene leyes específicas para condominios que muchos no cumplen por desconocimiento o porque es complicado.</p>
+                    <p><strong>¿Qué exige la ley?</strong> (ver sección de Marco Legal más abajo)</p>
+                    <ul style="margin: 0.5rem 0; padding-left: 2rem;">
+                        <li>Reglamento interno registrado en SUNARP</li>
+                        <li>Reportar deudores morosos a la Central de Riesgos de la SBS</li>
+                        <li>Actas formales de asambleas</li>
+                        <li>Registro de la empresa administradora en el Ministerio de Vivienda</li>
+                    </ul>
+                    <p><strong>Impacto:</strong> Sin cumplir esto, el condominio no puede exigir pagos legalmente, no puede sancionar a morosos, y la administración puede tener problemas legales.</p>
+                </div>
+                
+                <div class="problema">
+                    <h4>5. 🔧 Mantenimiento Inadecuado</h4>
+                    <p><strong>La realidad:</strong> Ascensores rotos, jardines descuidados, fugas que no se reparan...</p>
+                    <p><strong>¿Por qué pasa?</strong></p>
+                    <ul style="margin: 0.5rem 0; padding-left: 2rem;">
+                        <li>No hay presupuesto (por la morosidad)</li>
+                        <li>No se planifican mantenimientos preventivos</li>
+                        <li>No hay un sistema para reportar y hacer seguimiento a problemas</li>
+                        <li>Se contrata al proveedor más barato (no el mejor)</li>
+                    </ul>
+                    <p><strong>Impacto:</strong> Baja la calidad de vida, disminuye el valor de las propiedades, y eventualmente todo cuesta más por falta de prevención.</p>
+                </div>
+                
+                <div class="problema">
+                    <h4>6. 📱 Comunicación Caótica</h4>
+                    <p><strong>La realidad:</strong> Grupos de WhatsApp con 100+ mensajes diarios, información importante perdida entre chismes, convocatorias que no llegan a todos...</p>
+                    <p><strong>Consecuencias:</strong></p>
+                    <ul style="margin: 0.5rem 0; padding-left: 2rem;">
+                        <li>Los vecinos se pierden avisos importantes</li>
+                        <li>No hay registro oficial de comunicaciones</li>
+                        <li>Imposible hacer votaciones formales</li>
+                        <li>Los vecinos que no están en WhatsApp quedan fuera</li>
+                    </ul>
+                </div>
+                
+                <h3>🔴 Para los Propietarios/Inquilinos</h3>
+                
+                <div class="problema problema-critico">
+                    <h4>🚨 1. INSEGURIDAD Y DELINCUENCIA (CRÍTICO)</h4>
+                    <p><strong>La realidad:</strong> Este es el problema que más preocupa a las familias peruanas en 2025.</p>
+                    <p><strong>Situaciones reales:</strong></p>
+                    <ul style="margin: 0.5rem 0; padding-left: 2rem;">
+                        <li><strong>Robos dentro del condominio:</strong> Delincuentes entran haciéndose pasar por delivery, técnicos o visitas</li>
+                        <li><strong>Marcaje:</strong> Observan horarios y rutinas de los residentes</li>
+                        <li><strong>Control de acceso débil:</strong> El portero deja entrar a cualquiera "que se ve bien"</li>
+                        <li><strong>Sin registro de visitas:</strong> No hay forma de saber quién entró y a qué hora</li>
+                        <li><strong>Cámaras sin mantenimiento:</strong> Cuando pasa algo, las grabaciones no sirven</li>
+                        <li><strong>Falta de capacitación:</strong> El personal de seguridad no sabe cómo actuar</li>
+                    </ul>
+                    
+                    <div class="ejemplo">
+                        <strong>📰 Casos reales documentados:</strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            <li><strong>Chile (La Tercera, 2020):</strong> Banda de 5 delincuentes ingresó a condominio con cerco eléctrico y guardias, maniataron a una familia completa</li>
+                            <li><strong>Perú (Business Empresarial, 2022):</strong> Artículo destaca que la delincuencia en condominios es un problema creciente que debe enfrentarse con tecnología</li>
+                            <li><strong>Prosegur Perú (2024):</strong> Reporta que tras la pandemia, los delincuentes están más agresivos y los condominios son objetivos preferidos</li>
+                        </ul>
+                    </div>
+                    
+                    <p><strong>¿Qué necesitan los condominios?</strong></p>
+                    <ul style="margin: 0.5rem 0; padding-left: 2rem;">
+                        <li>Sistema digital de registro de visitas (con foto, DNI, unidad que visitan)</li>
+                        <li>Códigos QR que los residentes generen para sus visitas esperadas</li>
+                        <li>Alertas automáticas a administración en caso de incidentes</li>
+                        <li>Integración con cámaras de seguridad</li>
+                        <li>Protocolos de emergencia claros y accesibles</li>
+                        <li>Botones de pánico que alerten a todos simultáneamente</li>
+                    </ul>
+                </div>
+                
+                <div class="problema">
+                    <h4>2. 🤷 Falta de Información</h4>
+                    <p><strong>La realidad:</strong> Los propietarios no saben cuánto deben, cuándo vence su cuota, en qué se gastó el dinero del mes pasado...</p>
+                    <p><strong>Lo que quieren:</strong></p>
+                    <ul style="margin: 0.5rem 0; padding-left: 2rem;">
+                        <li>Ver su estado de cuenta 24/7 desde el celular</li>
+                        <li>Recibir su recibo automáticamente por email</li>
+                        <li>Consultar el historial de gastos del condominio</li>
+                        <li>Saber si su pago ya fue registrado</li>
+                    </ul>
+                </div>
+                
+                <div class="problema">
+                    <h4>3. 📅 Reservar Áreas Comunes es un Lío</h4>
+                    <p><strong>La realidad:</strong> Para reservar el salón de eventos, tienen que llamar al administrador, anotar en un cuaderno, esperar confirmación...</p>
+                    <p><strong>Problemas:</strong></p>
+                    <ul style="margin: 0.5rem 0; padding-left: 2rem;">
+                        <li>Doble reserva del mismo espacio</li>
+                        <li>No se respetan los horarios</li>
+                        <li>Algunos vecinos "siempre" consiguen las mejores fechas</li>
+                        <li>No hay transparencia en quién reservó qué</li>
+                    </ul>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-card">
+                        <span class="numero">30-40%</span>
+                        <span>Promedio de morosidad en condominios sin software</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="numero">20-30h</span>
+                        <span>Horas semanales que gasta un administrador sin software</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="numero">85%</span>
+                        <span>De conflictos vecinales por mala comunicación</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MARCO LEGAL -->
+            <div class="seccion">
+                <h2>5. ⚖️ Marco Legal en Perú: Lo que la Ley Exige</h2>
+                
+                <p>Esto es MUY importante porque <strong>en 2023 cambió la ley que rige los condominios en Perú</strong>. Si vas a trabajar en este sector, necesitas saber esto:</p>
+                
+                <div class="marco-legal">
+                    <h3>📜 Decreto Legislativo N° 1568 - Régimen de la Propiedad Horizontal</h3>
+                    <p><strong>Publicado:</strong> Mayo 2023 | <strong>Vigente desde:</strong> Enero 2024</p>
+                    <p><strong>¿Qué es?</strong> La ley que regula cómo funcionan los edificios y condominios donde hay departamentos de diferentes dueños que comparten espacios comunes.</p>
+                    
+                    <h4>🎯 Cambios Importantes que Impactan al Software:</h4>
+                    
+                    <div class="cita-legal">
+                        <strong>1. Registro de Deudores de Cuotas</strong>
+                        <p>Artículo 31 del D.L. 1568: Se crea el Registro de Deudores de cuotas de mantenimiento, que reporta información a la SBS (Superintendencia de Banca, Seguros y AFP) para su anotación en la Central de Riesgos.</p>
+                        <p><strong>En español simple:</strong> Si no pagas tu cuota de mantenimiento, ahora SÍ te van a reportar como moroso (igual que si no pagas un préstamo del banco). Esto afectará tu historial crediticio.</p>
+                    </div>
+                    
+                    <div class="cita-legal">
+                        <strong>2. Registro de Administradores</strong>
+                        <p>Artículo 32 del D.L. 1568: Se crea el Registro de Administradores de edificaciones sujetas al régimen de propiedad horizontal.</p>
+                        <p><strong>En español simple:</strong> Las empresas que administran condominios deben registrarse oficialmente en el Ministerio de Vivienda. Ya no puede ser "cualquiera".</p>
+                    </div>
+                    
+                    <div class="cita-legal">
+                        <strong>3. Cuotas Impagas = Título Ejecutivo</strong>
+                        <p>Las cuotas de mantenimiento impagas continúan siendo títulos ejecutivos, por lo que podrán ser puestas a cobro en un Proceso Único de Ejecución donde se puede solicitar la inscripción de una carga en la partida registral.</p>
+                        <p><strong>En español simple:</strong> Si alguien no paga, el condominio puede demandarlo directamente (sin juicio largo) y poner una "carga" en su propiedad (como una hipoteca). Esto dificulta que pueda vender su departamento.</p>
+                    </div>
+                    
+                    <div class="cita-legal">
+                        <strong>4. Reglamento Interno Obligatorio</strong>
+                        <p>Debe inscribirse en SUNARP (Superintendencia Nacional de Registros Públicos) mediante Escritura Pública.</p>
+                        <p><strong>En español simple:</strong> Cada condominio DEBE tener reglas escritas formalmente y registradas. No vale "acuerdos de palabra".</p>
+                    </div>
+                    
+                    <div class="cita-legal">
+                        <strong>5. Mayorías para Decisiones</strong>
+                        <p>Artículo 14: Para desafectar o transferir bienes comunes se requiere el voto del 75% de los propietarios (salvo que el Reglamento exija más).</p>
+                        <p><strong>En español simple:</strong> Para decisiones importantes (como vender un espacio común o hacer obras grandes), se necesita que el 75% de propietarios esté de acuerdo.</p>
+                    </div>
+                </div>
+                
+                <div class="oportunidad">
+                    <strong>💡 OPORTUNIDAD:</strong> Un software que ayude a los condominios a cumplir con estas nuevas exigencias legales tiene una ventaja competitiva enorme. La mayoría de software actual NO incluye:
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>Generación automática del reglamento interno</li>
+                        <li>Integración con SUNARP para reportes</li>
+                        <li>Sistema de reportes a la SBS de deudores</li>
+                        <li>Gestión formal de actas con las mayorías requeridas</li>
+                        <li>Templates de documentos legales peruanos</li>
+                    </ul>
+                </div>
+                
+                <h3>📋 Otras Normas Relevantes</h3>
+                
+                <ul style="margin: 1rem 0; padding-left: 2rem;">
+                    <li><strong>Ley N° 27157:</strong> Ley de Regularización de Edificaciones (ahora parcialmente derogada por el D.L. 1568)</li>
+                    <li><strong>Decreto Supremo 035-2006-VIVIENDA:</strong> Texto Único Ordenado del Reglamento de la Ley N° 27157</li>
+                    <li><strong>Reglamento del D.L. 1568:</strong> Publicado en julio 2024, detalla los procedimientos específicos</li>
+                </ul>
+            </div>
+            
+            <!-- PRECIOS -->
+            <div class="seccion">
+                <h2>6. 💵 ¿Cuánto Cuesta el Software? Análisis de Precios</h2>
+                
+                <p>Los precios varían mucho según el proveedor, funcionalidades y número de departamentos. Aquí un panorama realista:</p>
+                
+                <h3>🇵🇪 Rango de Precios en el Mercado Peruano</h3>
+                
+                <table class="precio-tabla">
+                    <thead>
+                        <tr>
+                            <th>Tamaño del Condominio</th>
+                            <th>Plan Básico</th>
+                            <th>Plan Profesional</th>
+                            <th>Plan Premium</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1-30 departamentos</strong></td>
+                            <td>S/. 50-80/mes</td>
+                            <td>S/. 90-120/mes</td>
+                            <td>S/. 130-180/mes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>31-70 departamentos</strong><br>(como tu caso)</td>
+                            <td>S/. 80-120/mes</td>
+                            <td>S/. 130-180/mes</td>
+                            <td>S/. 200-250/mes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>71-150 departamentos</strong></td>
+                            <td>S/. 120-180/mes</td>
+                            <td>S/. 200-280/mes</td>
+                            <td>S/. 300-400/mes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>150+ departamentos</strong></td>
+                            <td>S/. 180-250/mes</td>
+                            <td>S/. 300-450/mes</td>
+                            <td>S/. 500-700/mes</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>📦 ¿Qué Incluye Cada Plan?</h3>
+                
+                <div class="modelo-negocio">
+                    <h4>📦 Plan BÁSICO (Entry Level)</h4>
+                    <ul style="padding-left: 2rem;">
+                        <li>Gestión de propietarios e inquilinos</li>
+                        <li>Emisión de recibos mensuales</li>
+                        <li>Registro de pagos</li>
+                        <li>Reportes financieros básicos</li>
+                        <li>Portal del residente (consulta solamente)</li>
+                        <li>Envío de emails automáticos</li>
+                        <li>Soporte por email</li>
+                    </ul>
+                </div>
+                
+                <div class="modelo-negocio">
+                    <h4>💼 Plan PROFESIONAL (Mid-Tier)</h4>
+                    <p>Todo lo del plan básico +</p>
+                    <ul style="padding-left: 2rem;">
+                        <li>Reserva de áreas comunes online</li>
+                        <li>Registro digital de visitas</li>
+                        <li>Comunicación avanzada (anuncios, encuestas, votaciones)</li>
+                        <li>Integración con bancos peruanos</li>
+                        <li>Gestión de proveedores</li>
+                        <li>Reportes personalizables</li>
+                        <li>App móvil</li>
+                        <li>Soporte telefónico</li>
+                    </ul>
+                </div>
+                
+                <div class="modelo-negocio">
+                    <h4>🏆 Plan PREMIUM (Enterprise)</h4>
+                    <p>Todo lo del plan profesional +</p>
+                    <ul style="padding-left: 2rem;">
+                        <li><strong>Módulo de seguridad</strong> (control de acceso con QR, alertas)</li>
+                        <li>Integración con cámaras de seguridad</li>
+                        <li>Generación de documentos legales (actas, reglamento)</li>
+                        <li>Integración SUNARP/SBS</li>
+                        <li>Multi-condominio (para administradoras)</li>
+                        <li>API para integraciones personalizadas</li>
+                        <li>Capacitación incluida</li>
+                        <li>Account manager dedicado</li>
+                    </ul>
+                </div>
+                
+                <div class="ejemplo">
+                    <strong>💰 Cálculo para un condominio de 68 departamentos:</strong>
+                    <table style="width: 100%; margin-top: 1rem;">
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 0.5rem;"><strong>Plan Básico (S/. 100/mes)</strong></td>
+                            <td style="padding: 0.5rem;">= S/. 1.47 por departamento/mes</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem;"><strong>Plan Profesional (S/. 150/mes)</strong></td>
+                            <td style="padding: 0.5rem;">= S/. 2.21 por departamento/mes</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 0.5rem;"><strong>Plan Premium (S/. 220/mes)</strong></td>
+                            <td style="padding: 0.5rem;">= S/. 3.24 por departamento/mes</td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 1rem;"><strong>Comparativa:</strong> Si cada departamento paga S/. 200/mes de cuota de mantenimiento, el software representaría entre 0.7% y 1.6% del presupuesto total.</p>
+                </div>
+                
+                <h3>🎁 Modelos Adicionales</h3>
+                
+                <div class="modelo-negocio">
+                    <h4>Freemium (Gratis con Limitaciones)</h4>
+                    <p>Algunos proveedores ofrecen:</p>
+                    <ul style="padding-left: 2rem;">
+                        <li><strong>Gratis hasta 15-20 departamentos</strong></li>
+                        <li>Funcionalidades básicas limitadas</li>
+                        <li>Branding del proveedor (su logo en tus documentos)</li>
+                        <li>Soporte limitado</li>
+                    </ul>
+                    <p><strong>Estrategia:</strong> Te enganchan gratis, cuando creces o necesitas más funciones, pagas.</p>
+                </div>
+                
+                <div class="modelo-negocio">
+                    <h4>Por Módulos</h4>
+                    <p>Base económica + añades lo que necesites:</p>
+                    <ul style="padding-left: 2rem;">
+                        <li>Base: S/. 60/mes</li>
+                        <li>+ Módulo Seguridad: S/. 30/mes</li>
+                        <li>+ Módulo Legal: S/. 20/mes</li>
+                        <li>+ WhatsApp Integration: S/. 15/mes</li>
+                        <li><strong>Total personalizado: S/. 125/mes</strong></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- OPORTUNIDADES -->
+            <div class="seccion">
+                <h2>7. 🚀 Oportunidades de Negocio Identificadas</h2>
+                
+                <p>Basándose en el análisis del mercado, estas son las oportunidades claras:</p>
+                
+                <div class="oportunidad">
+                    <h4>🎯 OPORTUNIDAD #1: Software con Seguridad Integrada</h4>
+                    <p><strong>Por qué es oportunidad:</strong></p>
+                    <ul style="padding-left: 2rem;">
+                        <li>La delincuencia es el problema #1 que preocupa a las familias</li>
+                        <li>La mayoría de software actual trata la seguridad como "adicional" o no la incluye</li>
+                        <li>Los propietarios están dispuestos a pagar MÁS por sentirse seguros</li>
+                    </ul>
+                    <p><strong>Funcionalidades diferenciadas:</strong></p>
+                    <ul style="padding-left: 2rem;">
+                        <li>Control de acceso con QR (cada residente genera códigos para sus visitas)</li>
+                        <li>Registro fotográfico de visitas</li>
+                        <li>Alertas en tiempo real</li>
+                        <li>Botón de pánico integrado</li>
+                        <li>Integración con cámaras de seguridad</li>
+                        <li>Protocolos de emergencia digitales</li>
+                    </ul>
+                </div>
+                
+                <div class="oportunidad">
+                    <h4>⚖️ OPORTUNIDAD #2: Cumplimiento Legal Peruano</h4>
+                    <p><strong>Por qué es oportunidad:</strong></p>
+                    <ul style="padding-left: 2rem;">
+                        <li>La nueva ley (D.L. 1568) entró en vigencia en 2024</li>
+                        <li>Muchos condominios NO cumplen aún</li>
+                        <li>Las sanciones por incumplimiento son reales</li>
+                        <li>Los administradores necesitan ayuda para cumplir</li>
+                    </ul>
+                    <p><strong>Funcionalidades necesarias:</strong></p>
+                    <ul style="padding-left: 2rem;">
+                        <li>Generación automática de reglamento interno</li>
+                        <li>Templates de actas formales</li>
+                        <li>Sistema de votaciones con registro de mayorías</li>
+                        <li>Reportes automáticos para SUNARP y SBS</li>
+                        <li>Seguimiento de deudores para reporte legal</li>
+                    </ul>
+                </div>
+                
+                <div class="oportunidad">
+                    <h4>💸 OPORTUNIDAD #3: Solución Anti-Morosidad</h4>
+                    <p><strong>Por qué es oportunidad:</strong></p>
+                    <ul style="padding-left: 2rem;">
+                        <li>30-40% de morosidad promedio afecta todos los condominios</li>
+                        <li>Reducir morosidad al 10% significa ahorro de miles de soles</li>
+                        <li>Los administradores pagarían por esto</li>
+                    </ul>
+                    <p><strong>Funcionalidades clave:</strong></p>
+                    <ul style="padding-left: 2rem;">
+                        <li>Múltiples métodos de pago (Yape, Plin, transferencia, tarjeta)</li>
+                        <li>Recordatorios automáticos antes del vencimiento</li>
+                        <li>Transparencia total de gastos (el propietario ve en qué se gasta)</li>
+                        <li>Portal del residente 24/7 con estado de cuenta</li>
+                        <li>Convenios de pago personalizados</li>
+                        <li>Gamificación (badges, beneficios por pago puntual)</li>
+                    </ul>
+                </div>
+                
+                <div class="oportunidad">
+                    <h4>📱 OPORTUNIDAD #4: PWA/App Offline</h4>
+                    <p><strong>Por qué es oportunidad:</strong></p>
+                    <ul style="padding-left: 2rem;">
+                        <li>En Perú, la conectividad puede ser irregular</li>
+                        <li>Los porteros/guardias están en garita sin wifi</li>
+                        <li>Necesitan registrar visitas aunque no haya internet</li>
+                    </ul>
+                    <p><strong>Ventaja técnica:</strong></p>
+                    <ul style="padding-left: 2rem;">
+                        <li>PWA (Progressive Web App) funciona offline</li>
+                        <li>Sincroniza cuando vuelve la conexión</li>
+                        <li>No necesita instalar desde Play Store</li>
+                        <li>Se actualiza automáticamente</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- GLOSARIO -->
+            <div class="glosario">
+                <h2>📚 Glosario de Términos Técnicos</h2>
+                
+                <div class="termino">
+                    <dt>API (Application Programming Interface)</dt>
+                    <dd>Es como un "conector" que permite que dos sistemas hablen entre sí. Ejemplo: el software del condominio se conecta con la API del banco para verificar pagos automáticamente.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>B2B (Business to Business)</dt>
+                    <dd>Negocios que venden a otros negocios (no al consumidor final). En este caso: vender software a administradoras de condominios o empresas inmobiliarias.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>Backend / Frontend</dt>
+                    <dd><strong>Frontend:</strong> La parte visual que ves (la pantalla, botones, formularios). <strong>Backend:</strong> La parte invisible que procesa la información (base de datos, cálculos, reglas de negocio).</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>Cloud / Nube</dt>
+                    <dd>En lugar de tener el software instalado en tu computadora, está en servidores de internet. Accedes desde cualquier lugar con internet. Es como usar Gmail en lugar de Outlook instalado.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>CRM (Customer Relationship Management)</dt>
+                    <dd>Sistema para gestionar la relación con clientes. En condominios: gestionar la relación con propietarios, inquilinos y proveedores.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>Dashboard</dt>
+                    <dd>Panel de control visual donde ves lo más importante de un vistazo (gráficos, números, alertas). Como el tablero de tu auto: velocidad, gasolina, temperatura.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>Freemium</dt>
+                    <dd>Modelo de negocio: gratis con funciones básicas + pago por funciones avanzadas. Ejemplo: Spotify gratis con anuncios vs. Spotify Premium sin anuncios.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>Gamificación</dt>
+                    <dd>Usar elementos de juegos (puntos, badges, niveles) para motivar comportamientos. Ejemplo: dar un badge de "Pagador Puntual" a quienes nunca se atrasan.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>MVP (Minimum Viable Product)</dt>
+                    <dd>Versión mínima funcional de un producto. Solo tiene lo esencial para validar si funciona, sin todos los "adornos". Ejemplo: el primer iPhone no tenía copy-paste ni apps, pero funcionaba como teléfono.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>Pain Point</dt>
+                    <dd>Problema o "dolor de cabeza" que sufre el cliente. Resolver pain points = crear valor. Ejemplo para condominios: "morosidad" es un pain point.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>PWA (Progressive Web App)</dt>
+                    <dd>Página web que se comporta como una app. Puedes instalarla en tu celular, funciona offline, recibe notificaciones. Ventaja: no necesitas Google Play/App Store.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>QR (Quick Response)</dt>
+                    <dd>Código de barras 2D que escaneas con tu celular. En condominios: el residente genera un QR, se lo manda a su visita, el guardia escanea y valida automáticamente.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>SAAS (Software as a Service)</dt>
+                    <dd>Software que usas pagando una mensualidad/anualidad (no lo compras). Está en la nube. Ejemplos: Netflix, Spotify, Gmail, Zoom.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>Stakeholder</dt>
+                    <dd>Persona o grupo que tiene interés en un proyecto. En condominios: propietarios, inquilinos, administrador, junta directiva, proveedores.</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>UX/UI (User Experience / User Interface)</dt>
+                    <dd><strong>UI:</strong> Cómo se ve (colores, botones, tipografía). <strong>UX:</strong> Qué tan fácil y agradable es usarlo. Ejemplo: Uber tiene buena UX (pedir taxi es facilísimo) y buena UI (se ve bonito).</dd>
+                </div>
+                
+                <div class="termino">
+                    <dt>Upsell / Cross-sell</dt>
+                    <dd><strong>Upsell:</strong> Vender una versión mejorada. <strong>Cross-sell:</strong> Vender productos complementarios. Ejemplo: cliente tiene plan básico (upsell: ofrecerle plan premium), (cross-sell: ofrecerle módulo de seguridad adicional).</dd>
+                </div>
+            </div>
+            
+            <!-- REFERENCIAS LEGALES -->
+            <div class="referencias">
+                <h3>📑 Referencias Legales y Normativas</h3>
+                
+                <ol>
+                    <li>
+                        <strong>Decreto Legislativo N° 1568 - Régimen de la Propiedad Horizontal</strong><br>
+                        Publicado: 28 de mayo de 2023 | El Peruano<br>
+                        Vigencia: 180 días después de publicación del reglamento (desde enero 2024)<br>
+                        <em>Fuente: busquedas.elperuano.pe/dispositivo/NL/2181939-6</em>
+                    </li>
+                    
+                    <li>
+                        <strong>Reglamento del Decreto Legislativo N° 1568</strong><br>
+                        Publicado: 13 de julio de 2024 | Decreto Supremo<br>
+                        <em>Detalla los procedimientos específicos de implementación</em>
+                    </li>
+                    
+                    <li>
+                        <strong>Ley N° 27157 - Ley de Regularización de Edificaciones</strong><br>
+                        <em>Parcialmente vigente (derogado Título III sobre propiedad exclusiva y común)</em>
+                    </li>
+                    
+                    <li>
+                        <strong>Decreto Supremo N° 035-2006-VIVIENDA</strong><br>
+                        Texto Único Ordenado del Reglamento de la Ley N° 27157<br>
+                        <em>Complementa aspectos no derogados de la Ley 27157</em>
+                    </li>
+                    
+                    <li>
+                        <strong>Ley N° 31696</strong><br>
+                        Ley que delega facultades legislativas al Poder Ejecutivo<br>
+                        <em>Otorgó la potestad de crear el D.L. 1568</em>
+                    </li>
+                </ol>
+                
+                <h4 style="margin-top: 2rem;">🔗 Enlaces Útiles:</h4>
+                <ul>
+                    <li><strong>SUNARP</strong> (Superintendencia Nacional de Registros Públicos): www.sunarp.gob.pe</li>
+                    <li><strong>SBS</strong> (Superintendencia de Banca, Seguros y AFP): www.sbs.gob.pe</li>
+                    <li><strong>Ministerio de Vivienda</strong>: www.gob.pe/vivienda</li>
+                    <li><strong>El Peruano</strong> (Normas Legales): busquedas.elperuano.pe</li>
+                </ul>
+            </div>
+            
+            <!-- CONCLUSIÓN -->
+            <div class="seccion">
+                <h2>8. 🎯 Conclusiones y Próximos Pasos</h2>
+                
+                <div class="oportunidad">
+                    <h4>✅ Lo que Sabemos del Mercado:</h4>
+                    <ul style="padding-left: 2rem;">
+                        <li>El mercado existe y está creciendo (Lima crece verticalmente)</li>
+                        <li>Hay competencia, pero ninguna domina completamente</li>
+                        <li>Los problemas son reales y urgentes (morosidad, seguridad, cumplimiento legal)</li>
+                        <li>Las personas ESTÁN pagando por software (el mercado está validado)</li>
+                        <li>Hay oportunidades de diferenciación claras</li>
+                    </ul>
+                </div>
+                
+                <div class="problema">
+                    <h4>⚠️ Retos a Considerar:</h4>
+                    <ul style="padding-left: 2rem;">
+                        <li>Los administradores "tradicionales" son resistentes al cambio</li>
+                        <li>Muchos condominios operan informalmente (sin facturación, registros, etc.)</li>
+                        <li>El ciclo de venta puede ser largo (3-6 meses de demostración)</li>
+                        <li>Se necesita credibilidad (casos de éxito, testimonios)</li>
+                        <li>La implementación requiere capacitación (cambio de hábitos)</li>
+                    </ul>
+                </div>
+                
+                <div class="ejemplo">
+                    <h4>💡 Si Decides Emprender en Este Sector:</h4>
+                    <p><strong>Pasos Recomendados:</strong></p>
+                    <ol style="padding-left: 2rem;">
+                        <li><strong>Validar con usuarios reales:</strong> Entrevistar a 10+ administradores para confirmar problemas y disposición a pagar</li>
+                        <li><strong>Definir MVP:</strong> ¿Cuál es la versión mínima que resuelve el problema #1? (probablemente: cobros + transparencia + comunicación básica)</li>
+                        <li><strong>Buscar socio técnico:</strong> Si no programas, necesitas un desarrollador fullstack</li>
+                        <li><strong>Crear pricing:</strong> Basado en competencia y valor entregado</li>
+                        <li><strong>Beta testing:</strong> Ofrecer gratis/descuento a primeros 3-5 clientes a cambio de feedback</li>
+                        <li><strong>Construir casos de éxito:</strong> Documentar resultados (% reducción de morosidad, tiempo ahorrado, etc.)</li>
+                        <li><strong>Escalar:</strong> Con casos de éxito, vender a administradores similares</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; text-align: center; margin-top: 2rem; border-radius: 8px;">
+                <h3 style="color: white; border: none; margin: 0;">📞 ¿Preguntas?</h3>
+                <p style="margin: 1rem 0;">Este documento es un punto de partida. El mercado de software para condominios es complejo pero lleno de oportunidades para quien entienda los problemas reales de los administradores y propietarios.</p>
+                <p style="margin: 0;"><strong>Documento actualizado: Diciembre 9, 2025</strong></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
