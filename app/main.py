@@ -564,7 +564,15 @@ async def paso0(request: Request):
     return templates.TemplateResponse("paso0.html", {"request": request})
 
 
+#COLEGIO CONTADORES LORETO - JORGE
+@app.get("/decanojorge", response_class=HTMLResponse)
+async def decanojorge(request: Request):
+    return templates.TemplateResponse("decanojorge.html", {"request": request})
 
+#COLEGIO CONTADORES LORETO - JORGE
+@app.get("/saascolegios", response_class=HTMLResponse)
+async def saascolegios(request: Request):
+    return templates.TemplateResponse("saascolegios.html", {"request": request})
 
 
 
