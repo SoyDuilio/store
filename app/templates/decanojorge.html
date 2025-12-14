@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestión Digital para Colegios Profesionales | Solución Moderna</title>
+    <title>Sistema de Gestión Digital SAAS - Colegio de Contadores Público de Loreto</title>
     <style>
         * {
             margin: 0;
@@ -11,696 +11,1473 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f5f7fa;
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #10b981;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --accent: #f59e0b;
         }
         
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #e2e8f0;
+            background: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
+            padding: 80px 20px 100px;
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 0%, rgba(37, 99, 235, 0.1) 100%);
+            pointer-events: none;
+        }
+        
+        header h1 {
+            font-size: clamp(1.8em, 5vw, 3em);
+            margin-bottom: 20px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header h1 span {
+            color: var(--primary);
+        }
+        
+        header p {
+            font-size: clamp(1em, 3vw, 1.3em);
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            margin-top: 25px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: var(--dark-light);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+        }
+        
+        .nav-tab {
+            background: transparent;
+            color: var(--gray);
+            border: 1px solid var(--gray);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .nav-tab:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .nav-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
         
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-        
-        header p {
-            font-size: 1.3em;
-            opacity: 0.95;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            padding: 8px 20px;
-            border-radius: 20px;
-            margin-top: 20px;
-            font-size: 0.9em;
-            backdrop-filter: blur(10px);
-        }
-        
-        .hero-section {
-            background: white;
-            padding: 60px 20px;
-            margin: -40px 20px 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 10;
-        }
-        
-        .hero-section h2 {
-            color: #667eea;
-            font-size: 2.2em;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .hero-section p {
-            text-align: center;
-            font-size: 1.2em;
-            color: #666;
-            max-width: 900px;
-            margin: 0 auto 40px;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 40px 20px;
-        }
-        
-        .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-left: 4px solid #667eea;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(102,126,234,0.2);
-        }
-        
-        .feature-card h3 {
-            color: #667eea;
-            font-size: 1.4em;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .feature-card .icon {
-            font-size: 2em;
-            margin-right: 15px;
-        }
-        
-        .feature-card p {
-            color: #666;
-            line-height: 1.7;
-        }
-        
-        .feature-card ul {
-            margin-top: 15px;
-            padding-left: 20px;
-            color: #555;
-        }
-        
-        .feature-card ul li {
-            margin-bottom: 8px;
-        }
-        
+        /* Sections */
         .section {
             padding: 60px 20px;
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .section h2 {
-            text-align: center;
-            color: #2d3748;
-            font-size: 2.2em;
+            font-size: clamp(1.8em, 4vw, 2.5em);
             margin-bottom: 20px;
-        }
-        
-        .section-subtitle {
-            text-align: center;
-            color: #666;
-            font-size: 1.2em;
-            max-width: 800px;
-            margin: 0 auto 50px;
-        }
-        
-        .tech-stack {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 60px 20px;
+            font-weight: 700;
+        }
+        
+        .section h3 {
+            font-size: clamp(1.3em, 3vw, 1.8em);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .section p, .section li {
+            color: #cbd5e1;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+        
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
             margin: 40px 0;
         }
         
-        .tech-stack h2 {
+        .card {
+            background: var(--dark-light);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(100, 116, 139, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+        }
+        
+        .card h4 {
             color: white;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
         
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
+        .card p {
+            font-size: 1em;
         }
         
-        .tech-item {
-            background: rgba(255,255,255,0.15);
-            padding: 25px;
-            border-radius: 10px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
+        .card ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
         }
         
-        .tech-item h4 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-        
-        .tech-item p {
+        .card ul li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
             font-size: 0.95em;
-            opacity: 0.9;
         }
         
-        .comparison-table {
-            background: white;
+        .card ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        /* Comparison Table */
+        .comparison {
+            background: var(--dark-light);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             margin: 40px 0;
+            border: 1px solid rgba(100, 116, 139, 0.3);
         }
         
-        table {
+        .comparison table {
             width: 100%;
             border-collapse: collapse;
         }
         
-        th {
-            background: #667eea;
+        .comparison th {
+            background: var(--primary);
             color: white;
             padding: 20px;
             text-align: left;
             font-weight: 600;
+            font-size: 1.1em;
         }
         
-        td {
+        .comparison td {
             padding: 18px 20px;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+            color: #cbd5e1;
         }
         
-        tr:hover {
-            background: #f7fafc;
+        .comparison tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison tr:hover {
+            background: rgba(37, 99, 235, 0.05);
         }
         
         .check {
-            color: #48bb78;
+            color: var(--secondary);
             font-weight: bold;
             font-size: 1.2em;
         }
         
-        .highlight {
-            background: #fef5e7;
-            font-weight: 600;
-            color: #d68910;
+        .cross {
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 1.2em;
         }
         
-        .cta-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-            margin-top: 60px;
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
         }
         
-        .cta-section h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            color: white;
-        }
-        
-        .cta-section p {
+        .highlight-box h4 {
+            color: var(--primary);
             font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .warning-box h4 {
+            color: var(--accent);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        /* Pricing */
+        .pricing-card {
+            background: linear-gradient(135deg, var(--dark-light) 0%, var(--dark) 100%);
+            padding: 40px;
+            border-radius: 12px;
+            border: 2px solid var(--primary);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card::before {
+            content: 'RECOMENDADO PARA USTED';
+            position: absolute;
+            top: 15px;
+            right: -35px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 50px;
+            transform: rotate(45deg);
+            font-size: 0.75em;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .pricing-card h3 {
+            color: white;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-card .subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        .pricing-card .price {
+            font-size: 3.5em;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+            line-height: 1;
+        }
+        
+        .pricing-card .price span {
+            font-size: 0.3em;
+            color: var(--gray);
+            font-weight: 400;
+        }
+        
+        .pricing-card .features {
+            text-align: left;
+            margin: 30px 0;
+        }
+        
+        .pricing-card .features li {
+            padding: 12px 0;
+            font-size: 1.05em;
+        }
+        
+        .pricing-card .one-time {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .pricing-card .one-time h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
             margin-bottom: 40px;
-            opacity: 0.95;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--dark);
+        }
+        
+        .timeline-item h4 {
+            color: white;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        /* Sticky CTA Footer */
+        .sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--dark-light);
+            padding: 20px;
+            border-top: 2px solid var(--primary);
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            z-index: 999;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
         }
         
         .cta-button {
-            display: inline-block;
-            background: white;
-            color: #667eea;
-            padding: 18px 40px;
-            border-radius: 30px;
-            text-decoration: none;
+            background: var(--primary);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
             font-weight: 600;
-            font-size: 1.1em;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            margin: 0 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
         
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
         }
         
         .cta-button.secondary {
             background: transparent;
+            border: 2px solid var(--primary);
+        }
+        
+        .cta-button.secondary:hover {
+            background: var(--primary);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: var(--dark-light);
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            border: 2px solid var(--primary);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            font-size: 2em;
+            cursor: pointer;
+            line-height: 1;
+            padding: 5px 15px;
+            transition: all 0.3s;
+        }
+        
+        .modal-close:hover {
             color: white;
-            border: 2px solid white;
+            transform: rotate(90deg);
         }
         
-        footer {
-            background: #2d3748;
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
+        .modal h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 2em;
         }
         
-        footer p {
-            opacity: 0.8;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-        
-        .benefit-item {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            text-align: center;
-        }
-        
-        .benefit-item .icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-        }
-        
-        .benefit-item h4 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 1.2em;
-        }
-        
+        /* Responsive */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8em;
+            .nav-tabs {
+                position: relative;
+                overflow-x: auto;
+                justify-content: flex-start;
             }
             
-            header p {
-                font-size: 1em;
+            .timeline::before {
+                left: 10px;
             }
             
-            .hero-section h2 {
-                font-size: 1.6em;
+            .timeline-item {
+                padding-left: 50px;
             }
             
-            .section h2 {
-                font-size: 1.6em;
+            .timeline-item::before {
+                left: 0;
             }
             
-            .cta-section h2 {
-                font-size: 1.8em;
+            .sticky-cta {
+                padding: 15px 10px;
+            }
+            
+            .cta-button {
+                padding: 12px 20px;
+                font-size: 0.95em;
+            }
+            
+            .section {
+                padding: 40px 15px 100px;
             }
         }
+        
+        /* Utilities */
+        .text-center { text-align: center; }
+        .mb-20 { margin-bottom: 20px; }
+        .mb-40 { margin-bottom: 40px; }
+        .mt-40 { margin-top: 40px; }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>🚀 Sistema de Gestión Digital para Colegios Profesionales</h1>
-            <p>Transformación digital integral con tecnología de vanguardia para la gestión moderna de su institución</p>
-            <div class="badge">✨ Próxima Generación | Cloud Native | Seguridad Blockchain</div>
-        </div>
+        <h1>Sistema de Gestión Digital <span>SAAS</span></h1>
+        <p>Plataforma integral para el Colegio de Contadores Públicos de Loreto</p>
+        <div class="badge">Para 2,500 Colegiados | Modelo de Suscripción</div>
     </header>
     
+    <nav class="nav-tabs">
+        <button class="nav-tab active" onclick="showSection('modelo-saas')">¿Por qué SAAS?</button>
+        <button class="nav-tab" onclick="showSection('pilares')">5 Pilares Fundamentales</button>
+        <button class="nav-tab" onclick="showSection('ai-features')">Inteligencia Artificial</button>
+        <button class="nav-tab" onclick="showSection('filiales')">Gestión de Filiales</button>
+        <button class="nav-tab" onclick="showSection('precios')">Inversión</button>
+        <button class="nav-tab" onclick="showSection('implementacion')">Implementación</button>
+    </nav>
+    
     <div class="container">
-        <div class="hero-section">
-            <h2>Más que un Sistema de Gestión: Una Plataforma de Transformación Digital</h2>
-            <p>Diseñado específicamente para Colegios Profesionales del Perú que buscan modernizar su gestión, mejorar la comunicación con sus agremiados y generar nuevas fuentes de ingresos a través de la tecnología.</p>
-        </div>
-    </div>
-    
-    <section class="section">
-        <div class="container">
-            <h2>🎯 Características Diferenciadoras</h2>
-            <p class="section-subtitle">Funcionalidades de nueva generación que nos distinguen en el mercado</p>
+        <!-- Sección: Modelo SAAS -->
+        <section id="modelo-saas" class="section active">
+            <h2>¿Por qué un Modelo SAAS es la Mejor Opción?</h2>
+            <p class="mb-40">Software como Servicio (SAAS) vs Compra de Licencia Tradicional</p>
             
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3><span class="icon">💬</span> Comunicación en Tiempo Real</h3>
-                    <p><strong>Sistema de mensajería instantánea</strong> similar a WhatsApp integrado directamente en la plataforma:</p>
-                    <ul>
-                        <li>Chat en tiempo real con WebSocket</li>
-                        <li>Push Notifications instantáneas</li>
-                        <li>Notificaciones móviles (iOS/Android)</li>
-                        <li>Grupos de chat por especialidad</li>
-                        <li>Mensajes masivos segmentados</li>
-                        <li>Estado de lectura de mensajes</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><span class="icon">🔐</span> Certificados con Blockchain</h3>
-                    <p><strong>Seguridad de última generación</strong> para emisión y validación de certificados:</p>
-                    <ul>
-                        <li>Certificados inmutables en blockchain</li>
-                        <li>Verificación instantánea por QR</li>
-                        <li>Registro permanente e inalterable</li>
-                        <li>Prevención de falsificación</li>
-                        <li>Auditoría transparente</li>
-                        <li>Compatible con estándares internacionales</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><span class="icon">💰</span> Monetización y Nuevos Ingresos</h3>
-                    <p><strong>Plataforma de generación de ingresos</strong> integrada:</p>
-                    <ul>
-                        <li>Academia Virtual con cursos en línea</li>
-                        <li>Tienda de E-books profesionales</li>
-                        <li>Webinars y eventos pagados</li>
-                        <li>Certificaciones premium</li>
-                        <li>Membresías con beneficios exclusivos</li>
-                        <li>Pasarela de pagos integrada</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><span class="icon">🔌</span> APIs de Servicios Profesionales</h3>
-                    <p><strong>Centro de información especializada</strong> para agremiados:</p>
-                    <ul>
-                        <li>API de Tipo de Cambio actualizado (SUNAT/BCR)</li>
-                        <li>API de UIT vigente y histórica</li>
-                        <li>API de Tasas de Interés del BCR</li>
-                        <li>API de indicadores económicos</li>
-                        <li>Integración con SUNAT</li>
-                        <li>Dashboard financiero en tiempo real</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><span class="icon">🤖</span> Inteligencia Artificial</h3>
-                    <p><strong>Asistente virtual inteligente</strong> disponible 24/7:</p>
-                    <ul>
-                        <li>Chatbot multicanal (web, WhatsApp, app)</li>
-                        <li>Respuestas automáticas contextuales</li>
-                        <li>Procesamiento de lenguaje natural</li>
-                        <li>Aprendizaje continuo</li>
-                        <li>Atención en horario extendido</li>
-                        <li>Reducción de carga administrativa</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><span class="icon">📊</span> Business Intelligence</h3>
-                    <p><strong>Análisis avanzado de datos</strong> para toma de decisiones:</p>
-                    <ul>
-                        <li>Dashboards interactivos en tiempo real</li>
-                        <li>Reportes personalizables</li>
-                        <li>Análisis predictivo de cobranzas</li>
-                        <li>Métricas de satisfacción</li>
-                        <li>Indicadores de gestión (KPIs)</li>
-                        <li>Exportación a Excel/PDF</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="tech-stack">
-        <div class="container">
-            <h2>⚡ Tecnología de Vanguardia</h2>
-            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">Stack tecnológico moderno, escalable y seguro</p>
-            
-            <div class="tech-grid">
-                <div class="tech-item">
-                    <h4>🐍 Python + FastAPI</h4>
-                    <p>Backend ultra-rápido y eficiente para alto rendimiento</p>
-                </div>
-                <div class="tech-item">
-                    <h4>🗄️ PostgreSQL</h4>
-                    <p>Base de datos robusta y confiable con respaldo automático</p>
-                </div>
-                <div class="tech-item">
-                    <h4>⚛️ React/Vue.js</h4>
-                    <p>Interfaz moderna y responsiva con experiencia nativa</p>
-                </div>
-                <div class="tech-item">
-                    <h4>🔗 WebSocket</h4>
-                    <p>Comunicación bidireccional en tiempo real</p>
-                </div>
-                <div class="tech-item">
-                    <h4>📱 PWA</h4>
-                    <p>App instalable sin tiendas, funciona offline</p>
-                </div>
-                <div class="tech-item">
-                    <h4>⛓️ Blockchain</h4>
-                    <p>Certificados inmutables con máxima seguridad</p>
-                </div>
-                <div class="tech-item">
-                    <h4>☁️ Cloud Native</h4>
-                    <p>Escalable, disponible 99.9% del tiempo</p>
-                </div>
-                <div class="tech-item">
-                    <h4>🔒 SSL/TLS</h4>
-                    <p>Encriptación end-to-end para máxima seguridad</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="section">
-        <div class="container">
-            <h2>📋 Comparativa con Competencia</h2>
-            <p class="section-subtitle">Por qué somos la mejor opción para su institución</p>
-            
-            <div class="comparison-table">
+            <div class="comparison">
                 <table>
                     <thead>
                         <tr>
-                            <th>Característica</th>
-                            <th>GREMIA/SACPRO</th>
-                            <th>Datanostrum</th>
-                            <th class="highlight">Nuestra Solución</th>
+                            <th>Aspecto</th>
+                            <th>Compra Tradicional</th>
+                            <th>Modelo SAAS (Nuestra Propuesta)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Chat en Tiempo Real</strong></td>
-                            <td>❌ No</td>
-                            <td>❌ No</td>
-                            <td class="highlight"><span class="check">✓</span> Sí - Con WebSocket</td>
+                            <td><strong>Inversión Inicial</strong></td>
+                            <td>S/ 15,000 - 30,000</td>
+                            <td>S/ 1,200 + S/ 1,800 = S/ 3,000</td>
                         </tr>
                         <tr>
-                            <td><strong>Push Notifications</strong></td>
-                            <td>⚠️ Solo email</td>
-                            <td>❌ No</td>
-                            <td class="highlight"><span class="check">✓</span> Sí - Móvil y Web</td>
+                            <td><strong>Actualizaciones</strong></td>
+                            <td>Pago adicional por cada versión</td>
+                            <td>Incluidas sin costo extra</td>
                         </tr>
                         <tr>
-                            <td><strong>Certificados Blockchain</strong></td>
-                            <td>❌ Solo QR básico</td>
-                            <td>❌ No</td>
-                            <td class="highlight"><span class="check">✓</span> Sí - Inmutables</td>
+                            <td><strong>Mantenimiento</strong></td>
+                            <td>Contratos anuales costosos</td>
+                            <td>Incluido en suscripción mensual</td>
                         </tr>
                         <tr>
-                            <td><strong>Plataforma de Cursos</strong></td>
-                            <td>⚠️ Básica</td>
-                            <td>❌ No</td>
-                            <td class="highlight"><span class="check">✓</span> Academia Virtual Completa</td>
+                            <td><strong>Servidor/Hosting</strong></td>
+                            <td>Debe adquirir y mantener</td>
+                            <td>Todo en la nube, sin preocupaciones</td>
                         </tr>
                         <tr>
-                            <td><strong>Tienda de E-books</strong></td>
-                            <td>❌ No</td>
-                            <td>❌ No</td>
-                            <td class="highlight"><span class="check">✓</span> Sí - Con monetización</td>
+                            <td><strong>Backup de Datos</strong></td>
+                            <td>Responsabilidad del colegio</td>
+                            <td>Automático y seguro 24/7</td>
                         </tr>
                         <tr>
-                            <td><strong>APIs de Información</strong></td>
-                            <td>❌ No</td>
-                            <td>❌ No</td>
-                            <td class="highlight"><span class="check">✓</span> Sí - TC, UIT, Tasas, etc.</td>
+                            <td><strong>Soporte Técnico</strong></td>
+                            <td>Limitado o pago adicional</td>
+                            <td>Incluido permanentemente</td>
                         </tr>
                         <tr>
-                            <td><strong>Inteligencia Artificial</strong></td>
-                            <td>⚠️ Chatbot básico</td>
-                            <td>❌ No</td>
-                            <td class="highlight"><span class="check">✓</span> IA Conversacional Avanzada</td>
+                            <td><strong>Nuevas Funcionalidades</strong></td>
+                            <td>Pago por desarrollo a medida</td>
+                            <td>Se agregan continuamente</td>
                         </tr>
                         <tr>
-                            <td><strong>PWA (App Móvil)</strong></td>
-                            <td>⚠️ Solo web responsive</td>
-                            <td>❌ No</td>
-                            <td class="highlight"><span class="check">✓</span> Sí - Instalable y Offline</td>
+                            <td><strong>Acceso Remoto</strong></td>
+                            <td>Configuración compleja</td>
+                            <td>Desde cualquier lugar, cualquier dispositivo</td>
                         </tr>
                         <tr>
-                            <td><strong>Business Intelligence</strong></td>
-                            <td>⚠️ Reportes básicos</td>
-                            <td>⚠️ Reportes básicos</td>
-                            <td class="highlight"><span class="check">✓</span> Dashboards Interactivos</td>
+                            <td><strong>Escalabilidad</strong></td>
+                            <td>Limitada por hardware</td>
+                            <td>Ilimitada según necesidad</td>
                         </tr>
                         <tr>
-                            <td><strong>Integración SUNAT</strong></td>
-                            <td><span class="check">✓</span> Sí</td>
-                            <td>❌ No especificado</td>
-                            <td class="highlight"><span class="check">✓</span> Sí - Completa</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tecnología</strong></td>
-                            <td>PHP tradicional</td>
-                            <td>PHP/jQuery</td>
-                            <td class="highlight">Python/FastAPI moderna</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Base de Datos</strong></td>
-                            <td>MySQL</td>
-                            <td>MySQL</td>
-                            <td class="highlight">PostgreSQL enterprise</td>
+                            <td><strong>Riesgo de Obsolescencia</strong></td>
+                            <td>Alto (3-5 años)</td>
+                            <td>Cero - siempre actualizado</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-    </section>
-    
-    <section class="section" style="background: #f7fafc;">
-        <div class="container">
-            <h2>🎁 Beneficios para su Institución</h2>
             
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="icon">💸</div>
-                    <h4>Nuevos Ingresos</h4>
-                    <p>Genere ingresos adicionales con cursos online, e-books y eventos virtuales</p>
+            <div class="highlight-box">
+                <h4>Ventaja Principal para el Colegio</h4>
+                <p>Con el modelo SAAS, el colegio:</p>
+                <ul style="list-style: none; padding: 0; margin-top: 15px;">
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        <strong>Invierte menos al inicio:</strong> S/ 3,000 vs S/ 15,000-30,000
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        <strong>Costos predecibles:</strong> Sabe exactamente cuánto pagará mensualmente
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        <strong>Sin sorpresas técnicas:</strong> Todo el mantenimiento es nuestra responsabilidad
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        <strong>Tecnología siempre actual:</strong> Acceso a las últimas innovaciones
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        <strong>Puede cancelar cuando quiera:</strong> Sin atarse a software obsoleto
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <h4>Ventaja para Nosotros como Desarrolladores</h4>
+                <p>El modelo SAAS nos permite:</p>
+                <ul style="list-style: none; padding: 0; margin-top: 15px;">
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--accent);">■</span>
+                        <strong>Mejorar continuamente:</strong> Cada mejora beneficia a todos los clientes
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--accent);">■</span>
+                        <strong>Economía de escala:</strong> Al tener múltiples clientes, reducimos costos
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--accent);">■</span>
+                        <strong>Soporte eficiente:</strong> Un solo sistema que conocemos a fondo
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--accent);">■</span>
+                        <strong>Innovación constante:</strong> Podemos invertir en nuevas funcionalidades
+                    </li>
+                </ul>
+                <p style="margin-top: 20px; font-weight: 600; color: white;">Esta es una relación ganar-ganar: ustedes obtienen tecnología de punta a bajo costo, nosotros construimos un negocio sostenible.</p>
+            </div>
+        </section>
+        
+        <!-- Sección: 5 Pilares -->
+        <section id="pilares" class="section">
+            <h2>5 Pilares Fundamentales del Sistema</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>1. GESTIÓN ECONÓMICO-FINANCIERA</h4>
+                    <p>Información en tiempo real que se actualiza al instante cuando ocurre cualquier transacción.</p>
+                    <ul>
+                        <li>Reportes actualizados automáticamente</li>
+                        <li>Indicadores financieros al momento</li>
+                        <li>Consultas por voz y texto</li>
+                        <li>Dashboard interactivo</li>
+                        <li>Alertas de morosidad automáticas</li>
+                        <li>Proyecciones de flujo de caja</li>
+                    </ul>
                 </div>
-                <div class="benefit-item">
-                    <div class="icon">⚡</div>
-                    <h4>Mayor Eficiencia</h4>
-                    <p>Automatice procesos y reduzca carga administrativa hasta en 70%</p>
+                
+                <div class="card">
+                    <h4>2. HERRAMIENTAS DE MONETIZACIÓN</h4>
+                    <p>Genere ingresos adicionales para el colegio a través de la plataforma.</p>
+                    <ul>
+                        <li>Venta de libros con comisión</li>
+                        <li>Inscripción a congresos/webinars</li>
+                        <li>Plataforma de cursos online</li>
+                        <li>Publicidad de terceros</li>
+                        <li>Notificaciones a todos los colegiados</li>
+                        <li>Marketplace de servicios</li>
+                    </ul>
                 </div>
-                <div class="benefit-item">
-                    <div class="icon">😊</div>
-                    <h4>Agremiados Satisfechos</h4>
-                    <p>Mejore la experiencia con servicios digitales modernos y accesibles</p>
+                
+                <div class="card">
+                    <h4>3. COMUNICACIÓN EN TIEMPO REAL</h4>
+                    <p>Sistema de mensajería instantánea integrado, paralelo a WhatsApp pero dentro del sistema.</p>
+                    <ul>
+                        <li>Chat institucional sin costo por mensaje</li>
+                        <li>Grupos por especialidad</li>
+                        <li>Notificaciones push instantáneas</li>
+                        <li>Mensajes masivos segmentados</li>
+                        <li>Mayor integración entre colegiados</li>
+                        <li>Control total de comunicaciones</li>
+                    </ul>
                 </div>
-                <div class="benefit-item">
-                    <div class="icon">📈</div>
-                    <h4>Datos en Tiempo Real</h4>
-                    <p>Tome decisiones informadas con análisis y métricas actualizadas</p>
+                
+                <div class="card">
+                    <h4>4. SEGURIDAD CON BLOCKCHAIN</h4>
+                    <p>Certificados de habilidad imposibles de falsificar mediante tecnología blockchain.</p>
+                    <ul>
+                        <li>Registro permanente e inmutable</li>
+                        <li>Verificación instantánea por QR</li>
+                        <li>Imposible de alterar o falsificar</li>
+                        <li>Auditoría transparente</li>
+                        <li>Confianza absoluta para empleadores</li>
+                        <li>Prestigio tecnológico</li>
+                    </ul>
                 </div>
-                <div class="benefit-item">
-                    <div class="icon">🛡️</div>
-                    <h4>Máxima Seguridad</h4>
-                    <p>Proteja información sensible con tecnología blockchain y encriptación</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="icon">🌐</div>
-                    <h4>Acceso 24/7</h4>
-                    <p>Servicios disponibles desde cualquier dispositivo, en cualquier momento</p>
+                
+                <div class="card">
+                    <h4>5. CHATBOT INTELIGENTE 24/7</h4>
+                    <p>Asistente virtual que responde consultas de colegiados en cualquier momento.</p>
+                    <ul>
+                        <li>Consulta de deudas y aportes</li>
+                        <li>Estado de habilitación</li>
+                        <li>Información de webinars</li>
+                        <li>Bolsa de trabajo</li>
+                        <li>Respuestas instantáneas</li>
+                        <li>Reduce carga administrativa</li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <section class="section">
-        <div class="container">
-            <h2>📦 Módulos Incluidos</h2>
-            <p class="section-subtitle">Sistema integral con todos los módulos esenciales y avanzados</p>
             
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>👥 Gestión de Agremiados</h3>
+            <h3 class="mt-40">¿Por qué estos pilares son fundamentales?</h3>
+            
+            <div class="highlight-box">
+                <h4>Gestión Económico-Financiera en Tiempo Real</h4>
+                <p>Imaginen poder consultar en cualquier momento "¿Cuánto hemos recaudado este mes?" y obtener la respuesta al instante, actualizada hasta el último pago registrado hace 5 minutos. O preguntar por voz "¿Cuántos colegiados están morosos?" y recibir un reporte inmediato.</p>
+                <p style="margin-top: 15px;"><strong>Beneficio:</strong> Toma de decisiones basada en datos actuales, no en reportes de hace días o semanas.</p>
+            </div>
+            
+            <div class="highlight-box">
+                <h4>Herramientas de Monetización</h4>
+                <p>El colegio puede enviar una notificación a los 2,500 colegiados sobre un nuevo libro de contabilidad tributaria, recibir una comisión del 10-15% por cada venta. Si 200 colegiados compran un libro de S/ 80, el colegio obtiene S/ 1,200-2,400 adicionales.</p>
+                <p style="margin-top: 15px;"><strong>Beneficio:</strong> Nueva fuente de ingresos sin esfuerzo administrativo, la plataforma gestiona todo.</p>
+            </div>
+            
+            <div class="highlight-box">
+                <h4>Comunicación en Tiempo Real (vs WhatsApp)</h4>
+                <p>WhatsApp tiene limitaciones: grupos hasta 1,024 personas, no hay control sobre quién reenvía mensajes, sin reportes de lectura masivos, conversaciones se pierden. Nuestro sistema permite:</p>
+                <ul style="list-style: none; padding: 0; margin-top: 15px;">
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Enviar mensaje a los 2,500 colegiados instantáneamente
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Ver quién leyó el mensaje
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Costo cero por mensaje (WhatsApp Business API cobra por mensaje)
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Todo dentro del sistema institucional
+                    </li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Beneficio:</strong> Comunicación profesional, controlada, sin costos por mensaje, con todas las interacciones registradas.</p>
+            </div>
+            
+            <div class="highlight-box">
+                <h4>Seguridad con Blockchain - ¿Por qué es importante?</h4>
+                <p><strong>Problema actual:</strong> Certificados de habilidad en PDF pueden ser alterados, modificar fechas, falsificar firmas. Empleadores no tienen forma de verificar autenticidad inmediatamente.</p>
+                <p style="margin-top: 15px;"><strong>Solución con Blockchain:</strong> Cada certificado se registra en una cadena de bloques inmutable. Es como notarizar el documento digitalmente de forma que nadie puede alterarlo. Un empleador escanea el QR y obtiene confirmación instantánea de validez.</p>
+                <p style="margin-top: 15px;"><strong>Beneficio:</strong> Prestigio institucional, confianza absoluta, imposibilidad de fraude, verificación instantánea.</p>
+                <p style="margin-top: 15px;"><strong>Implementación:</strong> Usamos Polygon (blockchain económico), costo aproximado $0.01 por certificado. Para 2,500 colegiados al año = $25 anuales.</p>
+            </div>
+            
+            <div class="highlight-box">
+                <h4>Chatbot Inteligente 24/7</h4>
+                <p>Un colegiado a las 11pm del sábado quiere saber si está habilitado para participar en una licitación el lunes. Sin chatbot: debe esperar hasta el lunes que abra oficina. Con chatbot: obtiene respuesta inmediata.</p>
+                <p style="margin-top: 15px;"><strong>Usos principales:</strong></p>
+                <ul style="list-style: none; padding: 0; margin-top: 10px;">
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Consulta de deudas y aportes
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Estado de habilitación
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Fechas de webinars y eventos
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Ofertas de trabajo disponibles
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Información sobre cursos disponibles
+                    </li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Beneficio:</strong> Reduce 60-70% de consultas rutinarias a oficina administrativa, atención permanente, satisfacción de colegiados.</p>
+            </div>
+        </section>
+        
+        <!-- Sección: IA Features -->
+        <section id="ai-features" class="section">
+            <h2>Inteligencia Artificial Integrada</h2>
+            <p class="mb-40">Automatización inteligente para reducir trabajo manual y errores</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>Registro Automatizado de Colegiados</h4>
+                    <p><strong>Visión por Computadora de DNIs</strong></p>
                     <ul>
-                        <li>Registro completo de datos</li>
-                        <li>Historial académico y profesional</li>
-                        <li>Control de habilitación</li>
-                        <li>Gestión de multas y sanciones</li>
-                        <li>Portal de autogestión</li>
+                        <li>Tomar foto del DNI con celular</li>
+                        <li>IA extrae automáticamente todos los datos</li>
+                        <li>Nombre, apellidos, fecha nacimiento, dirección</li>
+                        <li>Reduce tiempo de registro de 10 min a 30 seg</li>
+                        <li>Elimina errores de digitación</li>
+                        <li>Validación cruzada con RENIEC</li>
                     </ul>
                 </div>
                 
-                <div class="feature-card">
-                    <h3>💳 Gestión Financiera</h3>
+                <div class="card">
+                    <h4>Control de Acceso Inteligente</h4>
+                    <p><strong>Reconocimiento Facial o QR</strong></p>
                     <ul>
-                        <li>Control de ingresos y egresos</li>
-                        <li>Conceptos personalizables</li>
-                        <li>Facturación electrónica SUNAT</li>
-                        <li>Fraccionamiento de deudas</li>
-                        <li>Múltiples métodos de pago</li>
+                        <li>Identificación automática en filiales</li>
+                        <li>Registro de asistencia a eventos</li>
+                        <li>Control de acceso a club social</li>
+                        <li>Verificación de habilitación instantánea</li>
+                        <li>Reportes automáticos de afluencia</li>
+                        <li>Seguridad mejorada</li>
                     </ul>
                 </div>
                 
-                <div class="feature-card">
-                    <h3>🎓 Academia Virtual</h3>
+                <div class="card">
+                    <h4>Cobro Automatizado de Entradas</h4>
+                    <p><strong>Sistema de Ticketing con IA</strong></p>
                     <ul>
-                        <li>Cursos online interactivos</li>
-                        <li>Videos, quizzes, evaluaciones</li>
-                        <li>Certificados automáticos</li>
-                        <li>Webinars en vivo</li>
-                        <li>Foro de discusión</li>
+                        <li>Venta online de entradas a eventos</li>
+                        <li>Códigos QR únicos por boleto</li>
+                        <li>Verificación automática en ingreso</li>
+                        <li>Prevención de duplicados</li>
+                        <li>Reportes de recaudación en tiempo real</li>
+                        <li>Integración con sistema financiero</li>
                     </ul>
                 </div>
                 
-                <div class="feature-card">
-                    <h3>📜 Certificados Digitales</h3>
+                <div class="card">
+                    <h4>Análisis Predictivo de Morosidad</h4>
+                    <p><strong>IA que identifica riesgos</strong></p>
                     <ul>
-                        <li>Emisión con blockchain</li>
-                        <li>Validación por QR instantánea</li>
-                        <li>Registro inmutable</li>
-                        <li>Descarga en PDF</li>
-                        <li>Compartir en LinkedIn</li>
+                        <li>Predice quién puede volverse moroso</li>
+                        <li>Alertas tempranas automáticas</li>
+                        <li>Sugerencias de cobranza personalizadas</li>
+                        <li>Patrones de pago de cada colegiado</li>
+                        <li>Optimiza recuperación de deudas</li>
+                        <li>Reduce morosidad hasta 40%</li>
                     </ul>
                 </div>
                 
-                <div class="feature-card">
-                    <h3>💼 Bolsa de Trabajo</h3>
+                <div class="card">
+                    <h4>Procesamiento de Documentos</h4>
+                    <p><strong>OCR y Extracción Inteligente</strong></p>
                     <ul>
-                        <li>Publicación de ofertas</li>
-                        <li>Matching inteligente</li>
-                        <li>Alertas personalizadas</li>
-                        <li>Portal para empresas</li>
-                        <li>Estadísticas de colocación</li>
+                        <li>Títulos profesionales escaneados</li>
+                        <li>Diplomas y certificados</li>
+                        <li>Vouchers de pago</li>
+                        <li>Extracción automática de datos</li>
+                        <li>Clasificación de documentos</li>
+                        <li>Archivo digital organizado</li>
                     </ul>
                 </div>
                 
-                <div class="feature-card">
-                    <h3>📚 Biblioteca Digital</h3>
+                <div class="card">
+                    <h4>Recomendaciones Personalizadas</h4>
+                    <p><strong>IA que conoce a cada colegiado</strong></p>
                     <ul>
-                        <li>E-books descargables</li>
-                        <li>Revistas institucionales</li>
-                        <li>Normativas actualizadas</li>
-                        <li>Búsqueda avanzada</li>
-                        <li>Monetización opcional</li>
+                        <li>Cursos según perfil profesional</li>
+                        <li>Ofertas laborales relevantes</li>
+                        <li>Eventos de interés</li>
+                        <li>Contenido educativo personalizado</li>
+                        <li>Mayor engagement de colegiados</li>
+                        <li>Incremento en participación</li>
                     </ul>
                 </div>
             </div>
-        </div>
-    </section>
+            
+            <div class="highlight-box mt-40">
+                <h4>Impacto Real de la IA en el Colegio</h4>
+                <p><strong>Ahorro de tiempo administrativo:</strong></p>
+                <ul style="list-style: none; padding: 0; margin-top: 15px;">
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Registro de colegiados: De 10 minutos a 30 segundos (95% más rápido)
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Control de acceso: De verificación manual a automática (70% reducción)
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Consultas rutinarias: Chatbot atiende 60-70% sin intervención humana
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Procesamiento de documentos: De horas a minutos
+                    </li>
+                </ul>
+                <p style="margin-top: 20px; font-weight: 600; color: white;">Estimación: El personal administrativo puede dedicar 50-60% más de su tiempo a tareas estratégicas en lugar de operativas rutinarias.</p>
+            </div>
+        </section>
+        
+        <!-- Sección: Filiales -->
+        <section id="filiales" class="section">
+            <h2>Gestión Integral de Filiales y Sedes</h2>
+            <p class="mb-40">Sistema especializado para clubes, salones de eventos y espacios del colegio</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>Control Financiero por Sede</h4>
+                    <ul>
+                        <li>Contabilidad separada por filial</li>
+                        <li>Ingresos y egresos por sede</li>
+                        <li>Reportes consolidados</li>
+                        <li>Rentabilidad por ubicación</li>
+                        <li>Transferencias entre sedes</li>
+                        <li>Presupuestos independientes</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>Gestión de Eventos y Alquileres</h4>
+                    <ul>
+                        <li>Calendario de reservas online</li>
+                        <li>Disponibilidad en tiempo real</li>
+                        <li>Cotizaciones automáticas</li>
+                        <li>Contratos digitales</li>
+                        <li>Pagos y adelantos</li>
+                        <li>Facturación automática</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>Club Social</h4>
+                    <ul>
+                        <li>Control de acceso de socios</li>
+                        <li>Reserva de instalaciones</li>
+                        <li>Consumos y cargos a cuenta</li>
+                        <li>Actividades deportivas</li>
+                        <li>Eventos exclusivos</li>
+                        <li>Estado de cuenta por socio</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>Salones de Recepción</h4>
+                    <ul>
+                        <li>Gestión de reservas</li>
+                        <li>Paquetes y servicios</li>
+                        <li>Coordinación de proveedores</li>
+                        <li>Timeline de eventos</li>
+                        <li>Facturación por servicios</li>
+                        <li>Seguimiento post-evento</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>Inventario por Sede</h4>
+                    <ul>
+                        <li>Control de activos por filial</li>
+                        <li>Equipos y mobiliario</li>
+                        <li>Mantenimiento preventivo</li>
+                        <li>Transferencias entre sedes</li>
+                        <li>Depreciación automática</li>
+                        <li>Alertas de reposición</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>Personal por Filial</h4>
+                    <ul>
+                        <li>Asignación de personal</li>
+                        <li>Control de asistencia</li>
+                        <li>Planillas por sede</li>
+                        <li>Turnos y horarios</li>
+                        <li>Evaluaciones de desempeño</li>
+                        <li>Reportes de productividad</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 class="mt-40">Ejemplo Práctico: Club Social del Colegio</h3>
+            
+            <div class="highlight-box">
+                <h4>Caso de Uso Real</h4>
+                <p>El Colegio tiene un club social en Iquitos con:</p>
+                <ul style="list-style: none; padding: 0; margin-top: 15px;">
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Piscina, canchas deportivas, salón de eventos
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        200 socios activos (colegiados y familias)
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Alquiler de salón para eventos
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Bar/restaurante con consumos
+                    </li>
+                </ul>
+                
+                <p style="margin-top: 20px;"><strong>Con el sistema:</strong></p>
+                <ul style="list-style: none; padding: 0; margin-top: 10px;">
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--primary);">■</span>
+                        Socio reserva cancha desde app móvil
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--primary);">■</span>
+                        Ingreso con QR, registro automático
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--primary);">■</span>
+                        Consumos en bar cargan a su cuenta
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--primary);">■</span>
+                        Recibe estado de cuenta mensual
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--primary);">■</span>
+                        Paga con Yape/Plin desde la app
+                    </li>
+                    <li style="padding: 5px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--primary);">■</span>
+                        Administración ve rentabilidad del club en tiempo real
+                    </li>
+                </ul>
+            </div>
+            
+            <h3 class="mt-40">Métodos de Pago Integrados</h3>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>Pagos Tradicionales</h4>
+                    <ul>
+                        <li>Transferencias bancarias BCP, BBVA, Interbank</li>
+                        <li>Depósitos en cuenta</li>
+                        <li>Tarjetas Visa/MasterCard</li>
+                        <li>Pago en oficina (efectivo)</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>Pagos Digitales Modernos</h4>
+                    <ul>
+                        <li><strong>Yape</strong> - Pago instantáneo</li>
+                        <li><strong>Plin</strong> - Transferencias rápidas</li>
+                        <li>Culqi (pagos online)</li>
+                        <li>Niubiz (POS virtual)</li>
+                        <li>Confirmación automática</li>
+                        <li>Conciliación en tiempo real</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección: Precios -->
+        <section id="precios" class="section">
+            <h2 class="text-center">Inversión Requerida</h2>
+            <p class="text-center mb-40">Plan específico para Colegio de Contadores de Loreto (2,500 colegiados)</p>
+            
+            <div class="pricing-card">
+                <h3>Plan Professional</h3>
+                <p class="subtitle">1,500 hasta 2,500 Colegiados</p>
+                
+                <div class="price">
+                    S/ 250<span>/mes</span>
+                </div>
+                
+                <div class="features">
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 10px 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(100, 116, 139, 0.2);">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-size: 1.2em;">■</span>
+                            Todos los 5 pilares incluidos
+                        </li>
+                        <li style="padding: 10px 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(100, 116, 139, 0.2);">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-size: 1.2em;">■</span>
+                            Inteligencia Artificial completa
+                        </li>
+                        <li style="padding: 10px 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(100, 116, 139, 0.2);">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-size: 1.2em;">■</span>
+                            Gestión de filiales/sedes
+                        </li>
+                        <li style="padding: 10px 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(100, 116, 139, 0.2);">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-size: 1.2em;">■</span>
+                            Certificados con Blockchain
+                        </li>
+                        <li style="padding: 10px 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(100, 116, 139, 0.2);">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-size: 1.2em;">■</span>
+                            Chat y comunicación tiempo real
+                        </li>
+                        <li style="padding: 10px 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(100, 116, 139, 0.2);">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-size: 1.2em;">■</span>
+                            Plataforma de monetización
+                        </li>
+                        <li style="padding: 10px 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(100, 116, 139, 0.2);">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-size: 1.2em;">■</span>
+                            Chatbot 24/7
+                        </li>
+                        <li style="padding: 10px 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(100, 116, 139, 0.2);">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-size: 1.2em;">■</span>
+                            App móvil PWA instalable
+                        </li>
+                        <li style="padding: 10px 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(100, 116, 139, 0.2);">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-size: 1.2em;">■</span>
+                            Todos los métodos de pago (Yape/Plin)
+                        </li>
+                        <li style="padding: 10px 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(100, 116, 139, 0.2);">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-size: 1.2em;">■</span>
+                            Actualizaciones continuas
+                        </li>
+                        <li style="padding: 10px 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(100, 116, 139, 0.2);">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-size: 1.2em;">■</span>
+                            Soporte técnico incluido
+                        </li>
+                        <li style="padding: 10px 0; padding-left: 30px; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-size: 1.2em;">■</span>
+                            Backup automático 24/7
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="one-time">
+                    <h4>Costos Únicos (Una sola vez)</h4>
+                    <p style="color: #cbd5e1; margin-top: 10px;"><strong>Configuración inicial:</strong> S/ 1,800</p>
+                    <p style="color: #cbd5e1; margin-top: 10px;"><strong>Bonificación Socio Fundador:</strong> S/ 1,200</p>
+                    <p style="margin-top: 15px; color: var(--gray); font-size: 0.95em;">Incluye: migración de datos, capacitación personal, personalización institucional, puesta en marcha.</p>
+                </div>
+                
+                <div style="background: rgba(37, 99, 235, 0.1); padding: 20px; border-radius: 8px; margin-top: 30px; border: 1px solid var(--primary);">
+                    <h4 style="color: var(--primary); margin-bottom: 10px;">Opción de Pago Anual</h4>
+                    <div style="font-size: 2em; font-weight: 700; color: white; margin: 10px 0;">S/ 2,750/año</div>
+                    <p style="color: var(--secondary); font-weight: 600;">Ahorro de S/ 250 (equivalente a 1 mes gratis)</p>
+                </div>
+            </div>
+            
+            <h3 class="mt-40 text-center">Comparación de Inversión</h3>
+            
+            <div class="comparison">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concepto</th>
+                            <th>Software Tradicional (Compra)</th>
+                            <th>Nuestro Sistema SAAS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Inversión Inicial</strong></td>
+                            <td>S/ 15,000 - 30,000</td>
+                            <td>S/ 3,000 (Config + Socio Fundador)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Primer Año (Total)</strong></td>
+                            <td>S/ 18,000 - 33,000</td>
+                            <td>S/ 5,750 (S/ 3,000 + S/ 2,750 anual)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Segundo Año</strong></td>
+                            <td>S/ 3,000 - 5,000 (Soporte/Mantenimiento)</td>
+                            <td>S/ 2,750</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Actualizaciones</strong></td>
+                            <td>Pago adicional (S/ 2,000 - 5,000)</td>
+                            <td>Incluidas (S/ 0)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nuevas Funcionalidades</strong></td>
+                            <td>Desarrollo a medida (S/ 5,000+)</td>
+                            <td>Se agregan continuamente (S/ 0)</td>
+                        </tr>
+                        <tr style="background: rgba(37, 99, 235, 0.1); font-weight: 600;">
+                            <td><strong>AHORRO en 3 años</strong></td>
+                            <td>S/ 24,000 - 48,000</td>
+                            <td>S/ 11,250<br><span style="color: var(--secondary); font-size: 1.2em;">AHORRA: S/ 12,750 - 36,750</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <!-- Sección: Implementación -->
+        <section id="implementacion" class="section">
+            <h2>Plan de Implementación</h2>
+            <p class="mb-40">Proceso estructurado para poner el sistema en marcha</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Fase 1: Análisis y Configuración (2 semanas)</h4>
+                    <p><strong>Actividades:</strong></p>
+                    <ul style="list-style: none; padding: 0; margin-top: 10px;">
+                        <li style="padding: 5px 0;">• Reunión con equipo del colegio</li>
+                        <li style="padding: 5px 0;">• Relevamiento de procesos actuales</li>
+                        <li style="padding: 5px 0;">• Definición de requerimientos específicos</li>
+                        <li style="padding: 5px 0;">• Configuración inicial del sistema</li>
+                        <li style="padding: 5px 0;">• Personalización con logos e identidad</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Fase 2: Migración de Datos (2 semanas)</h4>
+                    <p><strong>Actividades:</strong></p>
+                    <ul style="list-style: none; padding: 0; margin-top: 10px;">
+                        <li style="padding: 5px 0;">• Importación de base de datos de colegiados</li>
+                        <li style="padding: 5px 0;">• Migración de información financiera</li>
+                        <li style="padding: 5px 0;">• Carga de documentos históricos</li>
+                        <li style="padding: 5px 0;">• Validación de integridad de datos</li>
+                        <li style="padding: 5px 0;">• Pruebas de consistencia</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Fase 3: Capacitación (1 semana)</h4>
+                    <p><strong>Actividades:</strong></p>
+                    <ul style="list-style: none; padding: 0; margin-top: 10px;">
+                        <li style="padding: 5px 0;">• Capacitación a personal administrativo</li>
+                        <li style="padding: 5px 0;">• Entrenamiento en módulos financieros</li>
+                        <li style="padding: 5px 0;">• Uso de herramientas de comunicación</li>
+                        <li style="padding: 5px 0;">• Gestión de filiales y eventos</li>
+                        <li style="padding: 5px 0;">• Material de soporte y manuales</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Fase 4: Pruebas y Ajustes (1 semana)</h4>
+                    <p><strong>Actividades:</strong></p>
+                    <ul style="list-style: none; padding: 0; margin-top: 10px;">
+                        <li style="padding: 5px 0;">• Pruebas con usuarios reales</li>
+                        <li style="padding: 5px 0;">• Ajustes según feedback</li>
+                        <li style="padding: 5px 0;">• Optimización de procesos</li>
+                        <li style="padding: 5px 0;">• Verificación de integraciónes</li>
+                        <li style="padding: 5px 0;">• Preparación para go-live</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Fase 5: Lanzamiento y Acompañamiento (1 mes)</h4>
+                    <p><strong>Actividades:</strong></p>
+                    <ul style="list-style: none; padding: 0; margin-top: 10px;">
+                        <li style="padding: 5px 0;">• Puesta en producción oficial</li>
+                        <li style="padding: 5px 0;">• Comunicación a colegiados</li>
+                        <li style="padding: 5px 0;">• Soporte intensivo primeras semanas</li>
+                        <li style="padding: 5px 0;">• Resolución de incidencias</li>
+                        <li style="padding: 5px 0;">• Optimización continua</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight-box mt-40">
+                <h4>Tiempo Total de Implementación</h4>
+                <p style="font-size: 1.3em; font-weight: 600; color: white; margin-top: 15px;">6-8 semanas desde firma de contrato hasta sistema completamente operativo</p>
+                <p style="margin-top: 15px;">Esto incluye migración completa de datos, capacitación del personal, y acompañamiento inicial.</p>
+            </div>
+            
+            <h3 class="mt-40">Beneficios de Ser Socio Fundador</h3>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h4>Precio Especial Permanente</h4>
+                    <p>Como primer cliente, accede a condiciones preferenciales que se mantienen en el tiempo.</p>
+                </div>
+                
+                <div class="card">
+                    <h4>Influencia en Desarrollo</h4>
+                    <p>Sus necesidades específicas definen prioridades de desarrollo de nuevas funcionalidades.</p>
+                </div>
+                
+                <div class="card">
+                    <h4>Soporte Prioritario</h4>
+                    <p>Atención preferencial y tiempos de respuesta más rápidos durante toda la relación.</p>
+                </div>
+                
+                <div class="card">
+                    <h4>Personalización Incluida</h4>
+                    <p>Adaptaciones específicas para el colegio sin costos adicionales durante implementación.</p>
+                </div>
+                
+                <div class="card">
+                    <h4>Caso de Referencia</h4>
+                    <p>Posicionamiento como colegio innovador y tecnológicamente avanzado en la región.</p>
+                </div>
+                
+                <div class="card">
+                    <h4>Actualizaciones Tempranas</h4>
+                    <p>Acceso anticipado a nuevas funcionalidades antes de su lanzamiento general.</p>
+                </div>
+            </div>
+        </section>
+    </div>
     
-    <div class="cta-section">
-        <div class="container">
-            <h2>¿Listo para Transformar su Colegio Profesional?</h2>
-            <p>Únase a la nueva generación de instituciones digitales en el Perú</p>
-            <a href="https://wa.me/51920180071?text=Hola%2C%20estoy%20interesado%20en%20la%20plataforma%20para%20Colegios%20Profesionales" class="cta-button">📱 Solicitar Demo</a>
-            <a href="mailto:duilio@duilio.store" class="cta-button secondary">📧 Contactar por Email</a>
+    <!-- Sticky CTA Footer -->
+    <div class="sticky-cta">
+        <button class="cta-button" onclick="openModal('contact')">Solicitar Reunión</button>
+        <button class="cta-button secondary" onclick="openModal('demo')">Ver Demo en Vivo</button>
+        <a href="https://wa.me/51920180071?text=Hola%2C%20soy%20del%20Colegio%20de%20Contadores%20de%20Loreto%2C%20quiero%20más%20información" class="cta-button" style="background: #25D366;">WhatsApp</a>
+    </div>
+    
+    <!-- Modal Contact -->
+    <div id="modal-contact" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('contact')">&times;</button>
+            <h3>Solicitar Reunión</h3>
+            <p style="color: #cbd5e1; margin-bottom: 20px;">Coordinaremos una reunión para presentarle el sistema en detalle y responder todas sus consultas.</p>
+            
+            <div style="background: var(--dark); padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <p style="margin-bottom: 15px;"><strong>Contacto Directo:</strong></p>
+                <p style="color: #cbd5e1; margin-bottom: 10px;">📧 Email: duilio@duilio.store</p>
+                <p style="color: #cbd5e1; margin-bottom: 10px;">📱 Celular: +51 920 180 071</p>
+                <p style="color: #cbd5e1; margin-bottom: 10px;">🌐 Web: duilio.store</p>
+            </div>
+            
+            <p style="color: var(--gray); font-size: 0.95em; margin-top: 20px;">Nos comprometemos a responder en menos de 24 horas y agendar reunión según su disponibilidad.</p>
         </div>
     </div>
     
-    <footer>
-        <div class="container">
-            <p><strong>Desarrollado en Perú 🇵🇪</strong></p>
-            <p>Soluciones tecnológicas modernas para instituciones profesionales</p>
-            <p style="margin-top: 20px;">📧 duilio@duilio.store | 📱 +51 920 180 071</p>
-            <p style="margin-top: 10px; font-size: 0.9em;">© 2024 - Todos los derechos reservados</p>
+    <!-- Modal Demo -->
+    <div id="modal-demo" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('demo')">&times;</button>
+            <h3>Demo en Vivo del Sistema</h3>
+            <p style="color: #cbd5e1; margin-bottom: 20px;">Le mostraremos todas las funcionalidades del sistema adaptadas a las necesidades del Colegio de Contadores.</p>
+            
+            <div style="background: var(--dark); padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h4 style="color: var(--primary); margin-bottom: 15px;">Incluye demostración de:</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Gestión de 2,500 colegiados en tiempo real
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Sistema de comunicación instantánea
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Emisión de certificados con blockchain
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        IA para registro automático
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Gestión de filiales y eventos
+                    </li>
+                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">■</span>
+                        Plataforma de monetización
+                    </li>
+                </ul>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://wa.me/51920180071?text=Quiero%20agendar%20una%20demo%20del%20sistema%20SAAS%20para%20el%20Colegio%20de%20Contadores" class="cta-button" style="background: #25D366;">Agendar Demo por WhatsApp</a>
+            </div>
         </div>
-    </footer>
+    </div>
+    
+    <script>
+        // Tab Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active to clicked tab
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Modal Functions
+        function openModal(modalName) {
+            document.getElementById('modal-' + modalName).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modalName) {
+            document.getElementById('modal-' + modalName).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+        
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
