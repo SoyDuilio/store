@@ -575,6 +575,10 @@ async def saascolegios(request: Request):
     return templates.TemplateResponse("saascolegios.html", {"request": request})
 
 
+#ADMISION - IST PEDRO A DEL AGUILA H.
+@app.get("/videos", response_class=HTMLResponse)
+async def videos(request: Request):
+    return templates.TemplateResponse("videos_demo.html", {"request": request})
 
 
 
