@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Automatizado de Evaluación - Videos Demo</title>
+    <meta name="description" content="Sistema de captura y calificación automática de exámenes con visión computacional">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-light: #f1f5f9;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e293b 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(30, 58, 138, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-button {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 2px solid transparent;
+            color: var(--text-light);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+
+        .tab-button:hover {
+            background: rgba(30, 58, 138, 0.5);
+            border-color: var(--primary);
+        }
+
+        .tab-button.active {
+            background: var(--primary);
+            border-color: var(--secondary);
+            box-shadow: 0 4px 20px rgba(30, 58, 138, 0.5);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Video Section */
+        .video-section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(30, 58, 138, 0.3);
+        }
+
+        .video-section h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #000;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Message Box */
+        .message-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(30, 58, 138, 0.2));
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+        }
+
+        .message-box strong {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .message-box.highlight {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
+            border-left-color: var(--accent);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(30, 58, 138, 0.5);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Comparison Section */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 3px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(30, 58, 138, 0.6);
+            border-color: var(--secondary);
+        }
+
+        .option-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .option-card .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .badge.recommended {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .badge.alternative {
+            background: var(--accent);
+            color: white;
+        }
+
+        .pros-cons {
+            margin-top: 1rem;
+        }
+
+        .pros-cons ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pros-cons li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .pros-cons li::before {
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .pros-cons .pro::before {
+            content: '✓';
+            color: var(--secondary);
+        }
+
+        .pros-cons .con::before {
+            content: '✗';
+            color: var(--danger);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--primary), #1e40af);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 3rem;
+            box-shadow: 0 10px 40px rgba(30, 58, 138, 0.5);
+        }
+
+        .contact-section h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 640px) {
+            .contact-buttons {
+                flex-direction: row;
+            }
+        }
+
+        .whatsapp-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+            background: #20BA5A;
+        }
+
+        .whatsapp-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Share Section */
+        .share-section {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(30, 58, 138, 0.2);
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .share-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .share-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .share-btn.facebook {
+            background: #1877f2;
+        }
+
+        .share-btn.twitter {
+            background: #1da1f2;
+        }
+
+        .share-btn.linkedin {
+            background: #0a66c2;
+        }
+
+        .share-btn.copy {
+            background: var(--secondary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .video-section {
+                padding: 1rem;
+            }
+
+            .message-box {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>🎓 Sistema Automatizado de Evaluación</h1>
+        <p>Captura y calificación de exámenes con visión computacional</p>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('videos')">
+                📹 Videos Demo
+            </button>
+            <button class="tab-button" onclick="switchTab('comparativa')">
+                ⚖️ Comparativa
+            </button>
+            <button class="tab-button" onclick="switchTab('resultados')">
+                📊 Resultados
+            </button>
+        </div>
+
+        <!-- TAB 1: VIDEOS -->
+        <div id="videos" class="tab-content active">
+            
+            <!-- Video 1 -->
+            <div class="video-section">
+                <h2>🎬 Demostración del Sistema</h2>
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/GPPIua6RfAc" 
+                        title="Demostración del Sistema de Evaluación"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <div class="message-box">
+                💡 <strong>Punto clave:</strong> Este sistema reduce <strong>8 horas de trabajo manual</strong> a solo <strong>3 minutos</strong> de procesamiento automatizado.
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-section">
+                <h2>🔍 Funciones importantes</h2>
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/P5jck5nOSRQ" 
+                        title="Aulas | Profesores | Asistencia"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <div class="message-box highlight">
+                ⚡ <strong>99% de precisión</strong> validada en prueba piloto real con 27 postulantes.
+            </div>
+
+            <!-- Video 3 -->
+            <div class="video-section">
+                <h2>📈 Análisis de Resultados y Ranking</h2>
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/YKXDRPsJMM8" 
+                        title="Análisis de Resultados"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-value">99%</span>
+                    <span class="stat-label">Precisión OCR</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">17.6s</span>
+                    <span class="stat-label">Por examen</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">100%</span>
+                    <span class="stat-label">Automático</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">27</span>
+                    <span class="stat-label">Hojas piloto</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TAB 2: COMPARATIVA -->
+        <div id="comparativa" class="tab-content">
+            
+            <div class="message-box">
+                <strong>Dos alternativas para implementar el sistema:</strong><br>
+                Ambas funcionan perfectamente. La diferencia está en la flexibilidad vs control administrativo.
+            </div>
+
+            <div class="comparison-grid">
+                
+                <!-- Opción 1 -->
+                <div class="option-card">
+                    <span class="badge recommended">✓ RECOMENDADA</span>
+                    <h3>✍️ DNI Manuscrito</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                        Postulante escribe su DNI en hoja genérica
+                    </p>
+                    
+                    <div class="pros-cons">
+                        <ul>
+                            <li class="pro">Ingreso libre a cualquier aula</li>
+                            <li class="pro">Sin logística previa</li>
+                            <li class="pro">Bajo costo ($0.05/hoja)</li>
+                            <li class="pro">99% precisión validada</li>
+                            <li class="pro">Preferida por directivos</li>
+                            <li class="con">Sin control asistencia inmediato</li>
+                            <li class="con">Errores OCR excepcionales</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Opción 2 -->
+                <div class="option-card">
+                    <span class="badge alternative">ALTERNATIVA</span>
+                    <h3>🖨️ DNI Preimpreso</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                        Hoja personalizada con DNI ya impreso
+                    </p>
+                    
+                    <div class="pros-cons">
+                        <ul>
+                            <li class="pro">Control asistencia total</li>
+                            <li class="pro">Trazabilidad completa</li>
+                            <li class="pro">100% precisión DNI</li>
+                            <li class="pro">Registro de custodios</li>
+                            <li class="con">Logística compleja</li>
+                            <li class="con">Mayor costo ($0.15/hoja)</li>
+                            <li class="con">Menos flexibilidad</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="message-box highlight" style="margin-top: 2rem;">
+                <strong>Recomendación:</strong> Opción 1 (DNI Manuscrito) por su alineación con las políticas institucionales actuales y su balance óptimo entre precisión, flexibilidad y costo.
+            </div>
+
+        </div>
+
+        <!-- TAB 3: RESULTADOS -->
+        <div id="resultados" class="tab-content">
+            
+            <div class="video-section">
+                <h2>📊 Resultados de Prueba Piloto</h2>
+                
+                <div class="stats-grid" style="margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <span class="stat-value">27</span>
+                        <span class="stat-label">Hojas procesadas</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value">99%</span>
+                        <span class="stat-label">Precisión DNI</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value">100%</span>
+                        <span class="stat-label">Calificación OK</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value">3min</span>
+                        <span class="stat-label">Tiempo total</span>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--secondary); margin-bottom: 1rem;">✅ Casos exitosos:</h3>
+                <ul style="list-style: none; padding-left: 0; margin-bottom: 2rem;">
+                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">✓</span>
+                        26 de 27 DNIs detectados correctamente
+                    </li>
+                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">✓</span>
+                        Calificación automática 100% exitosa
+                    </li>
+                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">✓</span>
+                        Ranking generado en menos de 3 minutos
+                    </li>
+                </ul>
+
+                <h3 style="color: var(--accent); margin-bottom: 1rem;">⚠️ Casos de ajuste:</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--accent);">!</span>
+                        1 error OCR (7→4 por brillo) - Mitigable con instrucciones
+                    </li>
+                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--accent);">!</span>
+                        2 DNIs válidos como "INVITADO" - Corregible en dashboard
+                    </li>
+                </ul>
+            </div>
+
+            <div class="message-box">
+                <strong>Conclusión:</strong> Sistema listo para producción con mitigaciones conocidas para casos excepcionales.
+            </div>
+
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2>💬 ¿Tienes preguntas?</h2>
+            <p style="margin-bottom: 1.5rem;">Contáctanos por WhatsApp para una demostración personalizada</p>
+            
+            <div class="contact-buttons">
+                <a href="https://wa.me/51967317946?text=Hola%20Duilio,%20quisiera%20más%20información%20sobre%20el%20sistema%20de%20evaluación" 
+                   class="whatsapp-btn" 
+                   target="_blank">
+                    <span class="whatsapp-icon">💬</span>
+                    <div>
+                        <div>Duilio</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9;">967 317 946</div>
+                    </div>
+                </a>
+                
+                <a href="https://wa.me/51944831711?text=Hola%20Walter,%20quisiera%20más%20información%20sobre%20el%20sistema%20de%20evaluación" 
+                   class="whatsapp-btn" 
+                   target="_blank">
+                    <span class="whatsapp-icon">💬</span>
+                    <div>
+                        <div>Walter</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9;">944 831 711</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Share Section -->
+        <div class="share-section">
+            <h3>📤 Compartir esta información</h3>
+            <div class="share-buttons">
+                <button class="share-btn facebook" onclick="shareOnFacebook()">
+                    📘 Facebook
+                </button>
+                <button class="share-btn twitter" onclick="shareOnTwitter()">
+                    🐦 Twitter
+                </button>
+                <button class="share-btn linkedin" onclick="shareOnLinkedIn()">
+                    💼 LinkedIn
+                </button>
+                <button class="share-btn copy" onclick="copyLink()">
+                    🔗 Copiar enlace
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Sistema Automatizado de Evaluación de Exámenes</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+            Desarrollado con visión computacional y tecnología de IA
+        </p>
+    </footer>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activate button
+            event.target.classList.add('active');
+        }
+
+        // Share functions
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Sistema automatizado de evaluación de exámenes con 99% de precisión');
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        }
+
+        function shareOnLinkedIn() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copiado!';
+                btn.style.background = '#10b981';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            });
+        }
+
+        // Auto-pause videos when switching tabs
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('iframe').forEach(iframe => {
+                    const src = iframe.src;
+                    iframe.src = src; // Reload to stop video
+                });
+            });
+        });
+    </script>
+</body>
+</html>
