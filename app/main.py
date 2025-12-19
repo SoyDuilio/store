@@ -581,4 +581,9 @@ async def videos(request: Request):
     return templates.TemplateResponse("videos_demo.html", {"request": request})
 
 
+#SERVIPLUS - TERMINOS Y CONDICIONES POR DEFINIR
+@app.get("/terminos", response_class=HTMLResponse)
+async def terminos(request: Request):
+    return templates.TemplateResponse("terminos_condiciones.html", {"request": request})
+
 
