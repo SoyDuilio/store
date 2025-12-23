@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Gestión 2026-2027 | Colegio de Contadores Públicos de Loreto</title>
+    <style>
+        :root {
+            --primary: #0f172a; /* Azul noche profesional */
+            --primary-light: #1e293b;
+            --accent: #d97706; /* Dorado/Ambar para contadores */
+            --accent-light: #fbbf24;
+            --text: #334155;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --success: #059669;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        
+        body { background: var(--bg-light); color: var(--text); overflow-x: hidden; }
+
+        /* --- EFECTOS Y ANIMACIONES --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .reveal {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* --- DISEÑO DEL NUEVO PORTAL (HERO) --- */
+        .portal-nav {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .logo-text {
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span { color: var(--accent); }
+
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+        
+        .portal-btn {
+            background: var(--accent);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        
+        .portal-btn:hover { background: var(--accent-light); transform: scale(1.05); }
+
+        .hero-section {
+            height: 90vh;
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Efecto Parallax */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            color: var(--white);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            color: #e2e8f0;
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- SECCIÓN DE PROPUESTA (CONTENIDO) --- */
+        .proposal-container {
+            max-width: 1200px;
+            margin: -80px auto 50px;
+            position: relative;
+            z-index: 10;
+            padding: 0 20px;
+        }
+
+        .intro-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .intro-card h2 { color: var(--primary); font-size: 2rem; margin-bottom: 15px; }
+        .intro-card p { color: #64748b; font-size: 1.1rem; line-height: 1.6; }
+
+        /* GRID DE FUNCIONALIDADES */
+        .section-title {
+            text-align: center;
+            margin: 60px 0 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-card h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+        .feature-card p { color: #64748b; font-size: 0.95rem; margin-bottom: 15px; }
+        .feature-card ul { list-style: none; }
+        .feature-card ul li { padding: 5px 0; font-size: 0.9rem; color: #475569; position: relative; padding-left: 20px; }
+        .feature-card ul li::before { content: '✓'; color: var(--success); position: absolute; left: 0; font-weight: bold; }
+
+        /* MONETIZACIÓN */
+        .money-box {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 2px solid #fcd34d;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .money-box::before {
+            content: 'INGRESOS';
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--success);
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .money-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .money-item {
+            background: rgba(255,255,255,0.8);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        /* COMPARATIVA DE PRECIOS */
+        .pricing-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .pricing-card {
+            flex: 1;
+            min-width: 300px;
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            border: 1px solid #e2e8f0;
+            transition: 0.3s;
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border: 2px solid var(--accent);
+            z-index: 2;
+            box-shadow: 0 20px 50px rgba(217, 119, 6, 0.15);
+        }
+
+        .pricing-header {
+            padding: 30px;
+            text-align: center;
+            background: var(--bg-light);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .pricing-card.featured .pricing-header {
+            background: var(--primary);
+            color: white;
+        }
+
+        .pricing-header h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        .price { font-size: 2.5rem; font-weight: 800; color: var(--primary); }
+        .pricing-card.featured .price { color: var(--accent); }
+        .period { font-size: 0.9rem; font-weight: 400; color: #64748b; }
+        .pricing-card.featured .period { color: #cbd5e1; }
+
+        .pricing-body { padding: 30px; }
+        .pricing-features li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+            color: #475569;
+        }
+        .pricing-features li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+
+        .cta-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .pricing-card.featured .cta-btn { background: var(--accent); color: var(--primary); }
+        .pricing-card.featured .cta-btn:hover { background: #b45309; color: white; }
+
+        /* TIMELINE */
+        .launch-box {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .urgency-badge {
+            background: #ef4444;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+            animation: float 2s infinite ease-in-out;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.2rem; }
+            .nav-links { display: none; }
+            .proposal-container { margin-top: -40px; }
+            .pricing-card.featured { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVEGACIÓN (SIMULACIÓN DEL NUEVO PORTAL) -->
+    <nav class="portal-nav">
+        <div class="logo-text">CCPL <span>LORETO</span></div>
+        <div class="nav-links">
+            <a href="#">Institucional</a>
+            <a href="#">Agremiados</a>
+            <a href="#">Eventos</a>
+            <a href="#">Transparencia</a>
+            <a href="#" class="portal-btn">Aula Virtual</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION (ESTÉTICA MODERNA PROPUESTA) -->
+    <header class="hero-section">
+        <div class="hero-content reveal">
+            <div class="hero-badge">Gestión 2026 - 2027</div>
+            <h1>Colegio de Contadores<br>Públicos de Loreto</h1>
+            <p>Una gestión moderna, transparente y digital para los nuevos tiempos.</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="#propuesta" class="portal-btn" style="padding: 15px 40px; font-size: 1.1rem;">Ver Propuesta de Gestión</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR DE LA PROPUESTA -->
+    <div id="propuesta" class="proposal-container">
+        
+        <!-- INTRODUCCIÓN -->
+        <div class="intro-card reveal">
+            <h2>Propuesta de Sistema Integral de Gestión</h2>
+            <p>Estimado Decano Jorge, ante el inicio de su gestión este <strong>2 de Enero</strong>, presentamos una solución inmediata para transformar digitalmente el colegio. No es solo una página web, es una plataforma completa para facilitar su trabajo, controlar los recursos y dar servicio de primer nivel a los 2,500 colegiados.</p>
+        </div>
+
+        <!-- MÓDULOS Y FUNCIONALIDADES (Fusión de contenidos) -->
+        <div class="section-title">
+            <h2>Módulos y Funcionalidades Clave</h2>
+            <p style="margin-top: 10px; color: #64748b;">Todo lo necesario para una gestión eficiente y transparente</p>
+        </div>
+
+        <div class="features-grid">
+            <!-- Módulos Administrativos (Core) -->
+            <div class="feature-card">
+                <h3>👥 Gestión de Agremiados</h3>
+                <p>Base de datos digital y segura de los 2,500 miembros.</p>
+                <ul>
+                    <li>Registro rápido con foto de DNI (IA).</li>
+                    <li>Consulta de Habilidad en tiempo real.</li>
+                    <li>Ficha digital por colegiado.</li>
+                    <li>Control de sanciones y méritos.</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>💰 Gestión Económica</h3>
+                <p>Transparencia total en ingresos y egresos.</p>
+                <ul>
+                    <li>Control de caja y bancos.</li>
+                    <li>Reportes financieros al instante.</li>
+                    <li>Facturación electrónica automática (SUNAT).</li>
+                    <li>Alertas automáticas de morosidad.</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>📱 Comunicación Directa</h3>
+                <p>Una alternativa profesional a WhatsApp.</p>
+                <ul>
+                    <li>Chat institucional integrado.</li>
+                    <li>Mensajes masivos sin costo.</li>
+                    <li>Notificaciones al celular del colegiado.</li>
+                    <li>Confirmación de lectura.</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🔐 Seguridad Blockchain</h3>
+                <p>Certificados imposibles de falsificar.</p>
+                <ul>
+                    <li>Emisión de Certificados de Habilidad.</li>
+                    <li>Código QR de verificación inmediata.</li>
+                    <li>Registro inmutable (Blockchain).</li>
+                    <li>Prestigio tecnológico para el Colegio.</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🤖 Chatbot 24/7</h3>
+                <p>Atención automática para reducir carga administrativa.</p>
+                <ul>
+                    <li>Responde consultas de deudas.</li>
+                    <li>Informa sobre cursos y eventos.</li>
+                    <li>Atiende fuera de horario de oficina.</li>
+                    <li>Libera al personal de tareas repetitivas.</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🏢 Gestión de Filiales</h3>
+                <p>Control unificado de sedes y club social.</p>
+                <ul>
+                    <li>Control de acceso con QR.</li>
+                    <li>Reservas de canchas y salones.</li>
+                    <li>Caja chica por sede.</li>
+                    <li>Reportes consolidados.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE MONETIZACIÓN (Valor Agregado) -->
+        <div class="money-box reveal">
+            <h3 style="color: #b45309; font-size: 1.5rem; margin-bottom: 10px;">📈 Herramientas para Generar Ingresos</h3>
+            <p>El sistema no es solo un gasto, es una herramienta de inversión. Hemos diseñado módulos específicos para aumentar la recaudación del Colegio:</p>
+            
+            <div class="money-grid">
+                <div class="money-item">
+                    <h4 style="color: #0f172a;">🎓 Academia Virtual</h4>
+                    <p style="font-size: 0.9rem;">Venta de cursos y diplomados online. El sistema gestiona inscripciones, pagos y entrega de certificados automáticos.</p>
+                </div>
+                <div class="money-item">
+                    <h4 style="color: #0f172a;">📚 Venta de Libros Digitales</h4>
+                    <p style="font-size: 0.9rem;">Tienda online para venta de e-books y revistas especializadas con comisión para el colegio.</p>
+                </div>
+                <div class="money-item">
+                    <h4 style="color: #0f172a;">🎫 Entradas a Eventos</h4>
+                    <p style="font-size: 0.9rem;">Gestión de tickets QR para fiestas, cenas y congresos, evitando la reventa y el fraude.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROPUESTA ECONÓMICA (Comparativa) -->
+        <div class="section-title">
+            <h2>Alternativas de Inversión</h2>
+            <p>Dos modelos adaptados a su estilo de gestión</p>
+        </div>
+
+        <div class="pricing-container">
+            <!-- OPCIÓN 1: SAAS -->
+            <div class="pricing-card featured">
+                <div class="pricing-header">
+                    <div style="background: rgba(255,255,255,0.2); color: white; display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; margin-bottom: 10px;">RECOMENDADO</div>
+                    <h3>Suscripción (SAAS)</h3>
+                    <div class="price">S/ 250<span style="font-size: 1rem">/mes</span></div>
+                    <p class="period">+ Cuota única de implementación: S/ 3,000</p>
+                </div>
+                <div class="pricing-body">
+                    <p style="margin-bottom: 20px; font-weight: bold; color: var(--accent);">Ideal para bajo costo inicial</p>
+                    <ul class="pricing-features">
+                        <li><strong>Todo incluido:</strong> Servidores, correos, respaldos.</li>
+                        <li><strong>Soporte Técnico:</strong> Permanente e incluido.</li>
+                        <li><strong>Actualizaciones:</strong> Gratuitas para siempre.</li>
+                        <li><strong>App Móvil:</strong> Incluida para todos los colegiados.</li>
+                        <li>Sin costos ocultos de mantenimiento.</li>
+                        <li>Si el sistema falla, nosotros lo arreglamos gratis.</li>
+                    </ul>
+                    <a href="#" class="cta-btn">Elegir Modelo Suscripción</a>
+                </div>
+            </div>
+
+            <!-- OPCIÓN 2: VENTA -->
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h3>Compra de Licencia</h3>
+                    <div class="price">S/ 14,000</div>
+                    <p class="period">Pago único de por vida</p>
+                </div>
+                <div class="pricing-body">
+                    <p style="margin-bottom: 20px; font-weight: bold; color: var(--primary);">Modelo tradicional (Propiedad)</p>
+                    <ul class="pricing-features">
+                        <li><strong>Propiedad:</strong> El software es 100% del colegio.</li>
+                        <li><strong>Pago único:</strong> No paga mensualidades por uso.</li>
+                        <li>1 año de garantía y soporte incluido.</li>
+                        <li>Instalación en servidor propio del colegio.</li>
+                        <li><span style="color: #ef4444;">No incluye:</span> Costo mensual de servidor (hosting) ni actualizaciones futuras (se pagan aparte).</li>
+                    </ul>
+                    <a href="#" class="cta-btn" style="background: #e2e8f0; color: #334155;">Elegir Compra Directa</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIMELINE URGENCIA -->
+        <div class="launch-box reveal">
+            <div class="urgency-badge">⚠️ INICIO DE GESTIÓN: 2 DE ENERO</div>
+            <h3>Plan de Acción Inmediato</h3>
+            <p style="margin-bottom: 20px; opacity: 0.9;">Entendemos que el tiempo es crítico. Si aprobamos esta semana:</p>
+            
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; text-align: left;">
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; flex: 1; min-width: 200px;">
+                    <strong>📅 26-30 Dic:</strong><br>Personalización de la portada web y carga de base de datos inicial.
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; flex: 1; min-width: 200px;">
+                    <strong>🚀 02 Ene:</strong><br>Lanzamiento del Portal Web renovado y Sistema de Consultas habilitado.
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; flex: 1; min-width: 200px;">
+                    <strong>📅 Enero:</strong><br>Capacitación progresiva al personal y activación de módulos financieros.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Simple script para revelar elementos al hacer scroll
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
