@@ -586,4 +586,8 @@ async def videos(request: Request):
 async def terminos(request: Request):
     return templates.TemplateResponse("terminos_condiciones.html", {"request": request})
 
+#COLEGIO CONTADORES LORETO - PROPUESTA A JORGE SANTANA
+@app.get("/jorgedecano", response_class=HTMLResponse)
+async def jorgedecano(request: Request):
+    return templates.TemplateResponse("jorgedecano.html", {"request": request})
 
