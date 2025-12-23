@@ -591,3 +591,14 @@ async def terminos(request: Request):
 async def jorgedecano(request: Request):
     return templates.TemplateResponse("jorgedecano.html", {"request": request})
 
+
+#NUEVO PORTAL COLEGIO CONTADORES LORETO - PROPUESTA A JORGE SANTANA
+@app.get("/portal", response_class=HTMLResponse)
+async def portal(request: Request):
+    return templates.TemplateResponse("portal.html", {"request": request})
+
+
+#NUEVO PORTAL COLEGIO CONTADORES LORETO - PROPUESTA A JORGE SANTANA
+@app.get("/nuevoportal", response_class=HTMLResponse)
+async def nuevoportal(request: Request):
+    return templates.TemplateResponse("nuevoportal.html", {"request": request})
