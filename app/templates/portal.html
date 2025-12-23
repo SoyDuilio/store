@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCPL - Colegio de Contadores Públicos de Loreto</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a3a52;
+            --secondary: #d4af37;
+            --accent: #2c5aa0;
+            --light: #f5f7fa;
+            --dark: #0f1419;
+            --text: #2c3e50;
+            --border: #e8eef5;
+            --success: #27ae60;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background-color: #fff;
+        }
+
+        /* ============ HEADER Y NAVEGACIÓN ============ */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #0d1f2d 100%);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--secondary);
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--secondary), #e8c547);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav {
+            display: flex;
+            gap: 0;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary), #e8c547);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-item:hover::after {
+            width: 80%;
+        }
+
+        .nav-item:hover {
+            color: var(--secondary);
+        }
+
+        /* DROPDOWN MENU */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, #0d1f2d 100%);
+            min-width: 250px;
+            border-radius: 8px;
+            padding: 1rem 0;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-left-color: var(--secondary);
+            padding-left: 2rem;
+            color: var(--secondary);
+        }
+
+        .dropdown-menu a i {
+            color: var(--secondary);
+            width: 20px;
+            text-align: center;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--secondary), #e8c547);
+            color: var(--primary);
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+            background: linear-gradient(135deg, #e8c547, var(--secondary));
+        }
+
+        /* ============ HERO SECTION ============ */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #0d1f2d 50%, var(--accent) 100%);
+            color: #fff;
+            padding: 8rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1), transparent);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(44, 90, 160, 0.1), transparent);
+            border-radius: 50%;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            animation: slideDown 0.8s ease-out;
+            letter-spacing: 1px;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            animation: slideDown 1s ease-out 0.2s both;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            animation: slideDown 1s ease-out 0.4s both;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideDown 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 1.1rem 2.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), #e8c547);
+            color: var(--primary);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* ============ SLOGAN CON EFECTO PREMIUM ============ */
+        .slogan-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slogan-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><defs><pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="1" fill="rgba(26,58,82,0.05)"/></pattern></defs><rect width="1200" height="400" fill="url(%23grid)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .slogan-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slogan-item {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            min-width: 400px;
+            text-align: center;
+        }
+
+        .slogan-item span {
+            display: inline-block;
+            animation: growPremium 3s ease-in-out infinite;
+            background: linear-gradient(135deg, var(--secondary), #e8c547);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slogan-item:nth-child(1) span {
+            animation-delay: 0s;
+        }
+
+        .slogan-item:nth-child(2) span {
+            animation-delay: 3s;
+        }
+
+        .slogan-item:nth-child(3) span {
+            animation-delay: 6s;
+        }
+
+        @keyframes growPremium {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+                filter: blur(0);
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+                filter: blur(0);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+                filter: blur(0);
+            }
+        }
+
+        /* ============ MÓDULOS Y FUNCIONALIDADES ============ */
+        .modules-section {
+            padding: 6rem 0;
+            background: #fff;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .module-card {
+            background: linear-gradient(135deg, #fff 0%, #f8fafb 100%);
+            border: 2px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .module-card:hover::before {
+            left: 100%;
+        }
+
+        .module-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), #e8c547);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .module-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(26, 58, 82, 0.15);
+            border-color: var(--secondary);
+        }
+
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(44, 90, 160, 0.1));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover .module-icon {
+            background: linear-gradient(135deg, var(--secondary), #e8c547);
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .module-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .module-card p {
+            color: #666;
+            margin-bottom: 1.8rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .module-features {
+            list-style: none;
+        }
+
+        .module-features li {
+            padding: 0.6rem 0;
+            color: #555;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .module-features li:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .module-features li::before {
+            content: '\f058';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--secondary);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        /* ============ SECCIÓN DE INGRESOS ============ */
+        .revenue-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, #0d1f2d 50%, var(--accent) 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .revenue-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1), transparent);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .revenue-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05), transparent);
+            border-radius: 50%;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .revenue-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            padding: 2.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .revenue-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary), #e8c547);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .revenue-card:hover::before {
+            opacity: 1;
+        }
+
+        .revenue-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border-color: var(--secondary);
+        }
+
+        .revenue-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .revenue-card p {
+            font-size: 0.95rem;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            background: linear-gradient(135deg, var(--primary) 0%, #0d1f2d 100%);
+            color: #fff;
+            padding: 4rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-section p {
+            font-size: 0.9rem;
+            opacity: 0.85;
+            line-height: 1.8;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-section ul li a::before {
+            content: '\f054';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--secondary);
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            margin-right: -0.5rem;
+        }
+
+        .footer-section ul li a:hover::before {
+            opacity: 1;
+            margin-right: 0;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: var(--secondary);
+            color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-item {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .dropdown:hover .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 500px;
+            }
+
+            .hero {
+                padding: 4rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .slogan-item {
+                min-width: 90%;
+                font-size: 1.3rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .module-card {
+                padding: 1.8rem;
+            }
+
+            .revenue-card {
+                padding: 1.8rem;
+            }
+        }
+
+        /* ============ ANIMACIONES ADICIONALES ============ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .module-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .module-card:nth-child(1) { animation-delay: 0.1s; }
+        .module-card:nth-child(2) { animation-delay: 0.2s; }
+        .module-card:nth-child(3) { animation-delay: 0.3s; }
+        .module-card:nth-child(4) { animation-delay: 0.4s; }
+        .module-card:nth-child(5) { animation-delay: 0.5s; }
+        .module-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .revenue-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .revenue-card:nth-child(1) { animation-delay: 0.1s; }
+        .revenue-card:nth-child(2) { animation-delay: 0.2s; }
+        .revenue-card:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon">C</div>
+                    CCPL <span>LORETO</span>
+                </a>
+                <nav>
+                    <div class="dropdown">
+                        <a href="#" class="nav-item dropdown-toggle">
+                            <i class="fas fa-building"></i> Institucional
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#"><i class="fas fa-info-circle"></i> Acerca de Nosotros</a>
+                            <a href="#"><i class="fas fa-users"></i> Consejo Directivo</a>
+                            <a href="#"><i class="fas fa-history"></i> Nuestra Historia</a>
+                            <a href="#"><i class="fas fa-award"></i> Logros y Reconocimientos</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <a href="#" class="nav-item dropdown-toggle">
+                            <i class="fas fa-id-card"></i> Agremiados
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#"><i class="fas fa-user-plus"></i> Colegiarse</a>
+                            <a href="#"><i class="fas fa-search"></i> Consulta de Habilidad</a>
+                            <a href="#"><i class="fas fa-file-alt"></i> Requisitos</a>
+                            <a href="#"><i class="fas fa-credit-card"></i> Pagos y Cuotas</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <a href="#" class="nav-item dropdown-toggle">
+                            <i class="fas fa-cogs"></i> Servicios
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#"><i class="fas fa-book"></i> Capacitaciones</a>
+                            <a href="#"><i class="fas fa-certificate"></i> Certificaciones</a>
+                            <a href="#"><i class="fas fa-building"></i> Alquiler de Ambientes</a>
+                            <a href="#"><i class="fas fa-handshake"></i> Convenios</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <a href="#" class="nav-item dropdown-toggle">
+                            <i class="fas fa-calendar-alt"></i> Eventos
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#"><i class="fas fa-ticket-alt"></i> Próximos Eventos</a>
+                            <a href="#"><i class="fas fa-images"></i> Galería de Fotos</a>
+                            <a href="#"><i class="fas fa-video"></i> Videos</a>
+                            <a href="#"><i class="fas fa-newspaper"></i> Noticias</a>
+                        </div>
+                    </div>
+
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-lock"></i> Transparencia
+                    </a>
+
+                    <a href="#" class="cta-button">
+                        <i class="fas fa-sign-in-alt"></i> Acceso
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-star"></i> GESTIÓN 2026 - 2027
+                </div>
+                <h1>Colegio de Contadores Públicos de Loreto</h1>
+                <p>Una gestión moderna, transparente y digital para los nuevos tiempos. Transformando la administración profesional con tecnología de vanguardia.</p>
+                <div class="hero-buttons">
+                    <a href="#modulos" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Conocer Módulos
+                    </a>
+                    <a href="#contacto" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i> Contactar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLOGAN CON EFECTO PREMIUM -->
+    <section class="slogan-section">
+        <div class="container">
+            <div class="slogan-container">
+                <div class="slogan-item">
+                    <span><i class="fas fa-check-circle"></i> Gestión práctica e inteligente</span>
+                </div>
+                <div class="slogan-item">
+                    <span><i class="fas fa-handshake"></i> Facilidad para los abonados</span>
+                </div>
+                <div class="slogan-item">
+                    <span><i class="fas fa-flag-checkered"></i> Cumpliremos las metas</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MÓDULOS Y FUNCIONALIDADES -->
+    <section class="modules-section" id="modulos">
+        <div class="container">
+            <div class="section-title">
+                <h2>Módulos y Funcionalidades Clave</h2>
+                <p>Todo lo necesario para una gestión eficiente, transparente y profesional</p>
+            </div>
+
+            <div class="modules-grid">
+                <!-- Gestión de Agremiados -->
+                <div class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Gestión de Agremiados</h3>
+                    <p>Base de datos digital y segura de los 2,500 miembros con tecnología de última generación.</p>
+                    <ul class="module-features">
+                        <li>Registro rápido con foto de DNI (IA)</li>
+                        <li>Consulta de Habilidad en tiempo real</li>
+                        <li>Ficha digital por colegiado</li>
+                        <li>Control de sanciones y méritos</li>
+                    </ul>
+                </div>
+
+                <!-- Gestión Económica -->
+                <div class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Gestión Económica</h3>
+                    <p>Transparencia total en ingresos y egresos con reportes en tiempo real.</p>
+                    <ul class="module-features">
+                        <li>Control de caja y bancos</li>
+                        <li>Reportes financieros al instante</li>
+                        <li>Facturación electrónica (SUNAT)</li>
+                        <li>Alertas automáticas de morosidad</li>
+                    </ul>
+                </div>
+
+                <!-- Comunicación Directa -->
+                <div class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Comunicación Directa</h3>
+                    <p>Una alternativa profesional a WhatsApp para comunicación institucional.</p>
+                    <ul class="module-features">
+                        <li>Chat institucional integrado</li>
+                        <li>Mensajes masivos sin costo</li>
+                        <li>Notificaciones al celular</li>
+                        <li>Confirmación de lectura</li>
+                    </ul>
+                </div>
+
+                <!-- Seguridad Blockchain -->
+                <div class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Seguridad Blockchain</h3>
+                    <p>Certificados imposibles de falsificar con tecnología blockchain.</p>
+                    <ul class="module-features">
+                        <li>Emisión de Certificados de Habilidad</li>
+                        <li>Código QR de verificación inmediata</li>
+                        <li>Registro inmutable (Blockchain)</li>
+                        <li>Prestigio tecnológico</li>
+                    </ul>
+                </div>
+
+                <!-- Chatbot 24/7 -->
+                <div class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Chatbot 24/7</h3>
+                    <p>Atención automática para reducir carga administrativa y mejorar servicio.</p>
+                    <ul class="module-features">
+                        <li>Responde consultas de deudas</li>
+                        <li>Informa sobre cursos y eventos</li>
+                        <li>Atiende fuera de horario</li>
+                        <li>Libera personal de tareas repetitivas</li>
+                    </ul>
+                </div>
+
+                <!-- Gestión de Filiales -->
+                <div class="module-card">
+                    <div class="module-icon">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <h3>Gestión de Filiales</h3>
+                    <p>Control unificado de sedes y club social con reportes consolidados.</p>
+                    <ul class="module-features">
+                        <li>Control de acceso con QR</li>
+                        <li>Reservas de canchas y salones</li>
+                        <li>Caja chica por sede</li>
+                        <li>Reportes consolidados</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HERRAMIENTAS PARA GENERAR INGRESOS -->
+    <section class="revenue-section" id="ingresos">
+        <div class="container">
+            <div class="section-title">
+                <h2>Herramientas para Generar Ingresos</h2>
+                <p>El sistema no es solo un gasto, es una herramienta de inversión estratégica</p>
+            </div>
+
+            <div class="revenue-grid">
+                <div class="revenue-card">
+                    <h3><i class="fas fa-graduation-cap"></i> Academia Virtual</h3>
+                    <p>Venta de cursos y diplomados online. El sistema gestiona inscripciones, pagos y entrega de certificados automáticos para maximizar ingresos.</p>
+                </div>
+
+                <div class="revenue-card">
+                    <h3><i class="fas fa-book"></i> Venta de Libros Digitales</h3>
+                    <p>Tienda online para venta de e-books y revistas especializadas con comisión directa para el colegio.</p>
+                </div>
+
+                <div class="revenue-card">
+                    <h3><i class="fas fa-ticket-alt"></i> Entradas a Eventos</h3>
+                    <p>Gestión de tickets QR para fiestas, cenas y congresos, evitando la reventa y el fraude de manera efectiva.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-info-circle"></i> Sobre CCPL</h4>
+                    <p>El Colegio de Contadores Públicos de Loreto es la institución representativa de los profesionales contables de la región, comprometida con la excelencia, la transparencia y la innovación digital.</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4><i class="fas fa-link"></i> Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="#institucional">Institucional</a></li>
+                        <li><a href="#agremiados">Agremiados</a></li>
+                        <li><a href="#modulos">Módulos</a></li>
+                        <li><a href="#ingresos">Ingresos</a></li>
+                        <li><a href="#">Transparencia</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4><i class="fas fa-map-marker-alt"></i> Ubicación</h4>
+                    <p>Calle Echenique 451<br>Iquitos – Maynas<br>Loreto – Perú</p>
+                    <p style="margin-top: 1.5rem;">
+                        <strong>Horarios de Atención:</strong><br>
+                        Lunes – Viernes: 08:00 - 19:00<br>
+                        Sábados: 08:00 - 13:00
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h4><i class="fas fa-phone"></i> Contacto</h4>
+                    <p>
+                        <strong>Teléfono:</strong><br>
+                        +51 (65) 242-2449<br><br>
+                        <strong>Email:</strong><br>
+                        info@ccploreto.org.pe<br><br>
+                        <strong>WhatsApp:</strong><br>
+                        +51 979 169 813
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Colegio de Contadores Públicos de Loreto. Todos los derechos reservados. | Gestión 2026-2027 | Diseño Premium</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

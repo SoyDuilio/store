@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colegio de Contadores Públicos de Loreto | Nueva Gestión</title>
+    <!-- Importamos tipografía moderna: Montserrat y Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Iconos para un look profesional -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- VARIABLES Y RESET --- */
+        :root {
+            --primary: #0f172a; /* Azul noche profesional */
+            --accent: #3b82f6; /* Azul vibrante pero serio */
+            --gold: #cca43b; /* Toque dorado sutil para distinción */
+            --text: #334155;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        /* --- HEADER & NAV --- */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i { color: var(--gold); font-size: 1.5rem; }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        nav a:hover { color: var(--accent); }
+
+        .btn-login {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .btn-login:hover { background-color: var(--accent); transform: translateY(-2px); }
+
+        /* --- HERO SECTION CON ANIMACIÓN CSS --- */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 20px;
+            margin-top: 60px; /* offset header */
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+
+        /* EL EFECTO DE TEXTO QUE CRECE */
+        .slogan-container {
+            height: 60px; /* Espacio reservado para la animación */
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .slogan-text {
+            position: absolute;
+            font-size: 2rem;
+            font-weight: 300; /* Letra fina elegante */
+            color: var(--gold);
+            opacity: 0;
+            transform: scale(0.8);
+            animation: growAndFade 9s infinite ease-in-out;
+            white-space: nowrap;
+        }
+
+        /* Retardos para secuenciar los textos */
+        .slogan-text:nth-child(1) { animation-delay: 0s; }
+        .slogan-text:nth-child(2) { animation-delay: 3s; }
+        .slogan-text:nth-child(3) { animation-delay: 6s; }
+
+        @keyframes growAndFade {
+            0% { opacity: 0; transform: scale(0.9); filter: blur(5px); }
+            10% { opacity: 1; transform: scale(1); filter: blur(0); }
+            30% { opacity: 1; transform: scale(1.05); filter: blur(0); }
+            40% { opacity: 0; transform: scale(1.1); filter: blur(2px); }
+            100% { opacity: 0; }
+        }
+
+        /* --- SECCIÓN PROPUESTA (Basado en JORGE DECANO) --- */
+        .proposal-bar {
+            background: var(--white);
+            padding: 4rem 10%;
+            text-align: center;
+        }
+
+        .proposal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+            text-align: left;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-color: var(--accent);
+        }
+
+        .card i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .card p { font-size: 0.9rem; color: #64748b; }
+
+        /* --- ESTADÍSTICAS / BARRA MODERNA --- */
+        .stats {
+            background: var(--primary);
+            color: var(--white);
+            padding: 3rem 10%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .stat-item h2 { color: var(--gold); font-size: 2.5rem; margin-bottom: 0; }
+        .stat-item p { font-size: 0.9rem; opacity: 0.8; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #0b1120;
+            color: #94a3b8;
+            padding: 4rem 5% 2rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 { color: var(--white); margin-bottom: 1.5rem; }
+        .footer-col ul li { margin-bottom: 0.8rem; }
+        .footer-col ul li a:hover { color: var(--gold); }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #1e293b;
+            padding-top: 2rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .slogan-text { font-size: 1.3rem; }
+            nav { display: none; } /* En prod usaríamos JS para menú hamburguesa */
+            header { justify-content: center; }
+            .logo { margin-right: 0; }
+            .btn-login { position: absolute; right: 20px; padding: 0.4rem 1rem; font-size: 0.8rem;}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-scale-balanced"></i>
+            CCPLORETO
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">La Institución</a></li>
+                <li><a href="#">Trámites</a></li>
+                <li><a href="#">Transparencia</a></li>
+                <li><a href="#">Campus Virtual</a></li>
+            </ul>
+        </nav>
+        <a href="#" class="btn-login">Ventanilla Única</a>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <p style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; margin-bottom: 1rem; color: var(--gold);">Colegio de Contadores Públicos de Loreto</p>
+        <h1>Excelencia Profesional</h1>
+        
+        <!-- Animación solicitada -->
+        <div class="slogan-container">
+            <div class="slogan-text">Gestión práctica e inteligente</div>
+            <div class="slogan-text">Facilidad para los abonados</div>
+            <div class="slogan-text">Cumpliremos las metas</div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <a href="#" style="background: var(--accent); color: white; padding: 1rem 2rem; border-radius: 4px; font-weight: 600; margin-right: 1rem;">Habilitación Online</a>
+            <a href="#" style="border: 1px solid white; color: white; padding: 1rem 2rem; border-radius: 4px; font-weight: 600;">Propuesta Gestión</a>
+        </div>
+    </section>
+
+    <!-- Sección de Servicios / Propuesta -->
+    <section class="proposal-bar">
+        <h2 style="font-size: 2rem;">Modernización y Servicio</h2>
+        <p style="color: #64748b; max-width: 600px; margin: 1rem auto;">Implementando las funcionalidades propuestas para una gestión transparente y eficiente.</p>
+        
+        <div class="proposal-grid">
+            <!-- Funcionalidad 1 -->
+            <div class="card">
+                <i class="fa-solid fa-id-card"></i>
+                <h3>Trámites 100% Digitales</h3>
+                <p>Solicitud de colegiatura, constancias de habilidad y certificados desde cualquier dispositivo sin ir al local.</p>
+            </div>
+            
+            <!-- Funcionalidad 2 -->
+            <div class="card">
+                <i class="fa-solid fa-laptop-file"></i>
+                <h3>Bolsa de Trabajo IA</h3>
+                <p>Conexión directa entre empresas de Iquitos y colegiados, filtrado inteligente de perfiles profesionales.</p>
+            </div>
+            
+            <!-- Funcionalidad 3 -->
+            <div class="card">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h3>Campus de Actualización</h3>
+                <p>Acceso exclusivo a webinars, normativa tributaria al día y biblioteca virtual especializada.</p>
+            </div>
+
+            <!-- Funcionalidad 4 -->
+            <div class="card">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                <h3>Transparencia de Gestión</h3>
+                <p>Panel de control para que el agremiado visualice el uso de recursos y avances de las metas propuestas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Barra de Impacto -->
+    <section class="stats">
+        <div class="stat-item">
+            <h2>+2,500</h2>
+            <p>Agremiados</p>
+        </div>
+        <div class="stat-item">
+            <h2>100%</h2>
+            <p>Digitalizado</p>
+        </div>
+        <div class="stat-item">
+            <h2>24/7</h2>
+            <p>Atención Virtual</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <div class="logo" style="color: white; margin-bottom: 1rem;">
+                    <i class="fa-solid fa-scale-balanced" style="color: var(--gold);"></i> CCPLORETO
+                </div>
+                <p>Trabajando por la excelencia contable en la Amazonía Peruana.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="#">Junta Directiva</a></li>
+                    <li><a href="#">Normativa</a></li>
+                    <li><a href="#">Eventos Académicos</a></li>
+                    <li><a href="#">Mesa de Partes</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <ul>
+                    <li><i class="fa-solid fa-location-dot"></i> Iquitos, Loreto - Perú</li>
+                    <li><i class="fa-solid fa-phone"></i> (065) 23-XXXX</li>
+                    <li><i class="fa-solid fa-envelope"></i> informes@ccploreto.org.pe</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Colegio de Contadores Públicos de Loreto. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
