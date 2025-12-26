@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta de Modernización Digital - CCPL</title>
+    <!-- Fuentes Google: Inter para modernidad y limpieza -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Iconos FontAwesome (Versión Profesional) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0f172a; /* Azul noche profesional */
+            --accent: #2563eb; /* Azul digital vibrante */
+            --success: #10b981; /* Verde finanzas */
+            --bg-light: #f8fafc;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: var(--text-main); line-height: 1.6; }
+
+        /* HEADER */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .logo-placeholder {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: inline-block;
+            border: 2px solid var(--primary);
+            padding: 10px 20px;
+            letter-spacing: -1px;
+        }
+        h1 { font-size: 2.5rem; color: var(--primary); margin-bottom: 15px; letter-spacing: -0.02em; }
+        .subtitle { font-size: 1.1rem; color: var(--text-light); max-width: 700px; margin: 0 auto; }
+
+        /* CONTAINER */
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+
+        /* SECTIONS */
+        .phase-section { margin-bottom: 60px; }
+        .phase-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+        }
+        .phase-badge {
+            background: var(--primary);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-right: 15px;
+        }
+        .phase-title { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+        .phase-desc { display: block; margin-top: 5px; color: var(--text-light); font-size: 1rem; }
+
+        /* CARDS GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        /* FEATURE CARD */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+        .card-icon {
+            width: 45px;
+            height: 45px;
+            background: #eff6ff;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .card h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; color: var(--primary); }
+        .card ul { list-style: none; margin-bottom: 15px; }
+        .card li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .card li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        .benefit {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--border);
+            font-size: 0.9rem;
+            color: var(--success);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* CALL TO ACTION FOOTER */
+        .cta-footer {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 12px;
+            margin-top: 50px;
+        }
+        .cta-footer h2 { margin-bottom: 15px; color: var(--white); }
+        .cta-footer p { color: #94a3b8; max-width: 600px; margin: 0 auto 30px; }
+        .btn {
+            background: var(--accent);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .btn:hover { background: #1d4ed8; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .phase-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-placeholder">CCPLoreto</div>
+    <h1>Plan de Transformación Digital</h1>
+    <p class="subtitle">Propuesta estratégica para fortalecer la gestión, control y rentabilidad del Colegio de Contadores Públicos de Loreto.</p>
+</header>
+
+<div class="container">
+
+    <!-- INTRODUCCIÓN ESTRATÉGICA -->
+    <div style="margin-bottom: 50px; background: #fff; padding: 30px; border-radius: 12px; border-left: 5px solid var(--accent);">
+        <h3 style="color: var(--primary); margin-bottom: 10px;">Objetivo del Proyecto</h3>
+        <p style="color: var(--text-main);">Implementar una plataforma que centralice el <strong>control financiero y operativo</strong> (evitando fugas de dinero y manualidad) mientras posiciona al CCPLoreto como líder en innovación tecnológica, generando <strong>nuevas fuentes de ingresos</strong> para la institución.</p>
+    </div>
+
+    <!-- FASE 1 -->
+    <section class="phase-section">
+        <div class="phase-header">
+            <span class="phase-badge">Fase 1</span>
+            <div>
+                <div class="phase-title">Control, Orden y Credibilidad</div>
+                <span class="phase-desc">Funcionalidades para la gestión diaria eficiente y transparente.</span>
+            </div>
+        </div>
+
+        <div class="grid">
+            <!-- Finanzas y Recaudación -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+                <h3>Gestión de Tesorería</h3>
+                <ul>
+                    <li><strong>Facturación Electrónica:</strong> Emisión automática (Boleta/Factura) conectada a SUNAT.</li>
+                    <li><strong>Control de Caja (Arqueo):</strong> Cierre diario de caja por usuario (ideal para pagos presenciales).</li>
+                    <li><strong>Conciliación Automática:</strong> Cruce inteligente de pagos bancarios vs. sistema.</li>
+                </ul>
+                <div class="benefit"><i class="fa-solid fa-check-circle"></i> Elimina errores humanos y descuadres.</div>
+            </div>
+
+            <!-- Gestión del Restaurante/Stock -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-utensils"></i></div>
+                <h3>Punto de Venta & Servicios</h3>
+                <ul>
+                    <li><strong>Módulo Restaurante/Bar:</strong> Comandas digitales y cobro rápido en mesa.</li>
+                    <li><strong>Control de Inventarios (Kardex):</strong> Alerta de stock bajo de insumos o merchandising.</li>
+                    <li><strong>Gestión de Alquileres:</strong> Calendario de reservas para auditorio y campo deportivo con bloqueo de fechas por pago.</li>
+                </ul>
+                <div class="benefit"><i class="fa-solid fa-shield-halved"></i> Evita pérdidas o robos de insumos ("fuga hormiga").</div>
+            </div>
+
+            <!-- Servicios al Agremiado -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-id-card"></i></div>
+                <h3>Trámites Digitales</h3>
+                <ul>
+                    <li><strong>Certificado de Habilidad QR:</strong> Emisión automática 24/7 tras pago.</li>
+                    <li><strong>Mesa de Partes Virtual:</strong> Seguimiento de expedientes (Número de ticket).</li>
+                    <li><strong>Pasarela de Pagos:</strong> Integración total con Visa, Mastercard, Yape y Plin.</li>
+                </ul>
+                <div class="benefit"><i class="fa-solid fa-clock"></i> Reduce filas y carga a secretaría.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FASE 2 -->
+    <section class="phase-section">
+        <div class="phase-header">
+            <span class="phase-badge" style="background: var(--text-main);">Fase 2</span>
+            <div>
+                <div class="phase-title">Crecimiento y Nuevos Ingresos</div>
+                <span class="phase-desc">Funcionalidades para generar dinero y modernizar la comunicación.</span>
+            </div>
+        </div>
+
+        <div class="grid">
+            <!-- Monetización -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-shop"></i></div>
+                <h3>Marketplace de Conocimiento</h3>
+                <ul>
+                    <li><strong>Tienda de E-books/Recursos:</strong> Venta de libros digitales y plantillas Excel.</li>
+                    <li><strong>Sistema de Comisiones:</strong> Split de pagos (X% para el autor / Y% para el CCPL).</li>
+                    <li><strong>Programa de Afiliados:</strong> Colegiados ganan "créditos" por promover cursos del colegio.</li>
+                </ul>
+                <div class="benefit"><i class="fa-solid fa-arrow-trend-up"></i> Genera ingresos pasivos para el Colegio.</div>
+            </div>
+
+            <!-- Comunicación Moderna -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                <h3>Experiencia Móvil (WebApp)</h3>
+                <ul>
+                    <li><strong>Push Notifications:</strong> Alertas directas al celular (Vencimiento de cuota, Cursos).</li>
+                    <li><strong>Votación en Tiempo Real:</strong> Sistema seguro para Asambleas híbridas.</li>
+                    <li><strong>Bolsa de Trabajo Premium:</strong> Filtros avanzados para reclutadores.</li>
+                </ul>
+                <div class="benefit"><i class="fa-solid fa-bolt"></i> Comunicación instantánea y cero papel.</div>
+            </div>
+
+            <!-- Automatización IA -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+                <h3>Chatbot Inteligente</h3>
+                <ul>
+                    <li><strong>Atención 24/7:</strong> Responde preguntas frecuentes ("¿Cuánto debo?", "¿Cómo me habilito?").</li>
+                    <li><strong>Consulta de Deuda:</strong> Integración con BD para dar saldos exactos por WhatsApp/Web.</li>
+                    <li><strong>Derivación Inteligente:</strong> Pasa a un humano solo casos complejos.</li>
+                </ul>
+                <div class="benefit"><i class="fa-solid fa-headset"></i> Libera al personal administrativo de llamadas repetitivas.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="cta-footer">
+        <h2>Listos para transformar el CCPLoreto</h2>
+        <p>Una plataforma escalable, segura y diseñada para la autogestión financiera.</p>
+        <a href="#" class="btn">Iniciar Plan de Implementación</a>
+    </div>
+
+</div>
+
+</body>
+</html>
