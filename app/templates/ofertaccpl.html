@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Tecnológica CCPL - SigcoSystems</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Paleta Dark Corporate */
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --primary: #3b82f6; /* Azul eléctrico */
+            --secondary: #06b6d4; /* Cyan neón */
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --gold: #fbbf24;
+            --border: rgba(148, 163, 184, 0.1);
+            --gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* UTILITIES */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .text-gradient { 
+            background: var(--gradient); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        .center-text { text-align: center; }
+        .hidden { display: none; }
+        
+        /* HEADER */
+        header {
+            padding: 60px 0 40px;
+            background: radial-gradient(circle at top center, #1e293b 0%, #0f172a 70%);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo-tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        h1 { font-size: 2.8rem; line-height: 1.2; margin-bottom: 20px; letter-spacing: -1px; }
+        .subtitle { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+
+        /* INTRO CARDS (INNOVATION) */
+        .innovation-section { padding: 60px 0; }
+        .section-title { font-size: 2rem; margin-bottom: 40px; text-align: center; }
+        .section-title span { color: var(--secondary); }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .tech-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .tech-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tech-card:hover {
+            transform: translateY(-5px);
+            background: var(--bg-card-hover);
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+        }
+        .tech-card:hover::before { opacity: 1; }
+        
+        .icon-box {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.2));
+            width: 60px; height: 60px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+            color: var(--secondary);
+        }
+        .tech-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        .tech-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* TABS SECTION (MODULES) */
+        .modules-section { padding: 40px 0 80px; }
+        
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .tab-btn:hover { border-color: var(--primary); color: var(--text-main); }
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .tab-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        .module-list h4 { color: var(--secondary); margin-bottom: 20px; font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .module-list ul { list-style: none; }
+        .module-list li { margin-bottom: 12px; padding-left: 25px; position: relative; color: var(--text-main); }
+        .module-list li::before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--success);
+            position: absolute;
+            left: 0;
+            font-size: 0.9rem;
+        }
+
+        /* PRICING SECTION */
+        .pricing-section { padding: 60px 0; background: linear-gradient(to bottom, var(--bg-body), #0b1120); }
+        .price-card {
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 24px;
+            padding: 50px 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            box-shadow: 0 0 50px rgba(59, 130, 246, 0.15);
+        }
+        .badge-owner {
+            position: absolute;
+            top: -15px; left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(251, 191, 36, 0.4);
+        }
+        .price-amount { font-size: 3.5rem; font-weight: 700; margin: 20px 0 10px; color: #fff; }
+        .price-currency { font-size: 1.5rem; color: var(--text-muted); vertical-align: super; }
+        .price-terms { color: var(--text-muted); margin-bottom: 30px; font-size: 0.9rem; }
+        
+        .bonus-box {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px dashed var(--success);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            color: var(--success);
+            font-size: 0.95rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--gradient);
+            color: #fff;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(59, 130, 246, 0.5); }
+
+        /* FOOTER */
+        footer { padding: 40px 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
+        .sigco-brand { color: var(--text-main); font-weight: 700; letter-spacing: 1px; margin-bottom: 5px; display: block; }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .tabs-nav { flex-direction: column; }
+            .tab-btn { width: 100%; text-align: center; }
+            .tab-content { padding: 25px; }
+            .price-amount { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container center-text">
+        <span class="logo-tag"><i class="fas fa-code-branch"></i> SIGCO SYSTEMS LORETO</span>
+        <h1>Modernización Integral <br><span class="text-gradient">CCPLoreto 2026</span></h1>
+        <p class="subtitle">Propuesta para el desarrollo de la Plataforma de Gestión Institucional, Transparencia y Servicios Digitales con propiedad del código fuente.</p>
+    </div>
+</header>
+
+<!-- SECCIÓN 1: DIFERENCIACIÓN E INNOVACIÓN -->
+<section class="innovation-section container">
+    <h2 class="section-title">Innovación <span>No Disponible</span> en Otros Colegios</h2>
+    <div class="tech-grid">
+        <!-- Votación -->
+        <div class="tech-card">
+            <div class="icon-box"><i class="fas fa-person-booth"></i></div>
+            <h3>Votación Real-Time</h3>
+            <p>Sistema democrático con tecnología <strong>WebSockets</strong>. Resultados en vivo, gráficos instantáneos y auditoría digital para asambleas híbridas.</p>
+        </div>
+        <!-- Alertas -->
+        <div class="tech-card">
+            <div class="icon-box"><i class="fas fa-bell"></i></div>
+            <h3>Alertas Inteligentes</h3>
+            <p>Sistema <strong>Push Notifications</strong> directo al celular. Avisos de vencimiento de cuota, convocatorias urgentes y noticias sin usar SMS costosos.</p>
+        </div>
+        <!-- Monetización -->
+        <div class="tech-card">
+            <div class="icon-box"><i class="fas fa-cash-register"></i></div>
+            <h3>Ecommerce & Servicios</h3>
+            <p>Pasarela de pagos integrada para cuotas, pero también para <strong>Alquiler de Canchas, Auditorio y Centro Recreativo</strong> con bloqueo de fechas automático.</p>
+        </div>
+        <!-- IA -->
+        <div class="tech-card">
+            <div class="icon-box"><i class="fas fa-robot"></i></div>
+            <h3>Chatbot 24/7</h3>
+            <p>Asistente virtual entrenado para responder "¿Cuánto debo?" o "¿Estoy habilitado?" automáticamente, liberando la carga de Secretaría.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SECCIÓN 2: MÓDULOS DEL SISTEMA (TABS) -->
+<section class="modules-section container">
+    <h2 class="section-title">Alcance Funcional por Áreas</h2>
+    
+    <!-- Navegación de Pestañas -->
+    <div class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab(event, 'secretaria')"><i class="fas fa-user-tie"></i> Secretaría</button>
+        <button class="tab-btn" onclick="openTab(event, 'tesoreria')"><i class="fas fa-wallet"></i> Tesorería</button>
+        <button class="tab-btn" onclick="openTab(event, 'admin')"><i class="fas fa-chart-pie"></i> Administración</button>
+        <button class="tab-btn" onclick="openTab(event, 'contabilidad')"><i class="fas fa-file-invoice-dollar"></i> Contabilidad</button>
+    </div>
+
+    <!-- Contenido Secretaría -->
+    <div id="secretaria" class="tab-content">
+        <div class="module-grid">
+            <div class="module-list">
+                <h4><i class="fas fa-folder-open"></i> Gestión Documentaria</h4>
+                <ul>
+                    <li><strong>Mesa de Partes Virtual:</strong> Recepción y derivación de expedientes digitales.</li>
+                    <li><strong>Seguimiento (Tracking):</strong> El colegiado ve dónde está su trámite en tiempo real.</li>
+                    <li><strong>Digitalización:</strong> Repositorio de actas y resoluciones.</li>
+                </ul>
+            </div>
+            <div class="module-list">
+                <h4><i class="fas fa-users"></i> Padrón y Protocolo</h4>
+                <ul>
+                    <li><strong>Ficha Única del Agremiado:</strong> Historial completo, foto y estado.</li>
+                    <li><strong>Certificados de Habilidad:</strong> Emisión automática con QR (24/7).</li>
+                    <li><strong>Control de Asistencia:</strong> Registro biométrico o digital para eventos.</li>
+                    <li><strong>Reportes:</strong> Cumpleaños, Habilidad por periodos.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido Tesorería -->
+    <div id="tesoreria" class="tab-content hidden">
+        <div class="module-grid">
+            <div class="module-list">
+                <h4><i class="fas fa-coins"></i> Recaudación</h4>
+                <ul>
+                    <li><strong>Facturación Electrónica:</strong> Conexión directa SUNAT (Boletas/Facturas).</li>
+                    <li><strong>Pasarela de Pagos:</strong> Integración Visa, Yape, Plin.</li>
+                    <li><strong>Gestión de Cobranza:</strong> Alertas automáticas de morosidad.</li>
+                    <li><strong>Arqueo de Caja:</strong> Cierre diario de efectivo y digital.</li>
+                </ul>
+            </div>
+            <div class="module-list">
+                <h4><i class="fas fa-store"></i> Comercial (Restaurante/Sedes)</h4>
+                <ul>
+                    <li><strong>Punto de Venta (POS Web):</strong> Para el restaurante y bar del centro recreacional.</li>
+                    <li><strong>Control de Inventarios:</strong> Kardex de insumos y bebidas (Control de Stock).</li>
+                    <li><strong>Reservas:</strong> Calendario de alquiler de espacios deportivos.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido Administración -->
+    <div id="admin" class="tab-content hidden">
+        <div class="module-grid">
+            <div class="module-list">
+                <h4><i class="fas fa-cogs"></i> Control Institucional</h4>
+                <ul>
+                    <li><strong>Gestión de Multas:</strong> Aplicación automática por inasistencia a votaciones.</li>
+                    <li><strong>Comunicación Masiva:</strong> Envío de newsletters y notificaciones push.</li>
+                    <li><strong>Gestión de Usuarios:</strong> Roles y permisos (Decano, Secretaria, Contador).</li>
+                </ul>
+            </div>
+            <div class="module-list">
+                <h4><i class="fas fa-chart-line"></i> Business Intelligence</h4>
+                <ul>
+                    <li><strong>Dashboard Gerencial:</strong> Estadísticas de recaudación vs gastos en tiempo real.</li>
+                    <li><strong>Auditoría de Sistema:</strong> Log de quién hizo qué y cuándo.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido Contabilidad -->
+    <div id="contabilidad" class="tab-content hidden">
+        <div class="module-grid">
+            <div class="module-list">
+                <h4><i class="fas fa-book"></i> Integración Contable</h4>
+                <ul>
+                    <li><strong>Reportes de Ingresos:</strong> Exportación a Excel/Sist. Contable de lo recaudado.</li>
+                    <li><strong>Libro de Ventas:</strong> Generación automática basada en facturación electrónica.</li>
+                    <li><strong>Conciliación Bancaria:</strong> Cruce de depósitos vs sistema.</li>
+                    <li><strong>Portal de Transparencia:</strong> Publicación automática de estados financieros (opcional).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECCIÓN 3: PRECIO E INVERSIÓN -->
+<section class="pricing-section">
+    <div class="container">
+        <div class="price-card">
+            <div class="badge-owner">PROPIEDAD INTELECTUAL (CÓDIGO FUENTE)</div>
+            <h3 style="color: var(--text-main); margin-top: 20px;">Inversión por Desarrollo Integral</h3>
+            <p style="margin-bottom: 20px;">Adquisición de Activo Digital Institucional</p>
+            
+            <div class="price-amount">
+                <span class="price-currency">S/.</span>12,000
+            </div>
+            <div class="price-terms">
+                Facilidad de pago: <strong>3 cuotas bimensuales</strong> de S/. 4,000<br>
+                (Cobertura total en 6 meses)
+            </div>
+
+            <div class="bonus-box">
+                <i class="fas fa-gift"></i> <strong>BONUS INCLUIDO:</strong><br>
+                Hosting de Alta Velocidad (Valor $15/mes)<br>
+                <strong>GRATIS hasta el 31 de Diciembre del 2027</strong>
+            </div>
+
+            <ul style="text-align: left; margin: 30px 0; color: var(--text-muted); list-style: none;">
+                <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i> Entrega total del código fuente (Software propio).</li>
+                <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i> Soporte Técnico: S/. 250/mes (Inicia al 2do mes post-entrega).</li>
+                <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: var(--success); margin-right: 10px;"></i> Capacitación presencial al personal.</li>
+            </ul>
+
+            <a href="#" class="cta-btn">Aprobar Propuesta</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <span class="sigco-brand">SIGCO SYSTEMS LORETO</span>
+        <p>Más de 20 años liderando el desarrollo de software en la Amazonía.</p>
+        <p style="margin-top: 10px; opacity: 0.6;">&copy; 2026 Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabContent, tabBtn;
+        
+        // Ocultar todo el contenido
+        tabContent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].classList.add("hidden");
+        }
+        
+        // Quitar clase active de los botones
+        tabBtn = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tabBtn.length; i++) {
+            tabBtn[i].classList.remove("active");
+        }
+        
+        // Mostrar el tab actual y activar botón
+        document.getElementById(tabName).classList.remove("hidden");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+
+</body>
+</html>
