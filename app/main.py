@@ -607,3 +607,8 @@ async def nuevoportal(request: Request):
 @app.get("/funcionalidades", response_class=HTMLResponse)
 async def funcionalidades(request: Request):
     return templates.TemplateResponse("funcionalidades.html", {"request": request})
+
+#PROPUESTA/OFERTA A COLEGIO CONTADORES LORETO - PROPUESTA A JORGE SANTANA (07-01-2026)
+@app.get("/ofertaccpl", response_class=HTMLResponse)
+async def ofertaccpl(request: Request):
+    return templates.TemplateResponse("ofertaccpl.html", {"request": request})
