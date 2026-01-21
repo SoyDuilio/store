@@ -612,3 +612,8 @@ async def funcionalidades(request: Request):
 @app.get("/ofertaccpl", response_class=HTMLResponse)
 async def ofertaccpl(request: Request):
     return templates.TemplateResponse("ofertaccpl.html", {"request": request})
+
+#MODELOS SITIOS WEB - COLEGIOS PROFESIONALES - PERÚ (20 enero 2026)
+@app.get("/colegiospro", response_class=HTMLResponse)
+async def colegiospro(request: Request):
+    return templates.TemplateResponse("colegiospro.html", {"request": request})
