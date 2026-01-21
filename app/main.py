@@ -617,3 +617,7 @@ async def ofertaccpl(request: Request):
 @app.get("/colegiospro", response_class=HTMLResponse)
 async def colegiospro(request: Request):
     return templates.TemplateResponse("colegiospro.html", {"request": request})
+
+@app.get("/catalogo", response_class=HTMLResponse)
+async def catalogo(request: Request):
+    return templates.TemplateResponse("catalogo.html", {"request": request})
