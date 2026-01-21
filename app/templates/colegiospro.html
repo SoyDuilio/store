@@ -3,29 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Diseños Web - Colegios Profesionales</title>
+    <title>Plataformas Web + Automatización | Colegios Profesionales</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
             line-height: 1.6;
+            color: #333;
         }
 
-        .header-catalog {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 25px 40px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 2px solid #667eea;
+            padding: 20px 40px;
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .header-content {
@@ -36,610 +32,362 @@
             align-items: center;
         }
 
-        .logo-catalog {
-            font-size: 28px;
+        .logo {
+            font-size: 24px;
             font-weight: 900;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .header-info {
-            text-align: right;
-        }
-
-        .header-info p {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .header-info strong {
             color: #667eea;
+        }
+
+        .header-cta {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
         }
 
         /* Hero */
-        .hero-catalog {
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 80px 40px;
-            text-align: center;
             color: white;
         }
 
-        .hero-catalog h1 {
-            font-size: clamp(2.5rem, 6vw, 5rem);
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 25px;
+            line-height: 1.1;
+        }
+
+        .hero-list {
+            list-style: none;
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .hero-list li {
+            padding: 10px 0;
+        }
+
+        .urgency-badge {
+            background: #ff6b6b;
+            padding: 15px 30px;
+            border-radius: 30px;
+            display: inline-block;
+            font-weight: 800;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .video-box {
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .video-placeholder {
+            background: rgba(0,0,0,0.3);
+            padding: 100px 40px;
+            border-radius: 15px;
+        }
+
+        .video-placeholder svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 100px 40px;
+            background: #f8f9fa;
+        }
+
+        .pricing-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .pricing-header h2 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
             font-weight: 900;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
-        .hero-catalog p {
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
-            margin-bottom: 15px;
-            opacity: 0.95;
-        }
-
-        .stats-hero {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .stat-hero-item {
-            text-align: center;
-        }
-
-        .stat-hero-number {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 5px;
-        }
-
-        .stat-hero-label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        /* Filters */
-        .filters {
-            background: white;
-            padding: 30px 40px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-        }
-
-        .filters-content {
-            max-width: 1400px;
+        .pricing-grid {
+            max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 12px 28px;
-            border: 2px solid #e0e0e0;
-            background: white;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-color: #667eea;
-            transform: translateY(-2px);
-        }
-
-        /* Gallery */
-        .gallery {
-            padding: 60px 40px;
-            background: #f5f7fa;
-        }
-
-        .gallery-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .templates-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
-        .template-card {
+        .plan-card {
             background: white;
             border-radius: 20px;
-            overflow: hidden;
+            padding: 40px 30px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             transition: all 0.3s;
-            cursor: pointer;
+            border: 3px solid transparent;
         }
 
-        .template-card:hover {
+        .plan-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
         }
 
-        .template-preview {
+        .plan-card.featured {
+            border-color: #10b981;
             position: relative;
-            height: 300px;
-            overflow: hidden;
-            background: #f0f0f0;
         }
 
-        .template-preview iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-            transform: scale(0.5);
-            transform-origin: top left;
-            pointer-events: none;
-        }
-
-        .template-overlay {
+        .plan-card.featured::before {
+            content: '🔥 MÁS POPULAR';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 100%);
-            display: flex;
-            align-items: flex-end;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .template-card:hover .template-overlay {
-            opacity: 1;
-        }
-
-        .btn-view {
-            background: white;
-            color: #667eea;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .template-info {
-            padding: 30px;
-        }
-
-        .template-badges {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            background: #e3f2fd;
-            color: #1976d2;
-            padding: 5px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .badge.new {
-            background: #fff3e0;
-            color: #f57c00;
-        }
-
-        .badge.popular {
-            background: #f3e5f5;
-            color: #7b1fa2;
-        }
-
-        .template-info h3 {
-            font-size: 24px;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10b981;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
             font-weight: 800;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .template-info p {
-            color: #666;
-            font-size: 15px;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .template-tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background: #f5f5f5;
-            color: #666;
-            padding: 6px 14px;
-            border-radius: 15px;
             font-size: 13px;
         }
 
-        .mode-toggle {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 50px;
-            height: 26px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 13px;
-            cursor: pointer;
-            transition: background 0.3s;
+        .plan-name {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
         }
 
-        .mode-toggle::before {
-            content: '☀️';
-            position: absolute;
-            left: 3px;
-            top: 3px;
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-            transition: transform 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-        }
-
-        .mode-toggle.dark {
-            background: rgba(0,0,0,0.5);
-        }
-
-        .mode-toggle.dark::before {
-            content: '🌙';
-            transform: translateX(24px);
-        }
-
-        /* Footer */
-        .footer-catalog {
-            background: #2d3748;
-            color: white;
-            padding: 50px 40px 30px;
-            text-align: center;
-        }
-
-        .footer-catalog p {
+        .plan-price {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #667eea;
             margin-bottom: 10px;
         }
 
-        .contact-info {
-            margin: 30px 0;
-            font-size: 18px;
+        .plan-price span {
+            font-size: 1.2rem;
+            color: #718096;
         }
 
-        .contact-info a {
-            color: #667eea;
-            text-decoration: none;
+        .plan-description {
+            color: #718096;
+            margin-bottom: 30px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .plan-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .check { color: #10b981; font-weight: 900; }
+        .cross { color: #ef4444; font-weight: 900; }
+
+        .btn-plan {
+            width: 100%;
+            padding: 18px;
+            border-radius: 12px;
             font-weight: 700;
+            font-size: 17px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        @media (max-width: 768px) {
-            .templates-grid {
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .saas-info {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .saas-info strong {
+            color: #92400e;
+            font-size: 20px;
+        }
+
+        /* CTA Final */
+        .cta {
+            padding: 100px 40px;
+            background: #2d3748;
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 25px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .btn-cta {
+            padding: 20px 50px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 18px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 968px) {
+            .hero-content {
                 grid-template-columns: 1fr;
-            }
-
-            .stats-hero {
-                gap: 30px;
-            }
-
-            .header-info {
-                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <header class="header-catalog">
+    <header class="header">
         <div class="header-content">
-            <div class="logo-catalog">WebPro Portfolio</div>
-            <div class="header-info">
-                <p><strong>9 Diseños Profesionales</strong></p>
-                <p>Cada uno con modo día/noche</p>
-            </div>
+            <div class="logo">WebPro Solutions</div>
+            <a href="#pricing" class="header-cta">Ver Precios</a>
         </div>
     </header>
 
-    <section class="hero-catalog">
-        <h1>Catálogo de Diseños Web</h1>
-        <p>Portales modernos para Colegios Profesionales</p>
-        <p style="font-size: 16px; margin-top: 20px; opacity: 0.9;">Cada diseño es único, adaptable a cualquier profesión y 100% responsive</p>
-        
-        <div class="stats-hero">
-            <div class="stat-hero-item">
-                <div class="stat-hero-number">9</div>
-                <div class="stat-hero-label">Diseños únicos</div>
+    <section class="hero">
+        <div class="hero-content">
+            <div>
+                <h1>Plataforma Web + Automatización para Colegios Profesionales</h1>
+                <ul class="hero-list">
+                    <li>✅ Diseño moderno y profesional</li>
+                    <li>✅ Cobros automáticos 24/7</li>
+                    <li>✅ Certificados con firma digital</li>
+                    <li>✅ Notificaciones automáticas</li>
+                </ul>
+                <div class="urgency-badge">⚡ Oferta de Lanzamiento</div>
             </div>
-            <div class="stat-hero-item">
-                <div class="stat-hero-number">100%</div>
-                <div class="stat-hero-label">Responsive</div>
-            </div>
-            <div class="stat-hero-item">
-                <div class="stat-hero-number">2</div>
-                <div class="stat-hero-label">Modos (día/noche)</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="filters">
-        <div class="filters-content">
-            <button class="filter-btn active" data-filter="all">Todos</button>
-            <button class="filter-btn" data-filter="modern">Modernos</button>
-            <button class="filter-btn" data-filter="corporate">Corporativos</button>
-            <button class="filter-btn" data-filter="institutional">Institucionales</button>
-            <button class="filter-btn" data-filter="creative">Creativos</button>
-        </div>
-    </section>
-
-    <section class="gallery">
-        <div class="gallery-container">
-            <div class="templates-grid">
-                
-                <!-- Template 1: FinTech Bold -->
-                <div class="template-card" data-category="modern">
-                    <div class="template-preview">
-                        <div class="mode-toggle" onclick="event.stopPropagation(); this.classList.toggle('dark')"></div>
-                        <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">⚡</div>
-                        <div class="template-overlay">
-                            <a href="#" class="btn-view" onclick="alert('Aquí se abrirá la demo completa')">Ver Demo Completa →</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <div class="template-badges">
-                            <span class="badge new">Nuevo</span>
-                            <span class="badge popular">Popular</span>
-                        </div>
-                        <h3>FinTech Bold</h3>
-                        <p>Diseño moderno inspirado en startups tech. Dark mode nativo con gradientes vibrantes y efectos glassmorphism.</p>
-                        <div class="template-tags">
-                            <span class="tag">Dark Mode</span>
-                            <span class="tag">Gradientes</span>
-                            <span class="tag">Moderno</span>
-                        </div>
-                    </div>
+            <div class="video-box">
+                <div class="video-placeholder">
+                    <svg viewBox="0 0 24 24" fill="white">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <p style="font-size: 18px; font-weight: 700;">Ver Video Explicativo</p>
+                    <p style="font-size: 14px; opacity: 0.8;">(Coloca aquí tu video de presentación)</p>
                 </div>
-
-                <!-- Template 2: Corporate Clean -->
-                <div class="template-card" data-category="corporate">
-                    <div class="template-preview">
-                        <div class="mode-toggle"></div>
-                        <div style="background: #faf8f5; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 48px;">🏦</div>
-                        <div class="template-overlay">
-                            <a href="#" class="btn-view">Ver Demo Completa →</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <div class="template-badges">
-                            <span class="badge">Profesional</span>
-                        </div>
-                        <h3>Corporate Clean</h3>
-                        <p>Inspirado en banca y seguros. Diseño minimalista con espacios amplios y alta confiabilidad visual.</p>
-                        <div class="template-tags">
-                            <span class="tag">Minimalista</span>
-                            <span class="tag">Corporativo</span>
-                            <span class="tag">Confiable</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template 3: Institutional Trust -->
-                <div class="template-card" data-category="institutional">
-                    <div class="template-preview">
-                        <div class="mode-toggle"></div>
-                        <div style="background: linear-gradient(135deg, #003366 0%, #0066cc 100%); height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">⚖️</div>
-                        <div class="template-overlay">
-                            <a href="#" class="btn-view">Ver Demo Completa →</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <div class="template-badges">
-                            <span class="badge">Institucional</span>
-                        </div>
-                        <h3>Institutional Trust</h3>
-                        <p>Inspirado en ONGs y organismos gubernamentales. Diseño serio y autoritativo con tipografía serif.</p>
-                        <div class="template-tags">
-                            <span class="tag">Gubernamental</span>
-                            <span class="tag">Formal</span>
-                            <span class="tag">Autoridad</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template 4: Medical Premium -->
-                <div class="template-card" data-category="modern">
-                    <div class="template-preview">
-                        <div class="mode-toggle"></div>
-                        <div style="background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); height: 100%; display: flex; align-items: center; justify-content: center; font-size: 48px;">🏥</div>
-                        <div class="template-overlay">
-                            <a href="#" class="btn-view">Ver Demo Completa →</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <div class="template-badges">
-                            <span class="badge new">Nuevo</span>
-                        </div>
-                        <h3>Medical Premium</h3>
-                        <p>Inspirado en clínicas privadas. Colores suaves (azul cielo/verde menta) que transmiten confianza y calma.</p>
-                        <div class="template-tags">
-                            <span class="tag">Salud</span>
-                            <span class="tag">Premium</span>
-                            <span class="tag">Limpio</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template 5: Legal Authority -->
-                <div class="template-card" data-category="corporate">
-                    <div class="template-preview">
-                        <div class="mode-toggle dark"></div>
-                        <div style="background: #1a1a1a; height: 100%; display: flex; align-items: center; justify-content: center; color: #d4af37; font-size: 48px;">⚖️</div>
-                        <div class="template-overlay">
-                            <a href="#" class="btn-view">Ver Demo Completa →</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <div class="template-badges">
-                            <span class="badge new">Nuevo</span>
-                            <span class="badge">Premium</span>
-                        </div>
-                        <h3>Legal Authority</h3>
-                        <p>Inspirado en bufetes top tier. Negro/dorado/gris para proyectar exclusividad y poder.</p>
-                        <div class="template-tags">
-                            <span class="tag">Lujo</span>
-                            <span class="tag">Abogados</span>
-                            <span class="tag">Elegante</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template 6: Tech Startup -->
-                <div class="template-card" data-category="modern creative">
-                    <div class="template-preview">
-                        <div class="mode-toggle"></div>
-                        <div style="background: linear-gradient(135deg, #00d4ff 0%, #9333ea 100%); height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">🚀</div>
-                        <div class="template-overlay">
-                            <a href="#" class="btn-view">Ver Demo Completa →</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <div class="template-badges">
-                            <span class="badge new">Nuevo</span>
-                            <span class="badge popular">Trending</span>
-                        </div>
-                        <h3>Tech Startup</h3>
-                        <p>Inspirado en SaaS modernas. Cyan/morado con gradientes atrevidos y animaciones fluidas.</p>
-                        <div class="template-tags">
-                            <span class="tag">Tech</span>
-                            <span class="tag">Innovador</span>
-                            <span class="tag">SaaS</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template 7: Government Portal -->
-                <div class="template-card" data-category="institutional">
-                    <div class="template-preview">
-                        <div class="mode-toggle"></div>
-                        <div style="background: #003d82; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">🏛️</div>
-                        <div class="template-overlay">
-                            <a href="#" class="btn-view">Ver Demo Completa →</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <div class="template-badges">
-                            <span class="badge new">Nuevo</span>
-                        </div>
-                        <h3>Government Portal</h3>
-                        <p>Inspirado en portales .gob. Azul gobierno/rojo/blanco siguiendo estándares oficiales.</p>
-                        <div class="template-tags">
-                            <span class="tag">Gobierno</span>
-                            <span class="tag">Oficial</span>
-                            <span class="tag">Accesible</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template 8: Minimalist Nordic -->
-                <div class="template-card" data-category="modern">
-                    <div class="template-preview">
-                        <div class="mode-toggle"></div>
-                        <div style="background: #f5f5f0; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 48px;">🌿</div>
-                        <div class="template-overlay">
-                            <a href="#" class="btn-view">Ver Demo Completa →</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <div class="template-badges">
-                            <span class="badge new">Nuevo</span>
-                        </div>
-                        <h3>Minimalist Nordic</h3>
-                        <p>Inspirado en diseño escandinavo. Blanco/negro/verde oliva con máxima simplicidad.</p>
-                        <div class="template-tags">
-                            <span class="tag">Minimalista</span>
-                            <span class="tag">Escandinavo</span>
-                            <span class="tag">Zen</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template 9: Vibrant Creative -->
-                <div class="template-card" data-category="creative">
-                    <div class="template-preview">
-                        <div class="mode-toggle"></div>
-                        <div style="background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #ffe66d 100%); height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">🎨</div>
-                        <div class="template-overlay">
-                            <a href="#" class="btn-view">Ver Demo Completa →</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <div class="template-badges">
-                            <span class="badge new">Nuevo</span>
-                            <span class="badge">Atrevido</span>
-                        </div>
-                        <h3>Vibrant Creative</h3>
-                        <p>Inspirado en agencias creativas. Multicolor, bold y lleno de personalidad.</p>
-                        <div class="template-tags">
-                            <span class="tag">Creativo</span>
-                            <span class="tag">Colorido</span>
-                            <span class="tag">Único</span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <footer class="footer-catalog">
-        <h2 style="margin-bottom: 20px;">¿Interesado en algún diseño?</h2>
-        <div class="contact-info">
-            <p>📱 WhatsApp: <a href="https://wa.me/51979169813">+51 979 169 813</a></p>
-            <p>✉️ Email: <a href="mailto:contacto@webpro.com">contacto@webpro.com</a></p>
+    <section class="pricing" id="pricing">
+        <div class="pricing-header">
+            <h2>Elige tu Plan</h2>
+            <p style="font-size: 20px; color: #718096;">Soluciones para cada necesidad</p>
         </div>
-        <p style="margin-top: 30px; opacity: 0.7; font-size: 14px;">© 2025 WebPro Portfolio - Todos los diseños personalizables</p>
+        <div class="pricing-grid">
+            
+            <div class="plan-card">
+                <div class="plan-name">Plantilla Premium</div>
+                <div class="plan-price">S/ 600<span> único</span></div>
+                <div class="plan-description">Diseño profesional listo para usar</div>
+                <ul class="plan-features">
+                    <li><span class="check">✓</span> Plantilla a elección</li>
+                    <li><span class="check">✓</span> Responsive</li>
+                    <li><span class="check">✓</span> Modo día/noche</li>
+                    <li><span class="check">✓</span> SEO optimizado</li>
+                    <li><span class="cross">✗</span> Automatización</li>
+                </ul>
+                <button class="btn-plan btn-primary" onclick="window.open('https://wa.me/51979169813?text=Hola, me interesa la Plantilla Premium por S/600', '_blank')">Solicitar</button>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-name">Diseño Exclusivo</div>
+                <div class="plan-price">S/ 900<span> único</span></div>
+                <div class="plan-description">100% personalizado</div>
+                <ul class="plan-features">
+                    <li><span class="check">✓</span> Diseño personalizado</li>
+                    <li><span class="check">✓</span> A tu medida</li>
+                    <li><span class="check">✓</span> 3 revisiones</li>
+                    <li><span class="check">✓</span> Soporte 60 días</li>
+                    <li><span class="cross">✗</span> Automatización</li>
+                </ul>
+                <button class="btn-plan btn-primary" onclick="window.open('https://wa.me/51979169813?text=Hola, me interesa el Diseño Exclusivo por S/900', '_blank')">Solicitar</button>
+            </div>
+
+            <div class="plan-card featured">
+                <div class="plan-name">Plataforma Completa</div>
+                <div class="plan-price">S/ 0<span> web</span></div>
+                <div class="plan-description">Sistema completo + WEB GRATIS</div>
+                <ul class="plan-features">
+                    <li><span class="check">✓</span> <strong>WEB GRATIS</strong></li>
+                    <li><span class="check">✓</span> Cobros automáticos</li>
+                    <li><span class="check">✓</span> Firma digital</li>
+                    <li><span class="check">✓</span> Dashboard completo</li>
+                    <li><span class="check">✓</span> Soporte 24/7</li>
+                </ul>
+                <div class="saas-info">
+                    <strong>S/ 497/mes</strong><br>
+                    <small>+ S/ 350 instalación (una vez)</small>
+                </div>
+                <button class="btn-plan btn-success" onclick="window.open('https://wa.me/51979169813?text=Hola, quiero la Plataforma Completa SaaS', '_blank')">¡Lo quiero!</button>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>¿Listo para modernizar tu colegio?</h2>
+        <p style="font-size: 20px; opacity: 0.9;">Contáctanos ahora y recibe una demo personalizada</p>
+        <div class="cta-buttons">
+            <a href="https://wa.me/51979169813?text=Hola, quiero más información sobre las plataformas web" class="btn-cta btn-whatsapp">📱 WhatsApp: +51 979 169 813</a>
+        </div>
+    </section>
+
+    <footer style="background: #1a202c; color: #a0aec0; padding: 40px; text-align: center;">
+        <p>© 2026 WebPro Solutions - Soluciones web para colegios profesionales</p>
     </footer>
-
-    <script>
-        // Filtros
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                const filter = btn.dataset.filter;
-                document.querySelectorAll('.template-card').forEach(card => {
-                    if (filter === 'all' || card.dataset.category.includes(filter)) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
-
-        // Click en cards para ver demo
-        document.querySelectorAll('.template-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                if (!e.target.closest('.mode-toggle')) {
-                    const templateName = card.querySelector('h3').textContent;
-                    alert(`Abriendo demo completa de: ${templateName}\n\n(Aquí se abriría la página completa en nueva ventana)`);
-                }
-            });
-        });
-    </script>
 </body>
 </html>
