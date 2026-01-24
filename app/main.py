@@ -621,3 +621,9 @@ async def colegiospro(request: Request):
 @app.get("/catalogo", response_class=HTMLResponse)
 async def catalogo(request: Request):
     return templates.TemplateResponse("catalogo.html", {"request": request})
+
+
+#PROPUESTA PARA WALTER - MARCA BLANCA DE FACTURALO.PRO (24 enero 2026)
+@app.get("/facturalo1", response_class=HTMLResponse)
+async def facturalo1(request: Request):
+    return templates.TemplateResponse("marca_blanca.html", {"request": request})
