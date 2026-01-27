@@ -627,3 +627,8 @@ async def catalogo(request: Request):
 @app.get("/facturalo1", response_class=HTMLResponse)
 async def facturalo1(request: Request):
     return templates.TemplateResponse("marca_blanca.html", {"request": request})
+
+#LEVANTAMIENTO DE INFORMACIÓN - COLEGIO CONTADORES (SIRVE PARA TODO COLEGIO) (27-eNERO)
+@app.get("/infocolegiospro", response_class=HTMLResponse)
+async def infocolegiospro(request: Request):
+    return templates.TemplateResponse("info_colegios.html", {"request": request})
