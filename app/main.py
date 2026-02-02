@@ -632,3 +632,8 @@ async def facturalo1(request: Request):
 @app.get("/infocolegiospro", response_class=HTMLResponse)
 async def infocolegiospro(request: Request):
     return templates.TemplateResponse("info_colegios.html", {"request": request})
+
+#LEVANTAMIENTO DE INFORMACIÓN - ESTUDIO CONTABLE MILAGROS ESPINOZA (SIRVE PARA TODO ESTUDIO) (02-FEBRERO)
+@app.get("/estudioespinoza", response_class=HTMLResponse)
+async def estudioespinoza(request: Request):
+    return templates.TemplateResponse("modelo_negocio_milagros.html", {"request": request})
