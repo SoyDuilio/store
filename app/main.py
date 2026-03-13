@@ -637,3 +637,10 @@ async def infocolegiospro(request: Request):
 @app.get("/estudioespinoza", response_class=HTMLResponse)
 async def estudioespinoza(request: Request):
     return templates.TemplateResponse("modelo_negocio_milagros.html", {"request": request})
+
+
+#PERFIL PROYECTO ENTRE WALTER - DUILIO - SERGIO(INVERSIONISTA) HTML guardado en c:\QueVendi
+@app.get("/perfil", response_class=HTMLResponse)
+async def perfil(request: Request):
+    return templates.TemplateResponse("pyecto_sigco_web_perfil.html", {"request": request})
+
