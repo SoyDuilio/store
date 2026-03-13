@@ -644,3 +644,9 @@ async def estudioespinoza(request: Request):
 async def perfil(request: Request):
     return templates.TemplateResponse("pyecto_sigco_web_perfil.html", {"request": request})
 
+
+#PERFIL-2 PROYECTO ENTRE WALTER - DUILIO - SERGIO(INVERSIONISTA) HTML guardado en c:\QueVendi
+#versión super amigable
+@app.get("/proyecto", response_class=HTMLResponse)
+async def perfil(request: Request):
+    return templates.TemplateResponse("proyecto_sigco_web.html", {"request": request})
