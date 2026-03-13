@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIGCO WEB · Para Sergio</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: #f0f4ff;
+  color: #1a2340;
+  min-height: 100vh;
+  padding: 24px 16px 60px;
+}
+.wrap { max-width: 780px; margin: 0 auto; }
+
+/* ── CARDS ── */
+.card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px 26px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 16px rgba(30,60,120,.07);
+}
+.card-blue { background: #1e3a8a; color: #fff; }
+.card-green { background: #065f46; color: #fff; }
+
+/* ── HEADINGS ── */
+h1 { font-size: 36px; font-weight: 900; letter-spacing: -1px; }
+h2 { font-size: 18px; font-weight: 800; margin-bottom: 14px; color: #1e3a8a; }
+h2.w { color: #fff; }
+.tag {
+  display: inline-block;
+  background: rgba(255,255,255,.15);
+  border-radius: 20px;
+  padding: 3px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.tag-blue { background: #dbeafe; color: #1e3a8a; }
+
+/* ── BIG NUMBER ── */
+.bignum {
+  font-size: 52px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.bignum-sm { font-size: 28px; font-weight: 900; letter-spacing: -1px; }
+
+/* ── SLIDER ── */
+.slider-wrap { margin: 10px 0 6px; }
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%; height: 8px;
+  border-radius: 8px;
+  background: #dbeafe;
+  outline: none; cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: #1e3a8a;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(30,58,138,.35);
+}
+.tick-row {
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: #6b7280; font-weight: 700; margin-top: 4px;
+}
+
+/* ── METRIC BOXES ── */
+.metrics { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.mbox {
+  flex: 1; min-width: 140px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: 0 2px 12px rgba(30,60,120,.07);
+  text-align: center;
+}
+.mbox .label { font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+.mbox .val   { font-size: 26px; font-weight: 900; }
+.mbox .sub   { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+
+/* ── RESULT BANNER ── */
+#resultBanner {
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 18px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── TABLE ── */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  background: #f0f4ff;
+  padding: 9px 10px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #6b7280;
+  text-align: right;
+}
+th:first-child { text-align: left; border-radius: 8px 0 0 8px; }
+th:last-child  { border-radius: 0 8px 8px 0; }
+td { padding: 8px 10px; text-align: right; border-bottom: 1px solid #f3f4f6; font-weight: 600; }
+td:first-child { text-align: left; font-weight: 700; }
+tr.highlight td { background: #f0fdf4; }
+tr.goal td     { background: #fefce8; }
+
+/* ── COST TABLE ── */
+.cost-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 9px 0; border-bottom: 1px solid #f3f4f6; font-size: 14px;
+}
+.cost-row:last-child { border-bottom: none; }
+.cost-label { color: #374151; }
+.cost-val   { font-weight: 800; color: #1e3a8a; }
+.cost-total { background: #f0f4ff; border-radius: 10px; padding: 12px 16px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+
+/* ── GLOSSARY ── */
+.glos-item { margin-bottom: 10px; font-size: 13px; line-height: 1.5; }
+.gword { font-weight: 800; color: #1e3a8a; }
+
+/* ── FOOTER ── */
+footer { text-align: center; color: #9ca3af; font-size: 11px; margin-top: 10px; }
+.dlink {
+  color: #1e3a8a; text-decoration: none; font-weight: 800;
+  border-bottom: 2px solid #bfdbfe; padding-bottom: 1px;
+  transition: color .2s, border-color .2s;
+}
+.dlink:hover { color: #1d4ed8; border-color: #1d4ed8; }
+
+/* ── PROGRESS BAR ── */
+.pbar-bg { background: #e5e7eb; border-radius: 10px; height: 12px; overflow: hidden; }
+.pbar-fill { height: 100%; border-radius: 10px; transition: width .4s; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══ ENCABEZADO ══════════════════════════════════════════════════════ -->
+<div class="card card-blue" style="text-align:center; padding: 32px 26px;">
+  <div class="tag">Inversión · SIGCO WEB</div>
+  <h1 style="color:#fff; margin-bottom:8px;">Su dinero,<br>trabajando por usted</h1>
+  <p style="color:#93c5fd; font-size:15px; margin-top:10px;">
+    Modernización del sistema SIGCO a plataforma web.<br>
+    <strong style="color:#fff;">~1,000 clientes ya establecidos esperando el nuevo sistema.</strong>
+  </p>
+</div>
+
+<!-- ═══ SLIDER PRINCIPAL ════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="tag tag-blue">Paso 1 · Decida cuánto quiere ganar</div>
+  <h2>¿Qué porcentaje de ganancia quiere sobre su inversión?</h2>
+  <p style="color:#6b7280; font-size:14px; margin-bottom:18px;">
+    Mueva el control. El sistema le mostrará en cuántos meses recupera todo su dinero más esa ganancia.
+  </p>
+
+  <div style="text-align:center; margin-bottom:16px;">
+    <span id="gainLabel" class="bignum" style="color:#1e3a8a;">30%</span>
+    <span style="font-size:20px; font-weight:700; color:#6b7280;"> de ganancia</span>
+  </div>
+
+  <div class="slider-wrap">
+    <input type="range" id="gainRng" min="10" max="50" step="10" value="30">
+    <div class="tick-row">
+      <span>10%</span><span>20%</span><span>30%</span><span>40%</span><span>50%</span>
+    </div>
+  </div>
+
+  <p style="text-align:center; color:#6b7280; font-size:13px; margin-top:12px;">
+    Usted recibe el <strong style="color:#1e3a8a;">100% de las ganancias mensuales</strong> hasta recuperar su capital más este porcentaje.
+  </p>
+</div>
+
+<!-- ═══ BANNER RESULTADO ════════════════════════════════════════════════ -->
+<div id="resultBanner"></div>
+
+<!-- ═══ MÉTRICAS ════════════════════════════════════════════════════════ -->
+<div class="metrics">
+  <div class="mbox">
+    <div class="label">Usted invierte</div>
+    <div class="val" id="m-inv" style="color:#1e3a8a;">—</div>
+    <div class="sub">capital total</div>
+  </div>
+  <div class="mbox">
+    <div class="label">Recupera en</div>
+    <div class="val" id="m-be" style="color:#059669;">—</div>
+    <div class="sub" id="m-be-sub">meses</div>
+  </div>
+  <div class="mbox">
+    <div class="label">Meta lograda en</div>
+    <div class="val" id="m-goal" style="color:#d97706;">—</div>
+    <div class="sub" id="m-goal-sub">meses</div>
+  </div>
+  <div class="mbox">
+    <div class="label">Gana mensual (estable)</div>
+    <div class="val" id="m-stable" style="color:#059669;">—</div>
+    <div class="sub">después, si decide quedarse</div>
+  </div>
+</div>
+
+<!-- ═══ GRÁFICO ═════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>Así crece su dinero mes a mes</h2>
+  <p style="color:#6b7280; font-size:13px; margin-bottom:16px;">
+    La línea verde muestra cuánto ha acumulado. Cuando llega a cero, recuperó su inversión. Cuando llega a la línea amarilla, alcanzó su meta de ganancia.
+  </p>
+  <canvas id="myChart" style="max-height:260px;"></canvas>
+</div>
+
+<!-- ═══ TABLA MES A MES ══════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>Tabla mes a mes</h2>
+  <p style="color:#6b7280; font-size:13px; margin-bottom:16px;">
+    Los primeros 5 meses son de desarrollo del sistema. A partir del mes 6, el sistema entra en marcha y empieza a generar ingresos.
+  </p>
+  <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:left;">Mes</th>
+          <th>Clientes activos</th>
+          <th>Ingresos del mes</th>
+          <th>Gastos del mes</th>
+          <th>Ganancia del mes</th>
+          <th>Lo que recibe usted</th>
+          <th>Su saldo acumulado</th>
+        </tr>
+      </thead>
+      <tbody id="projBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ QUÉ SE PAGA CON SU DINERO ══════════════════════════════════════ -->
+<div class="card">
+  <h2>¿En qué se usa su inversión?</h2>
+  <div id="costList"></div>
+</div>
+
+<!-- ═══ CÓMO FUNCIONA ════════════════════════════════════════════════════ -->
+<div class="card" style="background:#f0f4ff;">
+  <h2>¿Cómo funciona el negocio?</h2>
+  <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:4px;">
+    <div style="flex:1; min-width:200px; background:#fff; border-radius:14px; padding:16px;">
+      <div style="font-size:28px; margin-bottom:6px;">🔄</div>
+      <div style="font-weight:800; margin-bottom:4px;">Clientes que actualizan</div>
+      <div style="font-size:13px; color:#6b7280;">Pagan <strong>S/ 500</strong> por migrar al nuevo sistema web, más <strong>S/ 100 al mes</strong>.</div>
+    </div>
+    <div style="flex:1; min-width:200px; background:#fff; border-radius:14px; padding:16px;">
+      <div style="font-size:28px; margin-bottom:6px;">💻</div>
+      <div style="font-weight:800; margin-bottom:4px;">Clientes que prefieren escritorio</div>
+      <div style="font-size:13px; color:#6b7280;">Pagan entre <strong>S/ 1,000 y S/ 1,500</strong> una sola vez. Después de 6 meses de garantía, pagan <strong>S/ 100 al mes</strong> por soporte.</div>
+    </div>
+    <div style="flex:1; min-width:200px; background:#fff; border-radius:14px; padding:16px;">
+      <div style="font-size:28px; margin-bottom:6px;">📦</div>
+      <div style="font-weight:800; margin-bottom:4px;">~1,000 clientes esperando</div>
+      <div style="font-size:13px; color:#6b7280;">Walter ya tiene la relación. Se estima convertir <strong>25 por mes</strong>. Son ingresos seguros desde el mes 6.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ GLOSARIO ═════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>Diccionario de términos</h2>
+  <div class="glos-item"><span class="gword">Inversión:</span> El dinero que usted pone para arrancar el proyecto.</div>
+  <div class="glos-item"><span class="gword">Capital:</span> Lo mismo que inversión. El monto que aportó.</div>
+  <div class="glos-item"><span class="gword">Ganancia neta:</span> Lo que sobra después de pagar todos los gastos del mes.</div>
+  <div class="glos-item"><span class="gword">Saldo acumulado:</span> Cuánto lleva recuperado hasta ese mes. Empieza negativo (es su inversión) y sube cada mes.</div>
+  <div class="glos-item"><span class="gword">Break-even (punto de equilibrio):</span> El mes en que su saldo llega a cero. Ya recuperó todo lo que invirtió.</div>
+  <div class="glos-item"><span class="gword">Pago mensual (SaaS):</span> El cobro mensual que los clientes pagan por usar el sistema en internet, como una suscripción.</div>
+  <div class="glos-item"><span class="gword">Ingresos recurrentes:</span> El dinero que entra todos los meses de forma segura por las suscripciones activas.</div>
+  <div class="glos-item"><span class="gword">Gastos corrientes:</span> Lo que cuesta mantener el sistema funcionando cada mes (servidores, internet, sueldos del equipo técnico).</div>
+  <div class="glos-item"><span class="gword">Imprevistos (10%):</span> Un colchón incluido en su inversión para cubrir cualquier gasto inesperado.</div>
+  <div class="glos-item"><span class="gword">Promoción (25%):</span> Dinero incluido para dar a conocer el producto: publicidad, presentaciones, materiales.</div>
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════════════════════ -->
+<footer>
+  Modelo financiero preliminar · SIGCO WEB 2025<br>
+  Elaborado por <a href="https://duilio.store" target="_blank" class="dlink">Duilio Restuccia Eslava</a> · Iquitos, Perú
+</footer>
+
+</div>
+
+<script>
+// ══ CONSTANTES ══════════════════════════════════════════════════════════
+const XR       = 3.80;
+const EXISTING = 1000;
+const CONV_MO  = 25;
+const DESK_PCT = 0.15;    // 15% prefieren escritorio
+const DESK_PX  = 1200;    // precio escritorio
+const WEB_UPD  = 500;     // pago único migración web
+const WEB_MRR  = 100;     // mensual web
+const DESK_SOP = 100;     // soporte mensual escritorio (post-garantía)
+const ONGOING  = 12000;   // gastos corrientes desde mes 6
+
+// Costos de desarrollo (5 meses)
+const C_MAX    = 380;
+const C_PRO    = Math.round(20 * XR);
+const SEN_MO   = 6000;   // 2 seniors juntos
+const WAL_MO   = 3000;
+const DIS_MO   = 2000;
+const JUN_MO   = 2000;
+const INFRA_MO = 120 + 200 + 100; // servers+net+elec
+
+// Costo directo
+const directCost = (() => {
+  let t = 0;
+  for (let m = 1; m <= 5; m++) {
+    const pers = SEN_MO + WAL_MO + (m<=2?DIS_MO:0) + (m<=3?JUN_MO:0);
+    const ai   = C_MAX + C_PRO + (m<=2?C_PRO:0) + (m<=3?C_PRO:0);
+    t += pers + ai + INFRA_MO;
+  }
+  return t;
+})();
+const promo  = Math.round(directCost * 0.25);
+const imprv  = Math.round(directCost * 0.10);
+const INVEST = directCost + promo + imprv;
+
+// ══ FORMATEO ═══════════════════════════════════════════════════════════
+function sol(n) {
+  const r = Math.round(Math.abs(n)).toLocaleString('es-PE');
+  return (n < 0 ? '-' : '') + 'S/ ' + r;
+}
+
+// ══ PROYECCIÓN ══════════════════════════════════════════════════════════
+function project() {
+  let webCl = 0, deskCl = 0, cumSerg = -INVEST;
+  const deskQueue = [];
+  const months = [];
+
+  // Meses de desarrollo (1-5): Sergio no recibe nada, su saldo = -INVEST
+  for (let m = 1; m <= 5; m++) {
+    months.push({ m, phase:'dev', clients:0, revenue:0, cost:0, profit:0, recv:0, cumSerg: Math.round(cumSerg) });
+  }
+
+  // Meses operativos
+  let m = 6;
+  while (true) {
+    const totalCl = webCl + deskCl;
+    const newC    = totalCl < EXISTING ? CONV_MO : 0;
+    const newD    = Math.round(newC * DESK_PCT);
+    const newW    = newC - newD;
+    webCl  += newW;
+    deskCl += newD;
+    deskQueue.push(newD);
+
+    // soporte escritorio: los que terminaron garantía (6 meses atrás)
+    const suppD = deskQueue.length > 6
+      ? deskQueue.slice(0, deskQueue.length - 6).reduce((a,b)=>a+b,0)
+      : 0;
+
+    const revenue = newW  * WEB_UPD
+                  + newD  * DESK_PX
+                  + webCl * WEB_MRR
+                  + suppD * DESK_SOP;
+
+    const profit = revenue - ONGOING;
+    const recv   = Math.max(0, profit);  // Sergio recibe 100% de la ganancia neta
+    cumSerg += recv;
+
+    months.push({
+      m, phase:'ops',
+      clients: webCl + deskCl,
+      revenue: Math.round(revenue),
+      cost: ONGOING,
+      profit: Math.round(profit),
+      recv: Math.round(recv),
+      cumSerg: Math.round(cumSerg)
+    });
+    m++;
+    if (m > 120) break; // tope de seguridad
+  }
+  return months;
+}
+
+// ══ RENDER ══════════════════════════════════════════════════════════════
+let chartObj = null;
+const allMonths = project();
+
+function render() {
+  const gainPct = parseInt(document.getElementById('gainRng').value);
+  document.getElementById('gainLabel').textContent = gainPct + '%';
+
+  const goalAmt = Math.round(INVEST * gainPct / 100);
+  const beM     = allMonths.find(d => d.cumSerg >= 0);
+  const goalM   = allMonths.find(d => d.cumSerg >= goalAmt);
+
+  // Horizonte: mes de meta + 4, o mes de break-even + 6 si no hay meta en rango
+  const refM  = goalM || beM;
+  const hEnd  = refM ? refM.m + 4 : 36;
+  const months = allMonths.slice(0, hEnd);
+
+  // Ingreso estable (cuando hay 1000 clientes)
+  const stabM = allMonths.find(d => d.clients >= EXISTING);
+  const stableRecv = stabM ? stabM.recv : null;
+
+  // ── MÉTRICAS
+  document.getElementById('m-inv').textContent = sol(INVEST);
+  const beEl = document.getElementById('m-be');
+  beEl.textContent = beM ? `Mes ${beM.m}` : '—';
+  beEl.style.color = beM ? '#059669' : '#dc2626';
+  document.getElementById('m-be-sub').textContent = beM
+    ? `${beM.m - 5} mes${beM.m-5>1?'es':''} de operación` : '';
+
+  const goalEl = document.getElementById('m-goal');
+  goalEl.textContent = goalM ? `Mes ${goalM.m}` : '—';
+  goalEl.style.color = goalM ? '#d97706' : '#9ca3af';
+  document.getElementById('m-goal-sub').textContent = goalM
+    ? `+${gainPct}% = ${sol(goalAmt)} extra` : 'fuera del horizonte visible';
+
+  document.getElementById('m-stable').textContent = stableRecv ? sol(stableRecv) + '/mes' : '—';
+
+  // ── BANNER
+  const banner = document.getElementById('resultBanner');
+  if (goalM) {
+    banner.style.background = '#f0fdf4';
+    banner.style.border     = '2px solid #86efac';
+    banner.innerHTML = `
+      <div style="font-size:22px;margin-bottom:8px;">✅ Excelente noticia para Sergio</div>
+      <div style="line-height:1.8;">
+        Con una inversión de <strong>${sol(INVEST)}</strong>, usted:<br>
+        🔵 <strong>Recupera todo su capital</strong> en el <strong>mes ${beM ? beM.m : '—'}</strong>
+        ${beM ? `(${beM.m-5} mes${beM.m-5>1?'es':''} después del lanzamiento)` : ''}.<br>
+        🟡 <strong>Logra el ${gainPct}% de ganancia</strong> (${sol(goalAmt)} extra) en el <strong>mes ${goalM.m}</strong>.<br>
+        🟢 Desde el mes ${goalM.m+1}, usted <strong>decide si seguir recibiendo ganancias o ceder parte al equipo</strong>.
+      </div>`;
+  } else if (beM) {
+    banner.style.background = '#fefce8';
+    banner.style.border     = '2px solid #fde047';
+    banner.innerHTML = `
+      <div style="font-size:22px;margin-bottom:8px;">⚠️ Resultado parcial</div>
+      <div>Sergio recupera su inversión en el <strong>mes ${beM.m}</strong>, pero la meta de <strong>+${gainPct}%</strong> (${sol(goalAmt)}) toma más tiempo del horizonte visible. Se puede mostrar proyección extendida.`;
+  } else {
+    banner.style.background = '#fef2f2';
+    banner.style.border     = '2px solid #fca5a5';
+    banner.innerHTML = `<div>⚠️ Con los parámetros actuales, la recuperación está fuera del horizonte visible.</div>`;
+  }
+
+  // ── GRÁFICO
+  const labels  = months.map(d => `M${d.m}`);
+  const values  = months.map(d => d.cumSerg);
+  const ctx     = document.getElementById('myChart');
+  if (chartObj) chartObj.destroy();
+
+  chartObj = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        borderColor: '#1d4ed8',
+        backgroundColor: (c) => {
+          const g = c.chart.ctx.createLinearGradient(0,0,0,250);
+          g.addColorStop(0,'rgba(29,78,216,.18)');
+          g.addColorStop(1,'rgba(29,78,216,0)');
+          return g;
+        },
+        borderWidth: 3, fill: true, tension: 0.45,
+        pointRadius: 0, pointHoverRadius: 6,
+      }]
+    },
+    options: {
+      responsive:true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1e3a8a', titleColor:'#fff', bodyColor:'#bfdbfe',
+          padding: 12, cornerRadius: 10,
+          callbacks: {
+            title: i => `Mes ${i[0].dataIndex+1}`,
+            label: c => {
+              const d = months[c.dataIndex];
+              const lines = [`Saldo Sergio: ${sol(d.cumSerg)}`];
+              if (d.revenue > 0)    lines.push(`Ingresos: ${sol(d.revenue)}`);
+              if (d.profit > 0)     lines.push(`Ganancia: ${sol(d.profit)}`);
+              if (d.clients > 0)    lines.push(`Clientes: ${d.clients}`);
+              return lines;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { grid:{color:'#f3f4f6'}, ticks:{color:'#9ca3af', font:{size:10}}, border:{color:'#e5e7eb'} },
+        y: { grid:{color:'#f3f4f6'}, ticks:{color:'#9ca3af', font:{size:10}, callback: v => {
+          const a = Math.abs(v);
+          return (v<0?'-':'') + 'S/' + (a>=1000 ? (a/1000).toFixed(0)+'k' : a);
+        }}, border:{color:'#e5e7eb'} }
+      }
+    },
+    plugins:[{
+      id:'refs',
+      afterDraw(ch) {
+        const {ctx:c, chartArea:a, scales:{y}} = ch;
+        const line = (val, color, dash, lbl) => {
+          const yp = y.getPixelForValue(val);
+          if (yp < a.top || yp > a.bottom) return;
+          c.save(); c.strokeStyle=color; c.lineWidth=2; c.setLineDash(dash);
+          c.beginPath(); c.moveTo(a.left, yp); c.lineTo(a.right, yp); c.stroke();
+          c.setLineDash([]); c.fillStyle=color; c.font='bold 11px Nunito,sans-serif';
+          c.textAlign='right'; c.fillText(lbl, a.right-6, yp-6); c.restore();
+        };
+        line(0,       '#059669', [6,3], '✅ Recupera su inversión');
+        line(goalAmt, '#d97706', [4,4], `🏆 Meta +${gainPct}%`);
+      }
+    }]
+  });
+
+  // ── TABLA
+  const tbody = document.getElementById('projBody');
+  tbody.innerHTML = months.map((r, i) => {
+    const prev   = i > 0 ? months[i-1] : null;
+    const isBE   = r.cumSerg >= 0 && (!prev || prev.cumSerg < 0);
+    const isGoal = r.cumSerg >= goalAmt && (!prev || prev.cumSerg < goalAmt) && goalAmt > 0;
+    const cls    = isBE ? 'highlight' : isGoal ? 'goal' : '';
+    const icon   = isBE ? ' ✅' : isGoal ? ' 🏆' : '';
+    const phase  = r.phase === 'dev'
+      ? '<span style="background:#fef3c7;color:#92400e;border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800;">DESARROLLO</span>'
+      : '<span style="background:#dbeafe;color:#1e3a8a;border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800;">EN MARCHA</span>';
+    const cSaldo = r.cumSerg >= goalAmt ? '#d97706' : r.cumSerg >= 0 ? '#059669' : '#dc2626';
+    return `<tr class="${cls}">
+      <td>${r.m === 6 ? '🚀 ' : ''}Mes ${r.m}${icon} ${phase}</td>
+      <td>${r.clients || '—'}</td>
+      <td>${r.revenue ? sol(r.revenue) : r.phase==='dev'?'En desarrollo':'—'}</td>
+      <td>${r.cost ? sol(r.cost) : r.phase==='dev'?sol(directCost/5):'—'}</td>
+      <td style="color:${r.profit>0?'#059669':r.profit<0?'#dc2626':'#9ca3af'}">${r.profit!==0?sol(r.profit):'—'}</td>
+      <td style="color:#1d4ed8;font-weight:800;">${r.recv?sol(r.recv):'—'}</td>
+      <td style="color:${cSaldo};font-weight:900;">${sol(r.cumSerg)}</td>
+    </tr>`;
+  }).join('');
+
+  // ── DESGLOSE INVERSIÓN
+  const SEN_AMT   = SEN_MO  * 5;
+  const WAL_AMT   = WAL_MO  * 5;
+  const DIS_AMT   = DIS_MO  * 2;
+  const JUN_AMT   = JUN_MO  * 3;
+  const AI_DUI    = C_MAX   * 5;
+  const AI_TEAM   = C_PRO * (5 + 2 + 3);
+  const INFRA_AMT = INFRA_MO * 5;
+
+  const costRows = [
+    ['👨‍💻 2 Programadores principales (5 meses)',  SEN_AMT],
+    ['📦 Walter · Coordinación del producto (5m)', WAL_AMT],
+    ['🎨 Diseñador de pantallas (2 meses)',          DIS_AMT],
+    ['💻 Programador de apoyo (3 meses)',            JUN_AMT],
+    ['🤖 Asistente IA · Duilio (5 meses)',           AI_DUI],
+    ['🤖 Asistente IA · Equipo (meses variables)',   AI_TEAM],
+    ['🖥️ Servidores, internet y electricidad (5m)', INFRA_AMT],
+  ];
+
+  const totalRows = costRows.reduce((s,[,v])=>s+v,0);
+
+  document.getElementById('costList').innerHTML = `
+    ${costRows.map(([l,v])=>`
+      <div class="cost-row">
+        <span class="cost-label">${l}</span>
+        <span class="cost-val">${sol(v)}</span>
+      </div>`).join('')}
+    <div class="cost-row" style="padding-top:12px; border-top:2px solid #e5e7eb; border-bottom:none;">
+      <span style="color:#6b7280;">Subtotal costos directos</span>
+      <span style="color:#6b7280; font-weight:700;">${sol(totalRows)}</span>
+    </div>
+    <div class="cost-row" style="border-bottom:none;">
+      <span style="color:#6b7280;">+ Publicidad y promoción (25%)</span>
+      <span style="color:#6b7280; font-weight:700;">+ ${sol(promo)}</span>
+    </div>
+    <div class="cost-row" style="border-bottom:none;">
+      <span style="color:#6b7280;">+ Imprevistos / emergencias (10%)</span>
+      <span style="color:#6b7280; font-weight:700;">+ ${sol(imprv)}</span>
+    </div>
+    <div class="cost-total">
+      <span style="font-size:16px; font-weight:800;">💰 TOTAL QUE INVIERTE SERGIO</span>
+      <span style="font-size:22px; font-weight:900; color:#1e3a8a;">${sol(INVEST)}</span>
+    </div>
+  `;
+}
+
+document.getElementById('gainRng').addEventListener('input', render);
+render();
+</script>
+</body>
+</html>
