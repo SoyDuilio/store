@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIGCO WEB · Perfil de Proyecto</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050c1a;--card:#0b1425;--card2:#060d1e;
+  --border:#182038;--border2:#1f2d4a;
+  --acc:#4f8ef7;--acc2:#6fa4ff;
+  --grn:#2dd4a0;--grn2:#1aad80;
+  --yel:#f5c842;--yel2:#e0b02a;
+  --red:#f06060;--pur:#a57ef5;
+  --txt:#e8f0ff;--mut:#7a93be;--sub:#3a5080;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--txt);
+  font-family:'Syne',sans-serif;
+  min-height:100vh;padding:30px 16px 60px;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 70% 10%,rgba(79,142,247,.05),transparent),
+    radial-gradient(ellipse 40% 30% at 20% 80%,rgba(45,212,160,.04),transparent);
+}
+.wrap{max-width:980px;margin:0 auto}
+.mb{margin-bottom:16px}
+
+/* ── CARD ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 24px}
+.sub{background:var(--card2);border-radius:10px;padding:13px 15px}
+
+/* ── TYPE ── */
+.mono{font-family:'JetBrains Mono',monospace}
+.lbl{display:block;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+
+/* ── PILLS ── */
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{
+  padding:5px 15px;border-radius:20px;
+  border:1px solid var(--border2);background:rgba(30,48,80,.4);
+  color:var(--mut);font-size:12px;cursor:pointer;font-family:'Syne',sans-serif;
+  transition:all .18s;white-space:nowrap;font-weight:600;
+}
+.pill:hover{border-color:var(--acc);color:var(--txt)}
+.pill.on {background:var(--acc); border-color:var(--acc); color:#fff}
+.pill.on-g{background:var(--grn2);border-color:var(--grn);color:#fff}
+.pill.on-y{background:#c07b10;border-color:var(--yel);color:#fff}
+.pill.on-p{background:#6d3fd4;border-color:var(--pur);color:#fff}
+
+/* ── RANGE ── */
+input[type=range]{
+  -webkit-appearance:none;width:100%;height:4px;
+  border-radius:4px;background:var(--border2);outline:none;cursor:pointer
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+  background:var(--acc);border:2px solid var(--acc2);
+  box-shadow:0 0 8px rgba(79,142,247,.5)
+}
+
+/* ── GRID ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+
+/* ── METRIC ── */
+.metric{
+  flex:1;min-width:140px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:16px 18px;
+}
+.mval{font-size:20px;font-weight:800;line-height:1.1;font-family:'JetBrains Mono',monospace}
+.msub{font-size:11px;color:var(--sub);margin-top:5px;line-height:1.4}
+
+/* ── TABLE ── */
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{padding:7px 8px;text-align:right;color:var(--sub);font-size:9px;letter-spacing:2px;text-transform:uppercase;border-bottom:2px solid var(--border);font-weight:700}
+th:first-child{text-align:left}
+td{padding:6px 8px;text-align:right;border-bottom:1px solid rgba(24,32,56,.8)}
+td:first-child{text-align:left}
+tbody tr:hover td{background:rgba(79,142,247,.03)}
+.badge{display:inline-block;border-radius:5px;padding:2px 7px;font-size:9px;font-weight:700;letter-spacing:1px;font-family:'Syne',sans-serif}
+
+/* ── VLINE ── */
+.vline{width:1px;background:var(--border);flex-shrink:0}
+
+/* ── FOOTER LINK ── */
+.dlink{
+  color:var(--acc2);text-decoration:none;font-weight:700;
+  font-size:11px;letter-spacing:2px;
+  border-bottom:1px solid rgba(111,164,255,.3);padding-bottom:1px;
+  transition:color .2s,border-color .2s,text-shadow .2s
+}
+.dlink:hover{color:#93c5fd;border-color:#93c5fd;text-shadow:0 0 12px rgba(147,197,253,.35)}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--card)}
+::-webkit-scrollbar-thumb{background:#1e3a5f;border-radius:3px}
+
+/* ── ANIMATION ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.anim{animation:fadeUp .5s ease both}
+.anim-2{animation:fadeUp .5s .1s ease both}
+.anim-3{animation:fadeUp .5s .2s ease both}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .g2{grid-template-columns:1fr}
+  .g3{grid-template-columns:1fr 1fr}
+  .hide-sm{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════════════════ -->
+<header style="text-align:center;margin-bottom:32px" class="anim">
+  <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.2);color:#6fa4ff;padding:5px 18px;border-radius:20px;font-size:9px;letter-spacing:4px;margin-bottom:16px">
+    📊 PERFIL DE PROYECTO · CONFIDENCIAL
+  </div>
+  <h1 style="font-size:48px;font-weight:800;letter-spacing:-2px;background:linear-gradient(135deg,#6fa4ff 0%,#a57ef5 45%,#2dd4a0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:10px">
+    SIGCO WEB
+  </h1>
+  <p style="color:var(--mut);font-size:14px;margin-bottom:20px">Modernización SaaS + Escritorio · Análisis de Retorno de Inversión</p>
+  <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:7px 16px;font-size:12px">💼 <strong>Sergio</strong> <span style="color:var(--sub)">· Capitalista</span></div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:7px 16px;font-size:12px">📦 <strong>Walter</strong> <span style="color:var(--sub)">· Producto / SIGCO</span></div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:7px 16px;font-size:12px">⚡ <strong>Duilio</strong> <span style="color:var(--sub)">· Tecnología Web</span></div>
+  </div>
+</header>
+
+<!-- ═══ CONTROLS ══════════════════════════════════════════════════════════ -->
+<div class="card mb anim-2" style="border-color:rgba(79,142,247,.35)">
+
+  <!-- ROW 1: main controls -->
+  <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+
+    <!-- Participación de Sergio -->
+    <div style="flex:2;min-width:210px">
+      <span class="lbl">Participación de Sergio en utilidades</span>
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:10px">
+        <span id="shareVal" style="font-size:48px;font-weight:800;color:var(--acc);line-height:1;font-family:'JetBrains Mono',monospace">50%</span>
+        <div style="font-size:12px;color:var(--sub)">Walter + Duilio<br><span id="partnerRem">50%</span> restante</div>
+      </div>
+      <input type="range" id="shareRng" min="30" max="60" step="5" value="50">
+      <div class="pills" style="margin-top:10px" id="sharePills">
+        <button class="pill" data-v="30" onclick="setShare(30)">30%</button>
+        <button class="pill" data-v="35" onclick="setShare(35)">35%</button>
+        <button class="pill" data-v="40" onclick="setShare(40)">40%</button>
+        <button class="pill" data-v="45" onclick="setShare(45)">45%</button>
+        <button class="pill on" data-v="50" onclick="setShare(50)">50%</button>
+        <button class="pill" data-v="55" onclick="setShare(55)">55%</button>
+        <button class="pill" data-v="60" onclick="setShare(60)">60%</button>
+      </div>
+    </div>
+
+    <div class="vline hide-sm" style="min-height:130px"></div>
+
+    <!-- Meta de ganancia -->
+    <div style="flex:2;min-width:200px">
+      <span class="lbl">Meta de ganancia sobre inversión</span>
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:10px">
+        <span id="roiVal" style="font-size:48px;font-weight:800;color:var(--grn);line-height:1;font-family:'JetBrains Mono',monospace">40%</span>
+        <div style="font-size:12px;color:var(--sub)">retorno<br>sobre inversión</div>
+      </div>
+      <div class="pills" id="roiPills">
+        <button class="pill" data-v="30" onclick="setROI(30)">+30%</button>
+        <button class="pill on on-g" data-v="40" onclick="setROI(40)">+40%</button>
+        <button class="pill" data-v="50" onclick="setROI(50)">+50%</button>
+        <button class="pill" data-v="75" onclick="setROI(75)">+75%</button>
+        <button class="pill" data-v="100" onclick="setROI(100)">+100%</button>
+      </div>
+      <p style="font-size:11px;color:var(--sub);margin-top:8px">
+        <strong style="color:var(--yel)">↑ Mayor % → más meses para alcanzar la meta</strong>
+      </p>
+    </div>
+
+    <div class="vline hide-sm" style="min-height:130px"></div>
+
+    <!-- Seniors toggle -->
+    <div style="flex:1.5;min-width:190px">
+      <span class="lbl" style="color:var(--yel)"> Salario de 2 Seniors</span>
+      <div class="pills" style="flex-direction:column;gap:8px" id="seniorPills">
+        <button class="pill on on-g" data-v="total" onclick="setSenior('total')" style="text-align:left">S/ 3,000 c/u → total S/6k/mes</button>
+        <!--<button class="pill" data-v="each" onclick="setSenior('each')" style="text-align:left">S/ 6,000 c/u → total S/12k/mes</button>-->
+      </div>
+      <p style="font-size:11px;color:var(--sub);margin-top:10px">
+        Costo directo: <strong id="devCostShow" style="color:var(--txt)">—</strong>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ROW 2: secondary controls -->
+  <div style="border-top:1px solid var(--border);margin-top:18px;padding-top:16px;display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">
+
+    <div>
+      <span class="lbl">Precio licencia escritorio (pago único)</span>
+      <div class="pills" id="deskPills">
+        <button class="pill" data-v="1000" onclick="setDesk(1000)">S/ 1,000</button>
+        <button class="pill on" data-v="1200" onclick="setDesk(1200)">S/ 1,200</button>
+        <button class="pill" data-v="1500" onclick="setDesk(1500)">S/ 1,500</button>
+      </div>
+    </div>
+
+    <div style="flex:1;min-width:200px">
+      <span class="lbl">% clientes que prefieren escritorio</span>
+      <div style="display:flex;align-items:center;gap:12px">
+        <input type="range" id="deskRng" min="0" max="40" step="5" value="15" style="flex:1">
+        <span id="deskPctVal" style="font-weight:800;color:var(--pur);min-width:32px;font-size:14px;font-family:'JetBrains Mono',monospace">15%</span>
+      </div>
+    </div>
+
+    <div>
+      <span class="lbl">Horizonte de análisis</span>
+      <div class="pills" id="horizonPills">
+        <button class="pill" data-v="24" onclick="setHorizon(24)">24 meses</button>
+        <button class="pill on" data-v="36" onclick="setHorizon(36)">36 meses</button>
+        <button class="pill" data-v="48" onclick="setHorizon(48)">48 meses</button>
+        <button class="pill" data-v="60" onclick="setHorizon(60)">60 meses</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ SUMMARY BANNER ════════════════════════════════════════════════════ -->
+<div id="summaryBanner" class="mb anim-3" style="border-radius:12px;padding:14px 20px;font-size:13px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;border:1px solid rgba(45,212,160,.2);background:rgba(45,212,160,.05)"></div>
+
+<!-- ═══ METRICS ═══════════════════════════════════════════════════════════ -->
+<div class="row mb anim-3">
+  <div class="metric" id="mc-inv" style="border-color:rgba(245,200,66,.4)">
+    <span class="lbl" style="color:var(--yel)">💰 Inversión de Sergio</span>
+    <div class="mval" id="m-inv" style="color:var(--yel)">—</div>
+    <div class="msub" id="m-inv-sub">—</div>
+  </div>
+  <div class="metric">
+    <span class="lbl">✅ Recupera inversión</span>
+    <div class="mval" id="m-be">—</div>
+    <div class="msub" id="m-be-sub">—</div>
+  </div>
+  <div class="metric" style="border-color:rgba(45,212,160,.3)">
+    <span class="lbl" id="m-roi-lbl">🏆 Meta +—% lograda</span>
+    <div class="mval" id="m-roi">—</div>
+    <div class="msub" id="m-roi-sub">—</div>
+  </div>
+  <div class="metric">
+    <span class="lbl">📈 Ingreso mensual estable</span>
+    <div class="mval" style="color:var(--grn)" id="m-stable">—</div>
+    <div class="msub">Cuando los 1,000 clientes migran</div>
+  </div>
+  <div class="metric">
+    <span class="lbl" id="m-finalroi-lbl">📊 ROI al fin del horizonte</span>
+    <div class="mval" id="m-finalroi">—</div>
+    <div class="msub" id="m-finalroi-sub">—</div>
+  </div>
+</div>
+
+<!-- ═══ COSTS + REVENUE ═══════════════════════════════════════════════════ -->
+<div class="g2 mb">
+
+  <!-- Desglose inversión -->
+  <div class="card">
+    <span class="lbl">💼 Desglose de la inversión</span>
+    <table style="margin-bottom:14px">
+      <thead><tr><th style="text-align:left">Concepto</th><th>Monto</th></tr></thead>
+      <tbody id="costBody"></tbody>
+      <tfoot id="costFoot"></tfoot>
+    </table>
+    <div class="sub">
+      <div style="font-size:9px;color:var(--mut);letter-spacing:3px;margin-bottom:6px">GASTOS CORRIENTES MENSUALES (desde mes 6)</div>
+      <div style="display:flex;justify-content:space-between;font-size:13px">
+        <span style="color:var(--sub)">Estimado por Walter (equipo + ops)</span>
+        <strong class="mono" style="color:var(--acc)">S/ 12,000/mes</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modelo ingresos -->
+  <div class="card">
+    <span class="lbl">📈 Modelo de ingresos</span>
+
+    <div class="sub" style="margin-bottom:10px">
+      <div style="font-size:9px;color:var(--acc);font-weight:700;letter-spacing:3px;margin-bottom:8px">CLIENTES EXISTENTES (~1,000) — MIGRACIÓN WEB SaaS</div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="color:var(--mut)">Pago único de actualización</span><strong>S/ 500</strong></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--mut)">Mensualidad SaaS</span><strong>S/ 100/mes</strong></div>
+    </div>
+
+    <div class="sub" style="margin-bottom:10px">
+      <div style="font-size:9px;color:var(--pur);font-weight:700;letter-spacing:3px;margin-bottom:8px">VERSIÓN ESCRITORIO MODERNA</div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="color:var(--mut)">Licencia única</span><strong id="deskPriceShow" style="color:var(--pur)">S/ 1,200</strong></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="color:var(--mut)">Garantía incluida</span><strong>6 meses</strong></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--mut)">Soporte post-garantía</span><strong>S/ 100/mes</strong></div>
+    </div>
+
+    <div class="sub" style="margin-bottom:10px">
+      <div style="font-size:9px;color:var(--yel);font-weight:700;letter-spacing:3px;margin-bottom:8px">CLIENTES NUEVOS</div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="color:var(--mut)">Configuración inicial</span><strong>S/ 200</strong></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--mut)">Mensualidad SaaS</span><strong>S/ 100/mes</strong></div>
+    </div>
+
+    <div style="background:rgba(45,212,160,.05);border:1px solid rgba(45,212,160,.2);border-radius:10px;padding:13px 15px">
+      <div style="font-size:9px;color:var(--grn);font-weight:700;letter-spacing:3px;margin-bottom:6px">RITMO DE CONVERSIÓN ESTIMADO (Walter)</div>
+      <div style="font-size:26px;font-weight:800;color:var(--yel);font-family:'JetBrains Mono',monospace">25 clientes/mes</div>
+      <div style="font-size:12px;color:var(--sub);margin-top:4px">→ 40 meses para los 1,000 clientes existentes</div>
+      <div style="font-size:12px;color:var(--sub)">→ MRR máx. web: <strong style="color:var(--grn)">S/ 85,000/mes</strong> (con 15% escritorio)</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ CHART ══════════════════════════════════════════════════════════════ -->
+<div class="card mb">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;flex-wrap:wrap;gap:8px">
+    <div>
+      <span class="lbl">Retorno acumulado de Sergio</span>
+      <div id="chartSub" style="font-size:13px;color:var(--sub)">—</div>
+    </div>
+    <div id="beBadge" style="display:none;background:rgba(45,212,160,.08);border:1px solid rgba(45,212,160,.25);border-radius:10px;padding:8px 15px;font-size:12px"></div>
+  </div>
+  <canvas id="myChart"></canvas>
+  <div style="display:flex;gap:18px;margin-top:12px;flex-wrap:wrap;font-size:11px;color:var(--sub)">
+    <span>— <span style="color:#6fa4ff">Acumulado Sergio</span></span>
+    <span>- - <span style="color:var(--grn)">Break-even (recupera inversión)</span></span>
+    <span>- - <span style="color:var(--yel)">Meta de ganancia</span></span>
+  </div>
+</div>
+
+<!-- ═══ PROJECTION TABLE ═══════════════════════════════════════════════════ -->
+<div class="card mb">
+  <span class="lbl">Proyección mes a mes · Primeros 24 meses</span>
+  <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:left">Mes</th>
+          <th>Fase</th>
+          <th>Clientes</th>
+          <th>Ingresos</th>
+          <th>Gastos</th>
+          <th>Utilidad</th>
+          <th id="thSerg">Sergio 50%</th>
+          <th>Acum. Sergio</th>
+        </tr>
+      </thead>
+      <tbody id="projBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ WARNINGS ══════════════════════════════════════════════════════════ -->
+<div class="g3 mb">
+  <div class="card" style="border-color:rgba(245,200,66,.3)">
+    <span class="lbl" style="color:var(--yel)">⚠ Decisiones pendientes</span>
+    <ul style="padding-left:14px;color:var(--mut);font-size:12px;line-height:2.3">
+      <li>Salario exacto de Seniors (S/3k o S/6k c/u)</li>
+      <li>Split Walter / Duilio del <span id="wRem">50%</span> restante</li>
+      <li>¿Sergio recupera inversión con prioridad?</li>
+      <li>Contrato legal entre los 3 socios</li>
+      <li>Estimación de clientes nuevos (no solo migración)</li>
+    </ul>
+  </div>
+  <div class="card" style="border-color:rgba(240,96,96,.3)">
+    <span class="lbl" style="color:var(--red)">⚡ No incluido aún</span>
+    <ul style="padding-left:14px;color:var(--mut);font-size:12px;line-height:2.3">
+      <li>Soporte técnico post-lanzamiento</li>
+      <li>Marketing y ventas activas</li>
+      <li>Contador + gastos legales + notariales</li>
+      <li>Churn / deserción de clientes</li>
+      <li>Comisiones a vendedores externos</li>
+    </ul>
+  </div>
+  <div class="card" style="border-color:rgba(165,126,245,.3)">
+    <span class="lbl" style="color:var(--pur)">💻 Versión escritorio</span>
+    <ul style="padding-left:14px;color:var(--mut);font-size:12px;line-height:2.3">
+      <li>Precio: <strong style="color:var(--pur)">S/1,000 – S/1,500</strong> pago único</li>
+      <li>Garantía: <strong>6 meses</strong> incluida</li>
+      <li>Soporte post-garantía: <strong style="color:var(--pur)">S/100/mes</strong></li>
+      <li>Mayor % escritorio → menor MRR mensual</li>
+      <li>Conviene maximizar clientes SaaS web</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════════════════════ -->
+<footer style="text-align:center;border-top:1px solid var(--border);padding:20px 0 6px;color:var(--sub);font-size:11px;line-height:2">
+  Modelo financiero preliminar · Basado en migración de clientes existentes de SIGCO · No incluye clientes nuevos<br>
+  Elaborado por&nbsp;<a href="https://duilio.store" target="_blank" class="dlink">DUILIO RESTUCCIA ESLAVA</a>&nbsp;·&nbsp;Iquitos, Perú · 2025
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+// ══ CONSTANTS ══════════════════════════════════════════════════════════════
+const XR       = 3.80;                          // Tipo de cambio S//$
+const C_MAX    = 380;                           // Claude MAX mensual (Duilio)
+const C_PRO    = Math.round(20 * XR);           // Claude Pro mensual ≈ S/76
+const ONGOING  = 12000;                         // Gastos corrientes desde mes 6
+const EXISTING = 1000;                          // Clientes existentes SIGCO
+const CONV     = 25;                            // Clientes convertidos por mes
+
+// ══ STATE ══════════════════════════════════════════════════════════════════
+const S = { share:50, roi:40, senior:'total', desk:1200, deskPct:15, horizon:36 };
+
+// ══ FORMATTERS ═════════════════════════════════════════════════════════════
+function sol(n) {
+  const r = Math.round(n);
+  const a = Math.abs(r).toLocaleString('es-PE');
+  return r < 0 ? `-S/ ${a}` : `S/ ${a}`;
+}
+function solK(n) {
+  const s = n < 0 ? '-' : '';
+  return `${s}S/${(Math.abs(n)/1000).toFixed(0)}k`;
+}
+
+// ══ CALCULAR COSTOS ════════════════════════════════════════════════════════
+function calcCosts(mode) {
+  const sen = mode === 'each' ? 12000 : 6000;
+  const devMonths = [];
+  let direct = 0;
+
+  for (let m = 1; m <= 5; m++) {
+    const hasD = m <= 2, hasJ = m <= 3;
+    const pers  = sen + 3000 + (hasD ? 2000 : 0) + (hasJ ? 2000 : 0);
+    const ai    = C_MAX + C_PRO + (hasD ? C_PRO : 0) + (hasJ ? C_PRO : 0);
+    const infra = 120 + 200 + 100;
+    const tot   = pers + ai + infra;
+    direct += tot;
+    devMonths.push({ m, pers, ai, infra, tot });
+  }
+
+  const promo  = Math.round(direct * 0.25);
+  const imprv  = Math.round(direct * 0.10);
+  const invest = direct + promo + imprv;
+  return { devMonths, direct, promo, imprv, invest };
+}
+
+// ══ CALCULAR PROYECCIÓN ════════════════════════════════════════════════════
+function calcProjection() {
+  const { share, senior, desk, deskPct, horizon } = S;
+  const dP    = deskPct / 100;
+  const costs = calcCosts(senior);
+  const inv   = costs.invest;
+
+  let cumSerg  = -inv;
+  let webTotal = 0, deskTotal = 0;
+  const deskQ  = [];   // cola para rastrear garantía escritorio
+
+  const months = [];
+
+  for (let m = 1; m <= horizon; m++) {
+    if (m <= 5) {
+      months.push({
+        m, phase:'dev', revenue:0, profit:0,
+        cost: costs.devMonths[m-1].tot,
+        sergioInc:0, cumSerg: Math.round(cumSerg),
+        converted:0
+      });
+    } else {
+      const totalC = webTotal + deskTotal;
+      const newC   = totalC < EXISTING ? CONV : 0;
+      const newD   = Math.round(newC * dP);
+      const newW   = newC - newD;
+      webTotal  += newW;
+      deskTotal += newD;
+      deskQ.push(newD);
+
+      // Escritorio que terminó garantía (>6 meses) → paga soporte
+      const deskSupport = deskQ.length > 6
+        ? deskQ.slice(0, deskQ.length - 6).reduce((a,b) => a+b, 0)
+        : 0;
+
+      const revenue = newW  * 500           // migración web (fee único)
+                    + newD  * desk           // licencia escritorio
+                    + webTotal * 100         // MRR web SaaS
+                    + deskSupport * 100;     // soporte escritorio
+
+      const profit   = revenue - ONGOING;
+      const sergioInc = profit > 0 ? Math.round(profit * share / 100) : 0;
+      cumSerg += sergioInc;
+
+      months.push({
+        m, phase:'ops',
+        revenue: Math.round(revenue), profit: Math.round(profit),
+        cost: ONGOING, sergioInc,
+        cumSerg: Math.round(cumSerg),
+        converted: webTotal + deskTotal, newC
+      });
+    }
+  }
+
+  return { months, ...costs };
+}
+
+// ══ CHART ══════════════════════════════════════════════════════════════════
+let chartObj = null;
+
+function renderChart(months, invest, roiPct) {
+  const labels   = months.map(d => `M${d.m}`);
+  const values   = months.map(d => d.cumSerg);
+  const roiTgt   = Math.round(invest * roiPct / 100);
+
+  const ctx = document.getElementById('myChart');
+  if (chartObj) chartObj.destroy();
+
+  chartObj = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        borderColor: '#4f8ef7',
+        backgroundColor: ctxArg => {
+          const g = ctxArg.chart.ctx.createLinearGradient(0,0,0,300);
+          g.addColorStop(0,'rgba(79,142,247,.18)');
+          g.addColorStop(1,'rgba(79,142,247,0)');
+          return g;
+        },
+        borderWidth: 2.5, fill: true, tension: 0.4,
+        pointRadius: 0, pointHoverRadius: 5,
+      }]
+    },
+    options: {
+      responsive:true,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'#0d1830', borderColor:'#182038', borderWidth:1,
+          titleColor:'#e8f0ff', bodyColor:'#7a93be',
+          callbacks:{
+            title: items => `Mes ${items[0].dataIndex + 1}`,
+            label: ctxArg => {
+              const d = months[ctxArg.dataIndex];
+              const lines = [`Acum. Sergio: ${sol(d.cumSerg)}`];
+              if (d.revenue > 0)  lines.push(`Ingresos: ${sol(d.revenue)}`);
+              if (d.profit !== 0) lines.push(`Utilidad: ${sol(d.profit)}`);
+              if (d.converted > 0) lines.push(`Clientes: ${d.converted}`);
+              return lines;
+            }
+          }
+        }
+      },
+      scales:{
+        x:{
+          grid:{color:'#182038'}, border:{color:'#182038'},
+          ticks:{color:'#3a5080', font:{size:10}, maxTicksLimit:13}
+        },
+        y:{
+          grid:{color:'#182038'}, border:{color:'#182038'},
+          ticks:{color:'#3a5080', font:{size:10}, callback: v => solK(v)}
+        }
+      }
+    },
+    plugins:[{
+      id:'refLines',
+      afterDraw(ch) {
+        const {ctx:c, chartArea:a, scales:{y}} = ch;
+        const line = (val, color, dash, lbl) => {
+          const yp = y.getPixelForValue(val);
+          if (yp < a.top || yp > a.bottom) return;
+          c.save();
+          c.strokeStyle = color; c.lineWidth = 1.5; c.setLineDash(dash);
+          c.beginPath(); c.moveTo(a.left, yp); c.lineTo(a.right, yp); c.stroke();
+          c.setLineDash([]); c.fillStyle = color;
+          c.font = '10px Syne, sans-serif'; c.textAlign = 'right';
+          c.fillText(lbl, a.right - 6, yp - 5);
+          c.restore();
+        };
+        line(0,      '#2dd4a0', [6,3], '▶ Break-even');
+        line(roiTgt, '#f5c842', [4,4], `▶ Meta +${roiPct}%`);
+      }
+    }]
+  });
+}
+
+// ══ RENDER PRINCIPAL ═══════════════════════════════════════════════════════
+function render() {
+  const { share, roi, senior, desk, deskPct, horizon } = S;
+  const data = calcProjection();
+  const { months, direct, promo, imprv, invest } = data;
+  const roiTgt = Math.round(invest * roi / 100);
+
+  // Textos reactivos
+  document.getElementById('shareVal').textContent    = share + '%';
+  document.getElementById('partnerRem').textContent  = (100-share) + '%';
+  document.getElementById('roiVal').textContent      = roi + '%';
+  document.getElementById('devCostShow').textContent = sol(direct);
+  document.getElementById('deskPriceShow').textContent = `S/ ${desk.toLocaleString('es-PE')}`;
+  document.getElementById('deskPctVal').textContent  = deskPct + '%';
+  document.getElementById('wRem').textContent        = (100-share) + '%';
+  document.getElementById('thSerg').textContent      = `Sergio ${share}%`;
+
+  // ── TABLA COSTOS ─────────────────────────────────────────────────────────
+  const senAmt = senior === 'each' ? 60000 : 30000;
+  const senLbl = senior === 'each' ? '2 Seniors × 5m (S/6,000 c/u)' : '2 Seniors × 5m (S/3,000 c/u)';
+  const cpTeam = Math.round(C_PRO * (5 + 2 + 3));  // Walter×5 + Diseñador×2 + Junior×3
+
+  const cRows = [
+    [senLbl,                                 senAmt],
+    ['Walter – Producto SIGCO × 5m',         15000],
+    ['Diseñador UI/UX × 2m',                 4000],
+    ['Programador Junior × 3m',              6000],
+    ['Claude MAX – Duilio × 5m',             C_MAX * 5],
+    ['Claude Pro – Walter/Diseñador/Junior',  cpTeam],
+    ['Infraestructura (Serv+Net+Elec) × 5m', (120+200+100)*5],
+  ];
+
+  document.getElementById('costBody').innerHTML = cRows.map(([l,v]) =>
+    `<tr><td style="color:var(--mut)">${l}</td><td class="mono">${sol(v)}</td></tr>`
+  ).join('');
+
+  document.getElementById('costFoot').innerHTML = `
+    <tr style="border-top:1px solid var(--border)">
+      <td style="padding:9px 8px 4px;font-weight:700;color:var(--txt)">Costo directo del proyecto</td>
+      <td style="padding:9px 8px 4px;font-weight:700;color:var(--acc)" class="mono">${sol(direct)}</td>
+    </tr>
+    <tr>
+      <td style="padding:3px 8px;color:var(--mut);font-size:11px">+ Gastos de promoción / marketing (25%)</td>
+      <td style="padding:3px 8px;color:var(--mut);font-size:11px" class="mono">${sol(promo)}</td>
+    </tr>
+    <tr>
+      <td style="padding:3px 8px 9px;color:var(--mut);font-size:11px">+ Imprevistos / contingencias (10%)</td>
+      <td style="padding:3px 8px 9px;color:var(--mut);font-size:11px" class="mono">${sol(imprv)}</td>
+    </tr>
+    <tr style="border-top:2px solid var(--border2)">
+      <td style="padding:10px 8px 0;font-weight:800;color:var(--yel);font-size:13px">INVERSIÓN SERGIO</td>
+      <td style="padding:10px 8px 0;font-weight:800;color:var(--yel);font-size:15px" class="mono">${sol(invest)}</td>
+    </tr>
+  `;
+
+  // ── MÉTRICAS ─────────────────────────────────────────────────────────────
+  const opsM   = months.filter(m => m.phase === 'ops');
+  const beM    = opsM.find(m => m.cumSerg >= 0);
+  const roiM   = opsM.find(m => m.cumSerg >= roiTgt);
+  const stabM  = opsM.find(m => m.converted >= EXISTING);
+  const lastM  = opsM[opsM.length - 1];
+  const finalR = lastM ? Math.round(lastM.cumSerg / invest * 100) : -100;
+
+  document.getElementById('m-inv').textContent    = sol(invest);
+  document.getElementById('m-inv-sub').textContent = `Dir. ${sol(direct)} + Prom. ${sol(promo)} + Impr. ${sol(imprv)}`;
+
+  const beEl = document.getElementById('m-be');
+  beEl.textContent      = beM ? `Mes ${beM.m}` : 'Fuera del horizonte';
+  beEl.style.color      = beM ? 'var(--grn)' : 'var(--red)';
+  document.getElementById('m-be-sub').textContent = beM
+    ? `${beM.m - 5} mes(es) en operación` : 'Ampliar horizonte';
+
+  document.getElementById('m-roi-lbl').textContent = `🏆 Meta +${roi}% lograda`;
+  const roiEl = document.getElementById('m-roi');
+  roiEl.textContent     = roiM ? `Mes ${roiM.m}` : 'Fuera del horizonte';
+  roiEl.style.color     = roiM ? 'var(--yel)' : 'var(--mut)';
+  document.getElementById('m-roi-sub').textContent = roiM
+    ? `Gana S/${Math.round(roiTgt/1000)}k adicionales sobre inversión`
+    : `Necesita ${sol(roiTgt)} sobre inversión`;
+
+  const stabEl = document.getElementById('m-stable');
+  stabEl.textContent = stabM ? `${sol(stabM.sergioInc)}/mes` : `> ${horizon}m`;
+
+  document.getElementById('m-finalroi-lbl').textContent = `📊 ROI al mes ${horizon}`;
+  const frEl = document.getElementById('m-finalroi');
+  frEl.textContent    = `${finalR >= 0 ? '+' : ''}${finalR}%`;
+  frEl.style.color    = finalR >= roi ? 'var(--grn)' : finalR > 0 ? 'var(--yel)' : 'var(--red)';
+  document.getElementById('m-finalroi-sub').textContent = lastM
+    ? `Acumula ${sol(lastM.cumSerg)} neto` : '';
+
+  // ── BANNER ───────────────────────────────────────────────────────────────
+  const banner = document.getElementById('summaryBanner');
+  if (beM) {
+    banner.style.borderColor  = 'rgba(45,212,160,.2)';
+    banner.style.background   = 'rgba(45,212,160,.05)';
+    banner.innerHTML = `<span style="font-size:18px">✅</span>
+      <span>Con <strong style="color:var(--acc)">${share}%</strong> participación, Sergio recupera su inversión de
+      <strong style="color:var(--yel)">${sol(invest)}</strong> en el
+      <strong style="color:var(--grn)">Mes ${beM.m}</strong>
+      ${roiM
+        ? `y logra la meta de <strong style="color:var(--yel)">+${roi}%</strong> en el <strong style="color:var(--yel)">Mes ${roiM.m}</strong>`
+        : `(meta +${roi}% está fuera del horizonte de ${horizon}m)`}.
+      Ingreso mensual estable: <strong style="color:var(--grn)">${stabM ? sol(stabM.sergioInc) : '—'}/mes</strong>.</span>`;
+  } else {
+    banner.style.borderColor = 'rgba(240,96,96,.3)';
+    banner.style.background  = 'rgba(240,96,96,.05)';
+    banner.innerHTML = `<span style="font-size:18px">⚠️</span>
+      <span>Con <strong style="color:var(--acc)">${share}%</strong> participación, Sergio no recupera su inversión dentro del horizonte de
+      <strong>${horizon} meses</strong>. Amplíe el horizonte o revise los parámetros.</span>`;
+  }
+
+  // BE badge en el chart
+  const badge = document.getElementById('beBadge');
+  if (beM) {
+    badge.style.display = 'block';
+    badge.innerHTML = `✅ Break-even <strong style="color:var(--grn)">Mes ${beM.m}</strong> &nbsp;|&nbsp; Meta +${roi}%: <strong style="color:var(--yel)">${roiM ? 'Mes ' + roiM.m : '—'}</strong>`;
+  } else {
+    badge.style.display = 'none';
+  }
+
+  document.getElementById('chartSub').textContent =
+    `${share}% participación · Meta +${roi}% · Horizonte ${horizon} meses`;
+
+  // ── GRÁFICO ───────────────────────────────────────────────────────────────
+  renderChart(months, invest, roi);
+
+  // ── TABLA PROYECCIÓN ─────────────────────────────────────────────────────
+  document.getElementById('projBody').innerHTML = months.slice(0, 24).map((r, i) => {
+    const prev    = i > 0 ? months[i-1] : null;
+    const isBE    = r.cumSerg >= 0 && (!prev || prev.cumSerg < 0);
+    const isROI   = r.cumSerg >= roiTgt && (!prev || prev.cumSerg < roiTgt) && roiTgt > 0;
+    const rowBg   = isBE ? 'rgba(45,212,160,.05)' : isROI ? 'rgba(245,200,66,.05)' : '';
+    const icon    = isBE ? ' ✅' : isROI ? ' 🏆' : '';
+    const bdg     = r.phase === 'dev'
+      ? `<span class="badge" style="background:rgba(245,200,66,.12);color:var(--yel)">DEV</span>`
+      : `<span class="badge" style="background:rgba(79,142,247,.12);color:var(--acc)">OPS</span>`;
+    const cColor  = r.cumSerg >= roiTgt ? 'var(--yel)'
+                  : r.cumSerg >= 0 ? 'var(--grn)' : 'var(--red)';
+    return `<tr style="background:${rowBg}">
+      <td class="mono" style="color:${r.phase==='dev'?'var(--yel)':'var(--txt)'};font-weight:700">M${r.m}${icon}</td>
+      <td style="text-align:center">${bdg}</td>
+      <td class="mono" style="color:var(--sub)">${r.converted || '—'}</td>
+      <td class="mono">${r.revenue ? sol(r.revenue) : '—'}</td>
+      <td class="mono" style="color:var(--red)">${sol(r.cost)}</td>
+      <td class="mono" style="color:${r.profit>0?'var(--grn)':r.profit<0?'var(--red)':'var(--sub)'}">
+        ${r.profit !== 0 ? sol(r.profit) : '—'}</td>
+      <td class="mono" style="color:var(--acc)">${r.sergioInc ? sol(r.sergioInc) : '—'}</td>
+      <td class="mono" style="font-weight:700;color:${cColor}">${sol(r.cumSerg)}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ══ CONTROL HELPERS ════════════════════════════════════════════════════════
+function activePills(id, val, extraCls) {
+  document.querySelectorAll(`#${id} .pill`).forEach(p => {
+    const on = String(p.dataset.v) === String(val);
+    p.className = 'pill' + (on ? ' on' + (extraCls ? ' '+extraCls : '') : '');
+  });
+}
+
+function setShare(v) {
+  S.share = v;
+  document.getElementById('shareRng').value = v;
+  activePills('sharePills', v);
+  render();
+}
+
+function setROI(v) {
+  S.roi = v;
+  document.getElementById('roiVal').textContent = v + '%';
+  activePills('roiPills', v, 'on-g');
+  render();
+}
+
+function setSenior(mode) {
+  S.senior = mode;
+  document.querySelectorAll('#seniorPills .pill').forEach(p => {
+    const on = p.dataset.v === mode;
+    p.className = 'pill' + (on ? ' on ' + (mode==='total'?'on-g':'on-y') : '');
+  });
+  render();
+}
+
+function setDesk(price) {
+  S.desk = price;
+  activePills('deskPills', price);
+  render();
+}
+
+function setHorizon(h) {
+  S.horizon = h;
+  activePills('horizonPills', h);
+  render();
+}
+
+// Slider de participación
+document.getElementById('shareRng').addEventListener('input', function() {
+  const v = Math.round(parseInt(this.value) / 5) * 5;
+  this.value = v;
+  S.share = v;
+  document.getElementById('shareVal').textContent   = v + '%';
+  document.getElementById('partnerRem').textContent = (100-v) + '%';
+  activePills('sharePills', v);
+  render();
+});
+
+// Slider de escritorio %
+document.getElementById('deskRng').addEventListener('input', function() {
+  S.deskPct = parseInt(this.value);
+  document.getElementById('deskPctVal').textContent = this.value + '%';
+  render();
+});
+
+// Render inicial
+render();
+</script>
+</body>
+</html>
