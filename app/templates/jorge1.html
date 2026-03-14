@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schmidt House — Plan de Reactivación</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --jungle:    #1a3a2a;
+    --moss:      #2d5a3d;
+    --fern:      #4a8c5c;
+    --leaf:      #7bbf8a;
+    --cream:     #f5f0e8;
+    --warm:      #e8ddc8;
+    --gold:      #c9a84c;
+    --amber:     #e6b84a;
+    --river:     #4a7fa0;
+    --ochre:     #a0622a;
+    --text:      #1e1e1e;
+    --muted:     #6b6355;
+    --white:     #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--jungle);
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(74,140,92,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(201,168,76,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .header-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 48px);
+    color: var(--white);
+    line-height: 1.15;
+    position: relative;
+    z-index: 1;
+  }
+  header h1 em {
+    color: var(--amber);
+    font-style: italic;
+  }
+  .header-sub {
+    margin-top: 10px;
+    color: rgba(245,240,232,0.65);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+  .header-from {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    font-size: 12px;
+    color: rgba(245,240,232,0.5);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 1px;
+  }
+
+  /* ─── TABS ─── */
+  .tabs-bar {
+    background: var(--jungle);
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 16px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(245,240,232,0.45);
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.25s ease;
+    position: relative;
+  }
+  .tab-btn .tab-icon { margin-right: 7px; font-size: 15px; }
+  .tab-btn:hover { color: rgba(245,240,232,0.8); }
+  .tab-btn.active {
+    color: var(--amber);
+    border-bottom-color: var(--amber);
+  }
+  .tab-role {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-top: 1px;
+  }
+
+  /* ─── MAIN ─── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  .tab-panel { display: none; animation: fadeIn 0.3s ease; }
+  .tab-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+  /* ─── INTRO CARD ─── */
+  .intro-card {
+    background: var(--white);
+    border-left: 4px solid var(--gold);
+    border-radius: 2px 8px 8px 2px;
+    padding: 28px 32px;
+    margin-bottom: 36px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .intro-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: var(--jungle);
+  }
+  .intro-card p {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .intro-card p:last-child { margin-bottom: 0; }
+  .intro-card strong { color: var(--text); }
+
+  /* ─── SECTION ─── */
+  .section {
+    margin-bottom: 40px;
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-title .num {
+    background: var(--jungle);
+    color: var(--amber);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-title h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    color: var(--jungle);
+  }
+
+  /* ─── ACTION CARD ─── */
+  .action-card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s;
+  }
+  .action-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.09); }
+  .action-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--jungle);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .action-card p, .action-card li {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .action-card ul { padding-left: 18px; margin-top: 8px; }
+  .action-card ul li { margin-bottom: 5px; }
+
+  /* ─── PRIORITY BADGE ─── */
+  .badge {
+    display: inline-block;
+    font-size: 9px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+  .badge-urgent { background: #fde8e0; color: #c0440a; }
+  .badge-now    { background: #e0f0e8; color: #1a6b3a; }
+  .badge-weekly { background: #e8f0fc; color: #1a4a8a; }
+  .badge-key    { background: #fdf4e0; color: #8a6010; }
+
+  /* ─── MESSAGE BOX ─── */
+  .msg-box {
+    background: var(--jungle);
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin: 12px 0 16px;
+    position: relative;
+  }
+  .msg-box::before {
+    content: '"';
+    position: absolute;
+    top: 8px; left: 18px;
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    color: rgba(201,168,76,0.3);
+    line-height: 1;
+  }
+  .msg-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-left: 28px;
+  }
+  .msg-box p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.88);
+    padding-left: 28px;
+    font-style: italic;
+  }
+
+  /* ─── IDEA GRID (Raúl) ─── */
+  .idea-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 12px;
+  }
+  .idea-item {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 18px 20px;
+    border-top: 3px solid var(--fern);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+  }
+  .idea-item:hover { transform: translateY(-2px); }
+  .idea-item .idea-emoji { font-size: 24px; margin-bottom: 8px; display: block; }
+  .idea-item h5 { font-size: 13px; font-weight: 600; color: var(--jungle); margin-bottom: 4px; }
+  .idea-item p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* ─── TIMELINE ─── */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    margin-top: 8px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px; top: 6px; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--fern), transparent);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -26px; top: 6px;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 2px solid var(--cream);
+  }
+  .tl-week {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .tl-item p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+  .tl-item strong { color: var(--text); }
+
+  /* ─── PHOTO IDEA (Abuela) ─── */
+  .photo-idea {
+    background: linear-gradient(135deg, var(--jungle) 0%, var(--moss) 100%);
+    border-radius: 12px;
+    padding: 28px 30px;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+    margin: 12px 0;
+  }
+  .photo-idea::after {
+    content: '📸';
+    position: absolute;
+    right: 24px; bottom: 16px;
+    font-size: 48px;
+    opacity: 0.2;
+  }
+  .photo-idea h4 { font-family: 'Playfair Display', serif; font-size: 17px; margin-bottom: 10px; color: var(--amber); }
+  .photo-idea p { font-size: 13.5px; line-height: 1.7; color: rgba(255,255,255,0.82); }
+  .phrase-list { margin-top: 14px; padding-left: 0; list-style: none; }
+  .phrase-list li {
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: rgba(245,240,232,0.9);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .phrase-list li:last-child { border-bottom: none; }
+  .phrase-list li span { font-family: 'DM Sans', sans-serif; font-style: normal; font-size: 11px; color: var(--amber); display: block; margin-top: 2px; }
+
+  /* ─── STEP LIST ─── */
+  .step-list { list-style: none; padding: 0; margin-top: 8px; }
+  .step-list li {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    align-items: flex-start;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-num {
+    background: var(--fern);
+    color: var(--white);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .step-list p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+  .step-list strong { color: var(--text); }
+
+  /* ─── HIGHLIGHT BOX ─── */
+  .highlight {
+    background: #f0f7f3;
+    border: 1px solid #c0dfc8;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin: 12px 0;
+    font-size: 13.5px;
+    color: var(--jungle);
+    line-height: 1.7;
+  }
+  .highlight strong { color: var(--moss); }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    margin: 36px 0;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 32px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 32px 20px 24px; }
+    .tabs-bar { padding: 0 12px; overflow-x: auto; }
+    .tab-btn { padding: 14px 16px; font-size: 12px; }
+    main { padding: 32px 18px 60px; }
+    .intro-card { padding: 20px 20px; }
+    .action-card { padding: 18px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">Documento interno — Uso exclusivo Schmidt House</div>
+  <h1>Schmidt House<br><em>Plan de Reactivación</em></h1>
+  <p class="header-sub">Iquitos, Loreto — Zona Céntrica · Apart-Hotel</p>
+  <p class="header-from">Preparado por: Duilio &nbsp;·&nbsp; Marzo 2026</p>
+</header>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="switchTab('jorge', this)">
+    <span class="tab-icon">🏢</span>Jorge
+    <span class="tab-role">Estrategia &amp; Digital</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('rosa', this)">
+    <span class="tab-icon">🌸</span>Rosa
+    <span class="tab-role">Abuela · Anfitriona</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('raul', this)">
+    <span class="tab-icon">🔬</span>Raúl
+    <span class="tab-role">Biólogo · Contenido</span>
+  </button>
+</div>
+
+<main>
+
+  <!-- ══════════════════════════════════════════
+       TAB: JORGE
+  ═══════════════════════════════════════════ -->
+  <div id="tab-jorge" class="tab-panel active">
+
+    <div class="intro-card">
+      <h2>Jorge, este es el panorama</h2>
+      <p>Schmidt House tiene algo valioso que muchos negocios no tienen: <strong>clientes reales que ya vivieron una buena experiencia</strong>. El trabajo ahora no es convencer a desconocidos — es <strong>reactivar vínculos que ya existen</strong>.</p>
+      <p>Desde Lima puedes manejar la estrategia digital. Lo que te toca a ti es lo que requiere criterio y visión. Rosa y Raúl hacen la parte presencial. Juntos cubre los tres frentes.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="num">1</div>
+        <h3>Presencia digital — Lo primero y urgente</h3>
+      </div>
+
+      <div class="action-card">
+        <h4>🗺️ Google Business Profile <span class="badge badge-urgent">Urgente</span></h4>
+        <p>Si alguien busca en Google <em>"apartment hotel Iquitos"</em> o <em>"hospedaje Iquitos centro"</em>, ¿aparece Schmidt House? Si no tiene ficha de Google Maps activa y actualizada, ese tráfico va a la competencia.</p>
+        <ul>
+          <li>Crear o reclamar el perfil en <strong>business.google.com</strong> (gratis, desde Lima, en una tarde)</li>
+          <li>Subir mínimo 10 fotos: habitaciones, sala, fachada, desayuno, detalles</li>
+          <li>Completar todos los datos: horario de atención, teléfono, WhatsApp, descripción en español e inglés</li>
+          <li>Categoría: <em>"Apart hotel"</em> o <em>"Apartamento amoblado"</em></li>
+        </ul>
+      </div>
+
+      <div class="action-card">
+        <h4>⭐ TripAdvisor <span class="badge badge-urgent">Urgente</span></h4>
+        <p>La mayoría de los huéspedes extranjeros buscan reseñas en TripAdvisor antes de decidir. Sin presencia ahí, Schmidt House es invisible para ese público.</p>
+        <ul>
+          <li>Crear ficha en <strong>tripadvisor.com/Owners</strong></li>
+          <li>Subir las mismas fotos de Google</li>
+          <li>Completar descripción, ubicación y datos de contacto</li>
+          <li>Compartir el enlace con Rosa para que lo tenga a mano cuando pida reviews por WhatsApp</li>
+        </ul>
+      </div>
+
+      <div class="action-card">
+        <h4>📱 Facebook e Instagram <span class="badge badge-now">Esta semana</span></h4>
+        <p>Si ya existen las páginas, asegurarse de que tengan datos actualizados, fotos recientes y el botón de contacto activo. Si no existen, crear una página de Facebook es suficiente para empezar — Instagram se puede vincular después.</p>
+        <ul>
+          <li>Foto de portada: algo que transmita <em>hogar y comodidad en el Amazonas</em></li>
+          <li>Enlazar el WhatsApp de Rosa como canal de contacto principal</li>
+          <li>Cuando Raúl empiece a publicar contenido, compartirlo también en Facebook</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="num">2</div>
+        <h3>Campaña WhatsApp — Los contactos de Rosa</h3>
+      </div>
+
+      <div class="highlight">
+        <strong>Nota importante:</strong> Los contactos están en el celular de Rosa. El primer mensaje debe salir <em>desde ese mismo número</em> — así el cliente reconoce de inmediato quién escribe. Jorge puede redactar los mensajes y Rosa los envía.
+      </div>
+
+      <div class="action-card">
+        <h4>✉️ Mensaje para turistas / viajeros</h4>
+        <div class="msg-box">
+          <div class="msg-label">Versión en inglés</div>
+          <p>Hi [Name]! This is Rosa from Schmidt House in Iquitos. I hope you're doing wonderfully! We miss having you here. Are you thinking of coming back to the Amazon? Or perhaps you know someone planning to visit? We'd love to welcome familiar faces again. 🌿</p>
+        </div>
+        <div class="msg-box">
+          <div class="msg-label">Versión en español (para latinoamericanos)</div>
+          <p>¡Hola [Nombre]! Soy Rosa del Schmidt House en Iquitos. ¿Cómo estás? Por acá recordamos con mucho cariño su visita. ¿Tienes planes de volver por Iquitos? O si conoces a alguien que venga, aquí estamos. 🙏</p>
+        </div>
+      </div>
+
+      <div class="action-card">
+        <h4>⭐ Pedido de reseña — mensaje de seguimiento</h4>
+        <p>Después de la respuesta positiva, enviar este segundo mensaje:</p>
+        <div class="msg-box">
+          <div class="msg-label">Versión en inglés</div>
+          <p>By the way, [Name] — would you mind leaving us a quick review on Google or TripAdvisor? It would mean so much to us. I can send you the link right now. If you prefer, I can even suggest a few short phrases you just copy and paste — it takes less than a minute! 😊</p>
+        </div>
+      </div>
+
+      <div class="action-card">
+        <h4>🎥 Pedido de video reseña</h4>
+        <p>Para los contactos más cercanos y entusiastas, una petición directa y sin presión:</p>
+        <div class="msg-box">
+          <div class="msg-label">Versión en inglés</div>
+          <p>If you ever feel like it, a short voice note or 30-second video on WhatsApp saying what you liked about your stay would be incredible for us. Just talking naturally — no editing needed. But absolutely no pressure! 🎤</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="num">3</div>
+        <h3>Hoja de ruta — Las primeras 4 semanas</h3>
+      </div>
+      <div class="action-card">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-week">Semana 1</div>
+            <p><strong>Jorge:</strong> Crear/completar Google Business Profile y TripAdvisor. Tomar screenshots de ambos enlaces y enviárselos a Rosa.<br>
+            <strong>Rosa:</strong> Enviar los primeros 10 mensajes WhatsApp a los contactos más cercanos y más recientes.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-week">Semana 2</div>
+            <p><strong>Rosa:</strong> Continuar con los siguientes 20 contactos. Recopilar las primeras respuestas positivas.<br>
+            <strong>Raúl:</strong> Publicar el primer post científico en Instagram (ver su pestaña).</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-week">Semana 3</div>
+            <p><strong>Rosa:</strong> A quienes respondieron bien, enviarles el pedido de reseña con el enlace de Google.<br>
+            <strong>Raúl:</strong> Segunda publicación. Compartirla en grupo de Facebook de biología amazónica.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-week">Semana 4</div>
+            <p><strong>Jorge:</strong> Revisar cuántas reseñas se obtuvieron. Evaluar si se activan más plataformas (Booking.com, Airbnb). Tomar decisiones con información real.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end tab-jorge -->
+
+
+  <!-- ══════════════════════════════════════════
+       TAB: ROSA
+  ═══════════════════════════════════════════ -->
+  <div id="tab-rosa" class="tab-panel">
+
+    <div class="intro-card">
+      <h2>Rosa, usted es el corazón del negocio</h2>
+      <p>Años de recibir viajeros de todo el mundo han dejado algo que no se puede comprar: <strong>confianza, calidez y recuerdos genuinos</strong>. Los pasajeros que pasaron por Schmidt House no recuerdan solo las habitaciones — la recuerdan <em>a usted</em>.</p>
+      <p>Ahora que Raúl está tomando las riendas, usted tiene un papel fundamental: <strong>sus contactos en WhatsApp son el activo más valioso del negocio en este momento</strong>. Nadie más tiene esa lista. Es el punto de partida de todo.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="num">1</div>
+        <h3>Sus contactos de WhatsApp — Por dónde empezar</h3>
+      </div>
+
+      <div class="action-card">
+        <h4>📋 Cómo organizar los contactos <span class="badge badge-now">Sin apuro</span></h4>
+        <p>No hace falta escribirle a todos a la vez. La idea es hacerlo con calma, como lo haría cualquier persona que quiere reencontrar a un conocido:</p>
+        <ul>
+          <li>Empezar con los <strong>más recientes</strong> — quienes se fueron hace menos tiempo son los que más fácil recuerdan</li>
+          <li>Luego los que <strong>estuvieron más tiempo o volvieron varias veces</strong></li>
+          <li>Jorge le preparará los mensajes en inglés para los extranjeros — usted solo los copia y envía</li>
+          <li>Con los latinoamericanos puede escribir con sus propias palabras, como siempre lo ha hecho</li>
+        </ul>
+      </div>
+
+      <div class="action-card">
+        <h4>💬 ¿Qué decirles? <span class="badge badge-key">Idea principal</span></h4>
+        <p>No es necesario pedir nada desde el primer momento. El primer mensaje es solo <strong>saludar y preguntar cómo están</strong>. Eso ya abre la conversación.</p>
+        <p style="margin-top:10px;">Si responden bien y con cariño, ahí es cuando se puede agregar:</p>
+        <ul>
+          <li><em>"¿Piensan volver por Iquitos?"</em></li>
+          <li><em>"¿Conocen a alguien que venga?"</em></li>
+          <li><em>"¿Les molestaría dejarnos un comentario en Google?"</em> (Jorge le da el enlace)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="num">2</div>
+        <h3>Sus fotos con los pasajeros — Un tesoro sin usar</h3>
+      </div>
+
+      <div class="photo-idea">
+        <h4>La idea de las fotos con frase</h4>
+        <p>Si usted tiene fotos con huéspedes — en el desayuno, en la sala, en la entrada del departamento — esas imágenes son <strong>publicidad auténtica que ningún dinero puede comprar</strong>.</p>
+        <p style="margin-top:10px;">La propuesta es simple: publicar una foto suya con un visitante (con su permiso) y añadir debajo una frase corta y cálida.</p>
+        <ul class="phrase-list">
+          <li>"Far from home, but never far from family." <span>Para fotos con viajeros extranjeros</span></li>
+          <li>"Every guest leaves a piece of the Amazon in their heart." <span>Para despedidas o recuerdos</span></li>
+          <li>"Home is where Rosa's welcome is." <span>Para quienes volvieron varias veces</span></li>
+          <li>"Iquitos is just the beginning of the magic." <span>Para fotos en exteriores o actividades</span></li>
+          <li>"Years pass. Friendships from the Amazon stay forever." <span>Para contactos de hace tiempo</span></li>
+        </ul>
+      </div>
+
+      <div class="action-card">
+        <h4>✅ Cómo pedir permiso — es muy sencillo</h4>
+        <p>Cuando retome el contacto por WhatsApp con algún pasajero, simplemente puede preguntar:</p>
+        <div class="msg-box">
+          <div class="msg-label">Ejemplo de mensaje</div>
+          <p>By the way, I was looking at some old photos and found one of us together. I'd love to share it on our Facebook page with a nice caption, if that's alright with you? I can send it to you first so you can see it. 😊</p>
+        </div>
+        <p>La mayoría de las personas se alegrarán de que las recuerden. Muy pocos dirán que no.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="num">3</div>
+        <h3>Su presencia en las redes — Con naturalidad</h3>
+      </div>
+
+      <div class="action-card">
+        <h4>🍳 Ideas de contenido sencillo que puede hacer usted</h4>
+        <p>No hace falta escribir mucho ni publicar todos los días. Algunas ideas que no requieren esfuerzo:</p>
+        <ul>
+          <li><strong>Una foto del desayuno</strong> preparado con algo típico iquiteño — con una frase en español e inglés</li>
+          <li><strong>Una foto de la sala o el comedor</strong> bien arreglado — "Ready to welcome new guests"</li>
+          <li><strong>Una foto suya</strong> — simplemente usted, en la cocina o en la entrada, con una sonrisa. Eso conecta más que cualquier foto profesional</li>
+        </ul>
+        <p style="margin-top:10px;">Raúl puede ayudarla a subirlas. Usted pone el alma, él pone el teléfono.</p>
+      </div>
+    </div>
+
+  </div><!-- end tab-rosa -->
+
+
+  <!-- ══════════════════════════════════════════
+       TAB: RAÚL
+  ═══════════════════════════════════════════ -->
+  <div id="tab-raul" class="tab-panel">
+
+    <div class="intro-card">
+      <h2>Raúl, tienes algo que nadie más tiene</h2>
+      <p>Iquitos es uno de los destinos de biodiversidad más importantes del planeta. Miles de investigadores, biólogos, ecólogos y naturalistas del mundo entero <strong>sueñan con venir aquí</strong>. Y tú eres biólogo. Vives aquí. Conoces el ecosistema.</p>
+      <p>Esa combinación — conocimiento científico + hospedaje en el centro de Iquitos — es un diferenciador real que <strong>ningún otro apart-hotel de la ciudad puede replicar</strong>. No es marketing. Es una ventaja genuina que todavía no estás usando.</p>
+      <p>La propuesta es simple: <strong>compartir lo que ya sabes</strong>, con regularidad, en las plataformas donde está tu público ideal. El hospedaje se menciona suavemente, sin presión. La credibilidad hace el trabajo.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="num">1</div>
+        <h3>El formato — Simple y repetible</h3>
+      </div>
+
+      <div class="action-card">
+        <h4>📐 La estructura de cada publicación <span class="badge badge-key">Seguir siempre este esquema</span></h4>
+        <p>Cada post tiene exactamente la misma estructura. Así no tienes que pensar desde cero cada vez:</p>
+        <ul>
+          <li><strong>Foto:</strong> animal, planta, paisaje, río o detalle de la selva — cuanto más impactante mejor</li>
+          <li><strong>Título:</strong> dato científico curioso, comenzando con <em>"Did you know?"</em> o <em>"¿Sabías que...?"</em></li>
+          <li><strong>Texto (3–5 líneas):</strong> explicación breve, en inglés preferentemente (tu público objetivo es internacional)</li>
+          <li><strong>Cierre siempre igual:</strong> <em>"Come experience it firsthand. Schmidt House — Iquitos, Amazon."</em></li>
+          <li><strong>Hashtags:</strong> #AmazonBiodiversity #Iquitos #AmazonResearch #TropicalBiology #WildlifePhotography</li>
+        </ul>
+      </div>
+
+      <div class="action-card">
+        <h4>📅 Frecuencia recomendada <span class="badge badge-weekly">Semanal</span></h4>
+        <p><strong>Una publicación por semana es suficiente para empezar.</strong> Mejor constancia que cantidad. Un post sólido cada martes o miércoles tiene más impacto que cinco posts irregulares.</p>
+        <p style="margin-top:8px;">Si una semana no tienes foto propia, puedes usar fotos de dominio público de iNaturalist o Wikimedia Commons — solo asegúrate de citar la fuente.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="num">2</div>
+        <h3>Ideas de publicaciones — Para el primer mes</h3>
+      </div>
+
+      <div class="idea-grid">
+        <div class="idea-item">
+          <span class="idea-emoji">🐬</span>
+          <h5>Delfín rosado</h5>
+          <p>Inia geoffrensis — endémico de la cuenca amazónica. Dato: su coloración rosada aumenta con la temperatura. Impacto visual garantizado.</p>
+        </div>
+        <div class="idea-item">
+          <span class="idea-emoji">🌊</span>
+          <h5>La creciente del río</h5>
+          <p>El fenómeno de inundación estacional del Amazonas y cómo adapta la fauna local. Dato científico + foto dramática del paisaje.</p>
+        </div>
+        <div class="idea-item">
+          <span class="idea-emoji">🦜</span>
+          <h5>Guacamayo escarlata</h5>
+          <p>Ara macao — su rol ecológico como dispersor de semillas. Foto desde el centro de Iquitos si es posible.</p>
+        </div>
+        <div class="idea-item">
+          <span class="idea-emoji">🌿</span>
+          <h5>Victoria amazónica</h5>
+          <p>El nenúfar gigante. Su estructura soporta hasta 40 kg. Dato de bioingeniería que fascina a ingenieros y biólogos por igual.</p>
+        </div>
+        <div class="idea-item">
+          <span class="idea-emoji">🐍</span>
+          <h5>Anaconda verde</h5>
+          <p>Eunectes murinus — el reptil más pesado del planeta. Desmitificar el peligro con datos reales genera mucho engagement.</p>
+        </div>
+        <div class="idea-item">
+          <span class="idea-emoji">🌙</span>
+          <h5>Fauna nocturna</h5>
+          <p>Qué ocurre en la selva amazónica después de que oscurece. Post con múltiples especies — muy compartido por naturalistas.</p>
+        </div>
+        <div class="idea-item">
+          <span class="idea-emoji">🪲</span>
+          <h5>Insectos como indicadores</h5>
+          <p>Por qué la diversidad de escarabajos es clave para medir la salud de un ecosistema. Tema de nicho muy valorado en la academia.</p>
+        </div>
+        <div class="idea-item">
+          <span class="idea-emoji">🌿</span>
+          <h5>Plantas medicinales</h5>
+          <p>Uso tradicional vs. evidencia farmacológica. Conecta con el público de etno-botánica y medicina natural — comunidad muy activa online.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="num">3</div>
+        <h3>Dónde publicar y dónde encontrar a tu público</h3>
+      </div>
+
+      <div class="action-card">
+        <h4>📸 Instagram — Tu canal principal</h4>
+        <p>Es la plataforma más fuerte para contenido de naturaleza y biodiversidad. Cuenta personal de Raúl vinculada a Schmidt House, o una cuenta específica del negocio con Raúl como voz.</p>
+        <ul>
+          <li>Publicar el post semanal siempre con las mismas etiquetas</li>
+          <li>Seguir cuentas similares: <em>@AmazonConservation, @iNaturalist, @NatGeo</em></li>
+          <li>Interactuar con comentarios — eso dispara el alcance orgánico</li>
+        </ul>
+      </div>
+
+      <div class="action-card">
+        <h4>🔬 Grupos de Facebook académicos — Alto impacto, poco usado</h4>
+        <p>Aquí es donde viven los investigadores que planean expediciones. Grupos a los que te puedes unir hoy mismo:</p>
+        <ul>
+          <li><em>Amazon Conservation Association</em></li>
+          <li><em>Tropical Biology &amp; Conservation</em></li>
+          <li><em>Biodiversity &amp; Wildlife — Scientific Community</em></li>
+          <li><em>Herpetology of South America</em> (si te interesa ese nicho)</li>
+          <li>Grupos de la Sociedad Entomológica o de Botánica de tu especialidad</li>
+        </ul>
+        <p style="margin-top:8px;">En esos grupos puedes compartir tus posts como <strong>contenido de valor</strong>, no como publicidad. La clave es participar genuinamente — responder preguntas, comentar otros posts. Con el tiempo te posicionas como referente local.</p>
+      </div>
+
+      <div class="action-card">
+        <h4>🎓 ResearchGate &amp; Academia.edu <span class="badge badge-weekly">A mediano plazo</span></h4>
+        <p>Si tienes publicaciones o trabajos académicos, tener un perfil activo en ResearchGate te conecta directamente con investigadores que vienen al Amazonas. En la bio puedes mencionar Schmidt House como tu base de operaciones en Iquitos.</p>
+      </div>
+
+      <div class="action-card">
+        <h4>🦎 iNaturalist — Comunidad naturalista global</h4>
+        <p>Plataforma de ciencia ciudadana donde naturalistas de todo el mundo registran avistamientos. Crear un perfil, registrar observaciones locales y conectar con observadores que planean visitar la región es completamente orgánico y altamente efectivo para este nicho.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="num">4</div>
+        <h3>Un ejemplo completo — Para que veas cómo queda</h3>
+      </div>
+
+      <div class="action-card">
+        <h4>📝 Post listo para publicar</h4>
+        <div class="msg-box">
+          <div class="msg-label">Ejemplo — Instagram / Facebook</div>
+          <p>🐬 Did you know? The Amazon river dolphin (Inia geoffrensis) is the only cetacean that can turn its head 90 degrees — a unique adaptation for navigating flooded forests during the Amazon's seasonal rise.<br><br>
+          Unlike ocean dolphins, boto live their entire lives in freshwater, and their pink coloration intensifies with age and social activity.<br><br>
+          Iquitos sits at the heart of their habitat. You can observe them at dusk from the riverbank — just minutes from Schmidt House.<br><br>
+          #AmazonBiodiversity #Iquitos #PinkDolphin #AmazonResearch #TropicalBiology</p>
+        </div>
+        <p style="margin-top: 12px; font-size: 13px; color: var(--muted);">Nota el cierre: no dice "venga a hospedarse" ni pone precio. Solo menciona la ubicación. Es suficiente. Quien quiera saber más, buscará Schmidt House.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <div class="num">5</div>
+        <h3>Para los que tienen poca iniciativa — El sistema anti-bloqueo</h3>
+      </div>
+
+      <div class="highlight">
+        <strong>Raúl, si hay una semana en que no sabes qué publicar:</strong> abre tu galería de fotos del celular, elige la que más te guste de la selva o de un animal, y escribe tres líneas sobre lo que ves. No tiene que ser perfecto. El público científico valora la autenticidad por encima de la producción. Una foto tuya en campo con texto simple tiene más credibilidad que un diseño muy elaborado.
+      </div>
+
+      <div class="action-card">
+        <h4>🗓️ Sistema de 15 minutos por semana</h4>
+        <ul>
+          <li>Lunes: elegir la foto de la semana (5 min)</li>
+          <li>Martes: escribir el texto (5 min)</li>
+          <li>Miércoles: publicar y responder comentarios (5 min)</li>
+        </ul>
+        <p style="margin-top: 8px;">Con 15 minutos por semana, en 6 meses Schmidt House puede posicionarse como <strong>el alojamiento de referencia para investigadores en Iquitos</strong>. Eso no lo hace ningún otro hospedaje de la ciudad.</p>
+      </div>
+    </div>
+
+  </div><!-- end tab-raul -->
+
+</main>
+
+<footer>
+  Schmidt House · Iquitos, Loreto, Perú · Documento de uso interno — Marzo 2026
+</footer>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
