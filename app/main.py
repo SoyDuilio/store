@@ -650,3 +650,10 @@ async def perfil(request: Request):
 @app.get("/proyecto", response_class=HTMLResponse)
 async def perfil(request: Request):
     return templates.TemplateResponse("proyecto_sigco_web.html", {"request": request})
+
+
+#ESTRATEGIA PARA SCHMIDT HOUSE - sÁBADO 14-03-2026 [GUARDADO EN c:\schmidt]
+@app.get("/jorge1", response_class=HTMLResponse)
+async def jorge1(request: Request):
+    return templates.TemplateResponse("jorge1.html", {"request": request})
+
