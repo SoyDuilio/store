@@ -657,3 +657,10 @@ async def perfil(request: Request):
 async def jorge1(request: Request):
     return templates.TemplateResponse("jorge1.html", {"request": request})
 
+
+#proforma para JHONNY DÁVILA
+@app.get("/proforma", response_class=HTMLResponse)
+async def proforma(request: Request):
+    return templates.TemplateResponse("proforma.html", {"request": request})
+
+
